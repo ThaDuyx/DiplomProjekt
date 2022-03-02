@@ -9,9 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hey Christoffer")
-            .padding()
+        VStack {
+            Text("application_name")
+                .padding()
+            Button("application_name") {
+                
+            }
+        }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
