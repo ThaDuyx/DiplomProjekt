@@ -23,6 +23,9 @@
 		8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592B27CF92DB009D8A51 /* ButtonStyle.swift */; };
 		8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */; };
 		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
+		6AC078E327CF88C20048F0B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AC078E227CF88C20048F0B1 /* GoogleService-Info.plist */; };
+		6AC078E527CF8ABD0048F0B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC078E427CF8ABD0048F0B1 /* AppDelegate.swift */; };
+		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,8 @@
 		8348592927CF912E009D8A51 /* FontSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSizes.swift; sourceTree = "<group>"; };
 		8348592B27CF92DB009D8A51 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundGradient.swift; sourceTree = "<group>"; };
+		6AC078E227CF88C20048F0B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6AC078E427CF8ABD0048F0B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83D5016827CF75480083AEE7 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,10 +82,12 @@
 			children = (
 				8348592227CF8C24009D8A51 /* Resources */,
 				8348592127CF8830009D8A51 /* Login */,
+				6AC078E427CF8ABD0048F0B1 /* AppDelegate.swift */,
 				6A31FD4827CF61B700EFECDD /* RegistrApp.swift */,
-				83D5016727CF75240083AEE7 /* Localizable.strings */,
 				6A31FD4A27CF61B700EFECDD /* ContentView.swift */,
+				83D5016727CF75240083AEE7 /* Localizable.strings */,
 				6A31FD4C27CF61B700EFECDD /* Assets.xcassets */,
+				6AC078E227CF88C20048F0B1 /* GoogleService-Info.plist */,
 				6A31FD4E27CF61B700EFECDD /* Preview Content */,
 			);
 			path = Registr;
@@ -184,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A31FD5027CF61B700EFECDD /* Preview Assets.xcassets in Resources */,
+				6AC078E327CF88C20048F0B1 /* GoogleService-Info.plist in Resources */,
 				83D5016527CF75240083AEE7 /* Localizable.strings in Resources */,
 				6A31FD4D27CF61B700EFECDD /* Assets.xcassets in Resources */,
 			);
@@ -196,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AC078E527CF8ABD0048F0B1 /* AppDelegate.swift in Sources */,
 				6A31FD4B27CF61B700EFECDD /* ContentView.swift in Sources */,
 				8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */,
 				8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */,
