@@ -9,15 +9,25 @@ import SwiftUI
 
 struct LoginOptions: View {
     var body: some View {
-        VStack(spacing: 80) {
-            Text("application_name")
-            Button("parent_login") {
-                
-            }
-            Button("school_login") {
-                
+        ZStack {
+            VStack(spacing: 80) {
+                Text("application_name")
+                    .bigHeaderTextStyle()
+                Button("parent_login") {
+                    
+                }
+                .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
+                Button("school_login") {
+                    
+                }
+                .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
             }
         }
+        .background(Image("BackgroundImage")
+                        .resizable()
+                        .edgesIgnoringSafeArea(.all)
+                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        )
     }
 }
 

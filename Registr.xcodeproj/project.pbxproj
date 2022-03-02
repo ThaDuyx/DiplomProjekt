@@ -18,6 +18,10 @@
 		8348592027CF8827009D8A51 /* LoginOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348591F27CF8827009D8A51 /* LoginOptions.swift */; };
 		8348592427CF8C3D009D8A51 /* FontStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592327CF8C3D009D8A51 /* FontStyles.swift */; };
 		8348592627CF8C7F009D8A51 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592527CF8C7F009D8A51 /* Color.swift */; };
+		8348592827CF8D1C009D8A51 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592727CF8D1C009D8A51 /* Resources.swift */; };
+		8348592A27CF912E009D8A51 /* FontSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592927CF912E009D8A51 /* FontSizes.swift */; };
+		8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592B27CF92DB009D8A51 /* ButtonStyle.swift */; };
+		8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */; };
 		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +34,10 @@
 		8348591F27CF8827009D8A51 /* LoginOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginOptions.swift; sourceTree = "<group>"; };
 		8348592327CF8C3D009D8A51 /* FontStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStyles.swift; sourceTree = "<group>"; };
 		8348592527CF8C7F009D8A51 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		8348592727CF8D1C009D8A51 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		8348592927CF912E009D8A51 /* FontSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSizes.swift; sourceTree = "<group>"; };
+		8348592B27CF92DB009D8A51 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundGradient.swift; sourceTree = "<group>"; };
 		83D5016827CF75480083AEE7 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,7 +75,7 @@
 		6A31FD4727CF61B700EFECDD /* Registr */ = {
 			isa = PBXGroup;
 			children = (
-				8348592227CF8C24009D8A51 /* Ressources */,
+				8348592227CF8C24009D8A51 /* Resources */,
 				8348592127CF8830009D8A51 /* Login */,
 				6A31FD4827CF61B700EFECDD /* RegistrApp.swift */,
 				83D5016727CF75240083AEE7 /* Localizable.strings */,
@@ -94,13 +102,17 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		8348592227CF8C24009D8A51 /* Ressources */ = {
+		8348592227CF8C24009D8A51 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				8348592327CF8C3D009D8A51 /* FontStyles.swift */,
 				8348592527CF8C7F009D8A51 /* Color.swift */,
+				8348592727CF8D1C009D8A51 /* Resources.swift */,
+				8348592927CF912E009D8A51 /* FontSizes.swift */,
+				8348592B27CF92DB009D8A51 /* ButtonStyle.swift */,
+				8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */,
 			);
-			path = Ressources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,8 +197,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A31FD4B27CF61B700EFECDD /* ContentView.swift in Sources */,
+				8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */,
+				8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */,
+				8348592A27CF912E009D8A51 /* FontSizes.swift in Sources */,
 				8348592027CF8827009D8A51 /* LoginOptions.swift in Sources */,
 				8348592427CF8C3D009D8A51 /* FontStyles.swift in Sources */,
+				8348592827CF8D1C009D8A51 /* Resources.swift in Sources */,
 				8348592627CF8C7F009D8A51 /* Color.swift in Sources */,
 				6A31FD4927CF61B700EFECDD /* RegistrApp.swift in Sources */,
 			);

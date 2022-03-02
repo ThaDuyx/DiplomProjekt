@@ -8,8 +8,8 @@
 import SwiftUI
 
 extension Text {
-    
     func bigHeaderTextStyle() -> some View {
-        self.foregroundColor(<#T##color: Color?##Color?#>)
+        self.foregroundColor(Resources.Color.Colors.darkPurple)
+            .font(.system(size: Resources.FontSize.bigHeader))
     }
 }
