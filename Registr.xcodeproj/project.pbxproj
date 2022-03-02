@@ -11,14 +11,11 @@
 		6A31FD4B27CF61B700EFECDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A31FD4A27CF61B700EFECDD /* ContentView.swift */; };
 		6A31FD4D27CF61B700EFECDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A31FD4C27CF61B700EFECDD /* Assets.xcassets */; };
 		6A31FD5027CF61B700EFECDD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A31FD4F27CF61B700EFECDD /* Preview Assets.xcassets */; };
-<<<<<<< HEAD
 		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
-=======
 		6AC078DB27CF73EB0048F0B1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078DA27CF73EB0048F0B1 /* FirebaseAnalytics */; };
 		6AC078DD27CF73EB0048F0B1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078DC27CF73EB0048F0B1 /* FirebaseAuth */; };
 		6AC078DF27CF73EB0048F0B1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078DE27CF73EB0048F0B1 /* FirebaseCrashlytics */; };
 		6AC078E127CF73EB0048F0B1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078E027CF73EB0048F0B1 /* FirebaseFirestore */; };
->>>>>>> dev
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
