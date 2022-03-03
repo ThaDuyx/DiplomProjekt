@@ -12,7 +12,7 @@ struct LoginOptions: View {
         ZStack {
             VStack(spacing: 80) {
                 Text("application_name")
-                    .bigHeaderTextStyle()
+                    .titleTextStyle()
                 Button("parent_login") {
                     
                 }

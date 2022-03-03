@@ -10,7 +10,13 @@ import SwiftUI
 extension Resources {
     
     struct FontSize {
-        static var frontPageButton: CGFloat { 24 }
-        static var bigHeader: CGFloat { 64 }
+        /// 14pt
+        static var body: CGFloat { 14 }
+        /// 18pt
+        static var subTitle: CGFloat { 18 }
+        /// 24pt
+        static var primaryHeader: CGFloat { 24 }
+        /// 64pt
+        static var title: CGFloat { 64 }
     }
 }
