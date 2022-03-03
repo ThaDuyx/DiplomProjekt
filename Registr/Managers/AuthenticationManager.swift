@@ -45,10 +45,19 @@ class AuthenticationManager {
                                 print("Document does not exist")
                             }
                         }
-                        
+                        //TODO: --- Add headmaster UserProfile ---
                     case .school:
-                        // TODO: --- Add teacher and headmaster collection in Firestore ---
-                        print("")
+                        let docRef = db.collection("fb_employee_path".localize).document(id)
+                        docRef.getDocument { (document, error) in
+                            if let document = document, document.exists, let data = document.data() {
+                                let name = data["name"] as? String ?? "nil"
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .teacher)
+                                UserManager.shared.user = userLoggedIn
+                                
+                            } else {
+                                print("Document does not exist")
+                            }
+                        }
                     }
                 }
             }

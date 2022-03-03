@@ -13,3 +13,5 @@
 
 // MARK: - Firebase paths
 "fb_parent_path" = "parent";
+
+"fb_employee_path" = "employees";
