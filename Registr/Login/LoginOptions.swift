@@ -9,25 +9,28 @@ import SwiftUI
 
 struct LoginOptions: View {
     var body: some View {
-        ZStack {
-            VStack(spacing: 80) {
+        NavigationView {
+            VStack(spacing: 60) {
                 Text("application_name")
                     .titleTextStyle()
-                Button("parent_login") {
-                    
+                VStack(spacing: 40) {
+                    NavigationLink(destination: LoginUserID()) {
+                        Text("parent_login")
+                    }
+                    .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
+                    NavigationLink(destination: LoginUserID()) {
+                        Text("school_login")
+                    }
+                    .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
+                    Spacer()
+                        .frame(height: 200)
                 }
-                .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
-                Button("school_login") {
-                    
-                }
-                .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
             }
+            .background(Image("BackgroundImage")
+                            .resizable()
+                            .edgesIgnoringSafeArea(.all)
+                            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         }
-        .background(Image("BackgroundImage")
-                        .resizable()
-                        .edgesIgnoringSafeArea(.all)
-                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        )
     }
 }
 
