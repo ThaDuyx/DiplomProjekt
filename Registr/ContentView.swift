@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
         VStack {
             Text("application_name")
                 .padding()
+
             Button("application_name") {
-                
+                AuthenticationManager.shared.signIn(email: "test@test.com", password: "test1234", type: .parent)
             }
         }
     }

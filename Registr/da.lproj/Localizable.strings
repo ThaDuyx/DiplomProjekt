@@ -7,3 +7,9 @@
 */
 
 "application_name" = "Registr";
+
+// MARK: - Errors
+"general_error" = "Something went wrong. Error description: ";
+
+// MARK: - Firebase paths
+"fb_parent_path" = "parent";

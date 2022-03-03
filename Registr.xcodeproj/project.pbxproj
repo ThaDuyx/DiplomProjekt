@@ -16,7 +16,10 @@
 		6AC078DF27CF73EB0048F0B1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078DE27CF73EB0048F0B1 /* FirebaseCrashlytics */; };
 		6AC078E127CF73EB0048F0B1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078E027CF73EB0048F0B1 /* FirebaseFirestore */; };
 		6AC078E327CF88C20048F0B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AC078E227CF88C20048F0B1 /* GoogleService-Info.plist */; };
-		6AC078E527CF8ABD0048F0B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC078E427CF8ABD0048F0B1 /* AppDelegate.swift */; };
+		6AC078E727CF8D0B0048F0B1 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC078E627CF8D0B0048F0B1 /* AuthenticationManager.swift */; };
+		6AC078EB27CF97340048F0B1 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC078EA27CF97340048F0B1 /* UserManager.swift */; };
+		6AC078ED27CF9A8C0048F0B1 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC078EC27CF9A8C0048F0B1 /* UserProfile.swift */; };
+		6AC078F227D0BA420048F0B1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC078F127D0BA420048F0B1 /* String+Extensions.swift */; };
 		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +30,10 @@
 		6A31FD4C27CF61B700EFECDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A31FD4F27CF61B700EFECDD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6AC078E227CF88C20048F0B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6AC078E427CF8ABD0048F0B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6AC078E627CF8D0B0048F0B1 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		6AC078EA27CF97340048F0B1 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		6AC078EC27CF9A8C0048F0B1 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		6AC078F127D0BA420048F0B1 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		83D5016827CF75480083AEE7 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,13 +71,15 @@
 		6A31FD4727CF61B700EFECDD /* Registr */ = {
 			isa = PBXGroup;
 			children = (
-				6AC078E427CF8ABD0048F0B1 /* AppDelegate.swift */,
 				6A31FD4827CF61B700EFECDD /* RegistrApp.swift */,
 				6A31FD4A27CF61B700EFECDD /* ContentView.swift */,
 				83D5016727CF75240083AEE7 /* Localizable.strings */,
 				6A31FD4C27CF61B700EFECDD /* Assets.xcassets */,
 				6AC078E227CF88C20048F0B1 /* GoogleService-Info.plist */,
+				6AC078EE27CF9A920048F0B1 /* Models */,
+				6AC078E827CF8D0F0048F0B1 /* Managers */,
 				6A31FD4E27CF61B700EFECDD /* Preview Content */,
+				6AC078F327D0BA470048F0B1 /* Extensions */,
 			);
 			path = Registr;
 			sourceTree = "<group>";
@@ -82,6 +90,31 @@
 				6A31FD4F27CF61B700EFECDD /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6AC078E827CF8D0F0048F0B1 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				6AC078E627CF8D0B0048F0B1 /* AuthenticationManager.swift */,
+				6AC078EA27CF97340048F0B1 /* UserManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		6AC078EE27CF9A920048F0B1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6AC078EC27CF9A8C0048F0B1 /* UserProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6AC078F327D0BA470048F0B1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6AC078F127D0BA420048F0B1 /* String+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,8 +199,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AC078E527CF8ABD0048F0B1 /* AppDelegate.swift in Sources */,
+				6AC078E727CF8D0B0048F0B1 /* AuthenticationManager.swift in Sources */,
+				6AC078ED27CF9A8C0048F0B1 /* UserProfile.swift in Sources */,
+				6AC078F227D0BA420048F0B1 /* String+Extensions.swift in Sources */,
 				6A31FD4B27CF61B700EFECDD /* ContentView.swift in Sources */,
+				6AC078EB27CF97340048F0B1 /* UserManager.swift in Sources */,
 				6A31FD4927CF61B700EFECDD /* RegistrApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
