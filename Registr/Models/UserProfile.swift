@@ -13,9 +13,16 @@ enum Role {
     case headmaster
 }
 
-struct UserProfile {
+class UserProfile {
     var uid: String
     var email: String
     var name: String
     var role: Role
+    
+    init(uid: String, email: String, name: String, role: Role) {
+        self.uid = uid
+        self.email = email
+        self.name = name
+        self.role = role
+    }
 }
