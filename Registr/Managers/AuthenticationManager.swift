@@ -40,7 +40,6 @@ class AuthenticationManager {
                                 let name = data["name"] as? String ?? "nil"
                                 let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .teacher)
                                 UserManager.shared.user = userLoggedIn
-                                
                             } else {
                                 print("Document does not exist")
                             }
