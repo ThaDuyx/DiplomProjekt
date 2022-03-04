@@ -22,6 +22,17 @@ extension Resources.CustomButtonStyle {
         }
     }
     
+    struct SmallFrontPageButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            return configuration.label
+                .frame(width: 280, height: 40)
+                .font(.custom("Poppins-Light", size: Resources.FontSize.primaryHeader))
+                .foregroundColor(Resources.Color.Colors.lightMint)
+                .background(Resources.Color.Colors.darkBlue)
+                .cornerRadius(5)
+        }
+    }
+    
     struct FilledButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             return configuration.label

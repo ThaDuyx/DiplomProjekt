@@ -23,7 +23,7 @@ extension Text {
     /// Color: darkPurple, FontSize: 18pt
     func subTitleTextStyle() -> some View {
         self.foregroundColor(Resources.Color.Colors.darkPurple)
-            .font(.custom("Poppins-", size: Resources.FontSize.subTitle))
+            .font(.custom("Poppins-Regular", size: Resources.FontSize.subTitle))
     }
     
     /// Color: darkPurple, FontSize: 14pt
