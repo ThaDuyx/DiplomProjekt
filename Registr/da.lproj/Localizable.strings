@@ -7,6 +7,12 @@
 */
 
 "application_name" = "Registr";
+"parent_login" = "Forældre login";
+"school_login" = "Skole login";
+"user_id" = "BrugerID";
+"next_view" = "Næste";
+"password" = "Kodeord";
+"login" = "Log ind";
 
 // MARK: - Errors
 "general_error" = "Something went wrong. Error description: ";

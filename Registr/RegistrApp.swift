@@ -16,6 +16,7 @@ struct RegistrApp: App {
     
     var body: some Scene {
         WindowGroup {
+            LoginOptions()
         }
     }
 }
