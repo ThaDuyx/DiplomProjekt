@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct RegistrApp: App {
+    init() {
+       FirebaseApp.configure()
+     }
+    
     var body: some Scene {
         WindowGroup {
             LoginOptions()
