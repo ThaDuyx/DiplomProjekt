@@ -5,14 +5,17 @@
   Created by Christoffer Detlef on 02/03/2022.
   
 */
-
+// MARK: - App Name
 "application_name" = "Registr";
+// MARK: - Login flow
 "parent_login" = "Forældre login";
 "school_login" = "Skole login";
 "user_id" = "BrugerID";
 "next_view" = "Næste";
 "password" = "Kodeord";
 "login" = "Log ind";
+
+// MARK: - Onboarding flow
 
 // MARK: - Errors
 "general_error" = "Something went wrong. Error description: ";
