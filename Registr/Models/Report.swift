@@ -17,7 +17,7 @@ struct Report: Codable {
     let reason: Reason
 }
 
-enum Reason: String {
+enum Reason: String, Codable {
     case late = "late"
     case illness = "illness"
     case other = "other"

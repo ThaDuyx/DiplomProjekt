@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum Role {
+enum Role: Codable {
     case teacher
     case parent
     case headmaster
 }
 
-class UserProfile {
+class UserProfile: Codable {
     var uid: String
     var email: String
     var name: String
@@ -31,10 +31,10 @@ class UserProfile {
     }
 }
 
-struct Children {
+struct Children: Codable {
     var id: String
 }
 
-struct Favorite {
+struct Favorite: Codable {
     var className: String
 }
