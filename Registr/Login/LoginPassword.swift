@@ -25,7 +25,7 @@ struct LoginPassword: View {
                         Text("password")
                             .primaryHeaderTextStyle()
                             .frame(width: 280, alignment: .leading)
-                        TextField("Indtast dit kodeord", text: $userID)
+                        TextField("password_field_text".localize, text: $userID)
                             .frame(width: 265, height: 40)
                             .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                             .background(RoundedRectangle(cornerRadius: 10).fill(Resources.Color.Colors.white))
@@ -35,7 +35,7 @@ struct LoginPassword: View {
                         Button("login") {
                             isPresented.toggle()
                         }
-                        .fullScreenCover(isPresented: $isPresented, content: OnboardingDataAccess.init)
+                        .fullScreenCover(isPresented: $isPresented, content: OnboardingControllerFlow.init)
                         .frame(alignment: .center)
                         .buttonStyle(Resources.CustomButtonStyle.SmallFrontPageButtonStyle())
                         Spacer()
