@@ -29,28 +29,29 @@ class AuthenticationManager {
                 
             } else {
                 if let id = authResult?.user.uid, let email = authResult?.user.email {
+                    
                     // Retrieve data from Firestore parent collection
                     let db = Firestore.firestore()
-                    
                     switch type {
                     case .parent:
                         let docRef = db.collection("fb_parent_path".localize).document(id)
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists, let data = document.data() {
                                 let name = data["name"] as? String ?? "nil"
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .teacher)
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, children: nil, favorites: nil)
                                 UserManager.shared.user = userLoggedIn
                             } else {
                                 print("Document does not exist")
                             }
                         }
+                        
                         //TODO: --- Add headmaster UserProfile ---
                     case .school:
                         let docRef = db.collection("fb_employee_path".localize).document(id)
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists, let data = document.data() {
                                 let name = data["name"] as? String ?? "nil"
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .teacher)
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .teacher, children: nil, favorites: nil)
                                 UserManager.shared.user = userLoggedIn
                                 
                             } else {
