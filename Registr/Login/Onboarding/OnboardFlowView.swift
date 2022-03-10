@@ -46,6 +46,6 @@ struct OnboardFlowView: View {
 
 struct OnboardFlowView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardFlowView(id: 1, title: "onboard_flow_page_one_title", details: "For at appen kan fungere som den skal, så skal den bruge adgang til din data. Du skal derfor give appen lov til at tilgå data om dig. Dette kan til hvert et tidspunkt ændres.", image: "checkmark.shield.fill", buttonText: "Tillad adgang")
+        OnboardFlowView(id: 1, title: "onboard_flow_page_one_title", details: "onboard_flow_page_one_description", image: "checkmark.shield.fill", buttonText: "onboard_flow_page_one_button_text")
     }
 }
