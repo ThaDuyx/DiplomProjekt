@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 enum Role: Codable {
     case teacher
@@ -14,6 +15,7 @@ enum Role: Codable {
 }
 
 class UserProfile: Codable {
+    @DocumentID var id: String?
     var uid: String
     var email: String
     var name: String

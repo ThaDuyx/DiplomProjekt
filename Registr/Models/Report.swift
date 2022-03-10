@@ -14,7 +14,7 @@ struct Report: Codable {
     let studentID: String
     let date: Date
     let description: String?
-    let reason: Reason
+    let reason: String
 }
 
 enum Reason: String, Codable {
