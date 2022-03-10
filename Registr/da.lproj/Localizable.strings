@@ -19,14 +19,14 @@
 
 
 // MARK: - Onboarding flow page 1
-"onboard_flow_page_two_title" = "Registr skal bruge adgang til din data";
-"onboard_flow_page_two_description" = "For at appen kan fungere som den skal, så skal den bruge adgang til din data. Du skal derfor give appen lov til at tilgå data om dig. Dette kan til hvert et tidspunkt ændres.";
-"onboard_flow_page_two_button_text" = "Tillad adgang";
+"onboard_flow_page_one_title" = "Registr skal bruge adgang til din data";
+"onboard_flow_page_one_description" = "For at appen kan fungere som den skal, så skal den bruge adgang til din data. Du skal derfor give appen lov til at tilgå data om dig. Dette kan til hvert et tidspunkt ændres.";
+"onboard_flow_page_one_button_text" = "Tillad adgang";
 
 // MARK: - Onboarding flow page 2
-"onboard_flow_page_one_title" = "Tillad notifikationer";
-"onboard_flow_page_one_description" = "For at få beskeder når en forældre har registreret fravær fra sit barn, eller har besvaret på din fraværsregistrering, så at tillad appen må sende dig notifikationer. ";
-"onboard_flow_page_one_button_text" = "Tillad notifikationer";
+"onboard_flow_page_two_title" = "Tillad notifikationer";
+"onboard_flow_page_two_description" = "For at få beskeder når en forældre har registreret fravær fra sit barn, eller har besvaret på din fraværsregistrering, så at tillad appen må sende dig notifikationer. ";
+"onboard_flow_page_two_button_text" = "Tillad notifikationer";
 
 // MARK: - Onboarding flow page 3
 "onboard_flow_page_three_title" = "Klar til brug";
