@@ -23,7 +23,7 @@ struct LoginUserID: View {
                         Text("user_id")
                             .primaryHeaderTextStyle()
                             .frame(width: 280, alignment: .leading)
-                        TextField("Indtast dit BrugerID", text: $userID)
+                        TextField("user_id_field_text".localize, text: $userID)
                             .frame(width: 265, height: 40)
                             .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                             .background(RoundedRectangle(cornerRadius: 10).fill(Resources.Color.Colors.white))
