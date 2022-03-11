@@ -26,6 +26,12 @@ struct ParentHomeScreenView: View {
 }
 
 struct CardStack: View {
+    
+    // To make the List background transparent, so the gradient background can be used.
+    init() {
+        UITableView.appearance().backgroundColor = .clear
+    }
+    
     var body: some View {
         VStack {
             ZStack {
@@ -35,11 +41,11 @@ struct CardStack: View {
                         .resizable()
                         .frame(width: 80, height: 80)
                     }
-                    .frame(width: 90, height: 100)
-                    .background(Color.red)
+                    .frame(width: 90, height: 90)
+                    .background(Resources.Color.Colors.mediumMint)
                     Spacer()
                 }
-                .foregroundColor(Color.blue)
+                .foregroundColor(Color.black)
                 .frame(alignment: .leading)
                 Spacer()
                 HStack {
