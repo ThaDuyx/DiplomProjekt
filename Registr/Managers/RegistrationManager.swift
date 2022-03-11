@@ -11,6 +11,7 @@ import FirebaseFirestore
 class RegistrationManager: ObservableObject {
     
     @Published var registrations: [Registration]?
+    @Published var students: [Student]?
     
     //TODO: --- We need to implement recieving class string in the method from the view - We can make the date logic from this manager class ---
     func fetchRegistrations() {
@@ -18,9 +19,9 @@ class RegistrationManager: ObservableObject {
         db
             .collection("classes")
             .document("0.x")
+            .collection("fb_date_path".localize)
+            .document("12-03-2022")
             .collection("fb_registrations_path".localize)
-            .document("11-03-2022")
-            .collection("fb_registrations_path")
             .getDocuments() {  (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")

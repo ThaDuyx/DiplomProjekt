@@ -25,6 +25,6 @@
 
 "fb_employee_path" = "employees";
 
-"fb_registrationDate_path" = "registrationDates";
+"fb_date_path" = "registrationDates";
 
 "fb_registrations_path" = "registrations";
