@@ -14,8 +14,11 @@ struct ParentHomeScreenView: View {
                 Resources.BackgroundGradient.backgroundGradient
                     .ignoresSafeArea()
                 Form {
-                    Section {
-                        CardStack()
+                    ForEach((1...7), id: \.self) {_ in
+                        Section {
+                            CardStack(name: "Simon Andersen", className: "8.Y", email: "mail@email.dk")
+                        }
+                        .listRowBackground(Resources.Color.Colors.darkBlue)
                     }
                 }
             }
@@ -26,45 +29,61 @@ struct ParentHomeScreenView: View {
 }
 
 struct CardStack: View {
+    var name: String
+    var className: String
+    var email: String
     
-    // To make the List background transparent, so the gradient background can be used.
-    init() {
+    init(name: String, className: String, email: String) {
+        // To make the background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
+        self.name = name
+        self.className = className
+        self.email = email
     }
     
     var body: some View {
         VStack {
             ZStack {
-                HStack {
-                    VStack {
-                    Image(systemName: "person")
-                        .resizable()
-                        .frame(width: 80, height: 80)
+                HStack(spacing: 40) {
+                    HStack {
+                        VStack {
+                            Image(systemName: "person")
+                                .resizable()
+                                .frame(width: 80, height: 80)
+                        }
+                        .frame(width: 90, height: 90)
+                        .background(Resources.Color.Colors.mediumMint)
+                        .cornerRadius(10)
                     }
-                    .frame(width: 90, height: 90)
-                    .background(Resources.Color.Colors.mediumMint)
-                    Spacer()
-                }
-                .foregroundColor(Color.black)
-                .frame(alignment: .leading)
-                Spacer()
-                HStack {
-                    VStack(alignment: .leading) {
+                    .foregroundColor(Resources.Color.Colors.darkPurple)
+                    .frame(alignment: .leading)
+                    HStack {
                         VStack(alignment: .leading) {
-                            Text("Navn:")
-                            Text("Simon Andersen")
-                        }
-                        VStack(alignment: .leading) {
-                            Text("Klasse:")
-                            Text("8.Y")
-                        }
-                        VStack(alignment: .leading) {
-                            Text("Email:")
-                            Text("Email@email.dk")
+                            VStack(alignment: .leading) {
+                                Text("parent_home_name")
+                                    .boldLightBodyTextStyle()
+                                Text(name)
+                                    .lightBodyTextStyle()
+                            }
+                            Spacer()
+                            VStack(alignment: .leading) {
+                                Text("parent_home_class")
+                                    .boldLightBodyTextStyle()
+                                Text(className)
+                                    .lightBodyTextStyle()
+                            }
+                            Spacer()
+                            VStack(alignment: .leading) {
+                                Text("parent_home_email")
+                                    .boldLightBodyTextStyle()
+                                Text(verbatim: email)
+                                    .lightBodyTextStyle()
+                            }
                         }
                     }
+                    .foregroundColor(Resources.Color.Colors.lightMint)
+                    .frame(alignment: .center)
                 }
-                .frame(alignment: .center)
             }
         }
     }

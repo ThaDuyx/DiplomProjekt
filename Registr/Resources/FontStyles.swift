@@ -35,12 +35,18 @@ extension Text {
     /// Color: darkPurple, FontSize: 14pt
     func darkBodyTextStyle() -> some View {
         self.foregroundColor(Resources.Color.Colors.darkPurple)
-            .font(.custom("Poppins-", size: Resources.FontSize.body))
+            .font(.custom("Poppins-Regular", size: Resources.FontSize.body))
     }
     
     /// Color: lightMint, FontSize: 14pt
     func lightBodyTextStyle() -> some View {
         self.foregroundColor(Resources.Color.Colors.lightMint)
-            .font(.custom("Poppins-", size: Resources.FontSize.body))
+            .font(.custom("Poppins-Regular", size: Resources.FontSize.body))
+    }
+    
+    /// Color: lightMint, FontSize: 14pt
+    func boldLightBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.lightMint)
+            .font(.custom("Poppins-Medium", size: Resources.FontSize.body))
     }
 }
