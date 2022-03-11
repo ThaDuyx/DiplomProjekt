@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 struct Report: Codable {
+    @DocumentID var id: String?
     let parentName: String
     let parentID: String
     let studentName: String
