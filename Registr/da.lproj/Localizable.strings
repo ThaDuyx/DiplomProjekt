@@ -14,8 +14,24 @@
 "next_view" = "Næste";
 "password" = "Kodeord";
 "login" = "Log ind";
+"password_field_text" = "Indtast dit kodeord";
+"user_id_field_text" = "Indtast dit BrugerID";
 
-// MARK: - Onboarding flow
+
+// MARK: - Onboarding flow page 1
+"onboard_flow_page_one_title" = "Registr skal bruge adgang til din data";
+"onboard_flow_page_one_description" = "For at appen kan fungere som den skal, så skal den bruge adgang til din data. Du skal derfor give appen lov til at tilgå data om dig. Dette kan til hvert et tidspunkt ændres.";
+"onboard_flow_page_one_button_text" = "Tillad adgang";
+
+// MARK: - Onboarding flow page 2
+"onboard_flow_page_two_title" = "Tillad notifikationer";
+"onboard_flow_page_two_description" = "For at få beskeder når en forældre har registreret fravær fra sit barn, eller har besvaret på din fraværsregistrering, så at tillad appen må sende dig notifikationer. ";
+"onboard_flow_page_two_button_text" = "Tillad notifikationer";
+
+// MARK: - Onboarding flow page 3
+"onboard_flow_page_three_title" = "Klar til brug";
+"onboard_flow_page_three_description" = "Du har nu udfyldt alle nødvendige konfigarationer af app’en, og den er nu klar til at blive brugt.";
+"onboard_flow_page_three_button_text" = "Start appen";
 
 // MARK: - Errors
 "general_error" = "Something went wrong. Error description: ";

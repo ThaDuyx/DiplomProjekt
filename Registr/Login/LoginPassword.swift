@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LoginPassword: View {
     @State private var userID: String = ""
+    @State private var isPresented = false
+
     var body: some View {
         ZStack {
             Resources.BackgroundGradient.backgroundGradient
@@ -23,17 +25,17 @@ struct LoginPassword: View {
                         Text("password")
                             .primaryHeaderTextStyle()
                             .frame(width: 280, alignment: .leading)
-                        TextField("Indtast dit kodeord", text: $userID)
+                        TextField("password_field_text".localize, text: $userID)
                             .frame(width: 265, height: 40)
                             .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                             .background(RoundedRectangle(cornerRadius: 10).fill(Resources.Color.Colors.white))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Resources.Color.Colors.darkPurple, lineWidth: 1))
-                        
-                        NavigationLink(destination: OnboardingDataAccess()) {
-                            Text("login")
+                        Button("login") {
+                            isPresented.toggle()
                         }
+                        .fullScreenCover(isPresented: $isPresented, content: OnboardingControllerFlow.init)
                         .frame(alignment: .center)
                         .buttonStyle(Resources.CustomButtonStyle.SmallFrontPageButtonStyle())
                         Spacer()
