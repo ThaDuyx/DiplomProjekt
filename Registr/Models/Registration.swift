@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestoreSwift
 
 struct Registration: Codable {
-    @DocumentID var id: String? = UUID().uuidString
+    @DocumentID var id: String?
     let name: String
     let value: String?
 }
