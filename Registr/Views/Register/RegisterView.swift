@@ -19,13 +19,13 @@ struct RegisterView: View {
                 Resources.BackgroundGradient.backgroundGradient
                     .ignoresSafeArea()
                 Form {
-                    Section(header: Text("Favoritter")) {
+                    Section(header: Text("Placeholder text - favorites")) {
                         ClassStack()
                         ClassStack()
                     }
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    Section(header: Text("Klasser")) {
+                    Section(header: Text("Placeholder text - Class")) {
                         ClassStack()
                     }
                     .listRowBackground(Color.clear)
@@ -49,7 +49,7 @@ struct ClassStack: View {
                 }
                 Spacer()
                 HStack {
-                    Text("3.Y")
+                    Text("Placeholder text - class name")
                         .frame(alignment: .center)
                 }
             }
