@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct TabViewView: View {
+    @State private var role: String = "parent"
+    
     var body: some View {
-        
         TabView {
+            if role == "parent" {
+                ParentHomeScreenView()
+                    .tabItem {
+                        Image(systemName: "house")
+                        Text("Start")
+                    }
+            } else {
             TeacherHomeScreenView()
                 .tabItem {
                     Image(systemName: "house")
                     Text("Start")
                 }
+            }
             RegisterView()
                 .tabItem {
                     Image(systemName: "square.and.pencil")
