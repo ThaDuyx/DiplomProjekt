@@ -20,10 +20,10 @@ class UserProfile: Codable {
     var email: String
     var name: String
     var role: Role
-    var children: [Children]?
+    var children: [Child]?
     var favorites: [Favorite]?
     
-    init(uid: String, email: String, name: String, role: Role, children: [Children]?, favorites: [Favorite]?) {
+    init(uid: String, email: String, name: String, role: Role, children: [Child]?, favorites: [Favorite]?) {
         self.uid = uid
         self.email = email
         self.name = name
@@ -33,7 +33,7 @@ class UserProfile: Codable {
     }
 }
 
-struct Children: Codable {
+struct Child: Codable {
     var id: String
 }
 
