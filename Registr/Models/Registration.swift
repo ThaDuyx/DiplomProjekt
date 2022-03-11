@@ -11,5 +11,5 @@ import FirebaseFirestoreSwift
 struct Registration: Codable {
     @DocumentID var id: String?
     let name: String
-    let value: String?
+    let reason: String?
 }

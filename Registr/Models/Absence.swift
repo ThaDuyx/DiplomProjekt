@@ -11,6 +11,6 @@ import FirebaseFirestoreSwift
 struct Absence: Codable {
     @DocumentID var id: String?
     let date: Date
-    let value: String
+    let reason: String
     let validated: Bool
 }
