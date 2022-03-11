@@ -40,3 +40,7 @@
 "fb_parent_path" = "parent";
 
 "fb_employee_path" = "employees";
+
+"fb_date_path" = "registrationDates";
+
+"fb_registrations_path" = "registrations";
