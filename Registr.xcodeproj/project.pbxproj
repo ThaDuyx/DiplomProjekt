@@ -49,6 +49,7 @@
 		8391A8F327DA2DC400B5C698 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F227DA2DC400B5C698 /* ProfileView.swift */; };
 		8391A8F727DA2DEE00B5C698 /* TeacherHomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F627DA2DEE00B5C698 /* TeacherHomeScreenView.swift */; };
 		8391A8F927DA2DFD00B5C698 /* TabViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F827DA2DFD00B5C698 /* TabViewView.swift */; };
+		8391A8FB27DB5BED00B5C698 /* ParentHomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8FA27DB5BED00B5C698 /* ParentHomeScreenView.swift */; };
 		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,7 @@
 		8391A8F227DA2DC400B5C698 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8391A8F627DA2DEE00B5C698 /* TeacherHomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHomeScreenView.swift; sourceTree = "<group>"; };
 		8391A8F827DA2DFD00B5C698 /* TabViewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewView.swift; sourceTree = "<group>"; };
+		8391A8FA27DB5BED00B5C698 /* ParentHomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentHomeScreenView.swift; sourceTree = "<group>"; };
 		83D5016827CF75480083AEE7 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -234,6 +236,7 @@
 			children = (
 				8391A8EF27DA2DB000B5C698 /* HomeScreenView.swift */,
 				8391A8F627DA2DEE00B5C698 /* TeacherHomeScreenView.swift */,
+				8391A8FA27DB5BED00B5C698 /* ParentHomeScreenView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 			files = (
 				6AC078E527CF8ABD0048F0B1 /* AppDelegate.swift in Sources */,
 				8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */,
+				8391A8FB27DB5BED00B5C698 /* ParentHomeScreenView.swift in Sources */,
 				8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */,
 				8348592A27CF912E009D8A51 /* FontSizes.swift in Sources */,
 				8348592027CF8827009D8A51 /* LoginOptions.swift in Sources */,
