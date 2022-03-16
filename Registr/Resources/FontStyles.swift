@@ -49,4 +49,10 @@ extension Text {
         self.foregroundColor(Resources.Color.Colors.lightMint)
             .font(.custom("Poppins-Medium", size: Resources.FontSize.body))
     }
+    
+    /// Color: darkBlue, FontSize: 14pt
+    func darkBlueBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.darkBlue)
+            .font(.custom("Poppins-Medium", size: Resources.FontSize.body))
+    }
 }

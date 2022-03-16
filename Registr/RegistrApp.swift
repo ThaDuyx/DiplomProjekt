@@ -9,6 +9,11 @@ import SwiftUI
 
 @main
 struct RegistrApp: App {
+    
+    init() {
+        NavigationAndTabbarAppearance.configureAppearance()
+    }
+    
     var body: some Scene {
         WindowGroup {
             TabViewView()
