@@ -49,9 +49,11 @@ struct TeacherHomeScreenView: View {
 
 struct TaskRow: View {
     var body: some View {
-        Text("Placeholder text - Student name")
-            .subTitleTextStyle()
-            .lineLimit(1)
+        NavigationLink(destination: StudentAbsenceView()) {
+            Text("Placeholder text - Student name")
+                .subTitleTextStyle()
+                .lineLimit(1)
+        }
     }
 }
 

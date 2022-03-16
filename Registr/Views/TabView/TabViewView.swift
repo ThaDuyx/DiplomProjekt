@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TabViewView: View {
-    @State private var role: String = "parent"
+    @State private var role: String = ""
     
     var body: some View {
         TabView {
