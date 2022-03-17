@@ -42,7 +42,8 @@ class RegistrationManager: ObservableObject {
             }
     }
     
-    func fetchClassNames() {
+    // Retrieves every class name
+    func fetchClasses() {
         db
             .collection("fb_classes_path".localize)
             .getDocuments { querySnapshot, err in
@@ -56,6 +57,7 @@ class RegistrationManager: ObservableObject {
             }
     }
     
+    // Retrieves all the students' data from a given class
     func fetchStudents(className: String) {
         db
             .collection("fb_classes_path".localize)
@@ -85,7 +87,7 @@ class RegistrationManager: ObservableObject {
             }
     }
     
-    func saveRegistrations() {
+    func saveRegistrations(className: String) {
         if !registrations.isEmpty {
             // Get new write batch
             let batch = db.batch()
@@ -127,6 +129,7 @@ class RegistrationManager: ObservableObject {
         }
     }
     
+    // Retrieving the current date 
     func getFormattedCurrentDate() -> String {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
