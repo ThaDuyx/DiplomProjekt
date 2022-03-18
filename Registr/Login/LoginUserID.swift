@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct LoginUserID: View {
-    @State private var userID: String = ""
+    @State private var userName: String = "teacher@test.com"
+    
     var body: some View {
         ZStack {
             Resources.BackgroundGradient.backgroundGradient
@@ -23,7 +24,7 @@ struct LoginUserID: View {
                         Text("user_id")
                             .primaryHeaderTextStyle()
                             .frame(width: 280, alignment: .leading)
-                        TextField("user_id_field_text".localize, text: $userID)
+                        TextField("user_id_field_text".localize, text: $userName)
                             .frame(width: 265, height: 40)
                             .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                             .background(RoundedRectangle(cornerRadius: 10).fill(Resources.Color.Colors.white))
@@ -31,7 +32,7 @@ struct LoginUserID: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Resources.Color.Colors.darkPurple, lineWidth: 1))
                         
-                        NavigationLink(destination: LoginPassword()) {
+                        NavigationLink(destination: LoginPassword(userName: $userName.wrappedValue)) {
                             Text("next_view")
                         }
                         .frame(alignment: .center)

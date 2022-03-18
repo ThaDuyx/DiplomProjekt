@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct LoginPassword: View {
-    @State private var userID: String = ""
+    @State private var password: String = "test1234"
     @State private var isPresented = false
+    @State private var showActivity = false
+    var userName: String
 
     var body: some View {
         ZStack {
@@ -25,7 +27,7 @@ struct LoginPassword: View {
                         Text("password")
                             .primaryHeaderTextStyle()
                             .frame(width: 280, alignment: .leading)
-                        TextField("password_field_text".localize, text: $userID)
+                        SecureField("password_field_text".localize, text: $password)
                             .frame(width: 265, height: 40)
                             .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                             .background(RoundedRectangle(cornerRadius: 10).fill(Resources.Color.Colors.white))
@@ -33,11 +35,27 @@ struct LoginPassword: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Resources.Color.Colors.darkPurple, lineWidth: 1))
                         Button("login") {
-                            isPresented.toggle()
+                            showActivity = true
+                            AuthenticationManager.shared.signIn(email: userName, password: password, completion: { success in
+                                if success {
+                                    showActivity = false
+                                    print(success)
+                                    isPresented.toggle()
+                                } else {
+                                    showActivity = false
+                                    // TODO: Present error Message || View
+                                }
+                            })
                         }
                         .fullScreenCover(isPresented: $isPresented, content: OnboardingControllerFlow.init)
                         .frame(alignment: .center)
                         .buttonStyle(Resources.CustomButtonStyle.SmallFrontPageButtonStyle())
+                        if showActivity {
+                            ProgressView()
+                                .foregroundColor(Resources.Color.Colors.darkBlue)
+                        }
+                        //Toggle("Hide", isOn: $isHidden)
+                        
                         Spacer()
                             .frame(height: 200)
                     }
@@ -51,6 +69,6 @@ struct LoginPassword: View {
 
 struct LoginPassword_Previews: PreviewProvider {
     static var previews: some View {
-        LoginPassword()
+        LoginPassword(userName: "thisisme")
     }
 }

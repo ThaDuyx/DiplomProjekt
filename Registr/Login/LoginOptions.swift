@@ -16,11 +16,15 @@ struct LoginOptions: View {
                 VStack(spacing: 40) {
                     NavigationLink(destination: LoginUserID()) {
                         Text("parent_login")
-                    }
+                    }.simultaneousGesture(TapGesture().onEnded{
+                        AuthenticationManager.shared.loginSelection = .parent
+                    })
                     .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
                     NavigationLink(destination: LoginUserID()) {
                         Text("school_login")
-                    }
+                    }.simultaneousGesture(TapGesture().onEnded{
+                        AuthenticationManager.shared.loginSelection = .school
+                    })
                     .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
                     Spacer()
                         .frame(height: 200)

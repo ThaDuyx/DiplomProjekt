@@ -9,16 +9,23 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
-enum signInType{
+enum signInType {
     case parent
     case school
+}
+
+enum schoolRole {
+    case teacher
+    case headmaster
 }
 
 class AuthenticationManager {
     
     static let shared = AuthenticationManager()
     
-    func signIn(email: String, password: String, type: signInType)
+    var loginSelection: signInType?
+    
+    func signIn(email: String, password: String, completion: @escaping (Bool) -> ())
     {
         // TODO: --- Add View change ---
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
@@ -32,7 +39,7 @@ class AuthenticationManager {
                     
                     // Retrieve data from Firestore parent collection
                     let db = Firestore.firestore()
-                    switch type {
+                    switch self.loginSelection {
                     case .parent:
                         let docRef = db.collection("fb_parent_path".localize).document(id)
                         docRef.getDocument { (document, error) in
@@ -43,10 +50,12 @@ class AuthenticationManager {
                                 UserManager.shared.fetchChildren(parentID: id) { children in
                                     let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, children: children)
                                     UserManager.shared.user = userLoggedIn
+                                    completion(true)
                                 }
                                 
                             } else {
                                 print("Document does not exist")
+                                completion(false)
                             }
                         }
                         
@@ -56,13 +65,20 @@ class AuthenticationManager {
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists, let data = document.data() {
                                 let name = data["name"] as? String ?? "nil"
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .teacher, children: nil)
+                                let roleData = data["role"] as? Bool ?? false
+                                let role: Role = roleData ? .headmaster : .teacher
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: role, children: nil)
                                 UserManager.shared.user = userLoggedIn
+                                completion(true)
                                 
                             } else {
                                 print("Document does not exist")
+                                completion(false)
                             }
                         }
+                    case .none:
+                        print("Something went wrong")
+                        completion(false)
                     }
                 }
             }
