@@ -41,42 +41,42 @@ struct StudentClassListView: View {
                 ZStack {
                     Resources.BackgroundGradient.backgroundGradient
                         .ignoresSafeArea()
-                    HStack {
+                    VStack {
                         Button {
-                            studentAbsenceState = "F"
+                            studentAbsenceState = "FS"
                             students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
-                            Text("For sent")
+                            Text("For sent - (FS)")
                         }
-                        .buttonStyle(Resources.CustomButtonStyle.ActionButtonStyle())
+                        .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
 
                         Button {
                             studentAbsenceState = "U"
                             students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
-                            Text("Ulovligt")
+                            Text("Ulovligt - (U)")
                         }
-                        .buttonStyle(Resources.CustomButtonStyle.ActionButtonStyle())
+                        .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
 
                         Button {
                             studentAbsenceState = "S"
                             students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
-                            Text("Syg")
+                            Text("Sygdom - (S)")
                         }
-                        .buttonStyle(Resources.CustomButtonStyle.ActionButtonStyle())
+                        .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
 
                         Button {
                             studentAbsenceState = ""
                             students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
-                            Text("Ryd")
+                            Text("Ryd felt")
                         }
-                        .buttonStyle(Resources.CustomButtonStyle.ActionButtonStyle())
+                        .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
                     }
                 }
                 .ignoresSafeArea()
