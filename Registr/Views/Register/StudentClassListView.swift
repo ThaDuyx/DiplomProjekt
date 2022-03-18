@@ -9,10 +9,11 @@ import SwiftUI
 
 struct StudentClassListView: View {
     @State var studentState: String = ""
-    @State var selectedStudent: Student = Student(id: "", name: "", absenceState: "")
+    @State var selectedStudent: Student = Student(id: 0, name: "", absenceState: "")
     @State var showSheet: Bool = false
+    @State var studentIndex: Int = 0
     
-    @ObservedObject var students: Students = Students()
+    @ObservedObject var students = Students()
     
     var body: some View {
         ZStack{
@@ -20,8 +21,7 @@ struct StudentClassListView: View {
                 .ignoresSafeArea()
             Form {
                 Section {
-                    ForEach(0..<students.students.count) { index in
-                        let _ = print("\(students.students[index].id) this is a list of students: \(students.students[index].absenceState)")
+                    ForEach(0..<students.students.count, id: \.self) { index in
                         StudentSection(
                             index: "\(index+1)",
                             name: students.students[index].name,
@@ -32,7 +32,9 @@ struct StudentClassListView: View {
                                     studentState = ""
                                 }
                                 selectedStudent = students.students[index]
+                                studentIndex = index
                                 showSheet.toggle()
+                                print("The absencestate is: \(students.students[index].absenceState)")
                             }
                     }
                 }
@@ -45,21 +47,21 @@ struct StudentClassListView: View {
                     HStack {
                         Button {
                             studentState = "F"
-                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState)
+                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("For sent")
                         }
                         Button {
                             studentState = "U"
-                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState)
+                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("Ulovligt")
                         }
                         Button {
                             studentState = "S"
-                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState)
+                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("Syg")
