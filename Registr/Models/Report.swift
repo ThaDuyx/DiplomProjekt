@@ -14,6 +14,7 @@ struct Report: Codable {
     let parentID: String
     let studentName: String
     let studentID: String
+    let className: String
     let date: Date
     let description: String?
     let reason: String

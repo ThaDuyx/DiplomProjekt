@@ -38,8 +38,13 @@ class AuthenticationManager {
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists, let data = document.data() {
                                 let name = data["name"] as? String ?? "nil"
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, children: nil, favorites: nil)
-                                UserManager.shared.user = userLoggedIn
+                                
+                                // Retrieving the parents' children
+                                UserManager.shared.fetchChildren(parentID: id) { children in
+                                    let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, children: children)
+                                    UserManager.shared.user = userLoggedIn
+                                }
+                                
                             } else {
                                 print("Document does not exist")
                             }
@@ -51,7 +56,7 @@ class AuthenticationManager {
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists, let data = document.data() {
                                 let name = data["name"] as? String ?? "nil"
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .teacher, children: nil, favorites: nil)
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .teacher, children: nil)
                                 UserManager.shared.user = userLoggedIn
                                 
                             } else {

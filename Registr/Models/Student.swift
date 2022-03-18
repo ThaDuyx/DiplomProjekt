@@ -8,7 +8,9 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Student {
+struct Student: Codable, Identifiable {
     @DocumentID var id: String?
     let name: String
+    let className: String
+    let email: String
 }
