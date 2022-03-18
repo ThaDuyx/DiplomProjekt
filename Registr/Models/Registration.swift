@@ -12,5 +12,6 @@ struct Registration: Codable {
     @DocumentID var id: String?
     let name: String
     let reason: String?
+    let date: String
     var validation: Bool = false
 }
