@@ -7,29 +7,12 @@
 
 import SwiftUI
 
-// This is for testing
-struct Student: Identifiable {
-    var id: Int
-    var name: String
-    @State var absenceState: String
-}
-
 struct StudentClassListView: View {
     @State var studentState: String = ""
-    @State var listIndex: Int = 0
+    @State var selectedStudent: Student = Student(id: "", name: "", absenceState: "")
     @State var showSheet: Bool = false
     
-    @State var students = [
-        Student(id: 1, name: "Simon Andersen", absenceState: ""),
-        Student(id: 2, name: "Alice Andersen", absenceState: ""),
-        Student(id: 3, name: "Bob Andersen", absenceState: ""),
-        Student(id: 4, name: "Charlie Andersen", absenceState: ""),
-        Student(id: 5, name: "Christoffer Andersen", absenceState: ""),
-        Student(id: 6, name: "Søren Andersen", absenceState: ""),
-        Student(id: 7, name: "Peter Andersen", absenceState: ""),
-        Student(id: 8, name: "Simone Andersen", absenceState: ""),
-        Student(id: 9, name: "Sarah Andersen", absenceState: "")
-    ]
+    @ObservedObject var students: Students = Students()
     
     var body: some View {
         ZStack{
@@ -37,11 +20,18 @@ struct StudentClassListView: View {
                 .ignoresSafeArea()
             Form {
                 Section {
-                    ForEach(0..<students.count) { index in
-                        StudentSection(index: "\(index+1)", name: students[index].name, absenceState: absenceStringState(studentID: listIndex, student: students[index]))
+                    ForEach(0..<students.students.count) { index in
+                        let _ = print("\(students.students[index].id) this is a list of students: \(students.students[index].absenceState)")
+                        StudentSection(
+                            index: "\(index+1)",
+                            name: students.students[index].name,
+                            absenceState: students.students[index].absenceState
+                        )
                             .onTapGesture {
-                                students[index].absenceState = studentState
-                                listIndex = students[index].id
+                                if !studentState.isEmpty {
+                                    studentState = ""
+                                }
+                                selectedStudent = students.students[index]
                                 showSheet.toggle()
                             }
                     }
@@ -55,18 +45,21 @@ struct StudentClassListView: View {
                     HStack {
                         Button {
                             studentState = "F"
+                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState)
                             showSheet.toggle()
                         } label: {
                             Text("For sent")
                         }
                         Button {
                             studentState = "U"
+                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState)
                             showSheet.toggle()
                         } label: {
                             Text("Ulovligt")
                         }
                         Button {
                             studentState = "S"
+                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState)
                             showSheet.toggle()
                         } label: {
                             Text("Syg")
@@ -78,18 +71,6 @@ struct StudentClassListView: View {
                 showSheet.toggle()
             }
         }
-    }
-}
-
-private extension StudentClassListView {
-    func absenceStringState(studentID: Int, student: Student) -> String {
-        
-        var string = ""
-        if studentID == student.id {
-            string = studentState
-            student.absenceState = string
-        }
-        return string
     }
 }
 
