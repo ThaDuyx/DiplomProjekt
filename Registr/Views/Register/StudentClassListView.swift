@@ -9,26 +9,26 @@ import SwiftUI
 
 // This is for testing
 struct Student: Identifiable {
-    var id = UUID()
+    var id: Int
     var name: String
-    var absenceState: String
+    @State var absenceState: String
 }
 
 struct StudentClassListView: View {
-    @State private var studentState: String = ""
-    @State private var listIndex = UUID()
-    @State private var showSheet: Bool = false
+    @State var studentState: String = ""
+    @State var listIndex: Int = 0
+    @State var showSheet: Bool = false
     
     @State var students = [
-        Student(name: "Simon Andersen", absenceState: ""),
-        Student(name: "Alice Andersen", absenceState: ""),
-        Student(name: "Bob Andersen", absenceState: ""),
-        Student(name: "Charlie Andersen", absenceState: ""),
-        Student(name: "Christoffer Andersen", absenceState: ""),
-        Student(name: "Søren Andersen", absenceState: ""),
-        Student(name: "Peter Andersen", absenceState: ""),
-        Student(name: "Simone Andersen", absenceState: ""),
-        Student(name: "Sarah Andersen", absenceState: "")
+        Student(id: 1, name: "Simon Andersen", absenceState: ""),
+        Student(id: 2, name: "Alice Andersen", absenceState: ""),
+        Student(id: 3, name: "Bob Andersen", absenceState: ""),
+        Student(id: 4, name: "Charlie Andersen", absenceState: ""),
+        Student(id: 5, name: "Christoffer Andersen", absenceState: ""),
+        Student(id: 6, name: "Søren Andersen", absenceState: ""),
+        Student(id: 7, name: "Peter Andersen", absenceState: ""),
+        Student(id: 8, name: "Simone Andersen", absenceState: ""),
+        Student(id: 9, name: "Sarah Andersen", absenceState: "")
     ]
     
     var body: some View {
@@ -38,13 +38,11 @@ struct StudentClassListView: View {
             Form {
                 Section {
                     ForEach(0..<students.count) { index in
-                       let _ = print("The first time: \(students)")
-                        StudentSection(index: "\(index+1)", name: students[index].name, absenceState: absenceStringState(studentID: students[index].id, studentAbsenceState: students[index].absenceState))
+                        StudentSection(index: "\(index+1)", name: students[index].name, absenceState: absenceStringState(studentID: listIndex, student: students[index]))
                             .onTapGesture {
-                                studentState = students[index].absenceState
+                                students[index].absenceState = studentState
                                 listIndex = students[index].id
                                 showSheet.toggle()
-                                print("The second time: \(students)")
                             }
                     }
                 }
@@ -57,7 +55,6 @@ struct StudentClassListView: View {
                     HStack {
                         Button {
                             studentState = "F"
-                            print("The studentState is now: \(studentState)")
                             showSheet.toggle()
                         } label: {
                             Text("For sent")
@@ -78,24 +75,21 @@ struct StudentClassListView: View {
                 }
                 .ignoresSafeArea()
             } onEnd: {
-                print("on dismiss")
+                showSheet.toggle()
             }
         }
     }
 }
 
 private extension StudentClassListView {
-    func absenceStringState(studentID: UUID, studentAbsenceState: String) -> String {
+    func absenceStringState(studentID: Int, student: Student) -> String {
         
-        var absenceState = ""
-
-        if studentID == listIndex {
-            absenceState = studentState
-        } else if !studentAbsenceState.isEmpty {
-            return studentAbsenceState
+        var string = ""
+        if studentID == student.id {
+            string = studentState
+            student.absenceState = string
         }
-        
-        return absenceState
+        return string
     }
 }
 
