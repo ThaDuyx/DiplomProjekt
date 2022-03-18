@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct StudentClassListView: View {
-    @State var studentState: String = ""
-    @State var selectedStudent: Student = Student(id: 0, name: "", absenceState: "")
     @State var showSheet: Bool = false
+    @State var studentAbsenceState: String = ""
     @State var studentIndex: Int = 0
     
     @ObservedObject var students = Students()
@@ -28,13 +27,11 @@ struct StudentClassListView: View {
                             absenceState: students.students[index].absenceState
                         )
                             .onTapGesture {
-                                if !studentState.isEmpty {
-                                    studentState = ""
+                                if !studentAbsenceState.isEmpty {
+                                    studentAbsenceState = ""
                                 }
-                                selectedStudent = students.students[index]
                                 studentIndex = index
                                 showSheet.toggle()
-                                print("The absencestate is: \(students.students[index].absenceState)")
                             }
                     }
                 }
@@ -46,26 +43,40 @@ struct StudentClassListView: View {
                         .ignoresSafeArea()
                     HStack {
                         Button {
-                            studentState = "F"
-                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState, index: studentIndex)
+                            studentAbsenceState = "F"
+                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("For sent")
                         }
+                        .buttonStyle(Resources.CustomButtonStyle.ActionButtonStyle())
+
                         Button {
-                            studentState = "U"
-                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState, index: studentIndex)
+                            studentAbsenceState = "U"
+                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("Ulovligt")
                         }
+                        .buttonStyle(Resources.CustomButtonStyle.ActionButtonStyle())
+
                         Button {
-                            studentState = "S"
-                            students.absenceStringState(studentID: selectedStudent.id, student: selectedStudent, studentState: studentState, index: studentIndex)
+                            studentAbsenceState = "S"
+                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("Syg")
                         }
+                        .buttonStyle(Resources.CustomButtonStyle.ActionButtonStyle())
+
+                        Button {
+                            studentAbsenceState = ""
+                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
+                            showSheet.toggle()
+                        } label: {
+                            Text("Ryd")
+                        }
+                        .buttonStyle(Resources.CustomButtonStyle.ActionButtonStyle())
                     }
                 }
                 .ignoresSafeArea()

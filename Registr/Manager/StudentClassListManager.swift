@@ -27,11 +27,7 @@ class Students: ObservableObject {
         Student(id: 9, name: "Sarah Andersen", absenceState: "")
     ]
     
-    func absenceStringState(studentID: Int, student: Student, studentState: String, index: Int) {
-        var string = ""
-        if studentID == student.id {
-            string = studentState
-            students[index].absenceState = string
-        }
+    func absenceStringState(studentState: String, index: Int) {
+        students[index].absenceState = studentState
     }
 }

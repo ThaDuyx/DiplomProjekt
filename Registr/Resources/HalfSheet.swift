@@ -70,16 +70,10 @@ class CustomHostingController<Content: View>: UIHostingController<Content> {
         
         view.backgroundColor = .clear
         
-        if #available(iOS 15.0, *) {
-            if let presentationController = presentationController as? UISheetPresentationController {
-                presentationController.detents = [
-                    .medium(),
-                    .large()
-                ]
-                presentationController.prefersGrabberVisible = true
-            }
-        } else {
-            return
+        if let presentationController = presentationController as? UISheetPresentationController {
+            presentationController.detents = [
+                .medium()
+            ]
         }
     }
 }
