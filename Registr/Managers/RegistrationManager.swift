@@ -17,6 +17,7 @@ class RegistrationManager: ObservableObject {
     
     //TODO: --- We need to implement recieving class string in the method from the view - We can make the date logic from this manager class ---
     func fetchRegistrations() {
+        /// Line 21 will be used later on in the project
         //let currentDate = getFormattedCurrentDate()
         db
             .collection("classes")
@@ -74,7 +75,6 @@ class RegistrationManager: ObservableObject {
                                 do {
                                     if let student = try data.data(as: Student.self) {
                                         self.students.append(student)
-                                        print(student)
                                     }
                                 }
                                 catch {
