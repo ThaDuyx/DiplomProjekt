@@ -1,3 +1,4 @@
+//
 //  LoginOptions.swift
 //  Registr
 //

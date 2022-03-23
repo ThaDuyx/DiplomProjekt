@@ -5,9 +5,69 @@
   Created by Christoffer Detlef on 02/03/2022.
   
 */
-
+// MARK: - App Name
 "application_name" = "Registr";
+// MARK: - Login flow
 "parent_login" = "Forældre login";
 "school_login" = "Skole login";
 "user_id" = "BrugerID";
 "next_view" = "Næste";
+"password" = "Kodeord";
+"login" = "Log ind";
+"password_field_text" = "Indtast dit kodeord";
+"user_id_field_text" = "Indtast dit BrugerID";
+
+
+// MARK: - Onboarding flow page 1
+"onboard_flow_page_one_title" = "Registr skal bruge adgang til din data";
+"onboard_flow_page_one_description" = "For at appen kan fungere som den skal, så skal den bruge adgang til din data. Du skal derfor give appen lov til at tilgå data om dig. Dette kan til hvert et tidspunkt ændres.";
+"onboard_flow_page_one_button_text" = "Tillad adgang";
+
+// MARK: - Onboarding flow page 2
+"onboard_flow_page_two_title" = "Tillad notifikationer";
+"onboard_flow_page_two_description" = "For at få beskeder når en forældre har registreret fravær fra sit barn, eller har besvaret på din fraværsregistrering, så at tillad appen må sende dig notifikationer. ";
+"onboard_flow_page_two_button_text" = "Tillad notifikationer";
+
+// MARK: - Onboarding flow page 3
+"onboard_flow_page_three_title" = "Klar til brug";
+"onboard_flow_page_three_description" = "Du har nu udfyldt alle nødvendige konfigarationer af app’en, og den er nu klar til at blive brugt.";
+"onboard_flow_page_three_button_text" = "Start appen";
+
+// MARK: - Errors
+"general_error" = "Something went wrong. Error description: ";
+
+// MARK: - Firebase paths
+"fb_parent_path" = "parent";
+
+"fb_employee_path" = "employees";
+
+"fb_date_path" = "registrationDates";
+
+"fb_registrations_path" = "registrations";
+
+"fb_children_path" = "children";
+
+"fb_students_path" = "students";
+
+"fb_classes_path" = "classes";
+
+"fb_absense_path" = "absense";
+
+
+// MARK: - Parent Home Screen
+"parent_home_name" = "Navn:";
+"parent_home_class" = "Klasse:";
+"parent_home_email" = "Email:";
+
+// MARK: - Student Absence
+"student_absence_name" = "Elev";
+"student_absence_reason" = "Årsag";
+"student_absence_date" = "Dato";
+"student_absence_description" = "Beskrivelse";
+
+// Mark: - Student class list
+"student_list_absence_description %@" = "Vælg årsag for %@ fravær";
+"student_list_absence_late" = "For sent - (FS)";
+"student_list_absence_illegal" = "Ulovligt - (U)";
+"student_list_absence_sick" = "Sygdom - (S)";
+"student_list_absence_clear" = "Ryd felt";

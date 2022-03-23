@@ -1,3 +1,4 @@
+//
 //  LoginUserID.swift
 //  Registr
 //
@@ -8,7 +9,7 @@ import SwiftUI
 
 struct LoginUserID: View {
     @State private var userName: String = "teacher@test.com"
-
+    
     var body: some View {
         ZStack {
             Resources.BackgroundGradient.backgroundGradient
@@ -30,7 +31,7 @@ struct LoginUserID: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Resources.Color.Colors.darkPurple, lineWidth: 1))
-
+                        
                         NavigationLink(destination: LoginPassword(userName: $userName.wrappedValue)) {
                             Text("next_view")
                         }

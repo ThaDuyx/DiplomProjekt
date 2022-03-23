@@ -74,8 +74,10 @@ extension Resources.CustomButtonStyle {
                 .font(.custom("Poppins-Light", size: Resources.FontSize.subTitle))
                 .foregroundColor(Resources.Color.Colors.darkPurple)
                 .background(Color.clear)
-                .border(Resources.Color.Colors.darkPurple, width: 1)
-                .cornerRadius(5)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Resources.Color.Colors.darkPurple, lineWidth: 1)
+                )
         }
     }
     
