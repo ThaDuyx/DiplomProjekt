@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TabViewView: View {
-    @State private var role: String = ""
     @State private var userRole = UserManager.shared.user?.role
     
     var body: some View {
@@ -46,12 +45,8 @@ struct TabViewView: View {
                         Text("Start")
                     }
             case .none:
-                ParentHomeScreenView()
-                    .tabItem {
-                        Image(systemName: "house")
-                        Text("Start")
-                    }
-
+                // Missing error handling here.
+                let _ = print("Something went wrong")
             }
         }
         .accentColor(Resources.Color.Colors.darkBlue)

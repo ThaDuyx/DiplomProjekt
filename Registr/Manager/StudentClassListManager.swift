@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// This is for testing
+// This is for testing - CAD
 struct StudentTest {
     let id: Int
     var name: String
