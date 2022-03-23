@@ -33,6 +33,8 @@ struct LoginOptions: View {
                             .resizable()
                             .edgesIgnoringSafeArea(.all)
                             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+            .navigationTitle("")
+            .navigationBarHidden(true)
         }
     }
 }
