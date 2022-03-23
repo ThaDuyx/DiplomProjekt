@@ -13,15 +13,12 @@ struct RegistrApp: App {
     
     init() {
         NavigationAndTabbarAppearance.configureAppearance()
+        FirebaseApp.configure()
     }
-    
-    init() {
-       FirebaseApp.configure()
-     }
     
     var body: some Scene {
         WindowGroup {
-            TabViewView()
+            LoginOptions()
         }
     }
 }
