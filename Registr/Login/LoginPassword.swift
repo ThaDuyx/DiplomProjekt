@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LoginPassword: View {
     @State private var password: String = "test1234"
-    @State private var isPresented = false
     @State private var showActivity = false
     var userName: String
 
@@ -40,14 +39,19 @@ struct LoginPassword: View {
                                 if success {
                                     showActivity = false
                                     print(success)
-                                    isPresented.toggle()
+                                    let window = UIApplication
+                                        .shared
+                                        .connectedScenes
+                                        .flatMap{( $0 as? UIWindowScene)?.windows ?? [] }
+                                        .first { $0.isKeyWindow }
+                                    window?.rootViewController = UIHostingController(rootView: OnboardingControllerFlow())
+                                    
                                 } else {
                                     showActivity = false
                                     // TODO: Present error Message || View
                                 }
                             })
                         }
-                        .fullScreenCover(isPresented: $isPresented, content: OnboardingControllerFlow.init)
                         .frame(alignment: .center)
                         .buttonStyle(Resources.CustomButtonStyle.SmallFrontPageButtonStyle())
                         if showActivity {

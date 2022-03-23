@@ -17,7 +17,6 @@ struct NavigationAndTabbarAppearance {
         
         UINavigationBar.appearance().standardAppearance = navigationAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navigationAppearance
-        UINavigationBar.appearance().backgroundColor = UIColor(Resources.Color.Colors.lightMint)
         UINavigationBar.appearance().isOpaque = true
         
         let tabBarAppearance = UITabBarAppearance(barAppearance: UIBarAppearance())
@@ -27,7 +26,6 @@ struct NavigationAndTabbarAppearance {
         
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
-        UITabBar.appearance().backgroundColor = UIColor(Resources.Color.Colors.mediumMint)
         UITabBar.appearance().isOpaque = true
     }
 }

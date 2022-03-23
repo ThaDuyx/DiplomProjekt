@@ -35,6 +35,7 @@ struct LoginOptions: View {
                             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             .navigationTitle("")
             .navigationBarHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
