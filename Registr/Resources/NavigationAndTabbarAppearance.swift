@@ -16,9 +16,7 @@ struct NavigationAndTabbarAppearance {
         navigationAppearance.shadowColor = UIColor.clear
         
         UINavigationBar.appearance().standardAppearance = navigationAppearance
-        if #available(iOS 15.0, *) {
-            UINavigationBar.appearance().scrollEdgeAppearance = navigationAppearance
-        }
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationAppearance
         UINavigationBar.appearance().backgroundColor = UIColor(Resources.Color.Colors.lightMint)
         UINavigationBar.appearance().isOpaque = true
         
@@ -28,9 +26,7 @@ struct NavigationAndTabbarAppearance {
         tabBarAppearance.shadowColor = UIColor.clear
         
         UITabBar.appearance().standardAppearance = tabBarAppearance
-        if #available(iOS 15.0, *) {
-            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
-        }
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         UITabBar.appearance().backgroundColor = UIColor(Resources.Color.Colors.mediumMint)
         UITabBar.appearance().isOpaque = true
     }

@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct RegisterView: View {
-    // To make the List background transparent, so the gradient background can be used.
+
     init() {
+        // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
     }
     
