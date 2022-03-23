@@ -58,7 +58,9 @@ struct ClassStack: View {
                 HStack {
                     Image(systemName: "star")
                         .frame(alignment: .leading)
+                        .foregroundColor(.black)
                     Text("0.X")
+                        .darkBodyTextStyle()
                         .frame(maxWidth: .infinity, alignment: .center)
                     Image(systemName: "ellipsis")
                         .foregroundColor(.black)
