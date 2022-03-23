@@ -23,3 +23,10 @@
 "student_absence_reason" = "Årsag";
 "student_absence_date" = "Dato";
 "student_absence_description" = "Beskrivelse";
+
+// Mark: - Student class list
+"student_list_absence_description %@" = "Vælg årsag for %@ fravær";
+"student_list_absence_late" = "For sent - (FS)";
+"student_list_absence_illegal" = "Ulovligt - (U)";
+"student_list_absence_sick" = "Sygdom - (S)";
+"student_list_absence_clear" = "Ryd felt";

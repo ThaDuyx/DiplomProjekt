@@ -11,6 +11,7 @@ struct StudentClassListView: View {
     @State var showSheet: Bool = false
     @State var studentAbsenceState: String = ""
     @State var studentIndex: Int = 0
+    @State private var studentName: String = ""
     
     @ObservedObject var students = Students()
     
@@ -19,6 +20,27 @@ struct StudentClassListView: View {
             Resources.BackgroundGradient.backgroundGradient
                 .ignoresSafeArea()
             Form {
+                Section {
+                    HStack(alignment: .center) {
+                        Spacer()
+                        VStack {
+                            // Placeholder text
+                            Text("6.x")
+                                .darkBodyTextStyle()
+                            Text("Fre. d. - 10/02/2022")
+                                .darkBodyTextStyle()
+                        }
+                        Spacer()
+                        Button {
+                            print("Saved students absence")
+                        } label: {
+                            Image(systemName: "checkmark.circle")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                        }
+                    }
+                }
+                .listRowBackground(Color.clear)
                 Section {
                     ForEach(0..<students.students.count, id: \.self) { index in
                         StudentSection(
@@ -30,6 +52,8 @@ struct StudentClassListView: View {
                                 if !studentAbsenceState.isEmpty {
                                     studentAbsenceState = ""
                                 }
+
+                                studentName = students.students[index].name
                                 studentIndex = index
                                 showSheet.toggle()
                             }
@@ -37,17 +61,22 @@ struct StudentClassListView: View {
                 }
                 .listRowBackground(Color.clear)
             }
+            .onAppear(perform: {
+                UITableView.appearance().contentInset.top = -35
+            })
             .halfSheet(showSheet: $showSheet) {
                 ZStack {
                     Resources.BackgroundGradient.backgroundGradient
                         .ignoresSafeArea()
                     VStack {
+                        Text("student_list_absence_description \(studentName)")
+                            .darkBodyTextStyle()
                         Button {
                             studentAbsenceState = "FS"
                             students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
-                            Text("For sent - (FS)")
+                            Text("student_list_absence_late")
                         }
                         .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
 
@@ -56,7 +85,7 @@ struct StudentClassListView: View {
                             students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
-                            Text("Ulovligt - (U)")
+                            Text("student_list_absence_illegal")
                         }
                         .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
 
@@ -65,7 +94,7 @@ struct StudentClassListView: View {
                             students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
-                            Text("Sygdom - (S)")
+                            Text("student_list_absence_sick")
                         }
                         .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
 
@@ -74,7 +103,7 @@ struct StudentClassListView: View {
                             students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
-                            Text("Ryd felt")
+                            Text("student_list_absence_clear")
                         }
                         .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
                     }
