@@ -10,13 +10,18 @@ import FirebaseCore
 
 @main
 struct RegistrApp: App {
+    
+    init() {
+        NavigationAndTabbarAppearance.configureAppearance()
+    }
+    
     init() {
        FirebaseApp.configure()
      }
     
     var body: some Scene {
         WindowGroup {
-            LoginOptions()
+            TabViewView()
         }
     }
 }
