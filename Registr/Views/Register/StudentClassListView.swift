@@ -20,24 +20,22 @@ struct StudentClassListView: View {
             Resources.BackgroundGradient.backgroundGradient
                 .ignoresSafeArea()
             Form {
-                Section {
-                    HStack(alignment: .center) {
-                        Spacer()
-                        VStack {
-                            // Placeholder text
-                            Text("6.x")
-                                .darkBodyTextStyle()
-                            Text("Fre. d. - 10/02/2022")
-                                .darkBodyTextStyle()
-                        }
-                        Spacer()
-                        Button {
-                            print("Saved students absence")
-                        } label: {
-                            Image(systemName: "checkmark.circle")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                        }
+                HStack(alignment: .center) {
+                    Spacer()
+                    VStack {
+                        // Placeholder text
+                        Text("6.x")
+                            .darkBodyTextStyle()
+                        Text("Fre. d. - 10/02/2022")
+                            .darkBodyTextStyle()
+                    }
+                    Spacer()
+                    Button {
+                        print("Saved students absence")
+                    } label: {
+                        Image(systemName: "checkmark.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
                     }
                 }
                 .listRowBackground(Color.clear)
@@ -61,9 +59,6 @@ struct StudentClassListView: View {
                 }
                 .listRowBackground(Color.clear)
             }
-            .onAppear(perform: {
-                UITableView.appearance().contentInset.top = -35
-            })
             .halfSheet(showSheet: $showSheet) {
                 ZStack {
                     Resources.BackgroundGradient.backgroundGradient
@@ -113,6 +108,8 @@ struct StudentClassListView: View {
                 showSheet.toggle()
             }
         }
+        .navigationTitle("Registrer")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
