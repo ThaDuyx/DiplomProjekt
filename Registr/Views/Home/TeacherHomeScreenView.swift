@@ -9,6 +9,9 @@ import SwiftUI
 
 struct TeacherHomeScreenView: View {
     
+    @ObservedObject var reportManager = ReportManager()
+    @State var favorites = DefaultsManager.shared.favorites
+    
     init() {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
@@ -19,30 +22,22 @@ struct TeacherHomeScreenView: View {
             ZStack {
                 Resources.BackgroundGradient.backgroundGradient
                     .ignoresSafeArea()
-                List {
+                List(favorites, id: \.self) { favorite in
                     Section(
-                        header: Text("Placeholder text - Class")
+                        header: Text(favorite)
                             .boldSubTitleTextStyle()
                     ) {
-                        TaskRow()
-                        TaskRow()
-                        TaskRow()
-                    }
-                    .listRowBackground(Color.clear)
-                    
-                    Section(
-                        header: Text("Placeholder text - Class")
-                            .boldSubTitleTextStyle()
-                    ){
-                        TaskRow()
-                        TaskRow()
-                        TaskRow()
+                        ForEach(reportManager.reports, id: \.self) { report in 
+                            TaskRow()
+                        }
                     }
                     .listRowBackground(Color.clear)
                 }
             }
-            .navigationTitle("Inberettelser")
+            .navigationTitle("Indberettelser")
             .navigationBarTitleDisplayMode(.inline)
+        }.onAppear(){
+            self.reportManager.fetchReports()
         }
     }
 }

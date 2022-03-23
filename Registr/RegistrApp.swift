@@ -14,6 +14,10 @@ struct RegistrApp: App {
     init() {
         NavigationAndTabbarAppearance.configureAppearance()
         FirebaseApp.configure()
+        if DefaultsManager.shared.favorites.isEmpty {
+            let favoriteArray = ["0.x", "1.x"]
+            DefaultsManager.shared.favorites = favoriteArray
+        }
     }
     
     var body: some Scene {

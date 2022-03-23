@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 class ReportManager: ObservableObject {
     
-    @Published var reports: [Report]?
+    @Published var reports = [Report]()
     
     //TODO: --- We need to implement recieving class string in the method from the view ---
     func fetchReports() {
@@ -26,7 +26,7 @@ class ReportManager: ObservableObject {
                     for document in querySnapshot!.documents {
                         do {
                             if let report = try document.data(as: Report.self) {
-                                self.reports?.append(report)
+                                self.reports.append(report)
                                 print(report)
                             }
                         }
