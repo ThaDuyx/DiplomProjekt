@@ -44,14 +44,17 @@
 		8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */; };
 		8348595B27D0C709009D8A51 /* LoginUserID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348595A27D0C709009D8A51 /* LoginUserID.swift */; };
 		8348596127D10C50009D8A51 /* LoginPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348596027D10C50009D8A51 /* LoginPassword.swift */; };
+		836F149F27E35FF200FEFCB3 /* HalfSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F149E27E35FF200FEFCB3 /* HalfSheet.swift */; };
 		8387E78127E1DACD0060C12D /* StudentAbsenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387E78027E1DACD0060C12D /* StudentAbsenceView.swift */; };
 		8387E78727E1FA660060C12D /* NavigationAndTabbarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */; };
+		8387E78927E215BF0060C12D /* StudentClassListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387E78827E215BF0060C12D /* StudentClassListView.swift */; };
 		8391A8EE27DA2DA400B5C698 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8ED27DA2DA400B5C698 /* RegisterView.swift */; };
 		8391A8F027DA2DB000B5C698 /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8EF27DA2DB000B5C698 /* HomeScreenView.swift */; };
 		8391A8F327DA2DC400B5C698 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F227DA2DC400B5C698 /* ProfileView.swift */; };
 		8391A8F727DA2DEE00B5C698 /* TeacherHomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F627DA2DEE00B5C698 /* TeacherHomeScreenView.swift */; };
 		8391A8F927DA2DFD00B5C698 /* TabViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F827DA2DFD00B5C698 /* TabViewView.swift */; };
 		8391A8FB27DB5BED00B5C698 /* ParentHomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8FA27DB5BED00B5C698 /* ParentHomeScreenView.swift */; };
+		83BB1B4327E4BCE7002FF81E /* StudentClassListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B4227E4BCE7002FF81E /* StudentClassListManager.swift */; };
 		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -91,14 +94,17 @@
 		8348593127CFAE1D009D8A51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8348595A27D0C709009D8A51 /* LoginUserID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserID.swift; sourceTree = "<group>"; };
 		8348596027D10C50009D8A51 /* LoginPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPassword.swift; sourceTree = "<group>"; };
+		836F149E27E35FF200FEFCB3 /* HalfSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSheet.swift; sourceTree = "<group>"; };
 		8387E78027E1DACD0060C12D /* StudentAbsenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAbsenceView.swift; sourceTree = "<group>"; };
 		8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAndTabbarAppearance.swift; sourceTree = "<group>"; };
+		8387E78827E215BF0060C12D /* StudentClassListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentClassListView.swift; sourceTree = "<group>"; };
 		8391A8ED27DA2DA400B5C698 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		8391A8EF27DA2DB000B5C698 /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		8391A8F227DA2DC400B5C698 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8391A8F627DA2DEE00B5C698 /* TeacherHomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHomeScreenView.swift; sourceTree = "<group>"; };
 		8391A8F827DA2DFD00B5C698 /* TabViewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewView.swift; sourceTree = "<group>"; };
 		8391A8FA27DB5BED00B5C698 /* ParentHomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentHomeScreenView.swift; sourceTree = "<group>"; };
+		83BB1B4227E4BCE7002FF81E /* StudentClassListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentClassListManager.swift; sourceTree = "<group>"; };
 		83D5016827CF75480083AEE7 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,6 +142,7 @@
 		6A31FD4727CF61B700EFECDD /* Registr */ = {
 			isa = PBXGroup;
 			children = (
+				83BB1B4127E4BCD9002FF81E /* Manager */,
 				8391A8E827DA2D4900B5C698 /* Views */,
 				8348593127CFAE1D009D8A51 /* Info.plist */,
 				8348592227CF8C24009D8A51 /* Resources */,
@@ -178,6 +185,7 @@
 				8348592B27CF92DB009D8A51 /* ButtonStyle.swift */,
 				8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */,
 				8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */,
+				836F149E27E35FF200FEFCB3 /* HalfSheet.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -251,8 +259,17 @@
 			isa = PBXGroup;
 			children = (
 				8391A8ED27DA2DA400B5C698 /* RegisterView.swift */,
+				8387E78827E215BF0060C12D /* StudentClassListView.swift */,
 			);
 			path = Register;
+			sourceTree = "<group>";
+		};
+		83BB1B4127E4BCD9002FF81E /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				83BB1B4227E4BCE7002FF81E /* StudentClassListManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6AC078E527CF8ABD0048F0B1 /* AppDelegate.swift in Sources */,
+				8387E78927E215BF0060C12D /* StudentClassListView.swift in Sources */,
 				8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */,
 				8391A8FB27DB5BED00B5C698 /* ParentHomeScreenView.swift in Sources */,
 				8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */,
@@ -365,8 +383,10 @@
 				8387E78727E1FA660060C12D /* NavigationAndTabbarAppearance.swift in Sources */,
 				8387E78127E1DACD0060C12D /* StudentAbsenceView.swift in Sources */,
 				8348595B27D0C709009D8A51 /* LoginUserID.swift in Sources */,
+				83BB1B4327E4BCE7002FF81E /* StudentClassListManager.swift in Sources */,
 				8348592427CF8C3D009D8A51 /* FontStyles.swift in Sources */,
 				8348592827CF8D1C009D8A51 /* Resources.swift in Sources */,
+				836F149F27E35FF200FEFCB3 /* HalfSheet.swift in Sources */,
 				8391A8F727DA2DEE00B5C698 /* TeacherHomeScreenView.swift in Sources */,
 				8348592627CF8C7F009D8A51 /* Color.swift in Sources */,
 				8391A8F927DA2DFD00B5C698 /* TabViewView.swift in Sources */,
@@ -527,6 +547,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -557,6 +578,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

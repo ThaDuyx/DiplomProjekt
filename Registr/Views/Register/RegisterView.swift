@@ -19,13 +19,25 @@ struct RegisterView: View {
                 Resources.BackgroundGradient.backgroundGradient
                     .ignoresSafeArea()
                 Form {
-                    Section(header: Text("Placeholder text - favorites")) {
+                    Section(
+                        header:
+                            HStack {
+                                Image(systemName: "star")
+                                Text("Placeholder text - favorites")
+                            }
+                    ) {
                         ClassStack()
                         ClassStack()
                     }
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    Section(header: Text("Placeholder text - Class")) {
+                    Section(
+                        header:
+                            HStack {
+                                Image(systemName: "person.3")
+                                Text("Placeholder text - Class")
+                            }
+                    ) {
                         ClassStack()
                     }
                     .listRowBackground(Color.clear)
@@ -40,25 +52,29 @@ struct RegisterView: View {
 
 struct ClassStack: View {
     var body: some View {
-        VStack {
-            ZStack {
-                HStack {
-                    Image(systemName: "star")
-                        .frame(alignment: .leading)
+        NavigationLink(destination: StudentClassListView()) {
+            VStack {
+                ZStack {
+                    HStack {
+                        Image(systemName: "star")
+                            .frame(alignment: .leading)
+                        Spacer()
+                    }
                     Spacer()
+                    HStack {
+                        Text("Placeholder text - class name")
+                            .frame(alignment: .center)
+                    }
+                    .padding(.leading, 20)
                 }
-                Spacer()
-                HStack {
-                    Text("Placeholder text - class name")
-                        .frame(alignment: .center)
-                }
+                .padding()
             }
-            .padding()
-            .overlay(
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color.black, lineWidth: 1)
-            )
         }
+        .padding(.trailing, 20)
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(Color.black, lineWidth: 1)
+        )
         .padding(4)
     }
 }

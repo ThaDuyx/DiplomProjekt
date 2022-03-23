@@ -26,6 +26,12 @@ extension Text {
             .font(.custom("Poppins-Regular", size: Resources.FontSize.subTitle))
     }
     
+    /// Color: lightMint, FontSize: 18pt
+    func lightSubTitleTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.lightMint)
+            .font(.custom("Poppins-Regular", size: Resources.FontSize.subTitle))
+    }
+    
     /// Color: darkPurple, FontSize: 18pt
     func boldSubTitleTextStyle() -> some View {
         self.foregroundColor(Resources.Color.Colors.darkPurple)
