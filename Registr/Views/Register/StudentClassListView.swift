@@ -37,6 +37,7 @@ struct StudentClassListView: View {
                             Image(systemName: "checkmark.circle")
                                 .resizable()
                                 .frame(width: 30, height: 30)
+                                .foregroundColor(Resources.Color.Colors.darkBlue)
                         }
                     }
                 }
@@ -59,6 +60,7 @@ struct StudentClassListView: View {
                             }
                     }
                 }
+                .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
             }
             .onAppear(perform: {

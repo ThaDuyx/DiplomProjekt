@@ -15,6 +15,7 @@ struct TeacherHomeScreenView: View {
     init() {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
+        self.reportManager.fetchReports()
     }
     
     var body: some View {
@@ -22,13 +23,16 @@ struct TeacherHomeScreenView: View {
             ZStack {
                 Resources.BackgroundGradient.backgroundGradient
                     .ignoresSafeArea()
+                
                 List(favorites, id: \.self) { favorite in
                     Section(
                         header: Text(favorite)
                             .boldSubTitleTextStyle()
                     ) {
-                        ForEach(reportManager.reports, id: \.self) { report in 
-                            TaskRow()
+                        ForEach(reportManager.reports, id: \.self) { report in
+                            if report.className == favorite {
+                                TaskRow(report: report)
+                            }
                         }
                     }
                     .listRowBackground(Color.clear)
@@ -36,16 +40,16 @@ struct TeacherHomeScreenView: View {
             }
             .navigationTitle("Indberettelser")
             .navigationBarTitleDisplayMode(.inline)
-        }.onAppear(){
-            self.reportManager.fetchReports()
         }
     }
 }
 
 struct TaskRow: View {
+    let report: Report
+    
     var body: some View {
-        NavigationLink(destination: StudentAbsenceView()) {
-            Text("Placeholder text - Student name")
+        NavigationLink(destination: StudentAbsenceView(report: report)) {
+            Text(report.studentName)
                 .subTitleTextStyle()
                 .lineLimit(1)
         }

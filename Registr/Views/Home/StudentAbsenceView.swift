@@ -11,10 +11,12 @@ struct StudentAbsenceView: View {
     
     @State private var selectedAbsence = "Fravær"
     private var absence = ["Fravær", "Ulovligt", "Forsent"]
+    let report: Report
     
-    init() {
+    init(report: Report) {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
+        self.report = report
     }
     
     var body: some View {
@@ -29,7 +31,7 @@ struct StudentAbsenceView: View {
                     HStack {
                         Image(systemName: "person")
                             .foregroundColor(Resources.Color.Colors.lightMint)
-                        Text("Placeholder text - displays name")
+                        Text(report.studentName + " - " + report.className)
                             .lightBodyTextStyle()
                     }
                 }
@@ -42,7 +44,7 @@ struct StudentAbsenceView: View {
                     HStack {
                         Image(systemName: "person")
                             .foregroundColor(Resources.Color.Colors.lightMint)
-                        Text("Placeholder text - displays reason")
+                        Text(report.reason)
                             .lightBodyTextStyle()
                     }
                 }
@@ -54,7 +56,7 @@ struct StudentAbsenceView: View {
                     HStack {
                         Image(systemName: "person")
                             .foregroundColor(Resources.Color.Colors.lightMint)
-                        Text("Placeholder text - displays date")
+                        Text(report.date.formatted())
                             .lightBodyTextStyle()
                     }
                 }
@@ -66,7 +68,7 @@ struct StudentAbsenceView: View {
                     HStack {
                         Image(systemName: "person")
                             .foregroundColor(Resources.Color.Colors.lightMint)
-                        Text("Placeholder text - limit to 3 lines")
+                        Text(report.description ?? "Ingen beskrivelse")
                             .lightBodyTextStyle()
                             .lineLimit(3)
                     }
@@ -127,7 +129,7 @@ struct StudentAbsenceView: View {
 
 struct StudentAbsenceView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentAbsenceView()
+        StudentAbsenceView(report: Report(id: "Heya", parentName: "Lars Larsen", parentID: "adsfads", studentName: "", studentID: "", className: "", date: Date(), description: "", reason: ""))
             
     }
 }

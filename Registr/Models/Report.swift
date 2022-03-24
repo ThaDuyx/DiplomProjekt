@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Report: Codable, Identifiable {
+struct Report: Codable, Hashable {
     @DocumentID var id: String?
     let parentName: String
     let parentID: String

@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct RegisterView: View {
-
+    @ObservedObject var registrationManager = RegistrationManager()
+    @State var favorites = DefaultsManager.shared.favorites
+    
     init() {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
+        self.registrationManager.fetchClasses()
     }
     
     var body: some View {
@@ -19,7 +22,8 @@ struct RegisterView: View {
             ZStack {
                 Resources.BackgroundGradient.backgroundGradient
                     .ignoresSafeArea()
-                Form {
+                Form() {
+                    // Favorite section
                     Section(
                         header:
                             HStack {
@@ -27,11 +31,17 @@ struct RegisterView: View {
                                 Text("Placeholder text - favorites")
                             }
                     ) {
-                        ClassStack()
-                        ClassStack()
+                        ForEach(registrationManager.classes, id: \.self) { className in
+                            if favorites.contains(className) {
+                                ClassStack(className: className, isFavorite: true)
+                            }
+                        }
                     }
+                    .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    
+                    // Other classes section
                     Section(
                         header:
                             HStack {
@@ -39,8 +49,13 @@ struct RegisterView: View {
                                 Text("Placeholder text - Class")
                             }
                     ) {
-                        ClassStack()
+                        ForEach(registrationManager.classes, id: \.self) { className in
+                            if !favorites.contains(className) {
+                                ClassStack(className: className)
+                            }
+                        }
                     }
+                    .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
@@ -52,18 +67,22 @@ struct RegisterView: View {
 }
 
 struct ClassStack: View {
+    let className: String
+    var isFavorite: Bool = false
+    
     var body: some View {
         NavigationLink(destination: StudentClassListView()) {
             VStack {
                 ZStack {
                     HStack {
-                        Image(systemName: "star")
+                        Image(systemName: isFavorite ? "star.fill" : "star")
                             .frame(alignment: .leading)
+                            .foregroundColor(Resources.Color.Colors.darkBlue)
                         Spacer()
                     }
                     Spacer()
                     HStack {
-                        Text("Placeholder text - class name")
+                        Text(className)
                             .frame(alignment: .center)
                     }
                     .padding(.leading, 20)
