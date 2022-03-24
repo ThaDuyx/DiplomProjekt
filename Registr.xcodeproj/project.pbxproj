@@ -68,6 +68,7 @@
 		8391A8F927DA2DFD00B5C698 /* TabViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F827DA2DFD00B5C698 /* TabViewView.swift */; };
 		8391A8FB27DB5BED00B5C698 /* ParentHomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8FA27DB5BED00B5C698 /* ParentHomeScreenView.swift */; };
 		83BB1B4327E4BCE7002FF81E /* StudentClassListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B4227E4BCE7002FF81E /* StudentClassListManager.swift */; };
+		83BB1B4E27ECA092002FF81E /* SwiftPieChart in Frameworks */ = {isa = PBXBuildFile; productRef = 83BB1B4D27ECA092002FF81E /* SwiftPieChart */; };
 		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -140,6 +141,7 @@
 			files = (
 				6AC078DF27CF73EB0048F0B1 /* FirebaseCrashlytics in Frameworks */,
 				6AC078E127CF73EB0048F0B1 /* FirebaseFirestore in Frameworks */,
+				83BB1B4E27ECA092002FF81E /* SwiftPieChart in Frameworks */,
 				6A0F350627D8E717001E60D9 /* FirebaseFirestoreSwift-Beta in Frameworks */,
 				6AC078DB27CF73EB0048F0B1 /* FirebaseAnalytics in Frameworks */,
 				6AC078DD27CF73EB0048F0B1 /* FirebaseAuth in Frameworks */,
@@ -373,6 +375,7 @@
 				6AC078DE27CF73EB0048F0B1 /* FirebaseCrashlytics */,
 				6AC078E027CF73EB0048F0B1 /* FirebaseFirestore */,
 				6A0F350527D8E717001E60D9 /* FirebaseFirestoreSwift-Beta */,
+				83BB1B4D27ECA092002FF81E /* SwiftPieChart */,
 			);
 			productName = Registr;
 			productReference = 6A31FD4527CF61B700EFECDD /* Registr.app */;
@@ -405,6 +408,7 @@
 			mainGroup = 6A31FD3C27CF61B700EFECDD;
 			packageReferences = (
 				6AC078D927CF73EB0048F0B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				83BB1B4C27ECA092002FF81E /* XCRemoteSwiftPackageReference "SwiftPieChart" */,
 			);
 			productRefGroup = 6A31FD4627CF61B700EFECDD /* Products */;
 			projectDirPath = "";
@@ -716,6 +720,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		83BB1B4C27ECA092002FF81E /* XCRemoteSwiftPackageReference "SwiftPieChart" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ilamanov/SwiftPieChart";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -743,6 +755,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6AC078D927CF73EB0048F0B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		83BB1B4D27ECA092002FF81E /* SwiftPieChart */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 83BB1B4C27ECA092002FF81E /* XCRemoteSwiftPackageReference "SwiftPieChart" */;
+			productName = SwiftPieChart;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
