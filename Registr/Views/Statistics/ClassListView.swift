@@ -11,7 +11,8 @@ struct ClassListView: View {
     @ObservedObject var registrationManager = RegistrationManager()
     
     init() {
-        // Used to fetching the classes
+        // To make the List background transparent, so the gradient background can be used.
+        UITableView.appearance().backgroundColor = .clear
         self.registrationManager.fetchClasses()
     }
     
@@ -22,10 +23,8 @@ struct ClassListView: View {
                     .ignoresSafeArea()
                 Form {
                     Section {
-                        VStack {
-                            ForEach(0..<registrationManager.classes.count, id: \.self) { index in
-                                ClassEntity(className: registrationManager.classes[index])
-                            }
+                        ForEach(registrationManager.classes, id: \.self) { className in
+                            ClassEntity(className: className)
                         }
                     }
                     .listRowBackground(Color.clear)
@@ -38,13 +37,10 @@ struct ClassListView: View {
 }
 
 struct ClassEntity: View {
-    var className: String
+    let className: String
     
-    init(className: String) {
-        self.className = className
-    }
     var body: some View {
-        NavigationLink(destination: StatisticsView()) {
+        NavigationLink(destination: StatisticsView(className: className)) {
             HStack {
                 Text(className)
                     .darkBodyTextStyle()
