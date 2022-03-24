@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct StudentClassListView: View {
+    @ObservedObject var registrationManager = RegistrationManager()
     @State var showSheet: Bool = false
     @State var studentAbsenceState: String = ""
     @State var studentIndex: Int = 0
     @State private var studentName: String = ""
-    
     @ObservedObject var students = Students()
+    var selectedClass: String
+    
+    init(selectedClass: String) {
+        self.selectedClass = selectedClass
+        self.registrationManager.fetchStudents(className: selectedClass)
+    }
     
     var body: some View {
         ZStack{
@@ -25,9 +31,9 @@ struct StudentClassListView: View {
                         Spacer()
                         VStack {
                             // Placeholder text
-                            Text("6.x")
+                            Text(selectedClass)
                                 .darkBodyTextStyle()
-                            Text("Fre. d. - 10/02/2022")
+                            Text(Date().currentDateAndNameFormatted)
                                 .darkBodyTextStyle()
                         }
                         Spacer()
@@ -43,10 +49,10 @@ struct StudentClassListView: View {
                 }
                 .listRowBackground(Color.clear)
                 Section {
-                    ForEach(0..<students.students.count, id: \.self) { index in
+                    ForEach(0..<registrationManager.students.count, id: \.self) { index in
                         StudentSection(
                             index: "\(index+1)",
-                            name: students.students[index].name,
+                            name: registrationManager.students[index].name,
                             absenceState: students.students[index].absenceState
                         )
                             .onTapGesture {
@@ -165,6 +171,6 @@ struct StudentSection: View {
 
 struct StudentClassListView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentClassListView()
+        StudentClassListView(selectedClass: "0.x")
     }
 }

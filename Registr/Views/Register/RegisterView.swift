@@ -71,7 +71,7 @@ struct ClassStack: View {
     var isFavorite: Bool = false
     
     var body: some View {
-        NavigationLink(destination: StudentClassListView()) {
+        NavigationLink(destination: StudentClassListView(selectedClass: className)) {
             VStack {
                 ZStack {
                     HStack {

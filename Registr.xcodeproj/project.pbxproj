@@ -41,6 +41,7 @@
 		6A5607CA27EB2A5C000EED0C /* LoginUserID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5607C927EB2A5C000EED0C /* LoginUserID.swift */; };
 		6A5607D027EB2B36000EED0C /* LoginPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5607CF27EB2B36000EED0C /* LoginPassword.swift */; };
 		6A63250F27EB565D000EF260 /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A63250E27EB565D000EF260 /* DefaultsManager.swift */; };
+		6A63251127ECAB37000EF260 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A63251027ECAB37000EF260 /* Date+Extensions.swift */; };
 		6AC078DB27CF73EB0048F0B1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078DA27CF73EB0048F0B1 /* FirebaseAnalytics */; };
 		6AC078DD27CF73EB0048F0B1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078DC27CF73EB0048F0B1 /* FirebaseAuth */; };
 		6AC078DF27CF73EB0048F0B1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078DE27CF73EB0048F0B1 /* FirebaseCrashlytics */; };
@@ -107,6 +108,7 @@
 		6A5607C927EB2A5C000EED0C /* LoginUserID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserID.swift; sourceTree = "<group>"; };
 		6A5607CF27EB2B36000EED0C /* LoginPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPassword.swift; sourceTree = "<group>"; };
 		6A63250E27EB565D000EF260 /* DefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
+		6A63251027ECAB37000EF260 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		6AC078E227CF88C20048F0B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6AC078E627CF8D0B0048F0B1 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		6AC078EA27CF97340048F0B1 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				6AC078F127D0BA420048F0B1 /* String+Extensions.swift */,
+				6A63251027ECAB37000EF260 /* Date+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				6AC078ED27CF9A8C0048F0B1 /* UserProfile.swift in Sources */,
 				6AC078F227D0BA420048F0B1 /* String+Extensions.swift in Sources */,
 				8391A8E027D8FD6100B5C698 /* OnboardingControllerFlow.swift in Sources */,
+				6A63251127ECAB37000EF260 /* Date+Extensions.swift in Sources */,
 				6A0F350A27DA3338001E60D9 /* ReportManager.swift in Sources */,
 				6AC078EB27CF97340048F0B1 /* UserManager.swift in Sources */,
 				8391A8DE27D8C59900B5C698 /* OnboardFlowView.swift in Sources */,
