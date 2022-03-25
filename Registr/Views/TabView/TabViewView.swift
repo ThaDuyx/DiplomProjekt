@@ -20,11 +20,15 @@ struct TabViewView: View {
                         Image(systemName: "house")
                         Text("Start")
                     }
-                
                 RegisterView()
                     .tabItem {
                         Image(systemName: "square.and.pencil")
                         Text("Registrer")
+                    }
+                ClassListView()
+                    .tabItem {
+                        Image(systemName: "chart.pie")
+                        Text("Statistik")
                     }
                 ProfileView()
                     .tabItem {

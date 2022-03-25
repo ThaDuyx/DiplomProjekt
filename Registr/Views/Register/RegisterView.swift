@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RegisterView: View {
-
+    
     init() {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
@@ -55,18 +55,19 @@ struct ClassStack: View {
     var body: some View {
         NavigationLink(destination: StudentClassListView()) {
             VStack {
-                ZStack {
-                    HStack {
-                        Image(systemName: "star")
-                            .frame(alignment: .leading)
-                        Spacer()
-                    }
-                    Spacer()
-                    HStack {
-                        Text("Placeholder text - class name")
-                            .frame(alignment: .center)
-                    }
-                    .padding(.leading, 20)
+                HStack {
+                    Image(systemName: "star")
+                        .frame(alignment: .leading)
+                        .foregroundColor(.black)
+                    Text("0.X")
+                        .darkBodyTextStyle()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    Image(systemName: "ellipsis")
+                        .foregroundColor(.black)
+                        .frame(alignment: .trailing)
+                        .onTapGesture {
+                            print("Hello world")
+                        }
                 }
                 .padding()
             }
