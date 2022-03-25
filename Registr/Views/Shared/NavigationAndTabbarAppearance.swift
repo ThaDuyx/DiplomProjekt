@@ -15,6 +15,10 @@ struct NavigationAndTabbarAppearance {
         navigationAppearance.backgroundColor = UIColor(Resources.Color.Colors.lightMint)
         navigationAppearance.shadowColor = UIColor.clear
         
+        navigationAppearance.titleTextAttributes = [
+            .foregroundColor: UIColor(Resources.Color.Colors.darkPurple)
+        ]
+        
         UINavigationBar.appearance().standardAppearance = navigationAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navigationAppearance
         UINavigationBar.appearance().isOpaque = true
