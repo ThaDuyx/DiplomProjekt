@@ -16,12 +16,12 @@ class RegistrationManager: ObservableObject {
     let db = Firestore.firestore()
     
     //TODO: --- We need to implement recieving class string in the method from the view - We can make the date logic from this manager class ---
-    func fetchRegistrations() {
+    func fetchRegistrations(className: String) {
         /// Line 21 will be used later on in the project
         //let currentDate = getFormattedCurrentDate()
         db
             .collection("classes")
-            .document("0.x")
+            .document(className)
             .collection("fb_date_path".localize)
             .document("12-03-2022")
             .collection("fb_registrations_path".localize)
@@ -33,6 +33,9 @@ class RegistrationManager: ObservableObject {
                         do {
                             if let registration = try document.data(as: Registration.self) {
                                 self.registrations.append(registration)
+                                self.registrations.sort {
+                                    $0.studentName < $1.studentName
+                                }
                             }
                         }
                         catch {
@@ -41,6 +44,10 @@ class RegistrationManager: ObservableObject {
                     }
                 }
             }
+    }
+    
+    func setAbsenceReason(absenceReason: String, index: Int) {
+        registrations[index].reason = absenceReason
     }
     
     // Retrieves every class name
@@ -75,6 +82,9 @@ class RegistrationManager: ObservableObject {
                                 do {
                                     if let student = try data.data(as: Student.self) {
                                         self.students.append(student)
+                                        self.students.sort {
+                                            $0.name < $1.name
+                                        }
                                     }
                                 }
                                 catch {
@@ -93,8 +103,9 @@ class RegistrationManager: ObservableObject {
             let batch = db.batch()
             
             //let currentDate = getFormattedCurrentDate()
-            for student in students {
-                if let id = student.id {
+            
+            for registration in registrations {
+                if registration.reason != "" {
                     do {
                         let classRegistrationForCurrentDateRef = db
                             .collection("fb_classes_path")
@@ -102,15 +113,15 @@ class RegistrationManager: ObservableObject {
                             .collection("fb_date_path".localize)
                             .document("12-03-2022")
                             .collection("fb_registrations_path")
-                            .document(id)
+                            .document(registration.studentID)
                         
-                        let studentRegistrationForCurrentDateRef = db
-                            .collection("fb_students_path".localize)
-                            .document(id)
-                            .collection("fb_absense_path")
-                            .document()
-                        try batch.setData(from: registrations.first(where: {$0.id == id}), forDocument: classRegistrationForCurrentDateRef)
-                        try batch.setData(from: registrations.first(where: {$0.id == id}), forDocument: studentRegistrationForCurrentDateRef)
+//                        let studentRegistrationForCurrentDateRef = db
+//                            .collection("fb_students_path".localize)
+//                            .document(registration.studentID)
+//                            .collection("fb_absense_path")
+//                            .document()
+                        
+                        try batch.setData(from: registration, forDocument: classRegistrationForCurrentDateRef, merge: true)
                     }
                     catch {
                         print("Could not encode registration")

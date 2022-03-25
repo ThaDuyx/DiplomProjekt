@@ -9,16 +9,17 @@ import SwiftUI
 
 struct StudentClassListView: View {
     @ObservedObject var registrationManager = RegistrationManager()
-    @State var showSheet: Bool = false
-    @State var studentAbsenceState: String = ""
-    @State var studentIndex: Int = 0
+    @State private var showSheet: Bool = false
+    @State private var studentAbsenceState: String = ""
+    @State private var studentIndex: Int = 0
     @State private var studentName: String = ""
-    @ObservedObject var students = Students()
+    
     var selectedClass: String
     
     init(selectedClass: String) {
         self.selectedClass = selectedClass
-        self.registrationManager.fetchStudents(className: selectedClass)
+        //self.registrationManager.fetchStudents(className: selectedClass)
+        self.registrationManager.fetchRegistrations(className: selectedClass)
     }
     
     var body: some View {
@@ -38,7 +39,7 @@ struct StudentClassListView: View {
                         }
                         Spacer()
                         Button {
-                            print("Saved students absence")
+                            registrationManager.saveRegistrations(className: selectedClass)
                         } label: {
                             Image(systemName: "checkmark.circle")
                                 .resizable()
@@ -49,18 +50,18 @@ struct StudentClassListView: View {
                 }
                 .listRowBackground(Color.clear)
                 Section {
-                    ForEach(0..<registrationManager.students.count, id: \.self) { index in
+                    ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
                         StudentSection(
                             index: "\(index+1)",
-                            name: registrationManager.students[index].name,
-                            absenceState: students.students[index].absenceState
+                            name: registrationManager.registrations[index].studentName,
+                            absenceState: registrationManager.registrations[index].reason
                         )
                             .onTapGesture {
                                 if !studentAbsenceState.isEmpty {
                                     studentAbsenceState = ""
                                 }
 
-                                studentName = students.students[index].name
+                                studentName = registrationManager.registrations[index].studentName
                                 studentIndex = index
                                 showSheet.toggle()
                             }
@@ -81,7 +82,7 @@ struct StudentClassListView: View {
                             .darkBodyTextStyle()
                         Button {
                             studentAbsenceState = "FS"
-                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
+                            registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("student_list_absence_late")
@@ -90,7 +91,7 @@ struct StudentClassListView: View {
 
                         Button {
                             studentAbsenceState = "U"
-                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
+                            registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("student_list_absence_illegal")
@@ -99,7 +100,7 @@ struct StudentClassListView: View {
 
                         Button {
                             studentAbsenceState = "S"
-                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
+                            registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("student_list_absence_sick")
@@ -108,7 +109,7 @@ struct StudentClassListView: View {
 
                         Button {
                             studentAbsenceState = ""
-                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
+                            registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("student_list_absence_clear")

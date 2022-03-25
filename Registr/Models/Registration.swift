@@ -10,8 +10,9 @@ import FirebaseFirestoreSwift
 
 struct Registration: Codable {
     @DocumentID var id: String?
-    let name: String
-    let reason: String?
-    let date: String
-    var validation: Bool = false
+    let studentID: String
+    let studentName: String
+    let date: Date
+    var reason: String = ""
+    var validated: Bool = false
 }
