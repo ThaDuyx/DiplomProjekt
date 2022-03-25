@@ -121,7 +121,8 @@ class RegistrationManager: ObservableObject {
 //                            .collection("fb_absense_path")
 //                            .document()
                         
-                        try batch.setData(from: registration, forDocument: classRegistrationForCurrentDateRef, merge: true)
+//                        try batch.setData(from: registration, forDocument: classRegistrationForCurrentDateRef, merge: true)
+                        try batch.updateData(["reason" : registration.reason], forDocument: classRegistrationForCurrentDateRef)
                     }
                     catch {
                         print("Could not encode registration")
