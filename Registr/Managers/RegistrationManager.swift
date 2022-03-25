@@ -20,7 +20,7 @@ class RegistrationManager: ObservableObject {
         /// Line 21 will be used later on in the project
         //let currentDate = getFormattedCurrentDate()
         db
-            .collection("classes")
+            .collection("fb_classes_path".localize)
             .document(className)
             .collection("fb_date_path".localize)
             .document("12-03-2022")
@@ -77,21 +77,23 @@ class RegistrationManager: ObservableObject {
                 } else {
                     for document in querySnapshot!.documents {
                         let studentID = document.documentID
-                        self.db.collection("fb_students_path".localize).document(studentID).getDocument { studentDoc, error in
-                            if let data = studentDoc {
-                                do {
-                                    if let student = try data.data(as: Student.self) {
-                                        self.students.append(student)
-                                        self.students.sort {
-                                            $0.name < $1.name
+                        self.db.collection("fb_students_path".localize)
+                            .document(studentID)
+                            .getDocument { studentDoc, error in
+                                if let data = studentDoc {
+                                    do {
+                                        if let student = try data.data(as: Student.self) {
+                                            self.students.append(student)
+                                            self.students.sort {
+                                                $0.name < $1.name
+                                            }
                                         }
                                     }
-                                }
-                                catch {
-                                    print(error)
+                                    catch {
+                                        print(error)
+                                    }
                                 }
                             }
-                        }
                     }
                 }
             }
@@ -106,31 +108,26 @@ class RegistrationManager: ObservableObject {
             
             for registration in registrations {
                 if registration.reason != "" {
-                    do {
-                        let classRegistrationForCurrentDateRef = db
-                            .collection("fb_classes_path")
-                            .document("0.x")
-                            .collection("fb_date_path".localize)
-                            .document("12-03-2022")
-                            .collection("fb_registrations_path")
-                            .document(registration.studentID)
-                        
-//                        let studentRegistrationForCurrentDateRef = db
-//                            .collection("fb_students_path".localize)
-//                            .document(registration.studentID)
-//                            .collection("fb_absense_path")
-//                            .document()
-                        
-//                        try batch.setData(from: registration, forDocument: classRegistrationForCurrentDateRef, merge: true)
-                        try batch.updateData(["reason" : registration.reason], forDocument: classRegistrationForCurrentDateRef)
-                    }
-                    catch {
-                        print("Could not encode registration")
-                    }
+                    let registrationRef = db
+                        .collection("fb_classes_path".localize)
+                        .document("0.x")
+                        .collection("fb_date_path".localize)
+                        .document("12-03-2022")
+                        .collection("fb_registrations_path".localize)
+                        .document(registration.studentID)
+                    
+                    let registrationStudentRef = db
+                        .collection("fb_students_path".localize)
+                        .document(registration.studentID)
+                        .collection("fb_absense_path".localize)
+                        .document("12-03-2022")
+                    
+                    batch.updateData(["reason" : registration.reason], forDocument: registrationRef)
+                    batch.setData(["date" : registration.date], forDocument: registrationStudentRef)
                 }
             }
             
-            // Writing our big batch of data to firebase
+            //          Writing our big batch of data to firebase
             batch.commit() { err in
                 if let err = err {
                     print("Error writing batch \(err)")
@@ -141,7 +138,7 @@ class RegistrationManager: ObservableObject {
         }
     }
     
-    // Retrieving the current date 
+    // Retrieving the current date
     func getFormattedCurrentDate() -> String {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
