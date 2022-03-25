@@ -10,11 +10,13 @@ import SwiftUICharts
 
 struct StatisticsView: View {
     let className: String
+    var isStudentPresented: Bool
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
-    init(className: String) {
+    init(className: String, isStudentPresented: Bool) {
         self.className = className
+        self.isStudentPresented = isStudentPresented
     }
     
     var body: some View {
@@ -24,14 +26,14 @@ struct StatisticsView: View {
             VStack {
                 VStack {
                     HStack {
-                        Image(systemName: "star")
+                        isStudentPresented ? nil : Image(systemName: "star")
                             .foregroundColor(Resources.Color.Colors.darkPurple)
-                        Text("Følger ikke")
+                        Text(isStudentPresented ? className : "Følger ikke")
                             .boldSubTitleTextStyle()
                     }
                     .padding()
                 }
-                .padding(.trailing, 20)
+                .padding(.trailing, isStudentPresented ? 0 : 20)
                 .overlay(
                     RoundedRectangle(cornerRadius: 5)
                         .stroke(Color.black, lineWidth: 1)
@@ -39,9 +41,7 @@ struct StatisticsView: View {
                 .padding(4)
                 Spacer()
                 VStack(spacing: 20) {
-                    Button {
-                        print("Historik have been pressed")
-                    } label: {
+                    NavigationLink(destination: EmptyView()) {
                         HStack {
                             Image(systemName: "star")
                                 .frame(alignment: .leading)
@@ -52,9 +52,8 @@ struct StatisticsView: View {
                         }
                     }
                     .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
-                    Button {
-                        print("Elever have been pressed")
-                    } label: {
+                    
+                    isStudentPresented ? nil : NavigationLink(destination: StudentListView(selectedClass: className)) {
                         HStack {
                             Image(systemName: "person.3")
                                 .frame(alignment: .leading)
@@ -99,13 +98,13 @@ struct StatisticsView: View {
                 Spacer()
             }
         }
-        .navigationTitle(className)
+        .navigationTitle(isStudentPresented ? "Elev" : className)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct StatisticsView_Previews: PreviewProvider {
     static var previews: some View {
-        StatisticsView(className: "ClassName")
+        StatisticsView(className: "ClassName", isStudentPresented: true)
     }
 }
