@@ -56,7 +56,7 @@ struct StudentAbsenceView: View {
                     HStack {
                         Image(systemName: "person")
                             .foregroundColor(Resources.Color.Colors.lightMint)
-                        Text(report.date.formatted())
+                        Text(report.date.currentDateFormatted)
                             .lightBodyTextStyle()
                     }
                 }

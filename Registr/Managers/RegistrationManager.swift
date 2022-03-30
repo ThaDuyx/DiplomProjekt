@@ -107,7 +107,7 @@ class RegistrationManager: ObservableObject {
             //let currentDate = getFormattedCurrentDate()
             
             for (var registration) in registrations {
-                if registration.reason != "" {
+                if !registration.reason.isEmpty {
                     let registrationRef = db
                         .collection("fb_classes_path".localize)
                         .document("0.x")
@@ -129,7 +129,7 @@ class RegistrationManager: ObservableObject {
                     } catch {
                         print("Decoding failed")
                     }
-                } else if registration.isAbsenceRegistered && registration.reason == "" {
+                } else if registration.isAbsenceRegistered && registration.reason.isEmpty {
                     let registrationRef = db
                         .collection("fb_classes_path".localize)
                         .document("0.x")
