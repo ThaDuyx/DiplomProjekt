@@ -106,7 +106,7 @@ class RegistrationManager: ObservableObject {
             
             //let currentDate = getFormattedCurrentDate()
             
-            for registration in registrations {
+            for (var registration) in registrations {
                 if registration.reason != "" {
                     let registrationRef = db
                         .collection("fb_classes_path".localize)
@@ -122,8 +122,30 @@ class RegistrationManager: ObservableObject {
                         .collection("fb_absense_path".localize)
                         .document("12-03-2022")
                     
-                    batch.updateData(["reason" : registration.reason], forDocument: registrationRef)
-                    batch.setData(["date" : registration.date], forDocument: registrationStudentRef)
+                    registration.isAbsenceRegistered = true
+                    do {
+                        batch.updateData(["reason" : registration.reason, "isAbsenceRegistered": true], forDocument: registrationRef)
+                        try batch.setData(from: registration, forDocument: registrationStudentRef)
+                    } catch {
+                        print("Decoding failed")
+                    }
+                } else if registration.isAbsenceRegistered && registration.reason == "" {
+                    let registrationRef = db
+                        .collection("fb_classes_path".localize)
+                        .document("0.x")
+                        .collection("fb_date_path".localize)
+                        .document("12-03-2022")
+                        .collection("fb_registrations_path".localize)
+                        .document(registration.studentID)
+                    
+                    let registrationStudentRef = db
+                        .collection("fb_students_path".localize)
+                        .document(registration.studentID)
+                        .collection("fb_absense_path".localize)
+                        .document("12-03-2022")
+                    
+                    batch.updateData(["reason" : registration.reason, "isAbsenceRegistered" : false], forDocument: registrationRef)
+                    batch.deleteDocument(registrationStudentRef)
                 }
             }
             

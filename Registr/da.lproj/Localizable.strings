@@ -53,7 +53,6 @@
 
 "fb_absense_path" = "absense";
 
-
 // MARK: - Parent Home Screen
 "parent_home_name" = "Navn:";
 "parent_home_class" = "Klasse:";
