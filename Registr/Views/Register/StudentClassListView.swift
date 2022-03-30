@@ -30,7 +30,6 @@ struct StudentClassListView: View {
                     HStack(alignment: .center) {
                         Spacer()
                         VStack {
-                            // Placeholder text
                             Text(selectedClass)
                                 .darkBodyTextStyle()
                             Text(Date().currentDateAndNameFormatted)
@@ -170,6 +169,6 @@ struct StudentSection: View {
 
 struct StudentClassListView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentClassListView(selectedClass: "0.x")
+        StudentClassListView(selectedClass: "")
     }
 }

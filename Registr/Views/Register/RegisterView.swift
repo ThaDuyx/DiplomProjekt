@@ -29,7 +29,7 @@ struct RegisterView: View {
                         header:
                             HStack {
                                 Image(systemName: "star")
-                                Text("Placeholder text - favorites")
+                                Text("register_section_header_favoritter")
                             }
                     ) {
                         ForEach(registrationManager.classes, id: \.self) { className in
@@ -47,7 +47,7 @@ struct RegisterView: View {
                         header:
                             HStack {
                                 Image(systemName: "person.3")
-                                Text("Placeholder text - Class")
+                                Text("register_section_header_classes")
                             }
                     ) {
                         ForEach(registrationManager.classes, id: \.self) { className in

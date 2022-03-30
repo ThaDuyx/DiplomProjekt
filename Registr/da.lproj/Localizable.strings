@@ -70,3 +70,7 @@
 "student_list_absence_illegal" = "Ulovligt - (U)";
 "student_list_absence_sick" = "Sygdom - (S)";
 "student_list_absence_clear" = "Ryd felt";
+
+//Mark: - Register View
+"register_section_header_favoritter" = "favoritter";
+"register_section_header_classes" = "andre klasser";
