@@ -50,14 +50,6 @@ class AuthenticationManager {
                                 DefaultsManager.shared.currentProfileID = id
                                 completion(true)
                                 
-                                // TODO: Find out if we should login to home screenand then fetch children
-                                // TODO: or while we are loggin in we should fetch children
-                                //Retrieving the parents' children
-//                              UserManager.shared.fetchChildren(parentID: id) { children in
-//                                  UserManager.shared.user = userLoggedIn
-//                                  completion(true)
-//                              }
-                                
                             } else {
                                 print("Document does not exist")
                                 completion(false)
@@ -93,7 +85,7 @@ class AuthenticationManager {
     func signOut()
     {
         do {
-            // TODO: --- Change view to log in screen ---
+            // TODO: --- Change view to log in screen & probably add a completion handler to this function ---
             try Auth.auth().signOut()
         } catch {
             print("general_error" + error.localizedDescription)
