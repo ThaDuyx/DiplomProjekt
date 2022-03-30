@@ -41,7 +41,7 @@ struct StatisticsView: View {
                 .padding(4)
                 Spacer()
                 VStack(spacing: 20) {
-                    NavigationLink(destination: EmptyView()) {
+                    NavigationLink(destination: AbsenceHistoryView()) {
                         HStack {
                             Image(systemName: "star")
                                 .frame(alignment: .leading)

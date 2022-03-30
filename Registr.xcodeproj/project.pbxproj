@@ -73,6 +73,7 @@
 		83BB1B5127ECA827002FF81E /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 83BB1B5027ECA827002FF81E /* SwiftUICharts */; };
 		83BB1B5327EDB925002FF81E /* StudentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B5227EDB925002FF81E /* StudentListView.swift */; };
 		83BB1B5B27EDFBF3002FF81E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83BB1B5A27EDFBF3002FF81E /* LaunchScreen.storyboard */; };
+		83BB1B6127EE0D03002FF81E /* AbsenceHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B6027EE0D03002FF81E /* AbsenceHistoryView.swift */; };
 		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -139,6 +140,7 @@
 		83BB1B4A27EC6A0C002FF81E /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		83BB1B5227EDB925002FF81E /* StudentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListView.swift; sourceTree = "<group>"; };
 		83BB1B5A27EDFBF3002FF81E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		83BB1B6027EE0D03002FF81E /* AbsenceHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbsenceHistoryView.swift; sourceTree = "<group>"; };
 		83D5016827CF75480083AEE7 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -377,6 +379,7 @@
 				83BB1B4827EC647E002FF81E /* ClassListView.swift */,
 				83BB1B4A27EC6A0C002FF81E /* StatisticsView.swift */,
 				83BB1B5227EDB925002FF81E /* StudentListView.swift */,
+				83BB1B6027EE0D03002FF81E /* AbsenceHistoryView.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				6A5607CA27EB2A5C000EED0C /* LoginUserID.swift in Sources */,
 				6A0F34FF27D8A943001E60D9 /* Class.swift in Sources */,
 				6A0F350127D8A9F9001E60D9 /* Absence.swift in Sources */,
+				83BB1B6127EE0D03002FF81E /* AbsenceHistoryView.swift in Sources */,
 				83BB1B4B27EC6A0C002FF81E /* StatisticsView.swift in Sources */,
 				8348592427CF8C3D009D8A51 /* FontStyles.swift in Sources */,
 				6A0F34FD27D8A870001E60D9 /* Report.swift in Sources */,
