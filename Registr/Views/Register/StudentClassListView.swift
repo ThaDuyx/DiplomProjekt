@@ -8,55 +8,64 @@
 import SwiftUI
 
 struct StudentClassListView: View {
-    @State var showSheet: Bool = false
-    @State var studentAbsenceState: String = ""
-    @State var studentIndex: Int = 0
+    @ObservedObject var registrationManager = RegistrationManager()
+    @State private var showSheet: Bool = false
+    @State private var studentAbsenceState: String = ""
+    @State private var studentIndex: Int = 0
     @State private var studentName: String = ""
     
-    @ObservedObject var students = Students()
+    var selectedClass: String
+    
+    init(selectedClass: String) {
+        self.selectedClass = selectedClass
+        self.registrationManager.fetchRegistrations(className: selectedClass)
+    }
     
     var body: some View {
         ZStack{
             Resources.BackgroundGradient.backgroundGradient
                 .ignoresSafeArea()
             Form {
-                HStack(alignment: .center) {
-                    Spacer()
-                    VStack {
-                        // Placeholder text
-                        Text("6.x")
-                            .darkBodyTextStyle()
-                        Text("Fre. d. - 10/02/2022")
-                            .darkBodyTextStyle()
-                    }
-                    Spacer()
-                    Button {
-                        print("Saved students absence")
-                    } label: {
-                        Image(systemName: "checkmark.circle")
-                            .resizable()
-                            .frame(width: 30, height: 30)
+                Section {
+                    HStack(alignment: .center) {
+                        Spacer()
+                        VStack {
+                            Text(selectedClass)
+                                .darkBodyTextStyle()
+                            Text(Date().currentDateAndNameFormatted)
+                                .darkBodyTextStyle()
+                        }
+                        Spacer()
+                        Button {
+                            registrationManager.saveRegistrations(className: selectedClass)
+                        } label: {
+                            Image(systemName: "checkmark.circle")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(Resources.Color.Colors.darkBlue)
+                        }
                     }
                 }
                 .listRowBackground(Color.clear)
                 Section {
-                    ForEach(0..<students.students.count, id: \.self) { index in
+                    ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
                         StudentSection(
                             index: "\(index+1)",
-                            name: students.students[index].name,
-                            absenceState: students.students[index].absenceState
+                            name: registrationManager.registrations[index].studentName,
+                            absenceState: registrationManager.registrations[index].reason
                         )
                             .onTapGesture {
                                 if !studentAbsenceState.isEmpty {
                                     studentAbsenceState = ""
                                 }
 
-                                studentName = students.students[index].name
+                                studentName = registrationManager.registrations[index].studentName
                                 studentIndex = index
                                 showSheet.toggle()
                             }
                     }
                 }
+                .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
             }
             .halfSheet(showSheet: $showSheet) {
@@ -68,7 +77,7 @@ struct StudentClassListView: View {
                             .darkBodyTextStyle()
                         Button {
                             studentAbsenceState = "FS"
-                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
+                            registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("student_list_absence_late")
@@ -77,7 +86,7 @@ struct StudentClassListView: View {
 
                         Button {
                             studentAbsenceState = "U"
-                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
+                            registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("student_list_absence_illegal")
@@ -86,7 +95,7 @@ struct StudentClassListView: View {
 
                         Button {
                             studentAbsenceState = "S"
-                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
+                            registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("student_list_absence_sick")
@@ -95,7 +104,7 @@ struct StudentClassListView: View {
 
                         Button {
                             studentAbsenceState = ""
-                            students.absenceStringState(studentState: studentAbsenceState, index: studentIndex)
+                            registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
                             showSheet.toggle()
                         } label: {
                             Text("student_list_absence_clear")
@@ -160,6 +169,6 @@ struct StudentSection: View {
 
 struct StudentClassListView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentClassListView()
+        StudentClassListView(selectedClass: "")
     }
 }

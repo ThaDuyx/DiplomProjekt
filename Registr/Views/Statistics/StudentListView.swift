@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StudentListView: View {
     @ObservedObject var registrationManager = RegistrationManager()
-    @ObservedObject var students = Students()
+    
     var selectedClass: String
     
     init(selectedClass: String) {

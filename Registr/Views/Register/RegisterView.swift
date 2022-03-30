@@ -9,9 +9,13 @@ import SwiftUI
 
 struct RegisterView: View {
     
+    @ObservedObject var registrationManager = RegistrationManager()
+    @State var favorites = DefaultsManager.shared.favorites
+    
     init() {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
+        self.registrationManager.fetchClasses()
     }
     
     var body: some View {
@@ -19,28 +23,40 @@ struct RegisterView: View {
             ZStack {
                 Resources.BackgroundGradient.backgroundGradient
                     .ignoresSafeArea()
-                Form {
+                Form() {
+                    // Favorite section
                     Section(
                         header:
                             HStack {
                                 Image(systemName: "star")
-                                Text("Placeholder text - favorites")
+                                Text("register_section_header_favoritter")
                             }
                     ) {
-                        ClassStack()
-                        ClassStack()
+                        ForEach(registrationManager.classes, id: \.self) { className in
+                            if favorites.contains(className) {
+                                ClassStack(className: className, isFavorite: true)
+                            }
+                        }
                     }
+                    .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    
+                    // Other classes section
                     Section(
                         header:
                             HStack {
                                 Image(systemName: "person.3")
-                                Text("Placeholder text - Class")
+                                Text("register_section_header_classes")
                             }
                     ) {
-                        ClassStack()
+                        ForEach(registrationManager.classes, id: \.self) { className in
+                            if !favorites.contains(className) {
+                                ClassStack(className: className)
+                            }
+                        }
                     }
+                    .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
@@ -52,22 +68,25 @@ struct RegisterView: View {
 }
 
 struct ClassStack: View {
+    let className: String
+    var isFavorite: Bool = false
+    
     var body: some View {
-        NavigationLink(destination: StudentClassListView()) {
+        NavigationLink(destination: StudentClassListView(selectedClass: className)) {
             VStack {
-                HStack {
-                    Image(systemName: "star")
-                        .frame(alignment: .leading)
-                        .foregroundColor(.black)
-                    Text("0.X")
-                        .darkBodyTextStyle()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                    Image(systemName: "ellipsis")
-                        .foregroundColor(.black)
-                        .frame(alignment: .trailing)
-                        .onTapGesture {
-                            print("Hello world")
-                        }
+                ZStack {
+                    HStack {
+                        Image(systemName: isFavorite ? "star.fill" : "star")
+                            .frame(alignment: .leading)
+                            .foregroundColor(Resources.Color.Colors.darkBlue)
+                        Spacer()
+                    }
+                    Spacer()
+                    HStack {
+                        Text(className)
+                            .frame(alignment: .center)
+                    }
+                    .padding(.leading, 20)
                 }
                 .padding()
             }
