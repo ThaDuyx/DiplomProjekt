@@ -16,11 +16,6 @@ final class DefaultsManager {
     private enum Key: String {
         case currentProfileID = "DefaultsManager_currentProfileID"
         case favorites = "DefaultsManager_favorites"
-        case localDataManagerDatabaseVersion = "DefaultsManager_localDataManagerDatabaseVersion"
-        case language = "DefaultsManager_language"
-        case lastRemoteDataCompleteSync = "DefaultsManager_lastRemoteDataCompleteSync"
-        case onboardingCompleted = "DefaultsManager_onboardingCompleted"
-        case feedOrder = "DefaultsManager_feedOrder"
     }
     
     // MARK: - Properties
