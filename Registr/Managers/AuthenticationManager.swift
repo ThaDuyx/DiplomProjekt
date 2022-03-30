@@ -45,13 +45,10 @@ class AuthenticationManager {
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists, let data = document.data() {
                                 let name = data["name"] as? String ?? "nil"
-                                
-                                // Retrieving the parents' children
-                                UserManager.shared.fetchChildren(parentID: id) { children in
-                                    let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, children: children)
-                                    UserManager.shared.user = userLoggedIn
-                                    completion(true)
-                                }
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, children: nil)
+                                UserManager.shared.user = userLoggedIn
+                                DefaultsManager.shared.currentProfileID = id
+                                completion(true)
                                 
                             } else {
                                 print("Document does not exist")
@@ -88,7 +85,7 @@ class AuthenticationManager {
     func signOut()
     {
         do {
-            // TODO: --- Change view to log in screen ---
+            // TODO: --- Change view to log in screen & probably add a completion handler to this function ---
             try Auth.auth().signOut()
         } catch {
             print("general_error" + error.localizedDescription)

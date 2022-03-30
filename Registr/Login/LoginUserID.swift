@@ -7,7 +7,14 @@
 import SwiftUI
 
 struct LoginUserID: View {
-    @State private var userName: String = "teacher@test.com"
+    // TODO: Hardcoded for testing purposes, should be changed to
+    @State private var userName: String
+    var username: String
+    
+    init(username: String) {
+        self.username = username
+        userName = username
+    }
 
     var body: some View {
         ZStack {
@@ -31,7 +38,7 @@ struct LoginUserID: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Resources.Color.Colors.darkPurple, lineWidth: 1))
 
-                        NavigationLink(destination: LoginPassword(userName: $userName.wrappedValue)) {
+                        NavigationLink(destination: LoginPassword(userName: userName)) {
                             Text("next_view")
                         }
                         .frame(alignment: .center)
@@ -49,6 +56,6 @@ struct LoginUserID: View {
 
 struct LoginUserID_Previews: PreviewProvider {
     static var previews: some View {
-        LoginUserID()
+        LoginUserID(username: "")
     }
 }

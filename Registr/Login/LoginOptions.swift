@@ -13,13 +13,13 @@ struct LoginOptions: View {
                 Text("application_name")
                     .titleTextStyle()
                 VStack(spacing: 40) {
-                    NavigationLink(destination: LoginUserID()) {
+                    NavigationLink(destination: LoginUserID(username: "test@test.com")) {
                         Text("parent_login")
                     }.simultaneousGesture(TapGesture().onEnded{
                         AuthenticationManager.shared.loginSelection = .parent
                     })
                     .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
-                    NavigationLink(destination: LoginUserID()) {
+                    NavigationLink(destination: LoginUserID(username: "teacher@test.com")) {
                         Text("school_login")
                     }.simultaneousGesture(TapGesture().onEnded{
                         AuthenticationManager.shared.loginSelection = .school
