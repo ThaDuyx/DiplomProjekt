@@ -9,9 +9,13 @@ import SwiftUI
 
 struct TeacherHomeScreenView: View {
     
+    @ObservedObject var reportManager = ReportManager()
+    @State var favorites = DefaultsManager.shared.favorites
+    
     init() {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
+        self.reportManager.fetchReports()
     }
     
     var body: some View {
@@ -19,38 +23,33 @@ struct TeacherHomeScreenView: View {
             ZStack {
                 Resources.BackgroundGradient.backgroundGradient
                     .ignoresSafeArea()
-                List {
+                
+                List(favorites, id: \.self) { favorite in
                     Section(
-                        header: Text("Placeholder text - Class")
+                        header: Text(favorite)
                             .boldSubTitleTextStyle()
                     ) {
-                        TaskRow()
-                        TaskRow()
-                        TaskRow()
-                    }
-                    .listRowBackground(Color.clear)
-                    
-                    Section(
-                        header: Text("Placeholder text - Class")
-                            .boldSubTitleTextStyle()
-                    ){
-                        TaskRow()
-                        TaskRow()
-                        TaskRow()
+                        ForEach(reportManager.reports, id: \.self) { report in
+                            if report.className == favorite {
+                                TaskRow(report: report)
+                            }
+                        }
                     }
                     .listRowBackground(Color.clear)
                 }
             }
-            .navigationTitle("Inberettelser")
+            .navigationTitle("Indberettelser")
             .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
 
 struct TaskRow: View {
+    let report: Report
+    
     var body: some View {
-        NavigationLink(destination: StudentAbsenceView()) {
-            Text("Placeholder text - Student name")
+        NavigationLink(destination: StudentAbsenceView(report: report)) {
+            Text(report.studentName)
                 .subTitleTextStyle()
                 .lineLimit(1)
         }

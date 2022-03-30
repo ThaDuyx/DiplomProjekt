@@ -10,6 +10,8 @@ import FirebaseFirestoreSwift
 
 struct Absence: Codable {
     @DocumentID var id: String?
+    let studentID: String
+    let studentName: String
     let date: Date
     let reason: String
     let validated: Bool

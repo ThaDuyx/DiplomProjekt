@@ -38,21 +38,13 @@
 
 // MARK: - Firebase paths
 "fb_parent_path" = "parent";
-
 "fb_employee_path" = "employees";
-
 "fb_date_path" = "registrationDates";
-
 "fb_registrations_path" = "registrations";
-
 "fb_children_path" = "children";
-
 "fb_students_path" = "students";
-
 "fb_classes_path" = "classes";
-
 "fb_absense_path" = "absense";
-
 
 // MARK: - Parent Home Screen
 "parent_home_name" = "Navn:";
@@ -71,3 +63,7 @@
 "student_list_absence_illegal" = "Ulovligt - (U)";
 "student_list_absence_sick" = "Sygdom - (S)";
 "student_list_absence_clear" = "Ryd felt";
+
+//Mark: - Register View
+"register_section_header_favoritter" = "favoritter";
+"register_section_header_classes" = "andre klasser";
