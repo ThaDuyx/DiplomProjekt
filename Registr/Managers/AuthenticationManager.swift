@@ -45,13 +45,18 @@ class AuthenticationManager {
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists, let data = document.data() {
                                 let name = data["name"] as? String ?? "nil"
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, children: nil)
+                                UserManager.shared.user = userLoggedIn
+                                DefaultsManager.shared.currentProfileID = id
+                                completion(true)
                                 
-                                // Retrieving the parents' children
-                                UserManager.shared.fetchChildren(parentID: id) { children in
-                                    let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, children: children)
-                                    UserManager.shared.user = userLoggedIn
-                                    completion(true)
-                                }
+                                // TODO: Find out if we should login to home screenand then fetch children
+                                // TODO: or while we are loggin in we should fetch children
+                                //Retrieving the parents' children
+//                              UserManager.shared.fetchChildren(parentID: id) { children in
+//                                  UserManager.shared.user = userLoggedIn
+//                                  completion(true)
+//                              }
                                 
                             } else {
                                 print("Document does not exist")

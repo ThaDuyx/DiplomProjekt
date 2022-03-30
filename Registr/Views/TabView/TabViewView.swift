@@ -39,7 +39,7 @@ struct TabViewView: View {
                 ParentHomeScreenView()
                     .tabItem {
                         Image(systemName: "house")
-                        Text("Start")
+                        Text("Børn")
                     }
             case .headmaster:
                 // TODO: Make headmaster view
