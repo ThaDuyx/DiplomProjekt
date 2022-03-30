@@ -21,16 +21,12 @@ final class DefaultsManager {
     // MARK: - Properties
     
     /// Active user profile identifier
-    var currentProfileID: String? {
+    var currentProfileID: String {
         get {
-            return defaults.string(forKey: Key.currentProfileID.rawValue)
+            return defaults.string(forKey: Key.currentProfileID.rawValue) ?? ""
         }
         set {
-            if newValue == nil {
-                defaults.removeObject(forKey: Key.currentProfileID.rawValue)
-            } else {
-                defaults.set(newValue, forKey: Key.currentProfileID.rawValue)
-            }
+            defaults.set(newValue, forKey: Key.currentProfileID.rawValue)
             defaults.synchronize()
         }
     }

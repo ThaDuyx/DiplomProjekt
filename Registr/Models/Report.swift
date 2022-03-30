@@ -18,6 +18,7 @@ struct Report: Codable, Hashable {
     let date: Date
     let description: String?
     let reason: String
+    let validated: Bool
 }
 
 enum Reason: String, Codable {

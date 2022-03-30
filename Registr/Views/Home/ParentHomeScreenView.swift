@@ -8,15 +8,22 @@
 import SwiftUI
 
 struct ParentHomeScreenView: View {
+    @ObservedObject var childrenManager = ChildrenManager()
+    
+    init() {
+        UITableView.appearance().backgroundColor = .clear
+        childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID)
+    }
+    
     var body: some View {
         NavigationView {
             ZStack {
                 Resources.BackgroundGradient.backgroundGradient
                     .ignoresSafeArea()
                 Form {
-                    ForEach((1...7), id: \.self) {_ in
+                    ForEach(childrenManager.children, id: \.self) { child in
                         Section {
-                            CardStack(name: "Simon Andersen", className: "8.Y", email: "mail@email.dk")
+                            CardStack(name: child.name, className: child.className, email: child.email)
                         }
                         .listRowBackground(Resources.Color.Colors.darkBlue)
                     }
