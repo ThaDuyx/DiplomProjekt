@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseFirestore
 
+// TODO: Refactor firebase paths and uncomment currentData when we have feeded the database
+/// Hardcoded variables for firebase path used for testing
 class RegistrationManager: ObservableObject {
     
     @Published var registrations = [Registration]()
