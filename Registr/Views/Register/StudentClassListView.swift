@@ -18,7 +18,6 @@ struct StudentClassListView: View {
     
     init(selectedClass: String) {
         self.selectedClass = selectedClass
-        //self.registrationManager.fetchStudents(className: selectedClass)
         self.registrationManager.fetchRegistrations(className: selectedClass)
     }
     
