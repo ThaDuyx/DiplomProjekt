@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct AbsenceHistoryView: View {
-    @State private var date = Date()
+    @State private var selectedDate: Date = Date()
+    let className: String
     
     private let dateRange: ClosedRange<Date> = {
         let calendar = Calendar.current
@@ -24,16 +25,24 @@ struct AbsenceHistoryView: View {
             Resources.BackgroundGradient.backgroundGradient
                 .ignoresSafeArea()
             VStack {
-                Text("Den følgende dato er valgt: \(date)")
-                    .boldSubTitleTextStyle()
-                    .padding()
-                DatePicker(
-                    "",
-                    selection: $date,
-                    in: dateRange,
-                    displayedComponents: [.date])
-                    .datePickerStyle(.graphical)
-                    .padding()
+                VStack(spacing: 0) {
+                    Text("absence_day_pick")
+                        .boldSubTitleTextStyle()
+                        .padding(.horizontal)
+                    let date = DateFormatter.abbreviationDayMonthYearFormatter.string(from: selectedDate)
+                    Text(date)
+                        .boldSubTitleTextStyle()
+                        .padding(.horizontal)
+                }
+                DatePicker("", selection: $selectedDate, in: dateRange, displayedComponents: .date)
+                .datePickerStyle(.graphical)
+                .padding()
+
+                NavigationLink(destination: StudentClassListView(selectedClass: className)) {
+                    Text("next_view")
+                }
+                .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
+                .padding(.leading, 200)
             }
         }
     }
@@ -41,6 +50,6 @@ struct AbsenceHistoryView: View {
 
 struct AbsenceHistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceHistoryView()
+        AbsenceHistoryView(className: "0.x")
     }
 }
