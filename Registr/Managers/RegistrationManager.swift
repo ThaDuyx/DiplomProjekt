@@ -149,7 +149,7 @@ class RegistrationManager: ObservableObject {
                 }
             }
             
-            //          Writing our big batch of data to firebase
+            // Writing our big batch of data to firebase
             batch.commit() { err in
                 if let err = err {
                     print("Error writing batch \(err)")
