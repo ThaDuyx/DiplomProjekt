@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RegisterView: View {
+    
     @ObservedObject var registrationManager = RegistrationManager()
     @State var favorites = DefaultsManager.shared.favorites
     

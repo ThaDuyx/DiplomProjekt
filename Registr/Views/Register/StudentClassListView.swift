@@ -70,9 +70,6 @@ struct StudentClassListView: View {
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
             }
-            .onAppear(perform: {
-                UITableView.appearance().contentInset.top = -35
-            })
             .halfSheet(showSheet: $showSheet) {
                 ZStack {
                     Resources.BackgroundGradient.backgroundGradient
@@ -122,6 +119,8 @@ struct StudentClassListView: View {
                 showSheet.toggle()
             }
         }
+        .navigationTitle("Registrer")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
