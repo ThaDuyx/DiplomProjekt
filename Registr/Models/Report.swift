@@ -19,10 +19,5 @@ struct Report: Codable, Hashable {
     let description: String?
     let reason: String
     let validated: Bool
-}
-
-enum Reason: String, Codable {
-    case late = "late"
-    case illness = "illness"
-    case other = "other"
+    let teacherValidation: String
 }
