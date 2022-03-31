@@ -18,6 +18,7 @@ extension Date {
         return currentDateFormatted
     }
     
+    // TODO: Will be deleted in the near future when our dates in the database is how we want them to be
     func formatSpecificData(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
@@ -25,6 +26,7 @@ extension Date {
         
         return currentDateFormatted
     }
+    // ------------------------------------------------------------------------
     
     var currentDateAndNameFormatted: String {
         let currentDate = Date()

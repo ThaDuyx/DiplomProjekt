@@ -60,7 +60,8 @@ class ChildrenManager: ObservableObject {
                                 self.absence.append(absence)
                             }
                         } catch {
-                            
+                            // TODO: Write no children absence and add error view
+                            print("No children")
                         }
                     }
                 }
