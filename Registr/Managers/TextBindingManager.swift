@@ -18,9 +18,6 @@ class TextBindingManager: ObservableObject {
         didSet {
             if value.count > self.limit {
                 value = String(value.prefix(self.limit))
-                self.hasReachedLimit = true
-            } else {
-                self.hasReachedLimit = false
             }
         }
     }
