@@ -11,7 +11,7 @@ enum AbsenceType: String, CaseIterable {
     case sickness = "Sygdom"
     case late = "Forsent"
     case vacation = "Ferie"
-    case prolongedIllness = "Forlængde sygdom"
+    case prolongedIllness = "Forlænget sygdom"
 }
 
 struct ParentAbsenceRegistrationView: View {
