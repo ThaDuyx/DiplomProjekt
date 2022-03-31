@@ -24,5 +24,4 @@ class TextBindingManager: ObservableObject {
             }
         }
     }
-    @Published var hasReachedLimit = false
 }
