@@ -62,3 +62,11 @@ extension Text {
             .font(.custom("Poppins-Medium", size: Resources.FontSize.body))
     }
 }
+
+extension TextEditor {
+    /// Color: lightMint, FontSize: 14pt
+    func lightBodyTextStyleTextEditor() -> some View {
+        self.foregroundColor(Resources.Color.Colors.lightMint)
+            .font(.custom("Poppins-Regular", size: Resources.FontSize.body))
+    }
+}

@@ -41,6 +41,16 @@ struct TabViewView: View {
                         Image(systemName: "house")
                         Text("Børn")
                     }
+                ParentAbsenceRegistrationView()
+                    .tabItem {
+                        Image(systemName: "square.and.pencil")
+                        Text("Indberet")
+                    }
+                ProfileView()
+                    .tabItem {
+                        Image(systemName: "person")
+                        Text("Profil")
+                    }
             case .headmaster:
                 // TODO: Make headmaster view
                 ParentHomeScreenView()
