@@ -11,6 +11,7 @@ import FirebaseFirestore
 class ChildrenManager: ObservableObject {
     
     @Published var children: [Student] = []
+    @Published var absence: [Registration] = []
     
     func fetchChildren(parentID: String) {
         let db = Firestore.firestore()
@@ -22,7 +23,6 @@ class ChildrenManager: ObservableObject {
             .getDocuments() {  (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
-                    
                 } else {
                     for document in querySnapshot!.documents {
                         let childID = document.documentID
@@ -31,13 +31,36 @@ class ChildrenManager: ObservableObject {
                                 do {
                                     if let child = try data.data(as: Student.self) {
                                         self.children.append(child)
-                                        print(child)
                                     }
                                 }
                                 catch {
                                     print(error)
                                 }
                             }
+                        }
+                    }
+                }
+            }
+    }
+    
+    func fetchChildrenAbsence(studentID: String) {
+        let db = Firestore.firestore()
+        
+        db
+            .collection("fb_students_path")
+            .document(studentID)
+            .collection("fb_absense_path")
+            .getDocuments { querySnapshot, err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        do {
+                            if let absence = try document.data(as: Registration.self) {
+                                self.absence.append(absence)
+                            }
+                        } catch {
+                            
                         }
                     }
                 }

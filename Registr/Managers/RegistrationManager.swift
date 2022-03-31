@@ -161,14 +161,4 @@ class RegistrationManager: ObservableObject {
             }
         }
     }
-    
-    // Retrieving the current date
-    func getFormattedCurrentDate() -> String {
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        let currentDateFormatted = dateFormatter.string(from: currentDate)
-        
-        return currentDateFormatted
-    }
 }

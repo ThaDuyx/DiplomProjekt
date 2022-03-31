@@ -18,6 +18,14 @@ extension Date {
         return currentDateFormatted
     }
     
+    func formatSpecificData(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let currentDateFormatted = dateFormatter.string(from: date)
+        
+        return currentDateFormatted
+    }
+    
     var currentDateAndNameFormatted: String {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
