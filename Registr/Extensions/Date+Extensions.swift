@@ -24,6 +24,7 @@ extension Date {
         dateFormatter.dateFormat = "dd-MM-yyyy"
         let currentDateFormatted = dateFormatter.string(from: currentDate)
         
+        dateFormatter.locale = Locale(identifier: "da_DK")
         dateFormatter.dateFormat = "E"
         let currentDayName = dateFormatter.string(from: currentDate).capitalized
         

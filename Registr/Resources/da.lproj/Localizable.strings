@@ -67,3 +67,6 @@
 //Mark: - Register View
 "register_section_header_favoritter" = "favoritter";
 "register_section_header_classes" = "andre klasser";
+
+// MARK: - Absence History View
+"absence_day_pick" = "Den følgende dato er valgt:";
