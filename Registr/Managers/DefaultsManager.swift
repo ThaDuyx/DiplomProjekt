@@ -16,6 +16,7 @@ final class DefaultsManager {
     private enum Key: String {
         case currentProfileID = "DefaultsManager_currentProfileID"
         case favorites = "DefaultsManager_favorites"
+        case userRole = "DefaultsManager_userRole"
     }
     
     // MARK: - Properties

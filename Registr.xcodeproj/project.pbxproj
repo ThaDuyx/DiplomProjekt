@@ -56,6 +56,7 @@
 		830FD5C427F5943200F87E0D /* ParentAbsenceRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830FD5C327F5943200F87E0D /* ParentAbsenceRegistrationView.swift */; };
 		830FD5C627F5C54100F87E0D /* ColorMultiply+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830FD5C527F5C54100F87E0D /* ColorMultiply+Extensions.swift */; };
 		830FD5CA27F5D2D800F87E0D /* TextBindingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830FD5C927F5D2D800F87E0D /* TextBindingManager.swift */; };
+		830FD5CC27F7231F00F87E0D /* ReportListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830FD5CB27F7231F00F87E0D /* ReportListView.swift */; };
 		8348592427CF8C3D009D8A51 /* FontStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592327CF8C3D009D8A51 /* FontStyles.swift */; };
 		8348592627CF8C7F009D8A51 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592527CF8C7F009D8A51 /* Color.swift */; };
 		8348592827CF8D1C009D8A51 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592727CF8D1C009D8A51 /* Resources.swift */; };
@@ -129,6 +130,7 @@
 		830FD5C327F5943200F87E0D /* ParentAbsenceRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentAbsenceRegistrationView.swift; sourceTree = "<group>"; };
 		830FD5C527F5C54100F87E0D /* ColorMultiply+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorMultiply+Extensions.swift"; sourceTree = "<group>"; };
 		830FD5C927F5D2D800F87E0D /* TextBindingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBindingManager.swift; sourceTree = "<group>"; };
+		830FD5CB27F7231F00F87E0D /* ReportListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportListView.swift; sourceTree = "<group>"; };
 		8348592327CF8C3D009D8A51 /* FontStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStyles.swift; sourceTree = "<group>"; };
 		8348592527CF8C7F009D8A51 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		8348592727CF8D1C009D8A51 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				83BB1B4A27EC6A0C002FF81E /* StatisticsView.swift */,
 				83BB1B5227EDB925002FF81E /* StudentListView.swift */,
 				83BB1B6027EE0D03002FF81E /* AbsenceHistoryView.swift */,
+				830FD5CB27F7231F00F87E0D /* ReportListView.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */,
 				8348592A27CF912E009D8A51 /* FontSizes.swift in Sources */,
 				8387E78727E1FA660060C12D /* NavigationAndTabbarAppearance.swift in Sources */,
+				830FD5CC27F7231F00F87E0D /* ReportListView.swift in Sources */,
 				8387E78127E1DACD0060C12D /* StudentAbsenceView.swift in Sources */,
 				6A0F350827DA0CF7001E60D9 /* RegistrationManager.swift in Sources */,
 				6A5607CA27EB2A5C000EED0C /* LoginUserID.swift in Sources */,
