@@ -154,6 +154,7 @@ struct ParentAbsenceRegistrationView: View {
                     }
                     .listRowBackground(Resources.Color.Colors.darkBlue)
                 }
+                
                 Section(
                     header: Text("Interval")
                 ) {
