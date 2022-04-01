@@ -16,6 +16,7 @@ struct Report: Codable, Hashable {
     let studentID: String
     let className: String
     let date: Date
+    let endDate: Date?
     let description: String?
     let reason: String
     let validated: Bool
