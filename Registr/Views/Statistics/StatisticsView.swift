@@ -9,13 +9,13 @@ import SwiftUI
 import SwiftUICharts
 
 struct StatisticsView: View {
-    let className: String
+    let navigationTitle: String
     var isStudentPresented: Bool
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
-    init(className: String, isStudentPresented: Bool) {
-        self.className = className
+    init(navigationTitle: String, isStudentPresented: Bool) {
+        self.navigationTitle = navigationTitle
         self.isStudentPresented = isStudentPresented
     }
     
@@ -25,10 +25,10 @@ struct StatisticsView: View {
                 .ignoresSafeArea()
             VStack {
                 VStack {
-                    HStack {
-                        isStudentPresented ? nil : Image(systemName: "star")
+                    isStudentPresented ? nil : HStack {
+                        Image(systemName: "star")
                             .foregroundColor(Resources.Color.Colors.darkPurple)
-                        Text(isStudentPresented ? className : "Følger ikke")
+                        Text("Følger ikke")
                             .boldSubTitleTextStyle()
                     }
                     .padding()
@@ -41,29 +41,13 @@ struct StatisticsView: View {
                 .padding(4)
                 Spacer()
                 VStack(spacing: 20) {
-                    NavigationLink(destination: AbsenceHistoryView(className: className)) {
-                        HStack {
-                            Image(systemName: "star")
-                                .frame(alignment: .leading)
-                                .padding(.leading, 20)
-                            Text("Historik")
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(.leading, -50)
-                        }
+                    if isStudentPresented {
+                        OptionsView(systemName: "square.and.pencil", titleText: "Indberettelser", destination: ReportListView())
+                        OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: EmptyView())
+                    } else {
+                        OptionsView(systemName: "star", titleText: "Historik", destination: AbsenceHistoryView(className: navigationTitle))
+                        OptionsView(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: navigationTitle))
                     }
-                    .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
-                    
-                    isStudentPresented ? nil : NavigationLink(destination: StudentListView(selectedClass: className)) {
-                        HStack {
-                            Image(systemName: "person.3")
-                                .frame(alignment: .leading)
-                                .padding(.leading, 20)
-                            Text("Elever")
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(.leading, -50)
-                        }
-                    }
-                    .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
                 }
                 Spacer()
                 VStack {
@@ -98,13 +82,33 @@ struct StatisticsView: View {
                 Spacer()
             }
         }
-        .navigationTitle(isStudentPresented ? "Elev" : className)
+        .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct OptionsView<TargetView: View>: View {
+    let systemName: String
+    let titleText: String
+    let destination: TargetView
+    
+    var body: some View {
+        NavigationLink(destination: destination) {
+            HStack {
+                Image(systemName: systemName)
+                    .frame(alignment: .leading)
+                    .padding(.leading, 20)
+                Text(titleText)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.leading, -50)
+            }
+        }
+        .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
     }
 }
 
 struct StatisticsView_Previews: PreviewProvider {
     static var previews: some View {
-        StatisticsView(className: "ClassName", isStudentPresented: true)
+        StatisticsView(navigationTitle: "ClassName", isStudentPresented: true)
     }
 }

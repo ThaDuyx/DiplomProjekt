@@ -39,7 +39,7 @@ struct StudentEntity: View {
     let studentName: String
     
     var body: some View {
-        NavigationLink(destination: StatisticsView(className: studentName, isStudentPresented: true)) {
+        NavigationLink(destination: StatisticsView(navigationTitle: studentName, isStudentPresented: true)) {
             HStack {
                 Text(studentName)
                     .darkBodyTextStyle()
