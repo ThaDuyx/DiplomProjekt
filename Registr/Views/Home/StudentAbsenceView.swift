@@ -138,6 +138,5 @@ struct StudentAbsenceView: View {
 struct StudentAbsenceView_Previews: PreviewProvider {
     static var previews: some View {
         StudentAbsenceView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), description: "", reason: "", validated: false, teacherValidation: ""))
-            
     }
 }
