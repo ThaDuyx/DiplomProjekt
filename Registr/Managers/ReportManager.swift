@@ -12,6 +12,10 @@ class ReportManager: ObservableObject {
     
     @Published var reports = [Report]()
     
+    init() {
+        fetchReports()
+    }
+    
     //TODO: --- We need to implement recieving class string in the method from the view ---
     func fetchReports() {
         let db = Firestore.firestore()
@@ -40,70 +44,89 @@ class ReportManager: ObservableObject {
         }
     }
     
-    func validateReport(report: Report, validationReason: String, teacherValidation: String) {
+    func validateReport(selectedReport: Report, validationReason: String, teacherValidation: String, completion: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         let batch = db.batch()
         
-        let classAbsenceRef = db
-            .collection("fb_classes_path")
-            .document(report.className)
-            .collection("fb_date_path")
-            .document(Date().formatSpecificData(date: report.date))
-            .collection("fb_registrations_path")
-            .document(report.studentID)
-        
-        let studentAbsenceRef = db
-            .collection("fb_students_path")
-            .document(report.studentID)
-            .collection("fb_absense_path")
-            .document(Date().formatSpecificData(date: report.date))
-        
-        let parentReportRef = db
-            .collection("fb_parent_path")
-            .document(DefaultsManager.shared.currentProfileID)
-            .collection("fb_report_path")
-            .document(Date().formatSpecificData(date: report.date))
-        
-        batch.updateData(["reason" : validationReason], forDocument: classAbsenceRef)
-        batch.updateData(["reason" : validationReason, "validation" : true], forDocument: studentAbsenceRef)
-        batch.updateData(["teacherValidation" : teacherValidation], forDocument: parentReportRef)
-        
-        batch.commit() { err in
-            if let err = err {
-                print("Error writing batch \(err)")
-            } else {
-                print("Batch write succeeded.")
+        if let id = selectedReport.id {
+            let classAbsenceRef = db
+                .collection("fb_classes_path".localize)
+                .document(selectedReport.className)
+                .collection("fb_date_path".localize)
+                .document(Date().formatSpecificData(date: selectedReport.date))
+                .collection("fb_registrations_path".localize)
+                .document(selectedReport.studentID)
+            
+            let classReportRef = db
+                .collection("fb_classes_path".localize)
+                .document(selectedReport.className)
+                .collection("fb_report_path".localize)
+                .document(id)
+                
+            
+            let studentAbsenceRef = db
+                .collection("fb_students_path".localize)
+                .document(selectedReport.studentID)
+                .collection("fb_absense_path".localize)
+                .document(Date().formatSpecificData(date: selectedReport.date))
+            
+            let parentReportRef = db
+                .collection("fb_parent_path".localize)
+                .document(DefaultsManager.shared.currentProfileID)
+                .collection("fb_report_path".localize)
+                .document(Date().formatSpecificData(date: selectedReport.date))
+            
+            batch.updateData(["reason" : validationReason], forDocument: classAbsenceRef)
+            batch.updateData(["reason" : validationReason, "validation" : true], forDocument: studentAbsenceRef)
+            batch.updateData(["teacherValidation" : teacherValidation], forDocument: parentReportRef)
+            batch.deleteDocument(classReportRef)
+            
+            batch.commit() { err in
+                if let err = err {
+                    print("Error writing batch \(err)")
+                    completion(false)
+                } else {
+                    print("Batch write succeeded.")
+                    completion(true)
+                    if let index = self.reports.firstIndex(where: {$0.id == id}) {
+                        self.reports.remove(at: index)
+                    }
+                }
             }
         }
     }
     
-    func denyReport(report: Report, teacherValidation: String) {
+    func denyReport(selectedReport: Report, teacherValidation: String, completion: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         let batch = db.batch()
         
-        let parentReportRef = db
-            .collection("fb_parent_path")
-            .document(DefaultsManager.shared.currentProfileID)
-            .collection("fb_report_path")
-            .document(Date().formatSpecificData(date: report.date))
-       
-        if let id = report.id {
+        if let id = selectedReport.id {
             let classReportRef = db
-                .collection("fb_classes_path")
-                .document(report.className)
-                .collection("fb_report_path")
+                .collection("fb_classes_path".localize)
+                .document(selectedReport.className)
+                .collection("fb_report_path".localize)
                 .document(id)
+            
+            let parentReportRef = db
+                .collection("fb_parent_path".localize)
+                .document(selectedReport.parentID)
+                .collection("fb_report_path".localize)
+                .document(id)
+            
             batch.deleteDocument(classReportRef)
-        }
-        
-        
-        batch.updateData(["teacherValidation" : teacherValidation], forDocument: parentReportRef)
-        
-        batch.commit() { err in
-            if let err = err {
-                print("Error writing batch \(err)")
-            } else {
-                print("Batch write succeeded.")
+            batch.updateData(["teacherValidation" : teacherValidation], forDocument: parentReportRef)
+            
+            batch.commit() { err in
+                if let err = err {
+                    print("Error writing batch \(err)")
+                    completion(false)
+                } else {
+                    print("Batch write succeeded.")
+                    if let index = self.reports.firstIndex(where: {$0.id == id}) {
+                        self.reports.remove(at: index)
+                    }
+                    completion(true)
+                }
             }
         }
     }

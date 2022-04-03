@@ -9,8 +9,10 @@ import SwiftUI
 
 struct StudentAbsenceView: View {
     
+    @EnvironmentObject var reportManager: ReportManager
+    
     @State private var selectedAbsence = "Fravær"
-    private var absence = ["Fravær", "Ulovligt", "Forsent"]
+    private var absence = ["Syg", "Ulovligt", "Forsent"]
     let report: Report
     
     init(report: Report) {
@@ -115,7 +117,13 @@ struct StudentAbsenceView: View {
                     .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
                     Spacer()
                     Button("Afslå") {
-                        print("Afslået")
+                        reportManager.denyReport(selectedReport: report, teacherValidation: "Denied") { result in
+                            if result {
+                                // TODO: Dismiss this view
+                            } else {
+                                // TODO: Add ErrorView
+                            }
+                        }
                     }
                     .buttonStyle(Resources.CustomButtonStyle.DeclineButtonStyle())
                 }

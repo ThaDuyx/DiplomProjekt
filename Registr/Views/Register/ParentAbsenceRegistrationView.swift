@@ -15,6 +15,8 @@ enum AbsenceType: String, CaseIterable {
 }
 
 struct ParentAbsenceRegistrationView: View {
+    @Environment(\.dismiss) var dismiss
+    
     @ObservedObject var childrenManager = ChildrenManager()
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     
@@ -204,6 +206,7 @@ struct ParentAbsenceRegistrationView: View {
                         childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
                             if result {
                                 // TODO: Show that the report has been written and reset everything
+                                self.dismiss()
                             } else {
                                 // TODO: ErrorView shown and maybe animation or something
                             }
