@@ -11,7 +11,7 @@ import FirebaseFirestore
 class ChildrenManager: ObservableObject {
     
     @Published var children: [Student] = []
-    @Published var absence: [Registration] = []
+    @Published var absences: [Registration] = []
     @Published var reports: [Report] = []
     
     init() {
@@ -62,7 +62,7 @@ class ChildrenManager: ObservableObject {
                     for document in querySnapshot!.documents {
                         do {
                             if let absence = try document.data(as: Registration.self) {
-                                self.absence.append(absence)
+                                self.absences.append(absence)
                             }
                         } catch {
                             // TODO: Write no children absence and add error view
