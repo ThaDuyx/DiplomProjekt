@@ -9,8 +9,11 @@ import SwiftUI
 
 struct StudentAbsenceView: View {
     
+    @EnvironmentObject var reportManager: ReportManager
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     @State private var selectedAbsence = "Fravær"
-    private var absence = ["Fravær", "Ulovligt", "Forsent"]
+    private var absence = ["Syg", "Ulovligt", "Forsent"]
     let report: Report
     
     init(report: Report) {
@@ -111,11 +114,18 @@ struct StudentAbsenceView: View {
                 HStack {
                     Button("Registrer") {
                         print("Registrer")
+                        presentationMode.wrappedValue.dismiss()
                     }
                     .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
                     Spacer()
                     Button("Afslå") {
-                        print("Afslået")
+                        reportManager.denyReport(selectedReport: report, teacherValidation: "Denied") { result in
+                            if result {
+                                // TODO: Dismiss this view
+                            } else {
+                                // TODO: Add ErrorView
+                            }
+                        }
                     }
                     .buttonStyle(Resources.CustomButtonStyle.DeclineButtonStyle())
                 }
@@ -129,7 +139,6 @@ struct StudentAbsenceView: View {
 
 struct StudentAbsenceView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentAbsenceView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), description: "", reason: "", validated: false, teacherValidation: ""))
-            
+        StudentAbsenceView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), description: "", reason: "", validated: false, teacherValidation: ""))
     }
 }

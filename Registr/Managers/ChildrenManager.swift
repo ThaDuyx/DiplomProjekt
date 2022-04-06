@@ -11,7 +11,12 @@ import FirebaseFirestore
 class ChildrenManager: ObservableObject {
     
     @Published var children: [Student] = []
-    @Published var absence: [Registration] = []
+    @Published var absences: [Registration] = []
+    @Published var reports: [Report] = []
+    
+    init() {
+        fetchChildren(parentID: DefaultsManager.shared.currentProfileID)
+    }
     
     func fetchChildren(parentID: String) {
         let db = Firestore.firestore()
@@ -57,7 +62,7 @@ class ChildrenManager: ObservableObject {
                     for document in querySnapshot!.documents {
                         do {
                             if let absence = try document.data(as: Registration.self) {
-                                self.absence.append(absence)
+                                self.absences.append(absence)
                             }
                         } catch {
                             // TODO: Write no children absence and add error view
@@ -66,6 +71,43 @@ class ChildrenManager: ObservableObject {
                     }
                 }
             }
+    }
+    
+    func createAbsenceReport(child: Student, report: Report, completion: @escaping (Bool) -> ()) {
+        let db = Firestore.firestore()
+        let batch = db.batch()
+        
+        let newClassReport = db
+            .collection("fb_classes_path".localize)
+            .document(child.className)
+            .collection("fb_report_path".localize)
+            .document()
+        
+        let newDocID = newClassReport.documentID
+        
+        let newParentReport = db
+            .collection("fb_parent_path".localize)
+            .document(DefaultsManager.shared.currentProfileID)
+            .collection("fb_report_path".localize)
+            .document(newDocID)
+        
+        do {
+            try batch.setData(from: report, forDocument: newClassReport)
+            try batch.setData(from: report, forDocument: newParentReport)
+        }
+        catch {
+          print(error)
+        }
+        
+        batch.commit() { err in
+            if let err = err {
+                print("Error writing batch \(err)")
+                completion(false)
+            } else {
+                print("Batch write succeeded.")
+                completion(true)
+            }
+        }
     }
 }
 

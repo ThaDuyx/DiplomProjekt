@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct ParentHomeScreenView: View {
-    @ObservedObject var childrenManager = ChildrenManager()
+    @EnvironmentObject var childrenManager: ChildrenManager
     
     init() {
         UITableView.appearance().backgroundColor = .clear
-        childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID)
     }
     
     var body: some View {

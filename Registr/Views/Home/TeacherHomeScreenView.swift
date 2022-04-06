@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct TeacherHomeScreenView: View {
-    
-    @ObservedObject var reportManager = ReportManager()
+     
+    @StateObject var reportManager = ReportManager()
     @State var favorites = DefaultsManager.shared.favorites
     
     init() {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
-        self.reportManager.fetchReports()
     }
     
     var body: some View {
@@ -31,7 +30,7 @@ struct TeacherHomeScreenView: View {
                     ) {
                         ForEach(reportManager.reports, id: \.self) { report in
                             if report.className == favorite {
-                                TaskRow(report: report)
+                                TaskRow(report: report).environmentObject(reportManager)
                             }
                         }
                     }
@@ -40,7 +39,7 @@ struct TeacherHomeScreenView: View {
             }
             .navigationTitle("Indberettelser")
             .navigationBarTitleDisplayMode(.inline)
-        }
+        }.environmentObject(reportManager)
     }
 }
 

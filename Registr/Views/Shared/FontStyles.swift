@@ -76,3 +76,10 @@ extension TextEditor {
             .font(.custom("Poppins-Regular", size: Resources.FontSize.body))
     }
 }
+
+extension Toggle {
+    func lightBodyTextStyleToggle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.lightMint)
+            .font(.custom("Poppins-Regular", size: Resources.FontSize.body))
+    }
+}
