@@ -42,8 +42,8 @@ struct StatisticsView: View {
                 Spacer()
                 VStack(spacing: 20) {
                     if isStudentPresented {
-                        OptionsView(systemName: "square.and.pencil", titleText: "Indberettelser", destination: ReportListView())
-                        OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: EmptyView())
+                        OptionsView(systemName: "square.and.pencil", titleText: "Indberettelser", destination: EmptyView())
+                        OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: ReportListView())
                     } else {
                         OptionsView(systemName: "star", titleText: "Historik", destination: AbsenceHistoryView(className: navigationTitle))
                         OptionsView(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: navigationTitle))
