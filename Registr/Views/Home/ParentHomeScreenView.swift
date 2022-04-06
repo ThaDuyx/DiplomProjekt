@@ -49,6 +49,11 @@ struct CardStack: View {
     
     var body: some View {
         VStack {
+            NavigationLink(destination: StatisticsView(navigationTitle: name, isStudentPresented: true)) {
+                EmptyView()
+            }
+            .frame(width: 0)
+            .opacity(0)
             ZStack {
                 HStack(spacing: 40) {
                     HStack {

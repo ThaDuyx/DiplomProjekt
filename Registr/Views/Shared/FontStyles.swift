@@ -61,6 +61,12 @@ extension Text {
         self.foregroundColor(Resources.Color.Colors.darkBlue)
             .font(.custom("Poppins-Medium", size: Resources.FontSize.body))
     }
+    
+    /// Color: darkPurple, FontSize: 14pt
+    func darkBoldBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.darkPurple)
+            .font(.custom("Poppins-Medium", size: Resources.FontSize.body))
+    }
 }
 
 extension TextEditor {
