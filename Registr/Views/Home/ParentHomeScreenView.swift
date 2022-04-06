@@ -30,7 +30,7 @@ struct ParentHomeScreenView: View {
             }
             .navigationTitle("Dine børn")
             .navigationBarTitleDisplayMode(.inline)
-        }.environmentObject(childrenManager)
+        }
     }
 }
 
