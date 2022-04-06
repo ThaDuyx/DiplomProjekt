@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TabViewView: View {
     @State private var userRole = UserManager.shared.user?.role
+    @StateObject var childrenManager = ChildrenManager()
     
     var body: some View {
         TabView {
@@ -40,12 +41,12 @@ struct TabViewView: View {
                     .tabItem {
                         Image(systemName: "house")
                         Text("Børn")
-                    }
+                    }.environmentObject(childrenManager)
                 ParentAbsenceRegistrationView()
                     .tabItem {
                         Image(systemName: "square.and.pencil")
                         Text("Indberet")
-                    }
+                    }.environmentObject(childrenManager)
                 ProfileView()
                     .tabItem {
                         Image(systemName: "person")

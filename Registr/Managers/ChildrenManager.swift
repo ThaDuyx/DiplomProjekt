@@ -14,6 +14,10 @@ class ChildrenManager: ObservableObject {
     @Published var absence: [Registration] = []
     @Published var reports: [Report] = []
     
+    init() {
+        fetchChildren(parentID: DefaultsManager.shared.currentProfileID)
+    }
+    
     func fetchChildren(parentID: String) {
         let db = Firestore.firestore()
         

@@ -15,9 +15,7 @@ enum AbsenceType: String, CaseIterable {
 }
 
 struct ParentAbsenceRegistrationView: View {
-    @Environment(\.dismiss) var dismiss
-    
-    @ObservedObject var childrenManager = ChildrenManager()
+    @EnvironmentObject var childrenManager: ChildrenManager
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     
     @State private var selectedAbsence = ""
@@ -50,7 +48,6 @@ struct ParentAbsenceRegistrationView: View {
     init() {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
-        childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID)
     }
     
     var body: some View {
@@ -206,7 +203,6 @@ struct ParentAbsenceRegistrationView: View {
                         childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
                             if result {
                                 // TODO: Show that the report has been written and reset everything
-                                self.dismiss()
                             } else {
                                 // TODO: ErrorView shown and maybe animation or something
                             }
