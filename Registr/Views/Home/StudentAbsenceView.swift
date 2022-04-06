@@ -10,6 +10,7 @@ import SwiftUI
 struct StudentAbsenceView: View {
     
     @EnvironmentObject var reportManager: ReportManager
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @State private var selectedAbsence = "Fravær"
     private var absence = ["Syg", "Ulovligt", "Forsent"]
@@ -113,6 +114,7 @@ struct StudentAbsenceView: View {
                 HStack {
                     Button("Registrer") {
                         print("Registrer")
+                        presentationMode.wrappedValue.dismiss()
                     }
                     .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
                     Spacer()
