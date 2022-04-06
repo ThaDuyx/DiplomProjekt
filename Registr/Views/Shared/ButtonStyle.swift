@@ -93,12 +93,14 @@ extension Resources.CustomButtonStyle {
     }
     
     struct FollowButtonStyle: ButtonStyle {
+        let backgroundColor: Color
+        let textColor: Color
         func makeBody(configuration: Configuration) -> some View {
-            return configuration.label
-                .frame(width: 115, height: 40)
+            configuration.label
+                .frame(width: 185, height: 40)
                 .font(.custom("Poppins-Medium", size: Resources.FontSize.subTitle))
-                .foregroundColor(Resources.Color.Colors.darkPurple)
-                .background(Color.clear)
+                .foregroundColor(textColor)
+                .background(backgroundColor)
                 .border(Resources.Color.Colors.darkPurple, width: 1)
                 .cornerRadius(2)
         }
