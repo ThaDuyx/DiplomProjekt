@@ -103,6 +103,19 @@ struct ParentAbsenceRegistrationView: View {
                 .listRowBackground(Resources.Color.Colors.darkBlue)
                 
                 Section(
+                    header: Text("Interval")
+                ) {
+                    HStack {
+                        Image(systemName: "calendar")
+                            .foregroundColor(Resources.Color.Colors.lightMint)
+                        Toggle("Aktivér for slutdato", isOn: $isInterval)
+                            .lightBodyTextStyleToggle()
+                            .toggleStyle(SwitchToggleStyle(tint: Resources.Color.Colors.mediumMint))
+                    }
+                }
+                .listRowBackground(Resources.Color.Colors.darkBlue)
+                
+                Section(
                     header: Text("Startdato")
                 ) {
                     HStack {
@@ -153,19 +166,6 @@ struct ParentAbsenceRegistrationView: View {
                     }
                     .listRowBackground(Resources.Color.Colors.darkBlue)
                 }
-                
-                Section(
-                    header: Text("Interval")
-                ) {
-                    HStack {
-                        Image(systemName: "calendar")
-                            .foregroundColor(Resources.Color.Colors.lightMint)
-                        Toggle("Aktivér for slutdato", isOn: $isInterval)
-                            .lightBodyTextStyleToggle()
-                            .toggleStyle(SwitchToggleStyle(tint: Resources.Color.Colors.mediumMint))
-                    }
-                }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
                 
                 Section(
                     header:
