@@ -25,20 +25,8 @@ struct StatisticsView: View {
                 .ignoresSafeArea()
             VStack {
                 VStack {
-                    isStudentPresented ? nil : HStack {
-                        Image(systemName: "star")
-                            .foregroundColor(Resources.Color.Colors.darkPurple)
-                        Text("Følger ikke")
-                            .boldSubTitleTextStyle()
-                    }
-                    .padding()
+                    isStudentPresented ? nil : FollowButton()
                 }
-                .padding(.trailing, isStudentPresented ? 0 : 20)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color.black, lineWidth: 1)
-                )
-                .padding(4)
                 Spacer()
                 VStack(spacing: 20) {
                     if isStudentPresented {
@@ -104,6 +92,25 @@ struct OptionsView<TargetView: View>: View {
             }
         }
         .buttonStyle(Resources.CustomButtonStyle.FilledButtonStyle())
+    }
+}
+
+struct FollowButton: View {
+    @State private var followToggled: Bool = false
+    var body: some View {
+        VStack {
+            Button {
+                followToggled.toggle()
+            } label: {
+                HStack {
+                    Image(systemName: followToggled ? "star.fill" : "star")
+                        .foregroundColor(followToggled ? Resources.Color.Colors.lightMint : Resources.Color.Colors.darkPurple)
+                    Text(followToggled ? "Følger" : "Følger ikke")
+                }
+                .padding()
+            }
+            .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(backgroundColor: followToggled ? Resources.Color.Colors.darkPurple : Color.clear, textColor: followToggled ? Resources.Color.Colors.lightMint : Resources.Color.Colors.darkPurple))
+        }
     }
 }
 
