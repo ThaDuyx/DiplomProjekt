@@ -16,7 +16,7 @@ class RegistrationManager: ObservableObject {
     @Published var students = [Student]()
     @Published var classes = [String]()
     let db = Firestore.firestore()
-    var selectedDate = String()
+    var selectedClass = String()
     
     init() {
         fetchClasses()
@@ -26,9 +26,9 @@ class RegistrationManager: ObservableObject {
     func fetchRegistrations(className: String, date: String) {
         // If 'selectedDate' is the same as the date input we have already fetched the registration.
         // In this case will not have to fetch it again.
-        if selectedDate != date {
+        if selectedClass != className {
             registrations.removeAll()
-            selectedDate = date
+            selectedClass = className
             
             db
                 .collection("fb_classes_path".localize)
