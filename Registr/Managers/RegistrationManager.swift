@@ -24,8 +24,8 @@ class RegistrationManager: ObservableObject {
     
     //TODO: --- We need to implement recieving class string in the method from the view - We can make the date logic from this manager class ---
     func fetchRegistrations(className: String, date: String) {
-        // If selectedDate is the same as the date input we have already fetched the registration
-        // and will not have to fetch it again
+        // If 'selectedDate' is the same as the date input we have already fetched the registration.
+        // In this case will not have to fetch it again.
         if selectedDate != date {
             registrations.removeAll()
             selectedDate = date
@@ -113,7 +113,7 @@ class RegistrationManager: ObservableObject {
     
     func saveRegistrations(className: String, date: String, completion: @escaping (Bool) -> ()) {
         if !registrations.isEmpty {
-            // Create new write batch that we will push at the same time.
+            // Create new write batch that will pushed at the same time.
             let batch = db.batch()
             
             for (var registration) in registrations {
