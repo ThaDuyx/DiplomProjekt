@@ -18,7 +18,7 @@ class FeedDatabaseManager: ObservableObject {
         fetchStudents(className: "0.x")
     }
     
-    ///This method fills our date array with date strings in the format 'dd-MM-yyyy'.
+    /// This method fills our date array with date strings in the format 'dd-MM-yyyy'.
     func createDateArray() {
         let currentDate = Date()
         let calendar = Calendar.current
