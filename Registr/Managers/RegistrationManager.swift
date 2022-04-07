@@ -16,36 +16,46 @@ class RegistrationManager: ObservableObject {
     @Published var students = [Student]()
     @Published var classes = [String]()
     let db = Firestore.firestore()
+    var selectedDate = String()
+    
+    init() {
+        fetchClasses()
+    }
     
     //TODO: --- We need to implement recieving class string in the method from the view - We can make the date logic from this manager class ---
-    func fetchRegistrations(className: String) {
-        /// Line 21 will be used later on in the project
-        //let currentDate = getFormattedCurrentDate()
-        db
-            .collection("fb_classes_path".localize)
-            .document(className)
-            .collection("fb_date_path".localize)
-            .document("12-03-2022")
-            .collection("fb_registrations_path".localize)
-            .getDocuments() {  (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        do {
-                            if let registration = try document.data(as: Registration.self) {
-                                self.registrations.append(registration)
-                                self.registrations.sort {
-                                    $0.studentName < $1.studentName
+    func fetchRegistrations(className: String, date: String) {
+        // If selectedDate is the same as the date input we have already fetched the registration
+        // and will not have to fetch it again
+        if selectedDate != date {
+            registrations.removeAll()
+            selectedDate = date
+            
+            db
+                .collection("fb_classes_path".localize)
+                .document(className)
+                .collection("fb_date_path".localize)
+                .document(date)
+                .collection("fb_registrations_path".localize)
+                .getDocuments() {  (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            do {
+                                if let registration = try document.data(as: Registration.self) {
+                                    self.registrations.append(registration)
+                                    self.registrations.sort {
+                                        $0.studentName < $1.studentName
+                                    }
                                 }
                             }
-                        }
-                        catch {
-                            print(error)
+                            catch {
+                                print(error)
+                            }
                         }
                     }
                 }
-            }
+        }
     }
     
     func setAbsenceReason(absenceReason: String, index: Int) {
@@ -101,12 +111,10 @@ class RegistrationManager: ObservableObject {
             }
     }
     
-    func saveRegistrations(className: String) {
+    func saveRegistrations(className: String, date: String, completion: @escaping (Bool) -> ()) {
         if !registrations.isEmpty {
-            // Get new write batch
+            // Create new write batch that we will push at the same time.
             let batch = db.batch()
-            
-            //let currentDate = getFormattedCurrentDate()
             
             for (var registration) in registrations {
                 if !registration.reason.isEmpty {
@@ -114,7 +122,7 @@ class RegistrationManager: ObservableObject {
                         .collection("fb_classes_path".localize)
                         .document("0.x")
                         .collection("fb_date_path".localize)
-                        .document("12-03-2022")
+                        .document(date)
                         .collection("fb_registrations_path".localize)
                         .document(registration.studentID)
                     
@@ -122,7 +130,7 @@ class RegistrationManager: ObservableObject {
                         .collection("fb_students_path".localize)
                         .document(registration.studentID)
                         .collection("fb_absense_path".localize)
-                        .document("12-03-2022")
+                        .document(date)
                     
                     registration.isAbsenceRegistered = true
                     do {
@@ -136,7 +144,7 @@ class RegistrationManager: ObservableObject {
                         .collection("fb_classes_path".localize)
                         .document("0.x")
                         .collection("fb_date_path".localize)
-                        .document("12-03-2022")
+                        .document(date)
                         .collection("fb_registrations_path".localize)
                         .document(registration.studentID)
                     
@@ -144,7 +152,7 @@ class RegistrationManager: ObservableObject {
                         .collection("fb_students_path".localize)
                         .document(registration.studentID)
                         .collection("fb_absense_path".localize)
-                        .document("12-03-2022")
+                        .document(date)
                     
                     batch.updateData(["reason" : registration.reason, "isAbsenceRegistered" : false], forDocument: registrationRef)
                     batch.deleteDocument(registrationStudentRef)
@@ -155,8 +163,10 @@ class RegistrationManager: ObservableObject {
             batch.commit() { err in
                 if let err = err {
                     print("Error writing batch \(err)")
+                    completion(false)
                 } else {
                     print("Batch write succeeded.")
+                    completion(true)
                 }
             }
         }

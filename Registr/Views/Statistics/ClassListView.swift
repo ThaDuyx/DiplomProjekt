@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct ClassListView: View {
-    @ObservedObject var registrationManager = RegistrationManager()
+    @EnvironmentObject var registrationManager: RegistrationManager
     
     init() {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
-        self.registrationManager.fetchClasses()
     }
     
     var body: some View {

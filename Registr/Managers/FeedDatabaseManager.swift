@@ -7,19 +7,27 @@
 
 import Foundation
 import FirebaseFirestore
-
+/*
+ This class is used to feed our data base
+ */
 class FeedDatabaseManager: ObservableObject {
     @Published var dateArray: [String] = []
-    @Published var students: [Student] = [Student(id: "asdfadsf", name: "Simon Andersen", className: "3.y", email: "asdf@mail.com")]
+    @Published var students: [Student] = []
     
     init() {
-        dateChecker()
+        fetchStudents(className: "0.x")
     }
     
-    func dateChecker() {
+    ///This method fills our date array with date strings in the format 'dd-MM-yyyy'.
+    func createDateArray() {
         let currentDate = Date()
         let calendar = Calendar.current
+        
+        // ---------------------
+        /// Change this variable to set how many days you'd like to create in the dateArray
         let component = DateComponents(month: 1)
+        // ---------------------
+        
         let endDate = calendar.date(byAdding: component, to: currentDate)
         let componentTwo = DateComponents(day: 1)
         var futureDate = Date()
@@ -36,6 +44,7 @@ class FeedDatabaseManager: ObservableObject {
         }
     }
     
+    /// This method is used to fill our 'students' array with student that can be used to create new absence registrations.
     func fetchStudents(className: String) {
         let db = Firestore.firestore()
         db
@@ -54,6 +63,7 @@ class FeedDatabaseManager: ObservableObject {
                                 if let data = studentDoc {
                                     do {
                                         if let student = try data.data(as: Student.self) {
+                                            print(student.name)
                                             self.students.append(student)
                                             self.students.sort {
                                                 $0.name < $1.name
@@ -70,6 +80,8 @@ class FeedDatabaseManager: ObservableObject {
             }
     }
     
+    /// This method will take the global date array from this class and create registrations from a class.
+    /// Though the method 'fetchStudents' will have to be called first for this to be used.
     func createRegistrationDates(className: String) {
         let db = Firestore.firestore()
         
@@ -86,8 +98,6 @@ class FeedDatabaseManager: ObservableObject {
                     newRegistration.collection("fb_registrations_path".localize).document(id).setData(["className" : className, "date" : date, "isAbsenceRegistered" : false, "reason" : "", "studentID" : id, "studentName" : student.name, "validated" : false])
                 }
             }
-            
         }
-        
     }
 }

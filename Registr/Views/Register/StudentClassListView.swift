@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct StudentClassListView: View {
-    @ObservedObject var registrationManager = RegistrationManager()
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var registrationManager: RegistrationManager
     @State private var showSheet: Bool = false
     @State private var studentAbsenceState: String = ""
     @State private var studentIndex: Int = 0
@@ -18,7 +19,6 @@ struct StudentClassListView: View {
     
     init(selectedClass: String) {
         self.selectedClass = selectedClass
-        self.registrationManager.fetchRegistrations(className: selectedClass)
     }
     
     var body: some View {
@@ -29,15 +29,24 @@ struct StudentClassListView: View {
                 Section {
                     HStack(alignment: .center) {
                         Spacer()
+                        
                         VStack {
                             Text(selectedClass)
                                 .darkBodyTextStyle()
                             Text(Date().currentDateAndNameFormatted)
                                 .darkBodyTextStyle()
                         }
+                        
                         Spacer()
+                        
                         Button {
-                            registrationManager.saveRegistrations(className: selectedClass)
+                            registrationManager.saveRegistrations(className: selectedClass, date: Date().currentDateFormatted) { result in
+                                if result {
+                                    presentationMode.wrappedValue.dismiss()
+                                } else {
+                                    // TODO: Present ErrorView
+                                }
+                            }
                         } label: {
                             Image(systemName: "checkmark.circle")
                                 .resizable()
@@ -47,6 +56,7 @@ struct StudentClassListView: View {
                     }
                 }
                 .listRowBackground(Color.clear)
+                
                 Section {
                     ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
                         StudentSection(
@@ -72,9 +82,11 @@ struct StudentClassListView: View {
                 ZStack {
                     Resources.BackgroundGradient.backgroundGradient
                         .ignoresSafeArea()
+                    
                     VStack {
                         Text("student_list_absence_description \(studentName)")
                             .darkBodyTextStyle()
+                        
                         Button {
                             studentAbsenceState = "FS"
                             registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
@@ -119,6 +131,9 @@ struct StudentClassListView: View {
         }
         .navigationTitle("Registrer")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear(){
+            registrationManager.fetchRegistrations(className: selectedClass, date: Date().currentDateFormatted)
+        }
     }
 }
 
