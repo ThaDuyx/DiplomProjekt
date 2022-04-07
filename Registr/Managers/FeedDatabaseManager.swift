@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 /*
- This class is used to feed our data base
+ This class is used to feed the database
  */
 class FeedDatabaseManager: ObservableObject {
     @Published var dateArray: [String] = []
