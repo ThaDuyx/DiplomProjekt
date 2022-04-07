@@ -47,12 +47,14 @@ extension Resources.CustomButtonStyle {
     struct TransparentButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             return configuration.label
-                .frame(width: 290, height: 50)
-                .font(.custom("Poppins-SemiBold", size: Resources.FontSize.subTitle))
-                .foregroundColor(Resources.Color.Colors.darkPurple)
+                .frame(width: 290, height: 65)
+                .font(.custom("Poppins-SemiBold", size: Resources.FontSize.primaryHeader))
+                .foregroundColor(Resources.Color.Colors.frolyRed)
                 .background(Color.clear)
-                .border(Resources.Color.Colors.darkPurple, width: 1)
-                .cornerRadius(2)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Resources.Color.Colors.frolyRed, lineWidth: 2)
+                )
         }
     }
     

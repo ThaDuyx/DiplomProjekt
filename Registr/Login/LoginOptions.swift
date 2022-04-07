@@ -9,30 +9,42 @@ import SwiftUI
 struct LoginOptions: View {
     var body: some View {
         NavigationView {
-            VStack(spacing: 60) {
-                Text("application_name")
-                    .titleTextStyle()
-                VStack(spacing: 40) {
-                    NavigationLink(destination: LoginUserID(username: "test@test.com")) {
-                        Text("parent_login")
-                    }.simultaneousGesture(TapGesture().onEnded{
-                        AuthenticationManager.shared.loginSelection = .parent
-                    })
-                    .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
-                    NavigationLink(destination: LoginUserID(username: "teacher@test.com")) {
-                        Text("school_login")
-                    }.simultaneousGesture(TapGesture().onEnded{
-                        AuthenticationManager.shared.loginSelection = .school
-                    })
-                    .buttonStyle(Resources.CustomButtonStyle.FrontPageButtonStyle())
-                    Spacer()
-                        .frame(height: 200)
+            ZStack {
+                VStack(spacing: 60) {
+                    ZStack {
+                        VStack {
+                            Rectangle()
+                                .fill(Resources.Color.Colors.moonMist.opacity(0.7))
+                                .frame(height: 170)
+                                .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
+                            Spacer()
+                        }
+                        .ignoresSafeArea()
+                        Spacer()
+                        VStack {
+                            Image("Group 4")
+                            Text("application_name")
+                                .titleTextStyle()
+                        }
+                    }
+                    VStack(spacing: 40) {
+                        NavigationLink(destination: LoginUserID(username: "test@test.com")) {
+                            Text("parent_login")
+                        }.simultaneousGesture(TapGesture().onEnded{
+                            AuthenticationManager.shared.loginSelection = .parent
+                        })
+                            .buttonStyle(Resources.CustomButtonStyle.TransparentButtonStyle())
+                        NavigationLink(destination: LoginUserID(username: "teacher@test.com")) {
+                            Text("school_login")
+                        }.simultaneousGesture(TapGesture().onEnded{
+                            AuthenticationManager.shared.loginSelection = .school
+                        })
+                            .buttonStyle(Resources.CustomButtonStyle.TransparentButtonStyle())
+                        Spacer()
+                            .frame(height: 200)
+                    }
                 }
             }
-            .background(Image("BackgroundImage")
-                            .resizable()
-                            .edgesIgnoringSafeArea(.all)
-                            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             .navigationTitle("")
             .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)

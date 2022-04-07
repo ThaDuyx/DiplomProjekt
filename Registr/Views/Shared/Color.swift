@@ -39,5 +39,9 @@ extension Resources.Color {
         static var darkBlue = Color(hex: 0x2C698D)
         /// Hexcode is CA6161
         static var bloodRed = Color(hex: 0xCA6161)
+        /// Hexcode is e2e0d4
+        static var moonMist = Color(hex: 0xe2e0d4)
+        /// Hexcode is f97c7c
+        static var frolyRed = Color(hex: 0xf97c7c)
     }
 }

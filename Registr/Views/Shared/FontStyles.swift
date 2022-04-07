@@ -10,7 +10,7 @@ import SwiftUI
 extension Text {
     /// Color: darkPurple, FontSize: 64pt
     func titleTextStyle() -> some View {
-        self.foregroundColor(Resources.Color.Colors.darkPurple)
+        self.foregroundColor(Resources.Color.Colors.frolyRed)
             .font(.custom("Poppins-SemiBold", size: Resources.FontSize.title))
     }
     
