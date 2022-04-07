@@ -24,7 +24,7 @@ class FeedDatabaseManager: ObservableObject {
         let calendar = Calendar.current
         
         // ---------------------
-        /// Change this variable to set how many days you'd like to create in the dateArray
+        /// Change this variable to set the number of days to to create in the dateArray
         let component = DateComponents(month: 1)
         // ---------------------
         
@@ -44,7 +44,7 @@ class FeedDatabaseManager: ObservableObject {
         }
     }
     
-    /// This method is used to fill our 'students' array with student that can be used to create new absence registrations.
+    /// This method is used to fill the 'students' array with student that can be used to create new absence registrations.
     func fetchStudents(className: String) {
         let db = Firestore.firestore()
         db
@@ -63,7 +63,6 @@ class FeedDatabaseManager: ObservableObject {
                                 if let data = studentDoc {
                                     do {
                                         if let student = try data.data(as: Student.self) {
-                                            print(student.name)
                                             self.students.append(student)
                                             self.students.sort {
                                                 $0.name < $1.name
