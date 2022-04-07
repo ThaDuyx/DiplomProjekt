@@ -7,19 +7,27 @@
 
 import Foundation
 import FirebaseFirestore
-
+/*
+ This class is used to feed the database
+ */
 class FeedDatabaseManager: ObservableObject {
     @Published var dateArray: [String] = []
-    @Published var students: [Student] = [Student(id: "asdfadsf", name: "Simon Andersen", className: "3.y", email: "asdf@mail.com")]
+    @Published var students: [Student] = []
     
     init() {
-        dateChecker()
+        fetchStudents(className: "0.x")
     }
     
-    func dateChecker() {
+    /// This method fills our date array with date strings in the format 'dd-MM-yyyy'.
+    func createDateArray() {
         let currentDate = Date()
         let calendar = Calendar.current
+        
+        // ---------------------
+        /// Change this variable to set the number of days to to create in the dateArray
         let component = DateComponents(month: 1)
+        // ---------------------
+        
         let endDate = calendar.date(byAdding: component, to: currentDate)
         let componentTwo = DateComponents(day: 1)
         var futureDate = Date()
@@ -36,6 +44,7 @@ class FeedDatabaseManager: ObservableObject {
         }
     }
     
+    /// This method is used to fill the 'students' array with student that can be used to create new absence registrations.
     func fetchStudents(className: String) {
         let db = Firestore.firestore()
         db
@@ -70,6 +79,8 @@ class FeedDatabaseManager: ObservableObject {
             }
     }
     
+    /// This method will take the global date array from this class and create registrations from a class.
+    /// Though the method 'fetchStudents' will have to be called first for this to be used.
     func createRegistrationDates(className: String) {
         let db = Firestore.firestore()
         
@@ -86,8 +97,6 @@ class FeedDatabaseManager: ObservableObject {
                     newRegistration.collection("fb_registrations_path".localize).document(id).setData(["className" : className, "date" : date, "isAbsenceRegistered" : false, "reason" : "", "studentID" : id, "studentName" : student.name, "validated" : false])
                 }
             }
-            
         }
-        
     }
 }

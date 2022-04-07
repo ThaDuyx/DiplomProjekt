@@ -9,13 +9,12 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @ObservedObject var registrationManager = RegistrationManager()
+    @EnvironmentObject var registrationManager: RegistrationManager
     @State var favorites = DefaultsManager.shared.favorites
     
     init() {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
-        self.registrationManager.fetchClasses()
     }
     
     var body: some View {
@@ -70,6 +69,7 @@ struct RegisterView: View {
 struct ClassStack: View {
     let className: String
     var isFavorite: Bool = false
+    @EnvironmentObject var registrationManager: RegistrationManager
     
     var body: some View {
         NavigationLink(destination: StudentClassListView(selectedClass: className)) {
@@ -91,6 +91,7 @@ struct ClassStack: View {
                 .padding()
             }
         }
+        .environmentObject(registrationManager)
         .padding(.trailing, 20)
         .overlay(
             RoundedRectangle(cornerRadius: 5)

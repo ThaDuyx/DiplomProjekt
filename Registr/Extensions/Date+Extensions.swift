@@ -9,6 +9,7 @@ import Foundation
 
 extension Date {
     
+    /// Returns todays date in the format "dd-MM-yyyy"
     var currentDateFormatted: String {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
@@ -28,6 +29,7 @@ extension Date {
     }
     // ------------------------------------------------------------------------
     
+    /// Returns todays date in the format "E d. - dd-MM-yyyy"
     var currentDateAndNameFormatted: String {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
