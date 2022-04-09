@@ -73,6 +73,7 @@ class AuthenticationManager {
                                 completion(false)
                             }
                         }
+                        
                     case .none:
                         print("Something went wrong")
                         completion(false)
