@@ -10,6 +10,7 @@ import SwiftUI
 struct RegisterView: View {
     
     @EnvironmentObject var registrationManager: RegistrationManager
+    @EnvironmentObject var favoriteManager: FavoriteManager
     @State var favorites = DefaultsManager.shared.favorites
     
     init() {
@@ -32,7 +33,7 @@ struct RegisterView: View {
                             }
                     ) {
                         ForEach(registrationManager.classes, id: \.self) { className in
-                            if favorites.contains(className) {
+                            if favoriteManager.favorites.contains(className) {
                                 ClassStack(className: className, isFavorite: true)
                             }
                         }
@@ -50,7 +51,7 @@ struct RegisterView: View {
                             }
                     ) {
                         ForEach(registrationManager.classes, id: \.self) { className in
-                            if !favorites.contains(className) {
+                            if !favoriteManager.favorites.contains(className) {
                                 ClassStack(className: className)
                             }
                         }

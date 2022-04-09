@@ -25,7 +25,7 @@ struct StatisticsView: View {
                 .ignoresSafeArea()
             VStack {
                 VStack {
-                    isStudentPresented ? nil : FollowButton()
+                    isStudentPresented ? nil : FollowButton(selectedClass: navigationTitle)
                 }
                 Spacer()
                 VStack(spacing: 20) {
@@ -96,20 +96,29 @@ struct OptionsView<TargetView: View>: View {
 }
 
 struct FollowButton: View {
+    @EnvironmentObject var favoriteManager: FavoriteManager
     @State private var followToggled: Bool = false
+    let selectedClass: String
+    
     var body: some View {
         VStack {
             Button {
                 followToggled.toggle()
+                favoriteManager.favoriteAction(favorite: selectedClass)
             } label: {
                 HStack {
                     Image(systemName: followToggled ? "star.fill" : "star")
                         .foregroundColor(followToggled ? Resources.Color.Colors.lightMint : Resources.Color.Colors.darkPurple)
+                    
                     Text(followToggled ? "Følger" : "Følger ikke")
                 }
                 .padding()
             }
             .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(backgroundColor: followToggled ? Resources.Color.Colors.darkPurple : Color.clear, textColor: followToggled ? Resources.Color.Colors.lightMint : Resources.Color.Colors.darkPurple))
+        }.onAppear() {
+            if favoriteManager.favorites.contains(selectedClass) {
+                followToggled = true
+            }
         }
     }
 }

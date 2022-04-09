@@ -52,6 +52,7 @@ struct TeacherTabs: View {
                 Text("Registrer")
             }
             .environmentObject(registrationManager)
+            .environmentObject(favoriteManager)
         
         ClassListView()
             .tabItem {

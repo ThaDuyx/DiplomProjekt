@@ -36,10 +36,8 @@ struct TeacherHomeScreenView: View {
                         }
                     }
                     .listRowBackground(Color.clear)
-                }
-                Button("FavoritesChecker") {
-                    favoriteManager.favoriteAction(favorite: "3.x")
-                    
+                }.onChange(of: favoriteManager.favorites) { _ in
+                    reportManager.fetchReports()
                 }
             }
             .navigationTitle("Indberettelser")

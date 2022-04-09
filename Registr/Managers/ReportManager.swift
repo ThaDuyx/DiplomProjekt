@@ -19,6 +19,7 @@ class ReportManager: ObservableObject {
     //TODO: --- We need to implement recieving class string in the method from the view ---
     func fetchReports() {
         let db = Firestore.firestore()
+        reports.removeAll()
         
         for favorite in DefaultsManager.shared.favorites {
             db
