@@ -38,7 +38,6 @@ struct LoginPassword: View {
                             AuthenticationManager.shared.signIn(email: userName, password: password, completion: { success in
                                 if success {
                                     showActivity = false
-                                    print(success)
                                     let window = UIApplication
                                         .shared
                                         .connectedScenes

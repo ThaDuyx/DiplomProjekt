@@ -44,6 +44,12 @@ class ReportManager: ObservableObject {
         }
     }
     
+    func reportFavoriteAction(favorite: String) {
+        if DefaultsManager.shared.favorites.contains(favorite) {
+            reports.removeAll(where: { $0.className == favorite })
+        }
+    }
+    
     func validateReport(selectedReport: Report, validationReason: String, teacherValidation: String, completion: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         let batch = db.batch()

@@ -72,7 +72,7 @@ struct ClassStack: View {
     @EnvironmentObject var registrationManager: RegistrationManager
     
     var body: some View {
-        NavigationLink(destination: StudentClassListView(selectedClass: className)) {
+        NavigationLink(destination: StudentClassListView(selectedClass: className, selectedDate: Date().currentDateFormatted)) {
             VStack {
                 ZStack {
                     HStack {

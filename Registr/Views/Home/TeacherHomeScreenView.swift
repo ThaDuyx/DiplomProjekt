@@ -10,6 +10,7 @@ import SwiftUI
 struct TeacherHomeScreenView: View {
      
     @StateObject var reportManager = ReportManager()
+    @EnvironmentObject var favoriteManager: FavoriteManager
     @State var favorites = DefaultsManager.shared.favorites
     
     init() {
@@ -23,7 +24,7 @@ struct TeacherHomeScreenView: View {
                 Resources.BackgroundGradient.backgroundGradient
                     .ignoresSafeArea()
                 
-                List(favorites, id: \.self) { favorite in
+                List(favoriteManager.favorites, id: \.self) { favorite in
                     Section(
                         header: Text(favorite)
                             .boldSubTitleTextStyle()
@@ -35,6 +36,10 @@ struct TeacherHomeScreenView: View {
                         }
                     }
                     .listRowBackground(Color.clear)
+                }
+                Button("FavoritesChecker") {
+                    favoriteManager.favoriteAction(favorite: "3.x")
+                    
                 }
             }
             .navigationTitle("Indberettelser")

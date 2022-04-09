@@ -16,9 +16,11 @@ struct StudentClassListView: View {
     @State private var studentName: String = ""
     
     var selectedClass: String
+    var selectedDate: String
     
-    init(selectedClass: String) {
+    init(selectedClass: String, selectedDate: String) {
         self.selectedClass = selectedClass
+        self.selectedDate = selectedDate
     }
     
     var body: some View {
@@ -33,14 +35,14 @@ struct StudentClassListView: View {
                         VStack {
                             Text(selectedClass)
                                 .darkBodyTextStyle()
-                            Text(Date().currentDateAndNameFormatted)
+                            Text(selectedDate)
                                 .darkBodyTextStyle()
                         }
                         
                         Spacer()
                         
                         Button {
-                            registrationManager.saveRegistrations(className: selectedClass, date: Date().currentDateFormatted) { result in
+                            registrationManager.saveRegistrations(className: selectedClass, date: selectedDate) { result in
                                 if result {
                                     presentationMode.wrappedValue.dismiss()
                                 } else {
@@ -132,7 +134,7 @@ struct StudentClassListView: View {
         .navigationTitle("Registrer")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(){
-            registrationManager.fetchRegistrations(className: selectedClass, date: Date().currentDateFormatted)
+            registrationManager.fetchRegistrations(className: selectedClass, date: selectedDate)
         }
     }
 }
@@ -184,6 +186,6 @@ struct StudentSection: View {
 
 struct StudentClassListView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentClassListView(selectedClass: "")
+        StudentClassListView(selectedClass: "", selectedDate: "")
     }
 }

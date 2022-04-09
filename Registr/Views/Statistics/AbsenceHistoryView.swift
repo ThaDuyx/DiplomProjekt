@@ -38,7 +38,7 @@ struct AbsenceHistoryView: View {
                 .datePickerStyle(.graphical)
                 .padding()
 
-                NavigationLink(destination: StudentClassListView(selectedClass: className)) {
+                NavigationLink(destination: StudentClassListView(selectedClass: className, selectedDate: selectedDate.formatSpecificData(date: selectedDate))) {
                     Text("next_view")
                 }
                 .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
