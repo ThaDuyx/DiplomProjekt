@@ -10,7 +10,7 @@ struct LoginOptions: View {
     var body: some View {
         NavigationView {
             ZStack {
-                VStack(spacing: 60) {
+                VStack {
                     ZStack {
                         VStack {
                             Rectangle()
@@ -28,13 +28,13 @@ struct LoginOptions: View {
                         }
                     }
                     VStack(spacing: 40) {
-                        NavigationLink(destination: LoginUserID(username: "test@test.com")) {
+                        NavigationLink(destination: UserIDView(username: "test@test.com")) {
                             Text("parent_login")
                         }.simultaneousGesture(TapGesture().onEnded{
                             AuthenticationManager.shared.loginSelection = .parent
                         })
                             .buttonStyle(Resources.CustomButtonStyle.TransparentButtonStyle())
-                        NavigationLink(destination: LoginUserID(username: "teacher@test.com")) {
+                        NavigationLink(destination: UserIDView(username: "teacher@test.com")) {
                             Text("school_login")
                         }.simultaneousGesture(TapGesture().onEnded{
                             AuthenticationManager.shared.loginSelection = .school

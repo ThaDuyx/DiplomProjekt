@@ -16,7 +16,7 @@ extension Text {
     
     /// Color: darkPurple, FontSize: 24pt
     func primaryHeaderTextStyle() -> some View {
-        self.foregroundColor(Resources.Color.Colors.darkPurple)
+        self.foregroundColor(Resources.Color.Colors.frolyRed)
             .font(.custom("Poppins-Medium", size: Resources.FontSize.primaryHeader))
     }
     

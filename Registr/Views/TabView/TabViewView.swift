@@ -17,7 +17,7 @@ struct TabViewView: View {
             
             switch userRole {
             case .teacher:
-                TeacherHomeScreenView()
+                TeacherHomeView()
                     .tabItem {
                         Image(systemName: "house")
                         Text("Start")
