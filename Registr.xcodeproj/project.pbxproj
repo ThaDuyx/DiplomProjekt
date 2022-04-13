@@ -57,6 +57,7 @@
 		830FD5CA27F5D2D800F87E0D /* TextBindingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830FD5C927F5D2D800F87E0D /* TextBindingManager.swift */; };
 		830FD5CC27F7231F00F87E0D /* ReportListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830FD5CB27F7231F00F87E0D /* ReportListView.swift */; };
 		8314F8132806BD7B00487C5F /* NavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8314F8122806BD7B00487C5F /* NavigationController+Extensions.swift */; };
+		8314F81A28072A6C00487C5F /* StringSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8314F81928072A6C00487C5F /* StringSeparator.swift */; };
 		83201BB92802510800007269 /* UserIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83201BB82802510800007269 /* UserIDView.swift */; };
 		83201BBB2802558900007269 /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83201BBA2802558900007269 /* PasswordView.swift */; };
 		83201BBD28025A2F00007269 /* TeacherHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83201BBC28025A2F00007269 /* TeacherHomeView.swift */; };
@@ -135,6 +136,7 @@
 		830FD5C927F5D2D800F87E0D /* TextBindingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBindingManager.swift; sourceTree = "<group>"; };
 		830FD5CB27F7231F00F87E0D /* ReportListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportListView.swift; sourceTree = "<group>"; };
 		8314F8122806BD7B00487C5F /* NavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationController+Extensions.swift"; sourceTree = "<group>"; };
+		8314F81928072A6C00487C5F /* StringSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSeparator.swift; sourceTree = "<group>"; };
 		83201BB82802510800007269 /* UserIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIDView.swift; sourceTree = "<group>"; };
 		83201BBA2802558900007269 /* PasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
 		83201BBC28025A2F00007269 /* TeacherHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHomeView.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				6A31FD4827CF61B700EFECDD /* RegistrApp.swift */,
 				8391A8E827DA2D4900B5C698 /* Views */,
 				6AC078EE27CF9A920048F0B1 /* Models */,
+				8314F81828072A4A00487C5F /* Coordinater */,
 				6AC078E827CF8D0F0048F0B1 /* Managers */,
 				6A31FD4E27CF61B700EFECDD /* Preview Content */,
 				6AC078F327D0BA470048F0B1 /* Extensions */,
@@ -270,6 +273,14 @@
 				8314F8122806BD7B00487C5F /* NavigationController+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8314F81828072A4A00487C5F /* Coordinater */ = {
+			isa = PBXGroup;
+			children = (
+				8314F81928072A6C00487C5F /* StringSeparator.swift */,
+			);
+			path = Coordinater;
 			sourceTree = "<group>";
 		};
 		8348592127CF8830009D8A51 /* Login */ = {
@@ -515,6 +526,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8387E78927E215BF0060C12D /* StudentClassListView.swift in Sources */,
+				8314F81A28072A6C00487C5F /* StringSeparator.swift in Sources */,
 				8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */,
 				8391A8FB27DB5BED00B5C698 /* ParentHomeScreenView.swift in Sources */,
 				8391A8DC27D8BBD700B5C698 /* OnboardingFlowControllerView.swift in Sources */,

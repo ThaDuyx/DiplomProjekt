@@ -43,5 +43,7 @@ extension Resources.Color {
         static var moonMist = Color(hex: 0xe2e0d4)
         /// Hexcode is f97c7c
         static var frolyRed = Color(hex: 0xf97c7c)
+        /// Hexcode is 505050
+        static var fiftyfifty = Color(hex: 0x505050)
     }
 }

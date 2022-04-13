@@ -32,9 +32,15 @@ extension Text {
             .font(.custom("Poppins-Regular", size: Resources.FontSize.subTitle))
     }
     
+    /// Color: fiftyfifty, FontSize: 24pt
+    func headerTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
+            .font(.custom("Poppins-Medium", size: Resources.FontSize.primaryHeader))
+    }
+    
     /// Color: darkPurple, FontSize: 18pt
     func boldSubTitleTextStyle() -> some View {
-        self.foregroundColor(Resources.Color.Colors.darkPurple)
+        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
             .font(.custom("Poppins-Bold", size: Resources.FontSize.subTitle))
     }
     
@@ -66,6 +72,18 @@ extension Text {
     func darkBoldBodyTextStyle() -> some View {
         self.foregroundColor(Resources.Color.Colors.darkPurple)
             .font(.custom("Poppins-Medium", size: Resources.FontSize.body))
+    }
+    
+    /// Color: white, FontSize: 14pt
+    func boldBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.white)
+            .font(.custom("Poppins-Bold", size: Resources.FontSize.body))
+    }
+    
+    /// Color: white, FontSize: 12pt
+    func smallBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.white)
+            .font(.custom("Poppins-Regular", size: Resources.FontSize.smallBody))
     }
 }
 

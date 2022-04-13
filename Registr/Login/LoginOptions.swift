@@ -11,22 +11,21 @@ struct LoginOptions: View {
         NavigationView {
             ZStack {
                 VStack {
-                    ZStack {
-                        VStack {
-                            Rectangle()
-                                .fill(Resources.Color.Colors.moonMist.opacity(0.7))
-                                .frame(height: 170)
-                                .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
-                            Spacer()
-                        }
-                        .ignoresSafeArea()
+                    ZStack(alignment: .top) {
+                        Rectangle()
+                            .fill(Resources.Color.Colors.moonMist.opacity(0.7))
+                            .frame(height: 170)
+                            .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
                         Spacer()
                         VStack {
                             Image("Group 4")
                             Text("application_name")
                                 .titleTextStyle()
                         }
+                        .offset(y: 80)
                     }
+                    .ignoresSafeArea()
+                    Spacer()
                     VStack(spacing: 40) {
                         NavigationLink(destination: UserIDView(username: "test@test.com")) {
                             Text("parent_login")
@@ -41,8 +40,8 @@ struct LoginOptions: View {
                         })
                             .buttonStyle(Resources.CustomButtonStyle.TransparentButtonStyle())
                         Spacer()
-                            .frame(height: 200)
                     }
+                    .offset(y: 80)
                 }
             }
             .navigationTitle("")

@@ -16,7 +16,9 @@ struct NavigationAndTabbarAppearance {
         navigationAppearance.shadowColor = UIColor.clear
 
         navigationAppearance.titleTextAttributes = [
-            .foregroundColor: UIColor(Resources.Color.Colors.darkPurple)
+            // It is okay to force unwrap, since we have imported the font into the project - CAD
+            .font: UIFont(name: "Poppins-Regular", size: 20)!,
+            .foregroundColor: UIColor(Resources.Color.Colors.fiftyfifty)
         ]
 
         UINavigationBar.appearance().tintColor = UIColor(Resources.Color.Colors.frolyRed)
