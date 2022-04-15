@@ -22,7 +22,9 @@ struct ParentHomeScreenView: View {
                 Form {
                     ForEach(childrenManager.children, id: \.self) { child in
                         Section {
-                            CardStack(name: child.name, className: child.className, email: child.email)
+                            if let id = child.id {
+                                CardStack(name: child.name, className: child.className, email: child.email, studentID: id)
+                            }
                         }
                         .listRowBackground(Resources.Color.Colors.darkBlue)
                     }
@@ -35,21 +37,24 @@ struct ParentHomeScreenView: View {
 }
 
 struct CardStack: View {
+    
     var name: String
     var className: String
     var email: String
+    var studentID: String
     
-    init(name: String, className: String, email: String) {
+    init(name: String, className: String, email: String, studentID: String) {
         // To make the background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
         self.name = name
         self.className = className
         self.email = email
+        self.studentID = studentID
     }
     
     var body: some View {
         VStack {
-            NavigationLink(destination: StatisticsView(navigationTitle: name, isStudentPresented: true)) {
+            NavigationLink(destination: StatisticsView(navigationTitle: name, isStudentPresented: true, studentID: studentID)) {
                 EmptyView()
             }
             .frame(width: 0)

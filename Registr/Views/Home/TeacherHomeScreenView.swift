@@ -11,7 +11,6 @@ struct TeacherHomeScreenView: View {
      
     @StateObject var reportManager = ReportManager()
     @EnvironmentObject var favoriteManager: FavoriteManager
-    @State var favorites = DefaultsManager.shared.favorites
     
     init() {
         // To make the List background transparent, so the gradient background can be used.

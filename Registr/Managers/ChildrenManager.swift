@@ -14,6 +14,8 @@ class ChildrenManager: ObservableObject {
     @Published var absences: [Registration] = []
     @Published var reports: [Report] = []
     
+    var selectedChildID = String()
+    
     init() {
         fetchChildren(parentID: DefaultsManager.shared.currentProfileID)
     }
@@ -49,28 +51,32 @@ class ChildrenManager: ObservableObject {
     }
     
     func fetchChildrenAbsence(studentID: String) {
-        let db = Firestore.firestore()
-        
-        db
-            .collection("fb_students_path")
-            .document(studentID)
-            .collection("fb_absense_path")
-            .getDocuments { querySnapshot, err in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        do {
-                            if let absence = try document.data(as: Registration.self) {
-                                self.absences.append(absence)
+        if selectedChildID != studentID {
+            selectedChildID = studentID
+            absences.removeAll()
+            
+            let db = Firestore.firestore()
+            db
+                .collection("fb_students_path".localize)
+                .document(selectedChildID)
+                .collection("fb_absense_path".localize)
+                .getDocuments { querySnapshot, err in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            do {
+                                if let absence = try document.data(as: Registration.self) {
+                                    self.absences.append(absence)
+                                }
+                            } catch {
+                                // TODO: Write no children absence and add error view
+                                print("No children")
                             }
-                        } catch {
-                            // TODO: Write no children absence and add error view
-                            print("No children")
                         }
                     }
                 }
-            }
+        }
     }
     
     func createAbsenceReport(child: Student, report: Report, completion: @escaping (Bool) -> ()) {

@@ -15,9 +15,11 @@ class RegistrationManager: ObservableObject {
     @Published var registrations = [Registration]()
     @Published var students = [Student]()
     @Published var classes = [String]()
+    @Published var studentRegistrationList = [Registration]()
     let db = Firestore.firestore()
     var selectedClass = String()
     var selectedDate = String()
+    var selectedStudent = String()
     
     init() {
         fetchClasses()
@@ -81,7 +83,6 @@ class RegistrationManager: ObservableObject {
     
     // Retrieves all the students' data from a given class
     func fetchStudents(className: String) {
-        
         if selectedClass != className {
             students.removeAll()
             selectedClass = className
@@ -177,6 +178,34 @@ class RegistrationManager: ObservableObject {
                     completion(true)
                 }
             }
+        }
+    }
+    
+    func fetchStudentAbsence(studentID: String) {
+        if selectedStudent != studentID {
+            studentRegistrationList.removeAll()
+            
+            db
+                .collection("fb_students_path".localize)
+                .document(studentID)
+                .collection("fb_absense_path".localize)
+                .getDocuments { querySnapshot, err in
+                    if let err = err {
+                        // TODO: Error Handling
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            do {
+                                if let registration = try document.data(as: Registration.self) {
+                                    self.studentRegistrationList.append(registration)
+                                }
+                            }
+                            catch {
+                                print(error)
+                            }
+                        }
+                    }
+                }
         }
     }
 }

@@ -11,12 +11,14 @@ import SwiftUICharts
 struct StatisticsView: View {
     let navigationTitle: String
     var isStudentPresented: Bool
+    var studentID: String? = nil
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
-    init(navigationTitle: String, isStudentPresented: Bool) {
+    init(navigationTitle: String, isStudentPresented: Bool, studentID: String? = nil) {
         self.navigationTitle = navigationTitle
         self.isStudentPresented = isStudentPresented
+        self.studentID = studentID
     }
     
     var body: some View {
@@ -31,7 +33,9 @@ struct StatisticsView: View {
                 VStack(spacing: 20) {
                     if isStudentPresented {
                         OptionsView(systemName: "square.and.pencil", titleText: "Indberettelser", destination: EmptyView())
-                        OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: ReportListView())
+                        if let studentID = studentID {
+                            OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: ReportListView(selectedStudent: studentID))
+                        }
                     } else {
                         OptionsView(systemName: "star", titleText: "Historik", destination: AbsenceHistoryView(className: navigationTitle))
                         OptionsView(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: navigationTitle))
