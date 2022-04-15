@@ -9,12 +9,13 @@ import SwiftUI
 
 enum AbsenceType: String, CaseIterable {    
     case sickness = "Sygdom"
-    case late = "Forsent"
+    case late = "For Sent"
     case vacation = "Ferie"
     case prolongedIllness = "Forlænget sygdom"
 }
 
 struct ParentAbsenceRegistrationView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var childrenManager: ChildrenManager
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     
@@ -196,13 +197,19 @@ struct ParentAbsenceRegistrationView: View {
                 .listRowBackground(Resources.Color.Colors.darkBlue)
                 
                 Button("Indberet") {
-                    // TODO:
                     if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsence.isEmpty {
                         let report = Report(parentName: name, parentID: DefaultsManager.shared.currentProfileID, studentName: selectedChild.name, studentID: id, className: selectedChild.className, date: startDate, endDate: isInterval ? endDate : nil, description: textBindingManager.value, reason: selectedAbsence, validated: false, teacherValidation: "false")
                         
                         childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
                             if result {
                                 // TODO: Show that the report has been written and reset everything
+                                self.selectedChild = nil
+                                self.selectedName = ""
+                                self.textBindingManager.value = ""
+                                self.selectedAbsence = ""
+                                self.isInterval = false
+                                self.startDate = Date()
+                                self.endDate = Date()
                             } else {
                                 // TODO: ErrorView shown and maybe animation or something
                             }

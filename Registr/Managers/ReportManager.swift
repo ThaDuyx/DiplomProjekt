@@ -23,9 +23,9 @@ class ReportManager: ObservableObject {
         
         for favorite in DefaultsManager.shared.favorites {
             db
-                .collection("classes")
+                .collection("fb_classes_path".localize)
                 .document(favorite)
-                .collection("reports")
+                .collection("fb_report_path".localize)
                 .getDocuments() {  (querySnapshot, err) in
                     if let err = err {
                         print("Error getting documents: \(err)")
