@@ -69,19 +69,18 @@ class ReportManager: ObservableObject {
                 .document(selectedReport.className)
                 .collection("fb_report_path".localize)
                 .document(id)
-                
-            
+
             let studentAbsenceRef = db
                 .collection("fb_students_path".localize)
                 .document(selectedReport.studentID)
                 .collection("fb_absense_path".localize)
                 .document(Date().formatSpecificData(date: selectedReport.date))
-            
+
             let parentReportRef = db
                 .collection("fb_parent_path".localize)
-                .document(DefaultsManager.shared.currentProfileID)
+                .document(selectedReport.parentID)
                 .collection("fb_report_path".localize)
-                .document(Date().formatSpecificData(date: selectedReport.date))
+                .document(id)
             
             batch.updateData(["reason" : validationReason], forDocument: classAbsenceRef)
             batch.updateData(["reason" : validationReason, "validation" : true], forDocument: studentAbsenceRef)

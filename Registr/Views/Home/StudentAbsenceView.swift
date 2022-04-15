@@ -12,7 +12,7 @@ struct StudentAbsenceView: View {
     @EnvironmentObject var reportManager: ReportManager
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @State private var selectedAbsence = "Fravær"
+    @State private var selectedAbsence = "Syg"
     private var absence = ["Syg", "Ulovligt", "For Sent"]
     let report: Report
     
@@ -113,22 +113,21 @@ struct StudentAbsenceView: View {
                 }
                 HStack {
                     Button("Registrer") {
-                        print("Registrer")
                         reportManager.validateReport(selectedReport: report, validationReason: selectedAbsence, teacherValidation: "Accepted") { result in
                             if result {
-                                
+                                presentationMode.wrappedValue.dismiss()
                             } else {
                                 // TODO: Add ErrorView
                             }
                         }
-                        presentationMode.wrappedValue.dismiss()
                     }
                     .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
+                    
                     Spacer()
+                    
                     Button("Afslå") {
                         reportManager.denyReport(selectedReport: report, teacherValidation: "Denied") { result in
                             if result {
-                                // TODO: Dismiss this view
                                 presentationMode.wrappedValue.dismiss()
                             } else {
                                 // TODO: Add ErrorView

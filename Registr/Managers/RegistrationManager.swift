@@ -129,7 +129,7 @@ class RegistrationManager: ObservableObject {
                 if !registration.reason.isEmpty {
                     let registrationRef = db
                         .collection("fb_classes_path".localize)
-                        .document("0.x")
+                        .document(className)
                         .collection("fb_date_path".localize)
                         .document(date)
                         .collection("fb_registrations_path".localize)
@@ -151,7 +151,7 @@ class RegistrationManager: ObservableObject {
                 } else if registration.isAbsenceRegistered && registration.reason.isEmpty {
                     let registrationRef = db
                         .collection("fb_classes_path".localize)
-                        .document("0.x")
+                        .document(className)
                         .collection("fb_date_path".localize)
                         .document(date)
                         .collection("fb_registrations_path".localize)
