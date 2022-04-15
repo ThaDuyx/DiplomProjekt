@@ -15,7 +15,6 @@ enum AbsenceType: String, CaseIterable {
 }
 
 struct ParentAbsenceRegistrationView: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var childrenManager: ChildrenManager
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     
