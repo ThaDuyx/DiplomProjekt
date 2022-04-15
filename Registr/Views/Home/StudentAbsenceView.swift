@@ -13,7 +13,7 @@ struct StudentAbsenceView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @State private var selectedAbsence = "Fravær"
-    private var absence = ["Syg", "Ulovligt", "Forsent"]
+    private var absence = ["Syg", "Ulovligt", "For Sent"]
     let report: Report
     
     init(report: Report) {
@@ -114,6 +114,13 @@ struct StudentAbsenceView: View {
                 HStack {
                     Button("Registrer") {
                         print("Registrer")
+                        reportManager.validateReport(selectedReport: report, validationReason: selectedAbsence, teacherValidation: "Accepted") { result in
+                            if result {
+                                
+                            } else {
+                                // TODO: Add ErrorView
+                            }
+                        }
                         presentationMode.wrappedValue.dismiss()
                     }
                     .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
@@ -122,6 +129,7 @@ struct StudentAbsenceView: View {
                         reportManager.denyReport(selectedReport: report, teacherValidation: "Denied") { result in
                             if result {
                                 // TODO: Dismiss this view
+                                presentationMode.wrappedValue.dismiss()
                             } else {
                                 // TODO: Add ErrorView
                             }
