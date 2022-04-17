@@ -18,8 +18,6 @@ struct StudentReportView: View {
     let report: Report
     
     init(report: Report) {
-        // To make the List background transparent, so the gradient background can be used.
-        UITableView.appearance().backgroundColor = .clear
         self.report = report
     }
     
@@ -57,12 +55,19 @@ struct StudentReportView: View {
             Spacer()
             HStack {
                 Button("Afslå") {
-                    
+                    reportManager.denyReport(selectedReport: report, teacherValidation: "Denied") { result in
+                        if result {
+                            // TODO: Dismiss this view
+                        } else {
+                            // TODO: Add ErrorView
+                        }
+                    }
                 }
                 .buttonStyle(Resources.CustomButtonStyle.DeclineButtonStyle())
                 Spacer()
                 Button("Registrer") {
-                    
+                    print("Registrer")
+                    presentationMode.wrappedValue.dismiss()
                 }
                 .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
             }
