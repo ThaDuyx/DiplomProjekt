@@ -69,6 +69,17 @@ extension Resources.CustomButtonStyle {
         }
     }
     
+    struct FilledBodyTextButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            return configuration.label
+                .frame(width: 290, height: 50)
+                .font(.custom("Poppins-Bold", size: Resources.FontSize.body))
+                .foregroundColor(Resources.Color.Colors.white)
+                .background(Resources.Color.Colors.frolyRed)
+                .cornerRadius(20)
+        }
+    }
+    
     struct RegisterButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             return configuration.label

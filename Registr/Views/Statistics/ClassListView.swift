@@ -20,7 +20,6 @@ struct ClassListView: View {
                     .listRowBackground(Resources.Color.Colors.frolyRed)
                     .listRowSeparatorTint(Resources.Color.Colors.white)
                 }
-                .accentColor(Resources.Color.Colors.fiftyfifty)
             }
             .navigationTitle("Statistik")
             .navigationBarTitleDisplayMode(.inline)
@@ -37,7 +36,7 @@ struct ClassEntity: View {
                 .boldBodyTextStyle()
                 .frame(maxWidth: .infinity, alignment: .center)
             
-            NavigationLink(destination: StatisticsView(navigationTitle: className, isStudentPresented: false)) {
+            NavigationLink(destination: ClassView(className: className, isStudentPresented: false)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)

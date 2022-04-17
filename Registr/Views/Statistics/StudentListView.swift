@@ -18,16 +18,12 @@ struct StudentListView: View {
     
     var body: some View {
         ZStack {
-            Resources.BackgroundGradient.backgroundGradient
-                .ignoresSafeArea()
-            Form {
-                Section {
-                    ForEach(0..<registrationManager.students.count, id: \.self) { student in
-                        StudentEntity(studentName: registrationManager.students[student].name)
-                    }
+            List {
+                ForEach(0..<registrationManager.students.count, id: \.self) { student in
+                    StudentEntity(studentName: registrationManager.students[student].name)
                 }
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
+                .listRowSeparatorTint(Resources.Color.Colors.white)
             }
         }
         .navigationTitle("Elever i \(selectedClass)")
@@ -42,20 +38,22 @@ struct StudentEntity: View {
     let studentName: String
     
     var body: some View {
-        NavigationLink(destination: StatisticsView(navigationTitle: studentName, isStudentPresented: true)) {
-            HStack {
-                Text(studentName)
-                    .darkBodyTextStyle()
-                    .frame(maxWidth: .infinity, alignment: .center)
+        HStack {
+            Text(studentName)
+                .boldBodyTextStyle()
+                .frame(maxWidth: .infinity, alignment: .center)
+            
+            NavigationLink(destination: StatisticsView(navigationTitle: studentName, isStudentPresented: true)) {
+                EmptyView()
             }
-            .padding()
+            .frame(width: 0, height: 0)
+            .opacity(0)
+
+            Image(systemName: "chevron.right")
+                .foregroundColor(Resources.Color.Colors.white)
+                .padding(.trailing, 10)
         }
-        .padding(.trailing, 20)
-        .overlay(
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.black, lineWidth: 1)
-        )
-        .padding(4)
+        .frame(height: 35)
     }
 }
 
