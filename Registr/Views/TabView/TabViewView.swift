@@ -17,26 +17,21 @@ struct TabViewView: View {
             
             switch userRole {
             case .teacher:
-                TeacherHomeScreenView()
+                TeacherHomeView()
                     .tabItem {
                         Image(systemName: "house")
-                        Text("Start")
+                        Text("Indberettelser")
                     }
-                RegisterView()
+                AbsenceClassListView()
                     .tabItem {
-                        Image(systemName: "square.and.pencil")
-                        Text("Registrer")
+                        Image(systemName: "plus.circle")
+                        Text("Fravær")
                     }.environmentObject(registrationManager)
                 ClassListView()
                     .tabItem {
                         Image(systemName: "chart.pie")
                         Text("Statistik")
                     }.environmentObject(registrationManager)
-                ProfileView()
-                    .tabItem {
-                        Image(systemName: "person")
-                        Text("Profil")
-                    }
             case .parent:
                 ParentHomeScreenView()
                     .tabItem {
@@ -65,7 +60,7 @@ struct TabViewView: View {
                 let _ = print("Something went wrong")
             }
         }
-        .accentColor(Resources.Color.Colors.darkBlue)
+        .accentColor(Resources.Color.Colors.frolyRed)
     }
 }
 

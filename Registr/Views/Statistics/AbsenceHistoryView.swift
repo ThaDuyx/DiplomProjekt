@@ -27,11 +27,11 @@ struct AbsenceHistoryView: View {
             VStack {
                 VStack(spacing: 0) {
                     Text("absence_day_pick")
-                        .boldSubTitleTextStyle()
+                        .boldSubTitleTextStyle(color: .red)
                         .padding(.horizontal)
                     let date = DateFormatter.abbreviationDayMonthYearFormatter.string(from: selectedDate)
                     Text(date)
-                        .boldSubTitleTextStyle()
+                        .boldSubTitleTextStyle(color: .red)
                         .padding(.horizontal)
                 }
                 DatePicker("", selection: $selectedDate, in: dateRange, displayedComponents: .date)

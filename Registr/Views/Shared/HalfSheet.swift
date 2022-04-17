@@ -67,9 +67,7 @@ struct HalfSheetController<SheetView: View>: UIViewControllerRepresentable {
 class CustomHostingController<Content: View>: UIHostingController<Content> {
     
     override func viewDidLoad() {
-        
-        view.backgroundColor = .clear
-        
+
         if let presentationController = presentationController as? UISheetPresentationController {
             presentationController.detents = [
                 .medium()

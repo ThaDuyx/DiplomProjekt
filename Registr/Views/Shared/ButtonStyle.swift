@@ -25,11 +25,11 @@ extension Resources.CustomButtonStyle {
     struct SmallFrontPageButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             return configuration.label
-                .frame(width: 280, height: 40)
+                .frame(width: 280, height: 50)
                 .font(.custom("Poppins-Light", size: Resources.FontSize.primaryHeader))
-                .foregroundColor(Resources.Color.Colors.lightMint)
-                .background(Resources.Color.Colors.darkBlue)
-                .cornerRadius(5)
+                .foregroundColor(Resources.Color.Colors.white)
+                .background(Resources.Color.Colors.frolyRed)
+                .cornerRadius(20)
         }
     }
     
@@ -47,12 +47,25 @@ extension Resources.CustomButtonStyle {
     struct TransparentButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             return configuration.label
-                .frame(width: 290, height: 50)
-                .font(.custom("Poppins-SemiBold", size: Resources.FontSize.subTitle))
-                .foregroundColor(Resources.Color.Colors.darkPurple)
+                .frame(width: 290, height: 65)
+                .font(.custom("Poppins-SemiBold", size: Resources.FontSize.primaryHeader))
+                .foregroundColor(Resources.Color.Colors.frolyRed)
                 .background(Color.clear)
-                .border(Resources.Color.Colors.darkPurple, width: 1)
-                .cornerRadius(2)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Resources.Color.Colors.frolyRed, lineWidth: 2)
+                )
+        }
+    }
+    
+    struct FilledWideButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            return configuration.label
+                .frame(width: 290, height: 50)
+                .font(.custom("Poppins-SemiBold", size: Resources.FontSize.primaryHeader))
+                .foregroundColor(Resources.Color.Colors.white)
+                .background(Resources.Color.Colors.frolyRed)
+                .cornerRadius(20)
         }
     }
     
@@ -60,10 +73,10 @@ extension Resources.CustomButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             return configuration.label
                 .frame(width: 120, height: 50)
-                .font(.custom("Poppins-Light", size: Resources.FontSize.subTitle))
-                .foregroundColor(Resources.Color.Colors.lightMint)
-                .background(Resources.Color.Colors.darkBlue)
-                .cornerRadius(5)
+                .font(.custom("Poppins-Regular", size: Resources.FontSize.subTitle))
+                .foregroundColor(Resources.Color.Colors.white)
+                .background(Resources.Color.Colors.frolyRed)
+                .cornerRadius(20)
         }
     }
     
@@ -71,12 +84,12 @@ extension Resources.CustomButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             return configuration.label
                 .frame(width: 120, height: 50)
-                .font(.custom("Poppins-Light", size: Resources.FontSize.subTitle))
-                .foregroundColor(Resources.Color.Colors.darkPurple)
+                .font(.custom("Poppins-Regular", size: Resources.FontSize.subTitle))
+                .foregroundColor(Resources.Color.Colors.frolyRed)
                 .background(Color.clear)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Resources.Color.Colors.darkPurple, lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Resources.Color.Colors.frolyRed, lineWidth: 2)
                 )
         }
     }
