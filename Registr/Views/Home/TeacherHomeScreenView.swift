@@ -26,7 +26,7 @@
                  List(favorites, id: \.self) { favorite in
                      Section(
                          header: Text(favorite)
-                             .boldSubTitleTextStyle()
+                            .boldSubTitleTextStyle(color: .black)
                      ) {
                          ForEach(reportManager.reports, id: \.self) { report in
                              if report.className == favorite {
