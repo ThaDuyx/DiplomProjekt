@@ -12,17 +12,17 @@ struct TeacherTabs: View {
     @StateObject var favoriteManager = FavoriteManager()
     
     var body: some View {
-        TeacherHomeScreenView()
+        TeacherHomeView()
             .tabItem {
                 Image(systemName: "house")
-                Text("Start")
+                Text("Indberettelser")
             }
             .environmentObject(favoriteManager)
         
-        RegisterView()
+        AbsenceClassListView()
             .tabItem {
-                Image(systemName: "square.and.pencil")
-                Text("Registrer")
+                Image(systemName: "plus.circle")
+                Text("Fravær")
             }
             .environmentObject(registrationManager)
             .environmentObject(favoriteManager)
@@ -34,12 +34,6 @@ struct TeacherTabs: View {
             }
             .environmentObject(registrationManager)
             .environmentObject(favoriteManager)
-        
-        ProfileView()
-            .tabItem {
-                Image(systemName: "person")
-                Text("Profil")
-            }
     }
 }
 

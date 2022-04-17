@@ -73,12 +73,10 @@
 		8348592A27CF912E009D8A51 /* FontSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592927CF912E009D8A51 /* FontSizes.swift */; };
 		8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592B27CF92DB009D8A51 /* ButtonStyle.swift */; };
 		8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */; };
-		83547AF2280C08DA0082D641 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AF1280C08DA0082D641 /* RegisterView.swift */; };
 		83547AF4280C08F00082D641 /* TeacherHomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AF3280C08F00082D641 /* TeacherHomeScreenView.swift */; };
 		836F149F27E35FF200FEFCB3 /* HalfSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F149E27E35FF200FEFCB3 /* HalfSheet.swift */; };
 		8387E78127E1DACD0060C12D /* StudentAbsenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387E78027E1DACD0060C12D /* StudentAbsenceView.swift */; };
 		8387E78727E1FA660060C12D /* NavigationAndTabbarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */; };
-		8387E78927E215BF0060C12D /* StudentClassListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387E78827E215BF0060C12D /* StudentClassListView.swift */; };
 		8391A8DC27D8BBD700B5C698 /* OnboardingFlowControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DB27D8BBD700B5C698 /* OnboardingFlowControllerView.swift */; };
 		8391A8DE27D8C59900B5C698 /* OnboardFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DD27D8C59900B5C698 /* OnboardFlowView.swift */; };
 		8391A8E027D8FD6100B5C698 /* OnboardingControllerFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DF27D8FD6100B5C698 /* OnboardingControllerFlow.swift */; };
@@ -158,12 +156,10 @@
 		8348592B27CF92DB009D8A51 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundGradient.swift; sourceTree = "<group>"; };
 		8348593127CFAE1D009D8A51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		83547AF1280C08DA0082D641 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		83547AF3280C08F00082D641 /* TeacherHomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHomeScreenView.swift; sourceTree = "<group>"; };
 		836F149E27E35FF200FEFCB3 /* HalfSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSheet.swift; sourceTree = "<group>"; };
 		8387E78027E1DACD0060C12D /* StudentAbsenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAbsenceView.swift; sourceTree = "<group>"; };
 		8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAndTabbarAppearance.swift; sourceTree = "<group>"; };
-		8387E78827E215BF0060C12D /* StudentClassListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentClassListView.swift; sourceTree = "<group>"; };
 		8391A8DB27D8BBD700B5C698 /* OnboardingFlowControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowControllerView.swift; sourceTree = "<group>"; };
 		8391A8DD27D8C59900B5C698 /* OnboardFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardFlowView.swift; sourceTree = "<group>"; };
 		8391A8DF27D8FD6100B5C698 /* OnboardingControllerFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingControllerFlow.swift; sourceTree = "<group>"; };
@@ -399,11 +395,9 @@
 		8391A8EC27DA2D7600B5C698 /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				8387E78827E215BF0060C12D /* StudentClassListView.swift */,
 				830FD5C327F5943200F87E0D /* ParentAbsenceRegistrationView.swift */,
 				8314F81D2809614500487C5F /* AbsenceClassListView.swift */,
 				8314F81F2809775E00487C5F /* AbsenceRegistrationView.swift */,
-				83547AF1280C08DA0082D641 /* RegisterView.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -540,7 +534,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8387E78927E215BF0060C12D /* StudentClassListView.swift in Sources */,
 				8314F81A28072A6C00487C5F /* StringSeparator.swift in Sources */,
 				8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */,
 				8391A8FB27DB5BED00B5C698 /* ParentHomeScreenView.swift in Sources */,
@@ -554,8 +547,6 @@
 				8387E78127E1DACD0060C12D /* StudentAbsenceView.swift in Sources */,
 				6A0F350827DA0CF7001E60D9 /* RegistrationManager.swift in Sources */,
 				83547AF4280C08F00082D641 /* TeacherHomeScreenView.swift in Sources */,
-				6A0F34FF27D8A943001E60D9 /* Class.swift in Sources */,
-				6A5607CA27EB2A5C000EED0C /* LoginUserID.swift in Sources */,
 				6A0F350127D8A9F9001E60D9 /* Absence.swift in Sources */,
 				830FD5C627F5C54100F87E0D /* ColorMultiply+Extensions.swift in Sources */,
 				83BB1B6127EE0D03002FF81E /* AbsenceHistoryView.swift in Sources */,
@@ -585,7 +576,6 @@
 				8391A8E027D8FD6100B5C698 /* OnboardingControllerFlow.swift in Sources */,
 				6A63251127ECAB37000EF260 /* Date+Extensions.swift in Sources */,
 				6A0F350A27DA3338001E60D9 /* ReportManager.swift in Sources */,
-				83547AF2280C08DA0082D641 /* RegisterView.swift in Sources */,
 				8314F81C28072CA800487C5F /* StudentReportView.swift in Sources */,
 				8314F81E2809614500487C5F /* AbsenceClassListView.swift in Sources */,
 				6AC078EB27CF97340048F0B1 /* UserManager.swift in Sources */,

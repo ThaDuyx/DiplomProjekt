@@ -21,11 +21,10 @@ struct TeacherHomeScreenView: View {
                 List(favoriteManager.favorites, id: \.self) { favorite in
                     Section(
                         header: Text(favorite)
-                            .boldSubTitleTextStyle()
                     ) {
                         ForEach(reportManager.reports, id: \.self) { report in
                             if report.className == favorite {
-                                TaskRow(report: report).environmentObject(reportManager)
+                                TaskRow(report: report)
                             }
                         }
                     }
