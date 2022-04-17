@@ -105,6 +105,20 @@ extension Resources.CustomButtonStyle {
         }
     }
     
+    struct TransparentFollowButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .frame(width: 170, height: 45)
+                .font(.custom("Poppins-Regular", size: Resources.FontSize.subTitle))
+                .foregroundColor(Resources.Color.Colors.frolyRed)
+                .background(.clear)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Resources.Color.Colors.frolyRed, lineWidth: 2)
+                )
+        }
+    }
+    
     struct FollowButtonStyle: ButtonStyle {
         let backgroundColor: Color
         let textColor: Color
