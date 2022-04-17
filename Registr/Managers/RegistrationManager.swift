@@ -15,8 +15,11 @@ class RegistrationManager: ObservableObject {
     @Published var registrations = [Registration]()
     @Published var students = [Student]()
     @Published var classes = [String]()
+    @Published var studentRegistrationList = [Registration]()
     let db = Firestore.firestore()
     var selectedClass = String()
+    var selectedDate = String()
+    var selectedStudent = String()
     
     init() {
         fetchClasses()
@@ -24,11 +27,12 @@ class RegistrationManager: ObservableObject {
     
     //TODO: --- We need to implement recieving class string in the method from the view - We can make the date logic from this manager class ---
     func fetchRegistrations(className: String, date: String) {
-        // If 'selectedDate' is the same as the date input we have already fetched the registration.
+        // If 'selectedClass' is the same as the className input we have already fetched the registration.
         // In this case will not have to fetch it again.
-        if selectedClass != className {
+        if selectedClass != className || selectedDate != date {
             registrations.removeAll()
             selectedClass = className
+            selectedDate = date
             
             db
                 .collection("fb_classes_path".localize)
@@ -79,36 +83,41 @@ class RegistrationManager: ObservableObject {
     
     // Retrieves all the students' data from a given class
     func fetchStudents(className: String) {
-        db
-            .collection("fb_classes_path".localize)
-            .document(className)
-            .collection("fb_students_path".localize)
-            .getDocuments { querySnapshot, err in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        let studentID = document.documentID
-                        self.db.collection("fb_students_path".localize)
-                            .document(studentID)
-                            .getDocument { studentDoc, error in
-                                if let data = studentDoc {
-                                    do {
-                                        if let student = try data.data(as: Student.self) {
-                                            self.students.append(student)
-                                            self.students.sort {
-                                                $0.name < $1.name
+        if selectedClass != className {
+            students.removeAll()
+            selectedClass = className
+            
+            db
+                .collection("fb_classes_path".localize)
+                .document(className)
+                .collection("fb_students_path".localize)
+                .getDocuments { querySnapshot, err in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            let studentID = document.documentID
+                            self.db.collection("fb_students_path".localize)
+                                .document(studentID)
+                                .getDocument { studentDoc, error in
+                                    if let data = studentDoc {
+                                        do {
+                                            if let student = try data.data(as: Student.self) {
+                                                self.students.append(student)
+                                                self.students.sort {
+                                                    $0.name < $1.name
+                                                }
                                             }
                                         }
-                                    }
-                                    catch {
-                                        print(error)
+                                        catch {
+                                            print(error)
+                                        }
                                     }
                                 }
-                            }
+                        }
                     }
                 }
-            }
+        }
     }
     
     func saveRegistrations(className: String, date: String, completion: @escaping (Bool) -> ()) {
@@ -120,7 +129,7 @@ class RegistrationManager: ObservableObject {
                 if !registration.reason.isEmpty {
                     let registrationRef = db
                         .collection("fb_classes_path".localize)
-                        .document("0.x")
+                        .document(className)
                         .collection("fb_date_path".localize)
                         .document(date)
                         .collection("fb_registrations_path".localize)
@@ -142,7 +151,7 @@ class RegistrationManager: ObservableObject {
                 } else if registration.isAbsenceRegistered && registration.reason.isEmpty {
                     let registrationRef = db
                         .collection("fb_classes_path".localize)
-                        .document("0.x")
+                        .document(className)
                         .collection("fb_date_path".localize)
                         .document(date)
                         .collection("fb_registrations_path".localize)
@@ -169,6 +178,34 @@ class RegistrationManager: ObservableObject {
                     completion(true)
                 }
             }
+        }
+    }
+    
+    func fetchStudentAbsence(studentID: String) {
+        if selectedStudent != studentID {
+            studentRegistrationList.removeAll()
+            
+            db
+                .collection("fb_students_path".localize)
+                .document(studentID)
+                .collection("fb_absense_path".localize)
+                .getDocuments { querySnapshot, err in
+                    if let err = err {
+                        // TODO: Error Handling
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            do {
+                                if let registration = try document.data(as: Registration.self) {
+                                    self.studentRegistrationList.append(registration)
+                                }
+                            }
+                            catch {
+                                print(error)
+                            }
+                        }
+                    }
+                }
         }
     }
 }

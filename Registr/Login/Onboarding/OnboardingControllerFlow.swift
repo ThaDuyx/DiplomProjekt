@@ -12,7 +12,7 @@ struct OnboardingControllerFlow: View {
 
     var body: some View {
         if currentPage > 3 {
-            TabViewView()
+            TabViews()
         } else {
             OnboardingFlowControllerView()
         }

@@ -11,12 +11,14 @@ import SwiftUICharts
 struct StatisticsView: View {
     let navigationTitle: String
     var isStudentPresented: Bool
+    var studentID: String? = nil
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
-    init(navigationTitle: String, isStudentPresented: Bool) {
+    init(navigationTitle: String, isStudentPresented: Bool, studentID: String? = nil) {
         self.navigationTitle = navigationTitle
         self.isStudentPresented = isStudentPresented
+        self.studentID = studentID
     }
     
     var body: some View {
@@ -25,13 +27,15 @@ struct StatisticsView: View {
                 .ignoresSafeArea()
             VStack {
                 VStack {
-                    isStudentPresented ? nil : FollowButton()
+                    isStudentPresented ? nil : FollowButton(selectedClass: navigationTitle)
                 }
                 Spacer()
                 VStack(spacing: 20) {
                     if isStudentPresented {
-                        OptionsView(systemName: "square.and.pencil", titleText: "Indberettelser", destination: EmptyView())
-                        OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: ReportListView())
+                        if let studentID = studentID {
+                            OptionsView(systemName: "square.and.pencil", titleText: "Indberettelser", destination: EmptyView())
+                            OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: ReportListView(selectedStudent: studentID))
+                        }
                     } else {
                         OptionsView(systemName: "star", titleText: "Historik", destination: AbsenceHistoryView(className: navigationTitle))
                         OptionsView(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: navigationTitle))
@@ -96,20 +100,29 @@ struct OptionsView<TargetView: View>: View {
 }
 
 struct FollowButton: View {
+    @EnvironmentObject var favoriteManager: FavoriteManager
     @State private var followToggled: Bool = false
+    let selectedClass: String
+    
     var body: some View {
         VStack {
             Button {
                 followToggled.toggle()
+                favoriteManager.favoriteAction(favorite: selectedClass)
             } label: {
                 HStack {
                     Image(systemName: followToggled ? "star.fill" : "star")
                         .foregroundColor(followToggled ? Resources.Color.Colors.lightMint : Resources.Color.Colors.darkPurple)
+                    
                     Text(followToggled ? "Følger" : "Følger ikke")
                 }
                 .padding()
             }
             .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(backgroundColor: followToggled ? Resources.Color.Colors.darkPurple : Color.clear, textColor: followToggled ? Resources.Color.Colors.lightMint : Resources.Color.Colors.darkPurple))
+        }.onAppear() {
+            if favoriteManager.favorites.contains(selectedClass) {
+                followToggled = true
+            }
         }
     }
 }

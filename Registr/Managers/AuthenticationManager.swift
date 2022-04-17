@@ -45,7 +45,7 @@ class AuthenticationManager {
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists, let data = document.data() {
                                 let name = data["name"] as? String ?? "nil"
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, children: nil)
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent)
                                 UserManager.shared.user = userLoggedIn
                                 DefaultsManager.shared.currentProfileID = id
                                 completion(true)
@@ -64,7 +64,7 @@ class AuthenticationManager {
                                 let name = data["name"] as? String ?? "nil"
                                 let roleData = data["role"] as? Bool ?? false
                                 let role: Role = roleData ? .headmaster : .teacher
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: role, children: nil)
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: role)
                                 UserManager.shared.user = userLoggedIn
                                 completion(true)
                                 

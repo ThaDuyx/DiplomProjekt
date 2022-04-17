@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct StudentListView: View {
-    @ObservedObject var registrationManager = RegistrationManager()
+    @EnvironmentObject var registrationManager: RegistrationManager
     
     var selectedClass: String
     
     init(selectedClass: String) {
         self.selectedClass = selectedClass
-        self.registrationManager.fetchStudents(className: selectedClass)
     }
     
     var body: some View {
@@ -27,11 +26,15 @@ struct StudentListView: View {
                         StudentEntity(studentName: registrationManager.students[student].name)
                     }
                 }
+                .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
             }
         }
         .navigationTitle("Elever i \(selectedClass)")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear(){
+            registrationManager.fetchStudents(className: selectedClass)
+        }
     }
 }
 
