@@ -19,12 +19,13 @@ class ReportManager: ObservableObject {
     //TODO: --- We need to implement recieving class string in the method from the view ---
     func fetchReports() {
         let db = Firestore.firestore()
+        reports.removeAll()
         
         for favorite in DefaultsManager.shared.favorites {
             db
-                .collection("classes")
+                .collection("fb_classes_path".localize)
                 .document(favorite)
-                .collection("reports")
+                .collection("fb_report_path".localize)
                 .getDocuments() {  (querySnapshot, err) in
                     if let err = err {
                         print("Error getting documents: \(err)")
@@ -41,6 +42,12 @@ class ReportManager: ObservableObject {
                         }
                     }
                 }
+        }
+    }
+    
+    func reportFavoriteAction(favorite: String) {
+        if DefaultsManager.shared.favorites.contains(favorite) {
+            reports.removeAll(where: { $0.className == favorite })
         }
     }
     
@@ -62,19 +69,18 @@ class ReportManager: ObservableObject {
                 .document(selectedReport.className)
                 .collection("fb_report_path".localize)
                 .document(id)
-                
-            
+
             let studentAbsenceRef = db
                 .collection("fb_students_path".localize)
                 .document(selectedReport.studentID)
                 .collection("fb_absense_path".localize)
                 .document(Date().formatSpecificData(date: selectedReport.date))
-            
+
             let parentReportRef = db
                 .collection("fb_parent_path".localize)
-                .document(DefaultsManager.shared.currentProfileID)
+                .document(selectedReport.parentID)
                 .collection("fb_report_path".localize)
-                .document(Date().formatSpecificData(date: selectedReport.date))
+                .document(id)
             
             batch.updateData(["reason" : validationReason], forDocument: classAbsenceRef)
             batch.updateData(["reason" : validationReason, "validation" : true], forDocument: studentAbsenceRef)

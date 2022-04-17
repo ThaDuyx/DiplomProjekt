@@ -30,9 +30,11 @@ struct AbsenceRegistrationView: View {
     @State private var studentName: String = ""
 
     var selectedClass: String
+    var selectedDate: String
     
-    init(selectedClass: String) {
+    init(selectedClass: String, selectedDate: String) {
         self.selectedClass = selectedClass
+        self.selectedDate = selectedDate
     }
     
     var body: some View {
@@ -47,6 +49,7 @@ struct AbsenceRegistrationView: View {
                                         Text("I dag")
                                             .bigBodyTextStyle(color: Resources.Color.Colors.fiftyfifty)
                                     }
+                                    
                                     Text("\(element.formatSpecificToDayAndMonthData(date: element))")
                                         .boldSubTitleTextStyle(color: self.selectedItem == number ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty)
                                 }
@@ -63,6 +66,7 @@ struct AbsenceRegistrationView: View {
                         }
                     }
                 }
+                
                 HStack {
                     Button {
                         selectedTime = 1
@@ -81,6 +85,7 @@ struct AbsenceRegistrationView: View {
                     .frame(maxWidth: .infinity, minHeight: 35)
                     .background(selectedTime == 2 ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
                 }
+                
                 ScrollView {
                     ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
                         StudentRow(
@@ -96,6 +101,7 @@ struct AbsenceRegistrationView: View {
                                 studentName = registrationManager.registrations[index].studentName
                                 showSheet.toggle()
                             }
+                        
                         Divider()
                             .background(Resources.Color.Colors.fiftyfifty)
                     }
@@ -105,6 +111,7 @@ struct AbsenceRegistrationView: View {
                     VStack {
                         Text("student_list_absence_description \(studentName)")
                             .boldDarkBodyTextStyle()
+                        
                         ForEach(AbsenceReasons.allCases, id: \.self) { absenceReasons in
                             Button(absenceReasons.rawValue.isEmpty ? "Ryd felt" : absenceReasons.rawValue) {
                                 studentAbsenceState = absenceReasons.rawValue
@@ -118,8 +125,9 @@ struct AbsenceRegistrationView: View {
                 } onEnd: {
                     showSheet.toggle()
                 }
+                
                 Button {
-                    registrationManager.saveRegistrations(className: selectedClass, date: Date().currentDateFormatted) { result in
+                    registrationManager.saveRegistrations(className: selectedClass, date: selectedDate) { result in
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
@@ -136,7 +144,7 @@ struct AbsenceRegistrationView: View {
         .navigationTitle("Registrer")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear() {
-            registrationManager.fetchRegistrations(className: selectedClass, date: Date().currentDateFormatted)
+            registrationManager.fetchRegistrations(className: selectedClass, date: selectedDate)
         }
     }
 }
@@ -168,13 +176,17 @@ struct StudentRow: View {
             Text("\(index)")
                 .boldSubTitleTextStyle(color: Resources.Color.Colors.fiftyfifty)
                 .padding(.leading, 20)
+            
             Image(systemName: "person.crop.circle.fill")
                 .resizable()
                 .frame(width: 40, height: 40)
                 .foregroundColor(Resources.Color.Colors.fiftyfifty)
+            
             Text(studentName)
                 .mediumSubTitleTextStyle(color: absenceReason?.isEmpty ?? true ? Resources.Color.Colors.fiftyfifty : Resources.Color.Colors.frolyRed, font: "Poppins-Regular")
+            
             Spacer()
+            
             Button { } label: {
                 Text(absenceReason?.isEmpty ?? true ? "" : stringSeparator(reason: absenceReason ?? "").uppercased())
                     .frame(width: 35, height: 35)
@@ -192,6 +204,6 @@ struct StudentRow: View {
 
 struct AbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceRegistrationView(selectedClass: "")
+        AbsenceRegistrationView(selectedClass: "", selectedDate: "")
     }
 }

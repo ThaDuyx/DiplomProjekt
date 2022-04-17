@@ -10,19 +10,19 @@ import SwiftUI
 struct TeacherHomeView: View {
     
     @StateObject var reportManager = ReportManager()
-    @State var favorites = DefaultsManager.shared.favorites
+    @EnvironmentObject var favoriteManager: FavoriteManager
     
     var body: some View {
         NavigationView {
             ZStack {
-                List(favorites, id: \.self) { favorite in
+                List(favoriteManager.favorites, id: \.self) { favorite in
                     Section(
                         header: Text(favorite)
                             .headerTextStyle()
                     ) {
                         ForEach(reportManager.reports, id: \.self) { report in
                             if report.className == favorite {
-                                AbsencesRow(report: report).environmentObject(reportManager)
+                                AbsencesRow(report: report)
                             }
                         }
                     }
@@ -30,10 +30,13 @@ struct TeacherHomeView: View {
                     .listRowSeparatorTint(Resources.Color.Colors.white)
                 }
                 .accentColor(Resources.Color.Colors.fiftyfifty)
+                .onChange(of: favoriteManager.favorites) { _ in
+                    reportManager.fetchReports()
+                }
             }
             .navigationTitle("Indberettelser")
             .navigationBarTitleDisplayMode(.inline)
-        }
+        }.environmentObject(reportManager)
     }
 }
 
@@ -53,20 +56,24 @@ struct AbsencesRow: View {
                                 .stroke(Resources.Color.Colors.white, lineWidth: 2)
                         )
                 }
+                
                 VStack {
                     Text(report.studentName)
                         .boldBodyTextStyle()
                         .frame(maxWidth: .infinity, alignment: .leading)
+                    
                     Text(report.description ?? "")
                         .smallBodyTextStyle()
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .lineLimit(2)
                 }
             }
+            
             NavigationLink(destination: StudentReportView(report: report)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
+            
             Image(systemName: "chevron.right")
                 .foregroundColor(Resources.Color.Colors.white)
                 .padding(.trailing, 10)

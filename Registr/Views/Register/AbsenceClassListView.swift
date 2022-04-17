@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AbsenceClassListView: View {
     @EnvironmentObject var registrationManager: RegistrationManager
-    @State var favorites = DefaultsManager.shared.favorites
+    @EnvironmentObject var favoriteManager: FavoriteManager
     
     var body: some View {
         NavigationView {
@@ -20,14 +20,14 @@ struct AbsenceClassListView: View {
                         header:
                             HStack {
                                 Image(systemName: "star")
+                                
                                 Text("register_section_header_favoritter")
                                     .boldDarkBodyTextStyle()
                             }
                     ) {
                         ForEach(registrationManager.classes, id: \.self) { className in
-                            if favorites.contains(className) {
-                                ClassRow(className: className, isFavorite: true).environmentObject(registrationManager)
-                                
+                            if favoriteManager.favorites.contains(className) {
+                                ClassRow(className: className, isFavorite: true)
                             }
                         }
                     }
@@ -39,14 +39,14 @@ struct AbsenceClassListView: View {
                         header:
                             HStack {
                                 Image(systemName: "person.3")
+                                
                                 Text("register_section_header_classes")
                                     .boldDarkBodyTextStyle()
                             }
                     ) {
                         ForEach(registrationManager.classes, id: \.self) { className in
-                            if !favorites.contains(className) {
-                                ClassRow(className: className, isFavorite: false).environmentObject(registrationManager)
-                                
+                            if !favoriteManager.favorites.contains(className) {
+                                ClassRow(className: className, isFavorite: false)
                             }
                         }
                     }
@@ -64,23 +64,23 @@ struct ClassRow: View {
     var className: String
     var isFavorite: Bool
     
-    @EnvironmentObject var registrationManager: RegistrationManager
-    
     var body: some View {
         HStack {
             HStack {
                 Image(systemName: isFavorite ? "star.fill" : "star")
                     .foregroundColor(Resources.Color.Colors.white)
+                
                 Text(className)
                     .smallSubTitleTextStyle()
                     .frame(maxWidth: .infinity, alignment: .center)
             }
             // Setting frame and opacity to 0, to remove chevron
-            NavigationLink(destination: AbsenceRegistrationView(selectedClass: className)) {
+            NavigationLink(destination: AbsenceRegistrationView(selectedClass: className, selectedDate: Date().currentDateFormatted)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
             .opacity(0)
+            
             Image(systemName: "chevron.right")
                 .foregroundColor(Resources.Color.Colors.white)
                 .padding(.trailing, 10)

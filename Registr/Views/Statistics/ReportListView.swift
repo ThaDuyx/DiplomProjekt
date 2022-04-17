@@ -8,26 +8,43 @@
 import SwiftUI
 
 struct ReportListView: View {
+    @EnvironmentObject var childrenManager: ChildrenManager
     
-    init() {
+    var selectedStudent: String
+    
+    init(selectedStudent: String) {
         // To make the List background transparent, so the gradient background can be used.
         UITableView.appearance().backgroundColor = .clear
+        self.selectedStudent = selectedStudent
     }
     
     var body: some View {
         ZStack {
             Resources.BackgroundGradient.backgroundGradient
                 .ignoresSafeArea()
-            List(0 ..< 5) { _ in
-                ReportSectionView()
-                    .padding(.bottom, 20)
+            List() {
+                ForEach(childrenManager.absences, id: \.self) { absence in
+                    ReportSectionView(absence: absence)
+                        .padding(.bottom, 20)
+                }
             }
         }
         .navigationTitle("")
+        .onAppear(){
+            childrenManager.fetchChildrenAbsence(studentID: selectedStudent)
+        }
     }
 }
 
 struct ReportSectionView: View {
+    @EnvironmentObject var childrenManager: ChildrenManager
+    
+    let absence: Registration
+    
+    init(absence: Registration){
+        self.absence = absence
+    }
+    
     var body: some View {
         NavigationLink(destination: EmptyView()) {
             HStack {
@@ -35,14 +52,14 @@ struct ReportSectionView: View {
                 VStack {
                     Text("Dato")
                         .darkBoldBodyTextStyle()
-                    Text("30-03-2021")
+                    Text(absence.date)
                         .darkBodyTextStyle()
                 }
                 Spacer()
                 VStack {
                     Text("Årsag")
                         .darkBoldBodyTextStyle()
-                    Text("")
+                    Text(absence.reason)
                         .darkBodyTextStyle()
                 }
                 Spacer()
@@ -60,6 +77,6 @@ struct ReportSectionView: View {
 
 struct ReportListView_Previews: PreviewProvider {
     static var previews: some View {
-        ReportListView()
+        ReportListView(selectedStudent: "")
     }
 }
