@@ -58,14 +58,25 @@ extension Resources.CustomButtonStyle {
         }
     }
     
+    struct FilledWideButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            return configuration.label
+                .frame(width: 290, height: 50)
+                .font(.custom("Poppins-SemiBold", size: Resources.FontSize.primaryHeader))
+                .foregroundColor(Resources.Color.Colors.white)
+                .background(Resources.Color.Colors.frolyRed)
+                .cornerRadius(20)
+        }
+    }
+    
     struct RegisterButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             return configuration.label
                 .frame(width: 120, height: 50)
-                .font(.custom("Poppins-Light", size: Resources.FontSize.subTitle))
-                .foregroundColor(Resources.Color.Colors.lightMint)
-                .background(Resources.Color.Colors.darkBlue)
-                .cornerRadius(5)
+                .font(.custom("Poppins-Regular", size: Resources.FontSize.subTitle))
+                .foregroundColor(Resources.Color.Colors.white)
+                .background(Resources.Color.Colors.frolyRed)
+                .cornerRadius(20)
         }
     }
     
@@ -73,12 +84,12 @@ extension Resources.CustomButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             return configuration.label
                 .frame(width: 120, height: 50)
-                .font(.custom("Poppins-Light", size: Resources.FontSize.subTitle))
-                .foregroundColor(Resources.Color.Colors.darkPurple)
+                .font(.custom("Poppins-Regular", size: Resources.FontSize.subTitle))
+                .foregroundColor(Resources.Color.Colors.frolyRed)
                 .background(Color.clear)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Resources.Color.Colors.darkPurple, lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Resources.Color.Colors.frolyRed, lineWidth: 2)
                 )
         }
     }

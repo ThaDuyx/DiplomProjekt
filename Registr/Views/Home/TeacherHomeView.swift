@@ -63,7 +63,7 @@ struct AbsencesRow: View {
                         .lineLimit(2)
                 }
             }
-            NavigationLink(destination: StudentAbsenceView(report: report)) {
+            NavigationLink(destination: StudentReportView(report: report)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)

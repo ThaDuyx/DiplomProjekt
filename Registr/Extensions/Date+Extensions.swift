@@ -19,7 +19,6 @@ extension Date {
         return currentDateFormatted
     }
     
-    // TODO: Will be deleted in the near future when our dates in the database is how we want them to be
     func formatSpecificData(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
@@ -27,7 +26,14 @@ extension Date {
         
         return currentDateFormatted
     }
-    // ------------------------------------------------------------------------
+    
+    func formatSpecificToDayAndMonthData(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MMM"
+        let currentDateFormatted = dateFormatter.string(from: date)
+        
+        return currentDateFormatted
+    }
     
     /// Returns todays date in the format "E d. - dd-MM-yyyy"
     var currentDateAndNameFormatted: String {
@@ -43,5 +49,25 @@ extension Date {
         let finalCurrentDate = currentDayName + " d. - " + currentDateFormatted
         
         return finalCurrentDate
+    }
+    
+    // ------------------------------------------------------------------------
+    
+    func comingDays(days: Int) -> [Date] {
+        var daysArray: [Date] = []
+        for i in 1..<days+1 {
+            let date = Calendar.current.date(byAdding: .day, value: i, to: self)!
+            daysArray.append(date)
+        }
+        return daysArray
+    }
+    
+    func previousDays(days: Int) -> [Date] {
+        var daysArray: [Date] = []
+        for i in 1..<days+1 {
+            let date = Calendar.current.date(byAdding: .day, value: -i, to: self)!
+            daysArray.append(date)
+        }
+        return daysArray
     }
 }

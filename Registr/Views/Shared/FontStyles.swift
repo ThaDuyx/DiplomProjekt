@@ -38,9 +38,9 @@ extension Text {
             .font(.custom("Poppins-Medium", size: Resources.FontSize.primaryHeader))
     }
     
-    /// Color: darkPurple, FontSize: 18pt
-    func boldSubTitleTextStyle() -> some View {
-        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
+    /// Color: fiftyfifty, FontSize: 18pt
+    func boldSubTitleTextStyle(color: Color) -> some View {
+        self.foregroundColor(color)
             .font(.custom("Poppins-Bold", size: Resources.FontSize.subTitle))
     }
     
@@ -80,10 +80,50 @@ extension Text {
             .font(.custom("Poppins-Bold", size: Resources.FontSize.body))
     }
     
+    /// Color: fiftyfifty, FontSize: 14pt
+    func boldDarkBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
+            .font(.custom("Poppins-Bold", size: Resources.FontSize.body))
+    }
+    
     /// Color: white, FontSize: 12pt
     func smallBodyTextStyle() -> some View {
         self.foregroundColor(Resources.Color.Colors.white)
             .font(.custom("Poppins-Regular", size: Resources.FontSize.smallBody))
+    }
+    
+    /// Color: white, FontSize: 12pt
+    func boldSmallBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.white)
+            .font(.custom("Poppins-Bold", size: Resources.FontSize.smallBody))
+    }
+    
+    /// Color: fiftyfifty, FontSize: 12pt
+    func boldDarkSmallBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
+            .font(.custom("Poppins-Bold", size: Resources.FontSize.smallBody))
+    }
+    
+    /// Color: FiftyFifty, FontSize: 16pt
+    func bigBodyTextStyle(color: Color) -> some View {
+        self.foregroundColor(color)
+            .font(.custom("Poppins-Regular", size: Resources.FontSize.bigBody))
+    }
+    
+    /// Color: FiftyFifty, FontSize: 16pt
+    func bigBoldBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
+            .font(.custom("Poppins-Bold", size: Resources.FontSize.bigBody))
+    }
+    
+    func smallSubTitleTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.white)
+            .font(.custom("Poppins-SemiBold", size: Resources.FontSize.subTitle))
+    }
+    
+    func mediumSubTitleTextStyle(color: Color, font: String) -> some View {
+        self.foregroundColor(color)
+            .font(.custom(font, size: Resources.FontSize.subTitle))
     }
 }
 
