@@ -33,7 +33,7 @@ struct TabViewView: View {
                 let _ = print("Something went wrong")
             }
         }
-        .accentColor(Resources.Color.Colors.darkBlue)
+        .accentColor(Resources.Color.Colors.frolyRed)
     }
 }
 

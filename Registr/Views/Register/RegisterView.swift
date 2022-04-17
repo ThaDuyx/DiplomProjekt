@@ -1,9 +1,4 @@
 //
-//  RegisterView.swift
-//  Registr
-//
-//  Created by Christoffer Detlef on 10/03/2022.
-//
 
 import SwiftUI
 

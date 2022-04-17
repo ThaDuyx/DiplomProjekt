@@ -10,8 +10,12 @@ import SwiftUI
 extension Resources {
     
     struct FontSize {
+        /// 12pt
+        static var smallBody: CGFloat { 12 }
         /// 14pt
         static var body: CGFloat { 14 }
+        /// 16pt
+        static var bigBody: CGFloat { 16 }
         /// 18pt
         static var subTitle: CGFloat { 18 }
         /// 24pt
