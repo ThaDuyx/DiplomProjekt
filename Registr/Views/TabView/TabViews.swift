@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TabViewView: View {
+struct TabViews: View {
     @State private var userRole = UserManager.shared.user?.role
     
     var body: some View {
@@ -39,6 +39,6 @@ struct TabViewView: View {
 
 struct TabView_Previews: PreviewProvider {
     static var previews: some View {
-        TabViewView()
+        TabViews()
     }
 }
