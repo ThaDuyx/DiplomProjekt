@@ -8,9 +8,9 @@
 import SwiftUI
 
 enum AbsenceReasons: String, CaseIterable {
-    case Illegal = "Ulovligt"
+    case illegal = "Ulovligt"
+    case illness = "Syg"
     case late = "For sent"
-    case sick = "Syg"
     case clear = ""
 }
 
@@ -109,6 +109,7 @@ struct AbsenceRegistrationView: View {
                 }
                 .listStyle(.plain)
                 .halfSheet(showSheet: $showSheet) {
+                    
                     VStack {
                         Text("student_list_absence_description \(studentName)")
                             .boldDarkBodyTextStyle()
@@ -121,7 +122,6 @@ struct AbsenceRegistrationView: View {
                             }
                             .buttonStyle(Resources.CustomButtonStyle.FilledWideButtonStyle())
                         }
-
                     }
                 } onEnd: {
                     showSheet.toggle()
@@ -150,6 +150,9 @@ struct AbsenceRegistrationView: View {
         .onChange(of: selectedDate) { newDate in
             registrationManager.fetchRegistrations(className: selectedClass, date: newDate)
         }
+        .onChange(of: selectedClass) { _ in
+            registrationManager.resetStatCounters()
+        }
     }
 }
 
@@ -166,6 +169,7 @@ private func convertedArray(currentDay: Date, previousDays: [Date], comingDays: 
 }
 
 struct StudentRow: View {
+    @EnvironmentObject var registrationManager: RegistrationManager
     let index: Int
     let studentName: String
     let absenceReason: String?
@@ -195,6 +199,12 @@ struct StudentRow: View {
                 Text(absenceReason?.isEmpty ?? true ? "" : stringSeparator(reason: absenceReason ?? "").uppercased())
                     .frame(width: 35, height: 35)
                     .foregroundColor(Resources.Color.Colors.frolyRed)
+                // Note: absenceReason in the following code is the old state value.
+                    .onChange(of: absenceReason) { [absenceReason] newValue in
+                        print("oldValue: \(absenceReason!) & newValue: \(newValue!)")
+                        // Force un-wrapping because we know we have the values and would like to receive an empty String
+                        registrationManager.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
+                    }
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
