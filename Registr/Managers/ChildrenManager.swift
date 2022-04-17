@@ -115,5 +115,32 @@ class ChildrenManager: ObservableObject {
             }
         }
     }
+    
+    func fetchChildrenReports(childID: String) {
+        let db = Firestore.firestore()
+        
+        db
+            .collection("fb_parent_path".localize)
+            .document(DefaultsManager.shared.currentProfileID)
+            .collection("fb_report_path".localize)
+            .whereField("studentID", isEqualTo: childID)
+            .getDocuments { querySnapshot, err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        do {
+                            if let report = try document.data(as: Report.self) {
+                                self.reports.append(report)
+                                print(report)
+                            }
+                        } catch {
+                            // TODO: Write no children absence and add error view
+                            print("No children")
+                        }
+                    }
+                }
+            }
+    }
 }
 

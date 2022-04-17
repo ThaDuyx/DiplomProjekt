@@ -32,6 +32,7 @@ struct ReportListView: View {
         .navigationTitle("")
         .onAppear(){
             childrenManager.fetchChildrenAbsence(studentID: selectedStudent)
+            childrenManager.fetchChildrenReports(childID: selectedStudent)
         }
     }
 }
