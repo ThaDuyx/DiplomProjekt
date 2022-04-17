@@ -33,7 +33,7 @@ struct StatisticsView: View {
                 VStack(spacing: 20) {
                     if isStudentPresented {
                         if let studentID = studentID {
-                            OptionsView(systemName: "square.and.pencil", titleText: "Indberettelser", destination: EmptyView()).onAppear()
+                            OptionsView(systemName: "square.and.pencil", titleText: "Indberettelser", destination: EmptyView())
                             OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: ReportListView(selectedStudent: studentID))
                         }
                     } else {
