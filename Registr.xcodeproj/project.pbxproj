@@ -73,9 +73,7 @@
 		8348592A27CF912E009D8A51 /* FontSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592927CF912E009D8A51 /* FontSizes.swift */; };
 		8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592B27CF92DB009D8A51 /* ButtonStyle.swift */; };
 		8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */; };
-		83547AF4280C08F00082D641 /* TeacherHomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AF3280C08F00082D641 /* TeacherHomeScreenView.swift */; };
 		836F149F27E35FF200FEFCB3 /* HalfSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F149E27E35FF200FEFCB3 /* HalfSheet.swift */; };
-		8387E78127E1DACD0060C12D /* StudentAbsenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387E78027E1DACD0060C12D /* StudentAbsenceView.swift */; };
 		8387E78727E1FA660060C12D /* NavigationAndTabbarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */; };
 		8391A8DC27D8BBD700B5C698 /* OnboardingFlowControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DB27D8BBD700B5C698 /* OnboardingFlowControllerView.swift */; };
 		8391A8DE27D8C59900B5C698 /* OnboardFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DD27D8C59900B5C698 /* OnboardFlowView.swift */; };
@@ -156,9 +154,7 @@
 		8348592B27CF92DB009D8A51 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundGradient.swift; sourceTree = "<group>"; };
 		8348593127CFAE1D009D8A51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		83547AF3280C08F00082D641 /* TeacherHomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHomeScreenView.swift; sourceTree = "<group>"; };
 		836F149E27E35FF200FEFCB3 /* HalfSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSheet.swift; sourceTree = "<group>"; };
-		8387E78027E1DACD0060C12D /* StudentAbsenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAbsenceView.swift; sourceTree = "<group>"; };
 		8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAndTabbarAppearance.swift; sourceTree = "<group>"; };
 		8391A8DB27D8BBD700B5C698 /* OnboardingFlowControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowControllerView.swift; sourceTree = "<group>"; };
 		8391A8DD27D8C59900B5C698 /* OnboardFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardFlowView.swift; sourceTree = "<group>"; };
@@ -383,11 +379,9 @@
 		8391A8EB27DA2D7100B5C698 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				8387E78027E1DACD0060C12D /* StudentAbsenceView.swift */,
 				8391A8FA27DB5BED00B5C698 /* ParentHomeScreenView.swift */,
 				83201BBC28025A2F00007269 /* TeacherHomeView.swift */,
 				8314F81B28072CA800487C5F /* StudentReportView.swift */,
-				83547AF3280C08F00082D641 /* TeacherHomeScreenView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -544,9 +538,7 @@
 				8348592A27CF912E009D8A51 /* FontSizes.swift in Sources */,
 				8387E78727E1FA660060C12D /* NavigationAndTabbarAppearance.swift in Sources */,
 				830FD5CC27F7231F00F87E0D /* ReportListView.swift in Sources */,
-				8387E78127E1DACD0060C12D /* StudentAbsenceView.swift in Sources */,
 				6A0F350827DA0CF7001E60D9 /* RegistrationManager.swift in Sources */,
-				83547AF4280C08F00082D641 /* TeacherHomeScreenView.swift in Sources */,
 				6A0F350127D8A9F9001E60D9 /* Absence.swift in Sources */,
 				830FD5C627F5C54100F87E0D /* ColorMultiply+Extensions.swift in Sources */,
 				83BB1B6127EE0D03002FF81E /* AbsenceHistoryView.swift in Sources */,

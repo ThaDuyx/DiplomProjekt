@@ -64,10 +64,17 @@ struct StudentReportView: View {
                     }
                 }
                 .buttonStyle(Resources.CustomButtonStyle.DeclineButtonStyle())
+                
                 Spacer()
+                
                 Button("Registrer") {
-                    print("Registrer")
-                    presentationMode.wrappedValue.dismiss()
+                    reportManager.validateReport(selectedReport: report, validationReason: selectedAbsence, teacherValidation: "Accepted") { result in
+                        if result {
+                            presentationMode.wrappedValue.dismiss()
+                        } else {
+                            // TODO: Add ErrorView
+                        }
+                    }
                 }
                 .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
             }
