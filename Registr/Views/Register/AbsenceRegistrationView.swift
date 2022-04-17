@@ -28,13 +28,13 @@ struct AbsenceRegistrationView: View {
     @State private var studentAbsenceState: String = ""
     @State private var studentIndex: Int = 0
     @State private var studentName: String = ""
+    @State var selectedDate: String
 
     var selectedClass: String
-    var selectedDate: String
     
     init(selectedClass: String, selectedDate: String) {
         self.selectedClass = selectedClass
-        self.selectedDate = selectedDate
+        _selectedDate = State(initialValue: selectedDate)
     }
     
     var body: some View {
@@ -56,6 +56,7 @@ struct AbsenceRegistrationView: View {
                                 .id(number)
                                 .onTapGesture {
                                     self.selectedItem = number
+                                    selectedDate = element.formatSpecificData(date: element)
                                 }
                             }.onAppear {
                                 withAnimation(.spring()) {
@@ -145,6 +146,9 @@ struct AbsenceRegistrationView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear() {
             registrationManager.fetchRegistrations(className: selectedClass, date: selectedDate)
+        }
+        .onChange(of: selectedDate) { newDate in
+            registrationManager.fetchRegistrations(className: selectedClass, date: newDate)
         }
     }
 }
