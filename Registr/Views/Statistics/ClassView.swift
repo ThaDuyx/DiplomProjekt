@@ -29,6 +29,7 @@ struct ClassView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 20) {
+                Spacer()
                 Button {
                     followAction.toggle()
                 } label: {
