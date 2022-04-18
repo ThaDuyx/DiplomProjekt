@@ -37,7 +37,7 @@ class RegistrationManager: ObservableObject {
         registrations[index].reason = absenceReason
     }
     
-    // MARK: - Firestore functions
+    // MARK: - Firestore actions
     /**
      Fetches all the registration of a selected class and will not fetch repeatedly if the selected class or date has not changed.
      

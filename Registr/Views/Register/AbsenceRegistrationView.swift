@@ -227,7 +227,7 @@ struct StudentRow: View {
                     .onChange(of: absenceReason) { [absenceReason] newValue in
                         // Force un-wrapping because we know we have the values and would like to receive an empty String
                         registrationManager.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
-                        statisticsManager.addStatWrite(oldValue: absenceReason!, newValue: newValue!, studentID: studentID)
+                        statisticsManager.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID)
                     }
             }
             .overlay(
