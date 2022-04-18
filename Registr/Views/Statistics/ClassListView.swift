@@ -10,28 +10,18 @@ import SwiftUI
 struct ClassListView: View {
     @EnvironmentObject var registrationManager: RegistrationManager
     
-    init() {
-        // To make the List background transparent, so the gradient background can be used.
-        UITableView.appearance().backgroundColor = .clear
-    }
-    
     var body: some View {
         NavigationView {
             ZStack {
-                Resources.BackgroundGradient.backgroundGradient
-                    .ignoresSafeArea()
-                Form {
-                    Section {
-                        ForEach(registrationManager.classes, id: \.self) { className in
-                            ClassEntity(className: className)
-                        }
+                List {
+                    ForEach(registrationManager.classes, id: \.self) { className in
+                        ClassEntity(className: className)
                     }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    .listRowBackground(Resources.Color.Colors.frolyRed)
+                    .listRowSeparatorTint(Resources.Color.Colors.white)
                 }
             }
-            .navigationTitle("Klasse liste")
+            .navigationTitle("Statistik")
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -41,20 +31,21 @@ struct ClassEntity: View {
     let className: String
     
     var body: some View {
-        NavigationLink(destination: StatisticsView(navigationTitle: className, isStudentPresented: false)) {
-            HStack {
-                Text(className)
-                    .darkBodyTextStyle()
-                    .frame(maxWidth: .infinity, alignment: .center)
+        HStack {
+            Text(className)
+                .boldBodyTextStyle()
+                .frame(maxWidth: .infinity, alignment: .center)
+            
+            NavigationLink(destination: ClassView(className: className, isStudentPresented: false)) {
+                EmptyView()
             }
-            .padding()
+            .frame(width: 0, height: 0)
+            
+            Image(systemName: "chevron.right")
+                .foregroundColor(Resources.Color.Colors.white)
+                .padding(.trailing, 10)
         }
-        .padding(.trailing, 20)
-        .overlay(
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.black, lineWidth: 1)
-        )
-        .padding(4)
+        .frame(height: 35)
     }
 }
 
