@@ -58,7 +58,7 @@ class StatisticsManager: ObservableObject {
     }
     
     /**
-     Determines wether to in or decrement either the illegal, illness or late variable in the database.
+     Determines wether to increment or decrement either the illegal, illness or late variable in the database.
      
      - parameter docRef:           Reference to the specific student's stats
      - parameter value:            The value to be determined; illegal, illness or late

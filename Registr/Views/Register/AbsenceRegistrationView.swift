@@ -165,10 +165,13 @@ struct AbsenceRegistrationView: View {
         }
         .onChange(of: selectedDate) { newDate in
             registrationManager.fetchRegistrations(className: selectedClass, date: newDate)
+            
+            // Resetting on change of date
             registrationManager.resetStatCounters()
             statisticsManager.resetBatch()
         }
         .onChange(of: selectedClass) { _ in
+            // Resetting on change of class
             registrationManager.resetStatCounters()
             statisticsManager.resetBatch()
         }
