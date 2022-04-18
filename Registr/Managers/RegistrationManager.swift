@@ -237,7 +237,7 @@ class RegistrationManager: ObservableObject {
         }
     }
     
-    // MARK: - Statistics
+    // MARK: - Class Statistics
     
     func resetStatCounters() {
         illnessCounter = 0; illegalCounter = 0; lateCounter = 0

@@ -15,9 +15,34 @@ class StatisticsManager: ObservableObject {
     // Collection of Firestore write actions
     private var batch = Firestore.firestore().batch()
     
+    @Published var statistic = Statistics(illegal: 0, illness: 0, late: 0, legal: 0)
+    
     // Constants
     private let increment: Int64 = 1
     private let decrement: Int64 = -1
+    
+    func fetchClassStats(className: String) {
+        db
+            .collection("fb_classes_path".localize)
+            .document(className)
+            .getDocument { document, err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    if let document = document {
+                        do {
+                            if let newStat = try document.data(as: Statistics.self) {
+                                self.statistic = newStat
+                            }
+                            print(self.statistic)
+                        }
+                        catch {
+                            print(error)
+                        }
+                    }
+                }
+            }
+    }
     
     /// Comitting the global batch of writes and will clean every write in the object.
     func commitBatch() {

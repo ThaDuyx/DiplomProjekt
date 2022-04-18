@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
-struct Statistics {
+struct Statistics: Codable {
+    @DocumentID var id: String?
     let illegal: Int
     let illness: Int
     let late: Int
