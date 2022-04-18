@@ -17,6 +17,7 @@ enum AbsenceReasons: String, CaseIterable {
 struct AbsenceRegistrationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var registrationManager: RegistrationManager
+    @StateObject var statisticsManager = StatisticsManager()
 
     let currentDate = Date.now
     let comingDays = Date().comingDays(days: 7)
@@ -92,16 +93,18 @@ struct AbsenceRegistrationView: View {
                         StudentRow(
                             index: index+1,
                             studentName: registrationManager.registrations[index].studentName,
-                            absenceReason: registrationManager.registrations[index].reason
+                            absenceReason: registrationManager.registrations[index].reason,
+                            studentID: registrationManager.registrations[index].studentID
                         )
-                            .onTapGesture {
-                                if !studentAbsenceState.isEmpty {
-                                    studentAbsenceState = ""
-                                }
-                                studentIndex = index
-                                studentName = registrationManager.registrations[index].studentName
-                                showSheet.toggle()
+                        .environmentObject(statisticsManager)
+                        .onTapGesture {
+                            if !studentAbsenceState.isEmpty {
+                                studentAbsenceState = ""
                             }
+                            studentIndex = index
+                            studentName = registrationManager.registrations[index].studentName
+                            showSheet.toggle()
+                        }
                         
                         Divider()
                             .background(Resources.Color.Colors.fiftyfifty)
@@ -130,6 +133,7 @@ struct AbsenceRegistrationView: View {
                 Button {
                     registrationManager.saveRegistrations(className: selectedClass, date: selectedDate) { result in
                         if result {
+                            statisticsManager.commitBatch()
                             presentationMode.wrappedValue.dismiss()
                         } else {
                             // TODO: Present ErrorView
@@ -149,9 +153,12 @@ struct AbsenceRegistrationView: View {
         }
         .onChange(of: selectedDate) { newDate in
             registrationManager.fetchRegistrations(className: selectedClass, date: newDate)
+            registrationManager.resetStatCounters()
+            statisticsManager.resetBatch()
         }
         .onChange(of: selectedClass) { _ in
             registrationManager.resetStatCounters()
+            statisticsManager.resetBatch()
         }
     }
 }
@@ -170,15 +177,20 @@ private func convertedArray(currentDay: Date, previousDays: [Date], comingDays: 
 
 struct StudentRow: View {
     @EnvironmentObject var registrationManager: RegistrationManager
+    @EnvironmentObject var statisticsManager: StatisticsManager
+    
     let index: Int
     let studentName: String
     let absenceReason: String?
+    let studentID: String
     
-    init(index: Int, studentName: String, absenceReason: String?) {
+    init(index: Int, studentName: String, absenceReason: String?, studentID: String) {
         self.index = index
         self.studentName = studentName
         self.absenceReason = absenceReason
+        self.studentID = studentID
     }
+    
     var body: some View {
         HStack {
             Text("\(index)")
@@ -201,9 +213,9 @@ struct StudentRow: View {
                     .foregroundColor(Resources.Color.Colors.frolyRed)
                 // Note: absenceReason in the following code is the old state value.
                     .onChange(of: absenceReason) { [absenceReason] newValue in
-                        print("oldValue: \(absenceReason!) & newValue: \(newValue!)")
                         // Force un-wrapping because we know we have the values and would like to receive an empty String
                         registrationManager.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
+                        statisticsManager.addStatWrite(oldValue: absenceReason!, newValue: newValue!, studentID: studentID)
                     }
             }
             .overlay(

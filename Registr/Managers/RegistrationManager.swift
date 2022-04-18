@@ -8,14 +8,15 @@
 import Foundation
 import FirebaseFirestore
 
-// TODO: Refactor firebase paths and uncomment currentData when we have feeded the database
-/// Hardcoded variables for firebase path used for testing
 class RegistrationManager: ObservableObject {
     
+    // Collections
     @Published var registrations = [Registration]()
     @Published var students = [Student]()
     @Published var classes = [String]()
     @Published var studentRegistrationList = [Registration]()
+    
+    // Firestore db reference
     private let db = Firestore.firestore()
     
     // Selectors
@@ -32,6 +33,17 @@ class RegistrationManager: ObservableObject {
         fetchClasses()
     }
     
+    func setAbsenceReason(absenceReason: String, index: Int) {
+        registrations[index].reason = absenceReason
+    }
+    
+    // MARK: - Firestore functions
+    /**
+     Fetches all the registration of a selected class and will not fetch repeatedly if the selected class or date has not changed.
+     
+     - parameter className:      The unique name specifier of the class
+     - parameter date:           A date string in the format: dd-MM-yyyy
+     */
     func fetchRegistrations(className: String, date: String) {
         // If 'selectedClass' is the same as the className input we have already fetched the registration.
         // In this case will not have to fetch it again.
@@ -68,10 +80,6 @@ class RegistrationManager: ObservableObject {
         }
     }
     
-    func setAbsenceReason(absenceReason: String, index: Int) {
-        registrations[index].reason = absenceReason
-    }
-    
     // Retrieves every class name
     func fetchClasses() {
         db
@@ -87,7 +95,11 @@ class RegistrationManager: ObservableObject {
             }
     }
     
-    // Retrieves all the students' data from a given class
+    /**
+     Retrieves all the students' data from a given class
+     
+     - parameter className:      The unique name specifier of the class
+     */
     func fetchStudents(className: String) {
         if selectedClass != className {
             students.removeAll()
@@ -126,6 +138,13 @@ class RegistrationManager: ObservableObject {
         }
     }
     
+    /**
+     Retrieves all the students' data from a given class
+     
+     - parameter className:      The unique name specifier of the class.
+     - parameter date:           A date string in the format: dd-MM-yyyy.
+     - parameter completion:     A Callback that returns if the write to the database went through.
+     */
     func saveRegistrations(className: String, date: String, completion: @escaping (Bool) -> ()) {
         if !registrations.isEmpty {
             // Create new write batch that will pushed at the same time.
@@ -184,7 +203,7 @@ class RegistrationManager: ObservableObject {
                 } else {
                     print("Batch write succeeded.")
                     completion(true)
-                    self.writeStats(className: className)
+                    self.writeClassStats(className: className)
                 }
             }
         }
@@ -218,14 +237,17 @@ class RegistrationManager: ObservableObject {
         }
     }
     
+    // MARK: - Statistics
+    
     func resetStatCounters() {
         illnessCounter = 0; illegalCounter = 0; lateCounter = 0
     }
     
-    private func writeStats(className: String){
+    private func writeClassStats(className: String) {
         let statisticsClassRef = db
             .collection("fb_classes_path".localize)
             .document(className)
+        
         // If one of the following counters are zero we do not want to use them
         if illegalCounter != 0 {
             statisticsClassRef.updateData(["illegal" : FieldValue.increment(illegalCounter)])
