@@ -14,15 +14,13 @@ struct ClassView: View {
     @State private var followAction: Bool = false
     
     let className: String
-    var isStudentPresented: Bool
     var studentID: String? = nil
     
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
-    init(className: String, isStudentPresented: Bool, studentID: String? = nil) {
+    init(className: String, studentID: String? = nil) {
         self.className = className
-        self.isStudentPresented = isStudentPresented
         self.studentID = studentID
     }
     
@@ -33,31 +31,21 @@ struct ClassView: View {
                 Button {
                     followAction.toggle()
                 } label: {
+                    
                     HStack {
                         Image(systemName: "checkmark.diamond")
+                        
                         Text(favoriteManager.favorites.contains(className) ? "Følger" : "Følger ikke")
                     }
                 }
                 .buttonStyle(Resources.CustomButtonStyle.TransparentFollowButtonStyle())
                 
-                if isStudentPresented {
-                    if let studentID = studentID {
-                        
-                        ButtonAction(systemName: "doc.text.fill", titleText: "Indberettelser", destination: EmptyView())
-                        
-                        ButtonAction(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: ReportListView(selectedStudent: studentID))
-                        
-                    }
-                } else {
-                    
-                    ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(className: className))
-                    
-                    ButtonAction(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: className))
-                    
-                }
+                ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(className: className))
+                
+                ButtonAction(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: className))
                 
                 Spacer()
-
+                
                 VStack {
                     PieChart()
                         .data(demoData)
@@ -126,6 +114,6 @@ struct ButtonAction<TargetView: View>: View {
 
 struct ClassView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassView(className: "0.X", isStudentPresented: true)
+        ClassView(className: "0.X")
     }
 }

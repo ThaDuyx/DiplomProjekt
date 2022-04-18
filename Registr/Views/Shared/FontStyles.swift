@@ -93,6 +93,12 @@ extension Text {
     }
     
     /// Color: white, FontSize: 12pt
+    func smallDarkBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
+            .font(.custom("Poppins-Regular", size: Resources.FontSize.smallBody))
+    }
+    
+    /// Color: white, FontSize: 12pt
     func boldSmallBodyTextStyle() -> some View {
         self.foregroundColor(Resources.Color.Colors.white)
             .font(.custom("Poppins-Bold", size: Resources.FontSize.smallBody))

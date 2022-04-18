@@ -20,7 +20,7 @@ struct StudentListView: View {
         ZStack {
             List {
                 ForEach(0..<registrationManager.students.count, id: \.self) { student in
-                    StudentEntity(studentName: registrationManager.students[student].name)
+                    StudentEntity(studentName: registrationManager.students[student].name, studentID: registrationManager.students[student].id ?? "")
                 }
                 .listRowBackground(Resources.Color.Colors.frolyRed)
                 .listRowSeparatorTint(Resources.Color.Colors.white)
@@ -36,6 +36,7 @@ struct StudentListView: View {
 
 struct StudentEntity: View {
     let studentName: String
+    let studentID: String
     
     var body: some View {
         HStack {
@@ -43,7 +44,7 @@ struct StudentEntity: View {
                 .boldBodyTextStyle()
                 .frame(maxWidth: .infinity, alignment: .center)
             
-            NavigationLink(destination: StudentView(studentName: studentName)) {
+            NavigationLink(destination: StudentView(studentName: studentName, isParent: false, studentID: studentID)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)

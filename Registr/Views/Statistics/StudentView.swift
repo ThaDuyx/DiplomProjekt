@@ -9,16 +9,36 @@ import SwiftUI
 import SwiftUICharts
 
 struct StudentView: View {
-    
+
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
     @State private var weekdaysArray: [String] = ["Man", "Tir", "Ons", "Tor", "Fre"]
 
     let studentName: String
+    var isParent: Bool
+    var studentID: String? = nil
+    
+    init(studentName: String, isParent: Bool, studentID: String? = nil) {
+        self.studentName = studentName
+        self.isParent = isParent
+        self.studentID = studentID
+    }
 
     var body: some View {
         VStack {
+            
+            if isParent {
+                if let studentID = studentID {
+                    
+                    Spacer()
+                    
+                    ButtonAction(systemName: "doc.text.fill", titleText: "Indberettelser", destination: EmptyView())
+                    
+                    ButtonAction(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: ReportListView(selectedStudent: studentID, studentName: studentName))
+                    
+                }
+            }
             VStack {
                 PieChart()
                     .data(demoData)
@@ -90,6 +110,6 @@ struct StudentView: View {
 
 struct StudentView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentView(studentName: "Student name")
+        StudentView(studentName: "Student name", isParent: true)
     }
 }
