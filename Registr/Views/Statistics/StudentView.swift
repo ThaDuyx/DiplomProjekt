@@ -13,6 +13,8 @@ struct StudentView: View {
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
+    @State private var weekdaysArray: [String] = ["Man", "Tir", "Ons", "Tor", "Fre"]
+
     let studentName: String
 
     var body: some View {
@@ -49,6 +51,30 @@ struct StudentView: View {
                         .lightBodyTextStyle()
                         .padding(.bottom, 10)
                     
+                    Divider()
+                        .frame(height: 1)
+                        .background(.white)
+                    
+                    VStack(spacing: 10) {
+                        Text("Forseelser:")
+                            .lightBodyTextStyle()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 20)
+                        
+                        HStack {
+                            ForEach(weekdaysArray, id: \.self) { index in
+                                VStack {
+                                    Text(index)
+                                        .lightBodyTextStyle()
+                                    Text("4")
+                                        .lightBodyTextStyle()
+                                }
+                                .padding(.leading, 20)
+                                .padding(.bottom, 10)
+                                Spacer()
+                            }
+                        }
+                    }
                 }
                 .frame(width: 290)
                 .background(Resources.Color.Colors.frolyRed)
@@ -64,6 +90,6 @@ struct StudentView: View {
 
 struct StudentView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentView(studentName: "")
+        StudentView(studentName: "Student name")
     }
 }

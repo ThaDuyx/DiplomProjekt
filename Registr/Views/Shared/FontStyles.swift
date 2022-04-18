@@ -50,7 +50,7 @@ extension Text {
             .font(.custom("Poppins-Regular", size: Resources.FontSize.body))
     }
     
-    /// Color: lightMint, FontSize: 14pt
+    /// Color: white, FontSize: 14pt
     func lightBodyTextStyle() -> some View {
         self.foregroundColor(Resources.Color.Colors.white)
             .font(.custom("Poppins-Regular", size: Resources.FontSize.body))
