@@ -256,6 +256,7 @@
 				6A63250E27EB565D000EF260 /* DefaultsManager.swift */,
 				6AAF955827F47A6500A6C37B /* ChildrenManager.swift */,
 				830FD5C927F5D2D800F87E0D /* TextBindingManager.swift */,
+				6AAC4E52280D546600AB59C2 /* StatisticsManager.swift */,
 				6AD2E1EB27F9FDAE0027036F /* FeedDatabaseManager.swift */,
 				6A25CFCA2801A70C006B2685 /* FavoriteManager.swift */,
 			);
@@ -433,7 +434,6 @@
 				830FD5CB27F7231F00F87E0D /* ReportListView.swift */,
 				83547AF5280C15D50082D641 /* ClassView.swift */,
 				83547AF9280C532F0082D641 /* StudentView.swift */,
-				6AAC4E52280D546600AB59C2 /* StatisticsManager.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
