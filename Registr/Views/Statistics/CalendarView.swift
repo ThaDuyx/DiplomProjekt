@@ -1,5 +1,5 @@
 //
-//  AbsenceHistoryView.swift
+//  CalendarView.swift
 //  Registr
 //
 //  Created by Christoffer Detlef on 25/03/2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AbsenceHistoryView: View {
+struct CalendarView: View {
     @State private var selectedDate: Date = Date()
     let className: String
     
@@ -22,23 +22,21 @@ struct AbsenceHistoryView: View {
     
     var body: some View {
         ZStack {
-            Resources.BackgroundGradient.backgroundGradient
-                .ignoresSafeArea()
             VStack {
                 VStack(spacing: 0) {
                     Text("absence_day_pick")
-                        .boldSubTitleTextStyle(color: .red)
+                        .boldSubTitleTextStyle(color: Resources.Color.Colors.fiftyfifty)
                         .padding(.horizontal)
                     let date = DateFormatter.abbreviationDayMonthYearFormatter.string(from: selectedDate)
                     Text(date)
-                        .boldSubTitleTextStyle(color: .red)
+                        .boldSubTitleTextStyle(color: Resources.Color.Colors.fiftyfifty)
                         .padding(.horizontal)
                 }
                 DatePicker("", selection: $selectedDate, in: dateRange, displayedComponents: .date)
                 .datePickerStyle(.graphical)
                 .padding()
 
-                NavigationLink(destination: AbsenceRegistrationView(selectedClass: className, selectedDate: selectedDate.formatSpecificData(date: selectedDate))) {
+                NavigationLink(destination: AbsenceRegistrationView(selectedClass: className, selectedDate: selectedDate.formatSpecificData(date: selectedDate), isFromHistory: true)) {
                     Text("next_view")
                 }
                 .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
@@ -48,8 +46,8 @@ struct AbsenceHistoryView: View {
     }
 }
 
-struct AbsenceHistoryView_Previews: PreviewProvider {
+struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceHistoryView(className: "0.x")
+        CalendarView(className: "0.x")
     }
 }

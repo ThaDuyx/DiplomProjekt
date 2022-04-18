@@ -29,63 +29,75 @@ struct AbsenceRegistrationView: View {
     @State private var studentIndex: Int = 0
     @State private var studentName: String = ""
     @State var selectedDate: String
+    var isFromHistory: Bool
 
     var selectedClass: String
     
-    init(selectedClass: String, selectedDate: String) {
+    init(selectedClass: String, selectedDate: String, isFromHistory: Bool) {
         self.selectedClass = selectedClass
         _selectedDate = State(initialValue: selectedDate)
+        self.isFromHistory = isFromHistory
     }
     
     var body: some View {
         ZStack {
             VStack {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    ScrollViewReader { proxy in
-                        HStack(spacing: 65) {
-                            ForEach(Array(convertedArray(currentDay: currentDate, previousDays: previousDays, comingDays: comingDays).enumerated()), id: \.offset) { number, element in
-                                VStack {
-                                    if element == currentDate {
-                                        Text("I dag")
-                                            .bigBodyTextStyle(color: Resources.Color.Colors.fiftyfifty)
+                if isFromHistory {
+                    VStack {
+                        Text("Valgte dag")
+                            .bigBodyTextStyle(color: Resources.Color.Colors.fiftyfifty)
+                        
+                        Text(selectedDate)
+                            .boldSubTitleTextStyle(color: Resources.Color.Colors.frolyRed)
+                    }
+                } else {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        ScrollViewReader { proxy in
+                            HStack(spacing: 65) {
+                                ForEach(Array(convertedArray(currentDay: currentDate, previousDays: previousDays, comingDays: comingDays).enumerated()), id: \.offset) { number, element in
+                                    VStack {
+                                        if element == currentDate {
+                                            Text("I dag")
+                                                .bigBodyTextStyle(color: Resources.Color.Colors.fiftyfifty)
+                                        }
+                                        
+                                        Text("\(element.formatSpecificToDayAndMonthData(date: element))")
+                                            .boldSubTitleTextStyle(color: self.selectedItem == number ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty)
                                     }
-                                    
-                                    Text("\(element.formatSpecificToDayAndMonthData(date: element))")
-                                        .boldSubTitleTextStyle(color: self.selectedItem == number ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty)
-                                }
-                                .id(number)
-                                .onTapGesture {
-                                    self.selectedItem = number
-                                    selectedDate = element.formatSpecificData(date: element)
-                                }
-                            }.onAppear {
-                                withAnimation(.spring()) {
-                                    proxy.scrollTo(7, anchor: .center)
-                                    self.selectedItem = 7
+                                    .id(number)
+                                    .onTapGesture {
+                                        self.selectedItem = number
+                                        selectedDate = element.formatSpecificData(date: element)
+                                    }
+                                }.onAppear {
+                                    withAnimation(.spring()) {
+                                        proxy.scrollTo(7, anchor: .center)
+                                        self.selectedItem = 7
+                                    }
                                 }
                             }
                         }
                     }
+                    HStack {
+                        Button {
+                            selectedTime = 1
+                        } label: {
+                            Text("Formiddag")
+                                .mediumSubTitleTextStyle(color: selectedTime == 1 ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: selectedTime == 1 ? "Poppins-Medium" : "Poppins-Regular")
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 35)
+                        .background(selectedTime == 1 ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
+                        
+                        Button {
+                            selectedTime = 2
+                        } label: {
+                            Text("Eftermiddag")
+                            .mediumSubTitleTextStyle(color: selectedTime == 2 ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: selectedTime == 2 ? "Poppins-Medium" : "Poppins-Regular")                    }
+                        .frame(maxWidth: .infinity, minHeight: 35)
+                        .background(selectedTime == 2 ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
+                    }
                 }
                 
-                HStack {
-                    Button {
-                        selectedTime = 1
-                    } label: {
-                        Text("Formiddag")
-                            .mediumSubTitleTextStyle(color: selectedTime == 1 ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: selectedTime == 1 ? "Poppins-Medium" : "Poppins-Regular")
-                    }
-                    .frame(maxWidth: .infinity, minHeight: 35)
-                    .background(selectedTime == 1 ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
-                    
-                    Button {
-                        selectedTime = 2
-                    } label: {
-                        Text("Eftermiddag")
-                        .mediumSubTitleTextStyle(color: selectedTime == 2 ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: selectedTime == 2 ? "Poppins-Medium" : "Poppins-Regular")                    }
-                    .frame(maxWidth: .infinity, minHeight: 35)
-                    .background(selectedTime == 2 ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
-                }
                 
                 ScrollView {
                     ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
@@ -208,6 +220,6 @@ struct StudentRow: View {
 
 struct AbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceRegistrationView(selectedClass: "", selectedDate: "")
+        AbsenceRegistrationView(selectedClass: "", selectedDate: "", isFromHistory: false)
     }
 }

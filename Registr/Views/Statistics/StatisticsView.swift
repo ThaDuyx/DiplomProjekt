@@ -37,7 +37,7 @@ struct StatisticsView: View {
                             OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: ReportListView(selectedStudent: studentID))
                         }
                     } else {
-                        OptionsView(systemName: "star", titleText: "Historik", destination: AbsenceHistoryView(className: navigationTitle))
+                        OptionsView(systemName: "star", titleText: "Historik", destination: CalendarView(className: navigationTitle))
                         OptionsView(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: navigationTitle))
                     }
                 }
