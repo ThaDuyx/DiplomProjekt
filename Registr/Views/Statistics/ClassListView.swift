@@ -36,7 +36,7 @@ struct ClassEntity: View {
                 .boldBodyTextStyle()
                 .frame(maxWidth: .infinity, alignment: .center)
             
-            NavigationLink(destination: ClassView(className: className, isStudentPresented: false)) {
+            NavigationLink(destination: ClassView(className: className)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)

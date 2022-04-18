@@ -11,7 +11,7 @@ struct ParentTabs: View {
     @StateObject var childrenManager = ChildrenManager()
     
     var body: some View {
-        ParentHomeScreenView()
+        ParentHomeView()
             .tabItem {
                 Image(systemName: "house")
                 Text("Børn")
