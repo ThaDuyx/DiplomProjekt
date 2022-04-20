@@ -22,7 +22,7 @@ struct TabViews: View {
                 
             case .headmaster:
                 // TODO: Make headmaster view
-                ParentHomeScreenView()
+                ParentHomeView()
                     .tabItem {
                         Image(systemName: "house")
                         Text("Start")
