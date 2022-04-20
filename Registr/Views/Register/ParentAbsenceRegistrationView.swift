@@ -39,7 +39,9 @@ struct ParentAbsenceRegistrationView: View {
         ZStack {
             Form {
                 Section(
-                    header: Text("Barn")
+                    header:
+                        Text("Barn")
+                        .darkBodyTextStyle()
                 ) {
                     Menu {
                         ForEach(childrenManager.children, id: \.self) { child in
@@ -51,19 +53,21 @@ struct ParentAbsenceRegistrationView: View {
                     } label: {
                         HStack {
                             Image(systemName: "person")
-                                .foregroundColor(Resources.Color.Colors.lightMint)
+                                .foregroundColor(Resources.Color.Colors.white)
                             Text(selectedName.isEmpty ? "Vælg barn" : selectedName)
                                 .lightBodyTextStyle()
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             Image(systemName: "chevron.down")
-                                .foregroundColor(Resources.Color.Colors.lightMint)
+                                .foregroundColor(Resources.Color.Colors.white)
                         }
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.fiftyfifty)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
                 
                 Section(
-                    header: Text("Fraværs årsag")
+                    header:
+                        Text("Fraværs årsag")
+                        .darkBodyTextStyle()
                 ) {
                     Menu {
                         ForEach(AbsenceType.allCases, id: \.self) { absenceType in
@@ -74,36 +78,40 @@ struct ParentAbsenceRegistrationView: View {
                     } label: {
                         HStack {
                             Image(systemName: "questionmark")
-                                .foregroundColor(Resources.Color.Colors.lightMint)
+                                .foregroundColor(Resources.Color.Colors.white)
                             Text(selectedAbsence.isEmpty ? "Vælg fraværsårsag" : selectedAbsence)
                                 .lightBodyTextStyle()
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             Image(systemName: "chevron.down")
-                                .foregroundColor(Resources.Color.Colors.lightMint)
+                                .foregroundColor(Resources.Color.Colors.white)
                         }
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.fiftyfifty)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
                 
                 Section(
-                    header: Text("Interval")
+                    header:
+                        Text("Interval")
+                        .darkBodyTextStyle()
                 ) {
                     HStack {
                         Image(systemName: "calendar")
-                            .foregroundColor(Resources.Color.Colors.lightMint)
+                            .foregroundColor(Resources.Color.Colors.white)
                         Toggle("Aktivér for slutdato", isOn: $isInterval)
                             .lightBodyTextStyleToggle()
-                            .toggleStyle(SwitchToggleStyle(tint: Resources.Color.Colors.mediumMint))
+                            .toggleStyle(SwitchToggleStyle(tint: Resources.Color.Colors.white.opacity(0.5)))
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.fiftyfifty)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
                 
                 Section(
-                    header: Text("Startdato")
+                    header:
+                        Text("Startdato")
+                        .darkBodyTextStyle()
                 ) {
                     HStack {
                         Image(systemName: "calendar")
-                            .foregroundColor(Resources.Color.Colors.lightMint)
+                            .foregroundColor(Resources.Color.Colors.white)
                         Text(DateFormatter.abbreviationDayMonthYearFormatter.string(from: startDate))
                             .lightBodyTextStyle()
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -118,18 +126,20 @@ struct ParentAbsenceRegistrationView: View {
                             in: dateRange,
                             displayedComponents: .date)
                         .datePickerStyle(.graphical)
-                        .applyTextColor(Resources.Color.Colors.lightMint)
+                        .applyTextColor(Resources.Color.Colors.white)
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.fiftyfifty)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
                 
                 if isInterval {
                     Section(
-                        header: Text("Slutdato")
+                        header:
+                            Text("Slutdato")
+                            .darkBodyTextStyle()
                     ) {
                         HStack {
                             Image(systemName: "calendar")
-                                .foregroundColor(Resources.Color.Colors.lightMint)
+                                .foregroundColor(Resources.Color.Colors.white)
                             Text(DateFormatter.abbreviationDayMonthYearFormatter.string(from: endDate))
                                 .lightBodyTextStyle()
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -144,19 +154,20 @@ struct ParentAbsenceRegistrationView: View {
                                 in: dateRange,
                                 displayedComponents: .date)
                             .datePickerStyle(.graphical)
-                            .applyTextColor(Resources.Color.Colors.lightMint)
+                            .applyTextColor(Resources.Color.Colors.white)
                         }
                     }
-                    .listRowBackground(Resources.Color.Colors.fiftyfifty)
+                    .listRowBackground(Resources.Color.Colors.frolyRed)
                 }
                 
                 Section(
                     header:
-                        Text("student_absence_description").darkBlueBodyTextStyle()
+                        Text("student_absence_description")
+                        .darkBodyTextStyle()
                 ) {
                     HStack {
                         Image(systemName: "note.text")
-                            .foregroundColor(Resources.Color.Colors.lightMint)
+                            .foregroundColor(Resources.Color.Colors.white)
                         ZStack(alignment: .leading) {
                             if textBindingManager.value.isEmpty && !showPlaceholderText {
                                 Text("Skriv beskrivelse")
@@ -176,7 +187,7 @@ struct ParentAbsenceRegistrationView: View {
                         }
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.fiftyfifty)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
                 
                 Button("Indberet") {
                     if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsence.isEmpty {

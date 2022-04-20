@@ -74,7 +74,6 @@
 		8348592827CF8D1C009D8A51 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592727CF8D1C009D8A51 /* Resources.swift */; };
 		8348592A27CF912E009D8A51 /* FontSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592927CF912E009D8A51 /* FontSizes.swift */; };
 		8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592B27CF92DB009D8A51 /* ButtonStyle.swift */; };
-		8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */; };
 		83547AF6280C15D50082D641 /* ClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AF5280C15D50082D641 /* ClassView.swift */; };
 		83547AF8280C4FE90082D641 /* NavAppearanceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AF7280C4FE90082D641 /* NavAppearanceModifier.swift */; };
 		83547AFA280C532F0082D641 /* StudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AF9280C532F0082D641 /* StudentView.swift */; };
@@ -86,16 +85,14 @@
 		8391A8E027D8FD6100B5C698 /* OnboardingControllerFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DF27D8FD6100B5C698 /* OnboardingControllerFlow.swift */; };
 		8391A8F327DA2DC400B5C698 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F227DA2DC400B5C698 /* ProfileView.swift */; };
 		8391A8F927DA2DFD00B5C698 /* TabViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F827DA2DFD00B5C698 /* TabViews.swift */; };
-		8391A8FB27DB5BED00B5C698 /* ParentHomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8FA27DB5BED00B5C698 /* ParentHomeScreenView.swift */; };
 		83BB1B4927EC647E002FF81E /* ClassListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B4827EC647E002FF81E /* ClassListView.swift */; };
-		83BB1B4B27EC6A0C002FF81E /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B4A27EC6A0C002FF81E /* StatisticsView.swift */; };
 		83BB1B5127ECA827002FF81E /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 83BB1B5027ECA827002FF81E /* SwiftUICharts */; };
 		83BB1B5327EDB925002FF81E /* StudentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B5227EDB925002FF81E /* StudentListView.swift */; };
 		83BB1B5B27EDFBF3002FF81E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83BB1B5A27EDFBF3002FF81E /* LaunchScreen.storyboard */; };
 		83BB1B6127EE0D03002FF81E /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B6027EE0D03002FF81E /* CalendarView.swift */; };
 		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
-		83D6297C28101085005EA006 /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6297B28101085005EA006 /* DateRange.swift */; };
 		83D6297A280D97F6005EA006 /* ReportList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D62979280D97F6005EA006 /* ReportList.swift */; };
+		83D6297C28101085005EA006 /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6297B28101085005EA006 /* DateRange.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,7 +159,6 @@
 		8348592727CF8D1C009D8A51 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		8348592927CF912E009D8A51 /* FontSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSizes.swift; sourceTree = "<group>"; };
 		8348592B27CF92DB009D8A51 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
-		8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundGradient.swift; sourceTree = "<group>"; };
 		8348593127CFAE1D009D8A51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83547AF5280C15D50082D641 /* ClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassView.swift; sourceTree = "<group>"; };
 		83547AF7280C4FE90082D641 /* NavAppearanceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavAppearanceModifier.swift; sourceTree = "<group>"; };
@@ -175,15 +171,13 @@
 		8391A8DF27D8FD6100B5C698 /* OnboardingControllerFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingControllerFlow.swift; sourceTree = "<group>"; };
 		8391A8F227DA2DC400B5C698 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8391A8F827DA2DFD00B5C698 /* TabViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViews.swift; sourceTree = "<group>"; };
-		8391A8FA27DB5BED00B5C698 /* ParentHomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentHomeScreenView.swift; sourceTree = "<group>"; };
 		83BB1B4827EC647E002FF81E /* ClassListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassListView.swift; sourceTree = "<group>"; };
-		83BB1B4A27EC6A0C002FF81E /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		83BB1B5227EDB925002FF81E /* StudentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListView.swift; sourceTree = "<group>"; };
 		83BB1B5A27EDFBF3002FF81E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		83BB1B6027EE0D03002FF81E /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		83D5016827CF75480083AEE7 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
-		83D6297B28101085005EA006 /* DateRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
 		83D62979280D97F6005EA006 /* ReportList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportList.swift; sourceTree = "<group>"; };
+		83D6297B28101085005EA006 /* DateRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -397,7 +391,6 @@
 		8391A8EB27DA2D7100B5C698 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				8391A8FA27DB5BED00B5C698 /* ParentHomeScreenView.swift */,
 				83201BBC28025A2F00007269 /* TeacherHomeView.swift */,
 				8314F81B28072CA800487C5F /* StudentReportView.swift */,
 				83547AFB280D51980082D641 /* ParentHomeView.swift */,
@@ -423,7 +416,6 @@
 				8348592727CF8D1C009D8A51 /* Resources.swift */,
 				8348592927CF912E009D8A51 /* FontSizes.swift */,
 				8348592B27CF92DB009D8A51 /* ButtonStyle.swift */,
-				8348592D27CF9C4C009D8A51 /* BackgroundGradient.swift */,
 				836F149E27E35FF200FEFCB3 /* HalfSheet.swift */,
 				8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */,
 				83547AF7280C4FE90082D641 /* NavAppearanceModifier.swift */,
@@ -436,7 +428,6 @@
 			isa = PBXGroup;
 			children = (
 				83BB1B4827EC647E002FF81E /* ClassListView.swift */,
-				83BB1B4A27EC6A0C002FF81E /* StatisticsView.swift */,
 				83BB1B5227EDB925002FF81E /* StudentListView.swift */,
 				83BB1B6027EE0D03002FF81E /* CalendarView.swift */,
 				830FD5CB27F7231F00F87E0D /* AbsenceListView.swift */,
@@ -554,9 +545,7 @@
 			files = (
 				8314F81A28072A6C00487C5F /* StringSeparator.swift in Sources */,
 				8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */,
-				8391A8FB27DB5BED00B5C698 /* ParentHomeScreenView.swift in Sources */,
 				8391A8DC27D8BBD700B5C698 /* OnboardingFlowControllerView.swift in Sources */,
-				8348592E27CF9C4C009D8A51 /* BackgroundGradient.swift in Sources */,
 				6AAF51B62809AC8C00023945 /* TeacherTabs.swift in Sources */,
 				6AD2E1EC27F9FDAE0027036F /* FeedDatabaseManager.swift in Sources */,
 				8348592A27CF912E009D8A51 /* FontSizes.swift in Sources */,
@@ -567,7 +556,6 @@
 				830FD5C627F5C54100F87E0D /* ColorMultiply+Extensions.swift in Sources */,
 				83BB1B6127EE0D03002FF81E /* CalendarView.swift in Sources */,
 				8314F8132806BD7B00487C5F /* NavigationController+Extensions.swift in Sources */,
-				83BB1B4B27EC6A0C002FF81E /* StatisticsView.swift in Sources */,
 				830FD5C227F4829600F87E0D /* DateFormatter+Extensions.swift in Sources */,
 				8314F8202809775F00487C5F /* AbsenceRegistrationView.swift in Sources */,
 				8348592427CF8C3D009D8A51 /* FontStyles.swift in Sources */,
