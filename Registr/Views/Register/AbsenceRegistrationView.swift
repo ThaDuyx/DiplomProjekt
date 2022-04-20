@@ -23,7 +23,7 @@ struct AbsenceRegistrationView: View {
     let previousDays = Date().previousDays(days: 7)
 
     @State private var selectedItem: Int? = nil
-    @State private var selectedTime: Int = 1
+    @State private var isMorning: Bool = true
     @State private var showSheet: Bool = false
     @State private var studentAbsenceState: String = ""
     @State private var studentIndex: Int = 0
@@ -78,23 +78,24 @@ struct AbsenceRegistrationView: View {
                             }
                         }
                     }
+                    
                     HStack {
                         Button {
-                            selectedTime = 1
+                            isMorning = true
                         } label: {
                             Text("Formiddag")
-                                .mediumSubTitleTextStyle(color: selectedTime == 1 ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: selectedTime == 1 ? "Poppins-Medium" : "Poppins-Regular")
+                                .mediumSubTitleTextStyle(color: isMorning ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: isMorning ? "Poppins-Medium" : "Poppins-Regular")
                         }
                         .frame(maxWidth: .infinity, minHeight: 35)
-                        .background(selectedTime == 1 ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
+                        .background(isMorning ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
                         
                         Button {
-                            selectedTime = 2
+                            isMorning = false
                         } label: {
                             Text("Eftermiddag")
-                            .mediumSubTitleTextStyle(color: selectedTime == 2 ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: selectedTime == 2 ? "Poppins-Medium" : "Poppins-Regular")                    }
+                            .mediumSubTitleTextStyle(color: !isMorning ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: !isMorning ? "Poppins-Medium" : "Poppins-Regular")                    }
                         .frame(maxWidth: .infinity, minHeight: 35)
-                        .background(selectedTime == 2 ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
+                        .background(!isMorning ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
                     }
                 }
                 

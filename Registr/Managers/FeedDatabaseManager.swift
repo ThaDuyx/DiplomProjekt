@@ -85,16 +85,24 @@ class FeedDatabaseManager: ObservableObject {
         let db = Firestore.firestore()
         
         for date in dateArray {
-            let newRegistration = db
+            let morningRegistration = db
                 .collection("fb_classes_path".localize)
                 .document(className)
                 .collection("fb_date_path".localize)
                 .document(date)
-            newRegistration.setData(["exsists" : true])
+            morningRegistration.setData(["exsists" : true])
+            
+            let afternoonRegistration = db
+                .collection("fb_classes_path".localize)
+                .document(className)
+                .collection("fb_date_path".localize)
+                .document(date)
+                
+            afternoonRegistration.setData(["exsists" : true])
                 
             for student in students {
                 if let id = student.id {
-                    newRegistration.collection("fb_registrations_path".localize).document(id).setData(["className" : className, "date" : date, "isAbsenceRegistered" : false, "reason" : "", "studentID" : id, "studentName" : student.name, "validated" : false])
+                    morningRegistration.collection("fb_registrations_path".localize).document(id).setData(["className" : className, "date" : date, "isAbsenceRegistered" : false, "reason" : "", "studentID" : id, "studentName" : student.name, "validated" : false])
                 }
             }
         }
