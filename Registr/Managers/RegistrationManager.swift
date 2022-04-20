@@ -8,24 +8,37 @@
 import Foundation
 import FirebaseFirestore
 
-// TODO: Refactor firebase paths and uncomment currentData when we have feeded the database
-/// Hardcoded variables for firebase path used for testing
 class RegistrationManager: ObservableObject {
     
+    // Collections
     @Published var registrations = [Registration]()
     @Published var students = [Student]()
     @Published var classes = [String]()
     @Published var studentRegistrationList = [Registration]()
-    let db = Firestore.firestore()
-    var selectedClass = String()
-    var selectedDate = String()
-    var selectedStudent = String()
+    
+    // Firestore db reference
+    private let db = Firestore.firestore()
+    
+    // Selectors
+    private var selectedClass = String()
+    private var selectedDate = String()
+    private var selectedStudent = String()
     
     init() {
         fetchClasses()
     }
     
-    //TODO: --- We need to implement recieving class string in the method from the view - We can make the date logic from this manager class ---
+    func setAbsenceReason(absenceReason: String, index: Int) {
+        registrations[index].reason = absenceReason
+    }
+    
+    // MARK: - Firestore actions
+    /**
+     Fetches all the registration of a selected class and will not fetch repeatedly if the selected class or date has not changed.
+     
+     - parameter className:      The unique name specifier of the class
+     - parameter date:           A date string in the format: dd-MM-yyyy
+     */
     func fetchRegistrations(className: String, date: String) {
         // If 'selectedClass' is the same as the className input we have already fetched the registration.
         // In this case will not have to fetch it again.
@@ -62,10 +75,6 @@ class RegistrationManager: ObservableObject {
         }
     }
     
-    func setAbsenceReason(absenceReason: String, index: Int) {
-        registrations[index].reason = absenceReason
-    }
-    
     // Retrieves every class name
     func fetchClasses() {
         db
@@ -81,7 +90,11 @@ class RegistrationManager: ObservableObject {
             }
     }
     
-    // Retrieves all the students' data from a given class
+    /**
+     Retrieves all the students' data from a given class
+     
+     - parameter className:      The unique name specifier of the class
+     */
     func fetchStudents(className: String) {
         if selectedClass != className {
             students.removeAll()
@@ -120,6 +133,13 @@ class RegistrationManager: ObservableObject {
         }
     }
     
+    /**
+     Retrieves all the students' data from a given class
+     
+     - parameter className:      The unique name specifier of the class.
+     - parameter date:           A date string in the format: dd-MM-yyyy.
+     - parameter completion:     A Callback that returns if the write to the database went through.
+     */
     func saveRegistrations(className: String, date: String, completion: @escaping (Bool) -> ()) {
         if !registrations.isEmpty {
             // Create new write batch that will pushed at the same time.
@@ -142,6 +162,7 @@ class RegistrationManager: ObservableObject {
                         .document(date)
                     
                     registration.isAbsenceRegistered = true
+                    
                     do {
                         batch.updateData(["reason" : registration.reason, "isAbsenceRegistered": true], forDocument: registrationRef)
                         try batch.setData(from: registration, forDocument: registrationStudentRef)
@@ -162,6 +183,7 @@ class RegistrationManager: ObservableObject {
                         .document(registration.studentID)
                         .collection("fb_absense_path".localize)
                         .document(date)
+                    
                     
                     batch.updateData(["reason" : registration.reason, "isAbsenceRegistered" : false], forDocument: registrationRef)
                     batch.deleteDocument(registrationStudentRef)

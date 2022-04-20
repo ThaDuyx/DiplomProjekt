@@ -10,6 +10,7 @@ import SwiftUICharts
 
 struct ClassView: View {
     @EnvironmentObject var favoriteManager: FavoriteManager
+    @ObservedObject var statisticsManager = StatisticsManager()
     
     @State private var followAction: Bool = false
     
@@ -30,6 +31,7 @@ struct ClassView: View {
                 Spacer()
                 Button {
                     followAction.toggle()
+                    favoriteManager.favoriteAction(favorite: className)
                 } label: {
                     
                     HStack {
@@ -64,17 +66,17 @@ struct ClassView: View {
                     }
                     VStack(alignment: .center, spacing: 15) {
                         
-                        Text("4.52% fraværsprocent")
+                        Text("Lovligt: \(statisticsManager.statistic.legal)")
                             .lightBodyTextStyle()
                             .padding(.top, 10)
                         
-                        Text("2.54% lovligt fravær")
+                        Text("Sygedage: \(statisticsManager.statistic.illness)")
                             .lightBodyTextStyle()
                         
-                        Text("7.14% ulovligt fravær")
+                        Text("Ulovligt: \(statisticsManager.statistic.illegal)")
                             .lightBodyTextStyle()
                         
-                        Text("67 gange forsent")
+                        Text("For sent: \(statisticsManager.statistic.late)")
                             .lightBodyTextStyle()
                             .padding(.bottom, 10)
                         
@@ -83,6 +85,9 @@ struct ClassView: View {
                     .background(Resources.Color.Colors.frolyRed)
                     .cornerRadius(20)
                     .padding()
+                }
+                .onAppear() {
+                    statisticsManager.fetchClassStats(className: className)
                 }
                 Spacer()
             }

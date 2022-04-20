@@ -83,7 +83,7 @@ class ReportManager: ObservableObject {
                 .document(id)
             
             batch.updateData(["reason" : validationReason], forDocument: classAbsenceRef)
-            batch.updateData(["reason" : validationReason, "validation" : true], forDocument: studentAbsenceRef)
+            batch.updateData(["reason" : validationReason, "validated" : true], forDocument: studentAbsenceRef)
             batch.updateData(["teacherValidation" : teacherValidation], forDocument: parentReportRef)
             batch.deleteDocument(classReportRef)
             
