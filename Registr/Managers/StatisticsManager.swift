@@ -58,10 +58,9 @@ class StatisticsManager: ObservableObject {
             .collection("fb_statistics_path".localize)
             .document("fb_statistics_doc".localize)
         
-        if oldValue.isEmpty {
-            determineAbsence(docRef: studentStatRef, value: newValue, inOrDecrement: increment)
-        } else {
-            determineAbsence(docRef: studentStatRef, value: newValue, inOrDecrement: increment)
+        determineAbsence(docRef: studentStatRef, value: newValue, inOrDecrement: increment)
+        
+        if !oldValue.isEmpty {
             determineAbsence(docRef: studentStatRef, value: oldValue, inOrDecrement: decrement)
         }
     }
@@ -160,12 +159,11 @@ class StatisticsManager: ObservableObject {
     }
     
     func updateClassStatistics(oldValue: String, newValue: String) {
+        // We are incrementing the respective counters
+        incrementCounters(value: newValue)
+        
         // If the new value is empty and old is not, it means we have removed a field and do not have to increment.
-        if newValue.isEmpty && !oldValue.isEmpty {
-            decrementCounters(value: oldValue)
-        } else {
-            // We are in- & decrementing the respective counters
-            incrementCounters(value: newValue)
+        if !oldValue.isEmpty {
             decrementCounters(value: oldValue)
         }
     }
@@ -173,11 +171,11 @@ class StatisticsManager: ObservableObject {
     private func incrementCounters(value: String) {
         switch value {
         case AbsenceReasons.illegal.rawValue:
-            illegalCounter += 1
+            illegalCounter += increment
         case AbsenceReasons.illness.rawValue:
-            illnessCounter += 1
+            illnessCounter += increment
         case AbsenceReasons.late.rawValue:
-            lateCounter += 1
+            lateCounter += increment
         default:
             break
         }
@@ -186,11 +184,11 @@ class StatisticsManager: ObservableObject {
     private func decrementCounters(value: String) {
         switch value {
         case AbsenceReasons.illegal.rawValue:
-            illegalCounter -= 1
+            illegalCounter += decrement
         case AbsenceReasons.illness.rawValue:
-            illnessCounter -= 1
+            illnessCounter += decrement
         case AbsenceReasons.late.rawValue:
-            lateCounter -= 1
+            lateCounter += decrement
         default:
             break
         }
