@@ -39,11 +39,12 @@ struct ParentHomeView: View {
                                     .boldSmallBodyTextStyle()
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
-                            
-                            NavigationLink(destination: StudentView(studentName: child.name, isParent: true, studentID: child.id)) {
-                                EmptyView()
+                            if let id = child.id {
+                                NavigationLink(destination: StudentView(studentName: child.name, isParent: true, studentID: id)) {
+                                    EmptyView()
+                                }
+                                .frame(width: 0, height: 0)
                             }
-                            .frame(width: 0, height: 0)
                             
                             Image(systemName: "chevron.right")
                                 .foregroundColor(Resources.Color.Colors.white)

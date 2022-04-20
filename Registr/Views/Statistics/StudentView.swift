@@ -13,13 +13,14 @@ struct StudentView: View {
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
+    @ObservedObject var statisticsManager = StatisticsManager()
     @State private var weekdaysArray: [String] = ["Man", "Tir", "Ons", "Tor", "Fre"]
 
     let studentName: String
     var isParent: Bool
-    var studentID: String? = nil
+    var studentID: String
     
-    init(studentName: String, isParent: Bool, studentID: String? = nil) {
+    init(studentName: String, isParent: Bool, studentID: String) {
         self.studentName = studentName
         self.isParent = isParent
         self.studentID = studentID
@@ -57,17 +58,17 @@ struct StudentView: View {
                 }
                 VStack(alignment: .center, spacing: 15) {
                     
-                    Text("4.52% fraværsprocent")
+                    Text("Lovligt: \(statisticsManager.statistic.legal)")
                         .lightBodyTextStyle()
                         .padding(.top, 10)
                     
-                    Text("2.54% lovligt fravær")
+                    Text("Sygedage: \(statisticsManager.statistic.illness)")
                         .lightBodyTextStyle()
                     
-                    Text("7.14% ulovligt fravær")
+                    Text("Ulovligt: \(statisticsManager.statistic.illegal)")
                         .lightBodyTextStyle()
                     
-                    Text("67 gange forsent")
+                    Text("For sent: \(statisticsManager.statistic.late)")
                         .lightBodyTextStyle()
                         .padding(.bottom, 10)
                     
@@ -101,6 +102,10 @@ struct StudentView: View {
                 .cornerRadius(20)
                 .padding()
             }
+            .onAppear() {
+                statisticsManager.fetchStudentStats(studentID: studentID)
+            }
+            
             Spacer()
         }
         .navigationTitle(studentName)
@@ -110,6 +115,6 @@ struct StudentView: View {
 
 struct StudentView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentView(studentName: "Student name", isParent: true)
+        StudentView(studentName: "Student name", isParent: true, studentID: "Student ID")
     }
 }

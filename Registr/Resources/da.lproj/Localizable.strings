@@ -46,6 +46,8 @@
 "fb_classes_path" = "classes";
 "fb_absense_path" = "absense";
 "fb_report_path" = "reports";
+"fb_statistics_path" = "statistics";
+"fb_statistics_doc" = "stats";
 
 // MARK: - Parent Home Screen
 "parent_home_name" = "Navn:";
