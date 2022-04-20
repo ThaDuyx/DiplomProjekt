@@ -34,7 +34,7 @@ struct StatisticsView: View {
                     if isStudentPresented {
                         if let studentID = studentID {
                             OptionsView(systemName: "square.and.pencil", titleText: "Indberettelser", destination: EmptyView())
-                            OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: ReportListView(selectedStudent: studentID, studentName: navigationTitle))
+                            OptionsView(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: AbsenceListView(selectedStudent: studentID, studentName: navigationTitle))
                         }
                     } else {
                         OptionsView(systemName: "star", titleText: "Historik", destination: CalendarView(className: navigationTitle))

@@ -1,5 +1,5 @@
 //
-//  ReportListView.swift
+//  AbsenceListView.swift
 //  Registr
 //
 //  Created by Christoffer Detlef on 01/04/2022.
@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct ReportListView: View {
+struct AbsenceListView: View {
     @EnvironmentObject var childrenManager: ChildrenManager
+    @State var showModal = false
     
     var selectedStudent: String
     var studentName: String
@@ -24,7 +25,14 @@ struct ReportListView: View {
                 ForEach(childrenManager.absences, id: \.self) { absence in
                     ReportSectionView(absence: absence)
                         .padding(.bottom, 20)
+                        .sheet(isPresented: $showModal) {
+                            ParentAbsenceRegistrationView()
+                        }
+                        .onTapGesture {
+                            showModal = true
+                        }
                 }
+                .listRowSeparatorTint(Resources.Color.Colors.fiftyfifty)
             }
         }
         .navigationTitle(studentName)
@@ -48,9 +56,11 @@ struct ReportSectionView: View {
         HStack {
             Text(stringSeparator(reason: absence.reason).uppercased())
                 .boldSmallBodyTextStyle()
-                .padding()
+                .frame(width: 36, height: 36)
                 .background(Resources.Color.Colors.frolyRed)
                 .clipShape(Circle())
+            
+            Spacer()
             
             VStack {
                 Text("Dato")
@@ -69,13 +79,8 @@ struct ReportSectionView: View {
             }
             
             Spacer()
-            
-            NavigationLink(destination: EmptyView()) {
-                EmptyView()
-            }
-            .frame(width: 0, height: 0)
-            
-            Image(systemName: "chevron.right")
+
+            Image(systemName: "ellipsis")
                 .foregroundColor(Resources.Color.Colors.fiftyfifty)
                 .padding(.trailing, 10)
         }
@@ -83,8 +88,8 @@ struct ReportSectionView: View {
     }
 }
 
-struct ReportListView_Previews: PreviewProvider {
+struct AbsenceListView_Previews: PreviewProvider {
     static var previews: some View {
-        ReportListView(selectedStudent: "", studentName: "")
+        AbsenceListView(selectedStudent: "", studentName: "")
     }
 }
