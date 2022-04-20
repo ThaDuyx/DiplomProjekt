@@ -34,5 +34,7 @@ struct NavigationAndTabbarAppearance {
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         UITabBar.appearance().isOpaque = true
+        
+        UITableView.appearance().backgroundColor = .white
     }
 }

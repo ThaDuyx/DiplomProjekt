@@ -37,8 +37,6 @@ struct ParentAbsenceRegistrationView: View {
     
     var body: some View {
         ZStack {
-            Color.white
-                .ignoresSafeArea()
             Form {
                 Section(
                     header: Text("Barns navn")
