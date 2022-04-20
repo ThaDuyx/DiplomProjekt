@@ -85,12 +85,12 @@ class FeedDatabaseManager: ObservableObject {
         let db = Firestore.firestore()
         
         for date in dateArray {
-            let morningRegistration = db
+            let newRegistration = db
                 .collection("fb_classes_path".localize)
                 .document(className)
                 .collection("fb_date_path".localize)
                 .document(date)
-            morningRegistration.setData(["exsists" : true])
+            newRegistration.setData(["exsists" : true])
             
             let afternoonRegistration = db
                 .collection("fb_classes_path".localize)
@@ -102,7 +102,27 @@ class FeedDatabaseManager: ObservableObject {
                 
             for student in students {
                 if let id = student.id {
-                    morningRegistration.collection("fb_registrations_path".localize).document(id).setData(["className" : className, "date" : date, "isAbsenceRegistered" : false, "reason" : "", "studentID" : id, "studentName" : student.name, "validated" : false])
+                    newRegistration.collection("fb_registrations_path".localize)
+                        .document(id)
+                        .setData(["className" : className,
+                                  "date" : date,
+                                  "isAbsenceRegistered" : false,
+                                  "reason" : "", "studentID" : id,
+                                  "studentName" : student.name,
+                                  "validated" : false])
+                }
+            }
+            
+            for student in students {
+                if let id = student.id {
+                    newRegistration.collection("fb_afternoonRegistration_path".localize)
+                        .document(id)
+                        .setData(["className" : className,
+                                  "date" : date,
+                                  "isAbsenceRegistered" : false,
+                                  "reason" : "", "studentID" : id,
+                                  "studentName" : student.name,
+                                  "validated" : false])
                 }
             }
         }

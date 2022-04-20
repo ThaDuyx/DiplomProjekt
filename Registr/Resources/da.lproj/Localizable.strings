@@ -48,6 +48,7 @@
 "fb_report_path" = "reports";
 "fb_statistics_path" = "statistics";
 "fb_statistics_doc" = "stats";
+"fb_afternoonRegistration_path" = "afternoon";
 
 // MARK: - Parent Home Screen
 "parent_home_name" = "Navn:";
