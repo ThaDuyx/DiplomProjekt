@@ -26,8 +26,7 @@ struct ParentAbsenceRegistrationView: View {
     @State private var isInterval = false
     @State var showsStartDatePicker = false
     @State var showsEndDatePicker = false
-    @State var showPlaceholderText = false
-    @State private var placeholderDescription: String = "Skriv beskrivelse"
+    @State private var showingAlert = false
     
     // For dismissing the keyboard
     enum Field: Hashable {
@@ -169,12 +168,9 @@ struct ParentAbsenceRegistrationView: View {
                         Image(systemName: "note.text")
                             .foregroundColor(Resources.Color.Colors.white)
                         ZStack(alignment: .leading) {
-                            if textBindingManager.value.isEmpty && !showPlaceholderText {
-                                Text("Skriv beskrivelse")
-                                    .lightBodyTextStyle()
-                            }
                             TextEditor(text: $textBindingManager.value)
                                 .lightBodyTextStyleTextEditor()
+                                .accentColor(.white)
                                 .focused($focusedField, equals: .myField)
                                 .onTapGesture {
                                     if (focusedField != nil) {
@@ -182,39 +178,47 @@ struct ParentAbsenceRegistrationView: View {
                                     }
                                 }
                         }
-                        .onTapGesture {
-                            showPlaceholderText = true
-                        }
                     }
                 }
                 .listRowBackground(Resources.Color.Colors.frolyRed)
                 
-                Button("Indberet") {
-                    if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsence.isEmpty {
-                        let report = Report(parentName: name, parentID: DefaultsManager.shared.currentProfileID, studentName: selectedChild.name, studentID: id, className: selectedChild.className, date: startDate, endDate: isInterval ? endDate : nil, description: textBindingManager.value, reason: selectedAbsence, validated: false, teacherValidation: "Afventer")
-                        
-                        childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
-                            if result {
-                                // TODO: Show that the report has been written and reset everything
-                                self.selectedChild = nil
-                                self.selectedName = ""
-                                self.textBindingManager.value = ""
-                                self.selectedAbsence = ""
-                                self.isInterval = false
-                                self.startDate = Date()
-                                self.endDate = Date()
-                            } else {
-                                // TODO: ErrorView shown and maybe animation or something
+                VStack(alignment: .center) {
+                    Button("Indberet") {
+                        if selectedName.isEmpty || selectedAbsence.isEmpty {
+                            showingAlert = true
+                        } else {
+                            if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsence.isEmpty {
+                                let report = Report(parentName: name, parentID: DefaultsManager.shared.currentProfileID, studentName: selectedChild.name, studentID: id, className: selectedChild.className, date: startDate, endDate: isInterval ? endDate : nil, description: textBindingManager.value, reason: selectedAbsence, validated: false, teacherValidation: "Afventer")
+                                
+                                childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
+                                    if result {
+                                        // TODO: Show that the report has been written and reset everything
+                                        self.selectedChild = nil
+                                        self.selectedName = ""
+                                        self.textBindingManager.value = ""
+                                        self.selectedAbsence = ""
+                                        self.isInterval = false
+                                        self.startDate = Date()
+                                        self.endDate = Date()
+                                    } else {
+                                        // TODO: ErrorView shown and maybe animation or something
+                                    }
+                                }
+                            }
+                            else {
+                                // TODO: ErrorView shown with 'Select a child'
                             }
                         }
                     }
-                    else {
-                        // TODO: ErrorView shown with 'Select a child'
-                    }
+                    .buttonStyle(Resources.CustomButtonStyle.FilledBodyTextButtonStyle())
+                    .listRowBackground(Color.clear)
+                    .alert("student_absence_alert_title".localize, isPresented: $showingAlert, actions: {
+                        Button("OK", role: .cancel) { }
+                    }, message: {
+                        Text("student_absence_alert_description".localize)
+                    })
                 }
-                .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
-                .padding(.leading, 200)
-                .listRowBackground(Color.clear)
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
         .navigationTitle("Indberettelse af elev")
