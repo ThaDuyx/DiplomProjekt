@@ -39,7 +39,7 @@ struct ParentAbsenceRegistrationView: View {
         ZStack {
             Form {
                 Section(
-                    header: Text("Barns navn")
+                    header: Text("Barn")
                 ) {
                     Menu {
                         ForEach(childrenManager.children, id: \.self) { child in
@@ -60,7 +60,7 @@ struct ParentAbsenceRegistrationView: View {
                         }
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
+                .listRowBackground(Resources.Color.Colors.fiftyfifty)
                 
                 Section(
                     header: Text("Fraværs årsag")
@@ -83,7 +83,7 @@ struct ParentAbsenceRegistrationView: View {
                         }
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
+                .listRowBackground(Resources.Color.Colors.fiftyfifty)
                 
                 Section(
                     header: Text("Interval")
@@ -96,7 +96,7 @@ struct ParentAbsenceRegistrationView: View {
                             .toggleStyle(SwitchToggleStyle(tint: Resources.Color.Colors.mediumMint))
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
+                .listRowBackground(Resources.Color.Colors.fiftyfifty)
                 
                 Section(
                     header: Text("Startdato")
@@ -121,7 +121,7 @@ struct ParentAbsenceRegistrationView: View {
                         .applyTextColor(Resources.Color.Colors.lightMint)
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
+                .listRowBackground(Resources.Color.Colors.fiftyfifty)
                 
                 if isInterval {
                     Section(
@@ -147,7 +147,7 @@ struct ParentAbsenceRegistrationView: View {
                             .applyTextColor(Resources.Color.Colors.lightMint)
                         }
                     }
-                    .listRowBackground(Resources.Color.Colors.darkBlue)
+                    .listRowBackground(Resources.Color.Colors.fiftyfifty)
                 }
                 
                 Section(
@@ -176,7 +176,7 @@ struct ParentAbsenceRegistrationView: View {
                         }
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
+                .listRowBackground(Resources.Color.Colors.fiftyfifty)
                 
                 Button("Indberet") {
                     if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsence.isEmpty {
