@@ -31,6 +31,7 @@ struct ClassView: View {
                 Spacer()
                 Button {
                     followAction.toggle()
+                    favoriteManager.favoriteAction(favorite: className)
                 } label: {
                     
                     HStack {

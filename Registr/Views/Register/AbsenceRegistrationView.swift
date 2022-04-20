@@ -146,6 +146,7 @@ struct AbsenceRegistrationView: View {
                     registrationManager.saveRegistrations(className: selectedClass, date: selectedDate) { result in
                         if result {
                             statisticsManager.commitBatch()
+                            statisticsManager.writeClassStats(className: selectedClass)
                             presentationMode.wrappedValue.dismiss()
                         } else {
                             // TODO: Present ErrorView
@@ -167,12 +168,12 @@ struct AbsenceRegistrationView: View {
             registrationManager.fetchRegistrations(className: selectedClass, date: newDate)
             
             // Resetting on change of date
-            registrationManager.resetStatCounters()
+            statisticsManager.resetStatCounters()
             statisticsManager.resetBatch()
         }
         .onChange(of: selectedClass) { _ in
             // Resetting on change of class
-            registrationManager.resetStatCounters()
+            statisticsManager.resetStatCounters()
             statisticsManager.resetBatch()
         }
     }
@@ -229,7 +230,7 @@ struct StudentRow: View {
                 // Note: absenceReason in the following code is the old state value.
                     .onChange(of: absenceReason) { [absenceReason] newValue in
                         // Force un-wrapping because we know we have the values and would like to receive an empty String
-                        registrationManager.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
+                        statisticsManager.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
                         statisticsManager.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID)
                     }
             }

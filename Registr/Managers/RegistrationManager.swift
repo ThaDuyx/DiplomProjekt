@@ -24,11 +24,6 @@ class RegistrationManager: ObservableObject {
     private var selectedDate = String()
     private var selectedStudent = String()
     
-    // Counters
-    private var illegalCounter: Int64 = 0
-    private var illnessCounter: Int64 = 0
-    private var lateCounter: Int64 = 0
-    
     init() {
         fetchClasses()
     }
@@ -203,7 +198,6 @@ class RegistrationManager: ObservableObject {
                 } else {
                     print("Batch write succeeded.")
                     completion(true)
-                    self.writeClassStats(className: className)
                 }
             }
         }
@@ -234,68 +228,6 @@ class RegistrationManager: ObservableObject {
                         }
                     }
                 }
-        }
-    }
-    
-    // MARK: - Class Statistics
-    
-    func resetStatCounters() {
-        illnessCounter = 0; illegalCounter = 0; lateCounter = 0
-    }
-    
-    private func writeClassStats(className: String) {
-        let statisticsClassRef = db
-            .collection("fb_classes_path".localize)
-            .document(className)
-        
-        // If one of the following counters are zero we do not want to use them
-        if illegalCounter != 0 {
-            statisticsClassRef.updateData(["illegal" : FieldValue.increment(illegalCounter)])
-        }
-        
-        if illnessCounter != 0 {
-            statisticsClassRef.updateData(["illness" : FieldValue.increment(illnessCounter)])
-        }
-        
-        if lateCounter != 0 {
-            statisticsClassRef.updateData(["late" : FieldValue.increment(lateCounter)])
-        }
-    }
-    
-    func updateClassStatistics(oldValue: String, newValue: String) {
-        // If the new value is empty and old is not, it means we have removed a field and do not have to increment.
-        if newValue.isEmpty && !oldValue.isEmpty {
-            decrementCounters(value: oldValue)
-        } else {
-            // We are in- & decrementing the respective counters
-            incrementCounters(value: newValue)
-            decrementCounters(value: oldValue)
-        }
-    }
-    
-    private func incrementCounters(value: String) {
-        switch value {
-        case AbsenceReasons.illegal.rawValue:
-            illegalCounter += 1
-        case AbsenceReasons.illness.rawValue:
-            illnessCounter += 1
-        case AbsenceReasons.late.rawValue:
-            lateCounter += 1
-        default:
-            break
-        }
-    }
-    
-    private func decrementCounters(value: String) {
-        switch value {
-        case AbsenceReasons.illegal.rawValue:
-            illegalCounter -= 1
-        case AbsenceReasons.illness.rawValue:
-            illnessCounter -= 1
-        case AbsenceReasons.late.rawValue:
-            lateCounter -= 1
-        default:
-            break
         }
     }
 }

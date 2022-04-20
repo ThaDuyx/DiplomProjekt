@@ -25,9 +25,9 @@ struct TeacherHomeView: View {
                                 AbsencesRow(report: report)
                             }
                         }
+                        .listRowBackground(Resources.Color.Colors.frolyRed)
+                        .listRowSeparatorTint(Resources.Color.Colors.white)
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
-                    .listRowSeparatorTint(Resources.Color.Colors.white)
                 }
                 .accentColor(Resources.Color.Colors.fiftyfifty)
                 .onChange(of: favoriteManager.favorites) { _ in
