@@ -55,7 +55,7 @@ struct StudentReportView: View {
             Spacer()
             HStack {
                 Button("Afslå") {
-                    reportManager.denyReport(selectedReport: report, teacherValidation: "Denied") { result in
+                    reportManager.denyReport(selectedReport: report, teacherValidation: "Afslået") { result in
                         if result {
                             // TODO: Dismiss this view
                         } else {
@@ -68,7 +68,7 @@ struct StudentReportView: View {
                 Spacer()
                 
                 Button("Registrer") {
-                    reportManager.validateReport(selectedReport: report, validationReason: selectedAbsence, teacherValidation: "Accepted") { result in
+                    reportManager.validateReport(selectedReport: report, validationReason: selectedAbsence, teacherValidation: "Godkendt") { result in
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
