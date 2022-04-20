@@ -35,24 +35,9 @@ struct ParentAbsenceRegistrationView: View {
     }
     @FocusState private var focusedField: Field?
     
-    
-    private let dateRange: ClosedRange<Date> = {
-        let calendar = Calendar.current
-        let startComponents = DateComponents(year: Calendar.current.component(.year, from: Date()),month: 1, day: 1)
-        let endComponents = DateComponents(year: Calendar.current.component(.year, from: Date()), month: 12, day: 31)
-        return calendar.date(from:startComponents)!
-        ...
-        calendar.date(from:endComponents)!
-    }()
-    
-    init() {
-        // To make the List background transparent, so the gradient background can be used.
-        UITableView.appearance().backgroundColor = .clear
-    }
-    
     var body: some View {
         ZStack {
-            Resources.BackgroundGradient.backgroundGradient
+            Color.white
                 .ignoresSafeArea()
             Form {
                 Section(

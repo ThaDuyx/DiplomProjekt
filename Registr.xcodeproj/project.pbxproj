@@ -92,6 +92,7 @@
 		83BB1B5B27EDFBF3002FF81E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83BB1B5A27EDFBF3002FF81E /* LaunchScreen.storyboard */; };
 		83BB1B6127EE0D03002FF81E /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B6027EE0D03002FF81E /* CalendarView.swift */; };
 		83D5016527CF75240083AEE7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83D5016727CF75240083AEE7 /* Localizable.strings */; };
+		83D6297C28101085005EA006 /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6297B28101085005EA006 /* DateRange.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -176,6 +177,7 @@
 		83BB1B5A27EDFBF3002FF81E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		83BB1B6027EE0D03002FF81E /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		83D5016827CF75480083AEE7 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83D6297B28101085005EA006 /* DateRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +419,7 @@
 				836F149E27E35FF200FEFCB3 /* HalfSheet.swift */,
 				8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */,
 				83547AF7280C4FE90082D641 /* NavAppearanceModifier.swift */,
+				83D6297B28101085005EA006 /* DateRange.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				83547AFA280C532F0082D641 /* StudentView.swift in Sources */,
 				83BB1B4927EC647E002FF81E /* ClassListView.swift in Sources */,
 				836F149F27E35FF200FEFCB3 /* HalfSheet.swift in Sources */,
+				83D6297C28101085005EA006 /* DateRange.swift in Sources */,
 				8348592627CF8C7F009D8A51 /* Color.swift in Sources */,
 				83547AF8280C4FE90082D641 /* NavAppearanceModifier.swift in Sources */,
 				83547AF6280C15D50082D641 /* ClassView.swift in Sources */,
