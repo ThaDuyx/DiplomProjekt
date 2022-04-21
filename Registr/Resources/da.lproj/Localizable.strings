@@ -75,3 +75,8 @@
 
 // MARK: - Absence History View
 "absence_day_pick" = "Den følgende dato er valgt:";
+
+// MARK: - Alert View
+"alert_title" = "Ups! Noget gik galt!";
+"alert_button_title" = "Luk";
+"alert_default_description" = "Der skete en fejl. Luk beskeden og prøv igen.";
