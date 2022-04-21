@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIKit
 
 enum AbsenceType: String, CaseIterable {    
     case sickness = "Sygdom"
@@ -15,6 +16,7 @@ enum AbsenceType: String, CaseIterable {
 }
 
 struct ParentAbsenceRegistrationView: View {
+    @StateObject private var context = FullScreenCoverContext()
     @EnvironmentObject var childrenManager: ChildrenManager
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     
@@ -201,12 +203,9 @@ struct ParentAbsenceRegistrationView: View {
                                         self.startDate = Date()
                                         self.endDate = Date()
                                     } else {
-                                        // TODO: ErrorView shown and maybe animation or something
+                                        context.present(ErrorView(error: "alert_default_description".localize))
                                     }
                                 }
-                            }
-                            else {
-                                // TODO: ErrorView shown with 'Select a child'
                             }
                         }
                     }
@@ -221,6 +220,7 @@ struct ParentAbsenceRegistrationView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
         }
+        .fullScreenCover(context)
         .navigationTitle("Indberettelse af elev")
         .navigationBarTitleDisplayMode(.inline)
     }

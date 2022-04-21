@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import SwiftUIKit
 
 struct PasswordView: View {
     @State private var password: String = "test1234"
     @State private var showActivity = false
+    @StateObject private var context = FullScreenCoverContext()
+
     var userName: String
     
     var body: some View {
@@ -55,8 +58,8 @@ struct PasswordView: View {
                                 window?.rootViewController = UIHostingController(rootView: OnboardingControllerFlow())
                                 
                             } else {
+                                context.present(ErrorView(error: "alert_default_description".localize))
                                 showActivity = false
-                                // TODO: Present error Message || View
                             }
                         })
                     }
@@ -72,6 +75,7 @@ struct PasswordView: View {
             }
             .ignoresSafeArea(.keyboard)
         }
+        .fullScreenCover(context)
     }
 }
 
