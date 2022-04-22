@@ -39,6 +39,7 @@ class RegistrationManager: ObservableObject {
      
      - parameter className:      The unique name specifier of the class
      - parameter date:           A date string in the format: dd-MM-yyyy
+     - parameter isMorning:      A boolean value that determines to fetch the the morning or afternoon table.
      */
     func fetchRegistrations(className: String, date: String, isMorning: Bool) {
         // If 'selectedClass' is the same as the className input we have already fetched the registration.
@@ -82,6 +83,7 @@ class RegistrationManager: ObservableObject {
      
      - parameter className:      The unique name specifier of the class.
      - parameter date:           A date string in the format: dd-MM-yyyy.
+     - parameter isMorning:      A boolean value that determines if the registration should be put in the morning or afternoon table.
      - parameter completion:     A Callback that returns if the write to the database went through.
      */
     func saveRegistrations(className: String, date: String, isMorning: Bool, completion: @escaping (Bool) -> ()) {
