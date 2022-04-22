@@ -47,9 +47,10 @@ class StatisticsManager: ObservableObject {
     /**
      Adds a new write action of the specific student's statistics to the global batch of writes.
      
-     - parameter oldValue:      The old value of the registration
-     - parameter newValue:      The new value of the registration
-     - parameter studentID:     The selected student's firestore id
+     - parameter oldValue:      The old value of the registration.
+     - parameter newValue:      The new value of the registration.
+     - parameter studentID:     The selected student's firestore id.
+     - parameter isMorning:      A boolean value that determines wether to update the morning or afternoon statistics.
      */
     func updateStudentStatistics(oldValue: String, newValue: String, studentID: String, isMorning: Bool) {
         let studentStatRef = db
@@ -70,7 +71,8 @@ class StatisticsManager: ObservableObject {
      
      - parameter docRef:           Reference to the specific student's stats
      - parameter value:            The value to be determined; illegal, illness or late
-     - parameter inOrDecrement:    A constant that chooses either to increment or decrement the number in the database
+     - parameter inOrDecrement:    A constant that chooses either to increment or decrement the number in the database.
+     - parameter isMorning:      A boolean value that determines wether to update the morning or afternoon statistics.
      */
     private func determineAbsence(docRef: DocumentReference, value: String, inOrDecrement: Int64, isMorning: Bool) {
         switch value {
@@ -140,6 +142,12 @@ class StatisticsManager: ObservableObject {
         illnessCounter = 0; illegalCounter = 0; lateCounter = 0
     }
     
+    /**
+     Function that writes the calculated statistcs to the specific class
+     
+     - parameter className:      Name of the selected class.
+     - parameter isMorning:      A boolean value that determines wether to update the morning or afternoon statistics.
+     */
     func writeClassStats(className: String, isMorning: Bool) {
         let statisticsClassRef = db
             .collection("fb_classes_path".localize)
