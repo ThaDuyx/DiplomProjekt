@@ -25,7 +25,9 @@ struct UserIDView: View {
                         .fill(Resources.Color.Colors.moonMist.opacity(0.7))
                         .frame(height: 170)
                         .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
+                    
                     Spacer()
+                    
                     VStack(spacing: 0) {
                         Image("Group 4")
                         Text("application_name")
@@ -34,12 +36,16 @@ struct UserIDView: View {
                     .offset(y: 80)
                 }
                 .ignoresSafeArea()
+                
                 Spacer()
+                
                 VStack(spacing: 10) {
                     Text("user_id")
                         .primaryHeaderTextStyle()
                         .frame(width: 280, alignment: .leading)
+                    
                     TextField("user_id_field_text".localize, text: $userName)
+                        .darkBodyTextStyle()
                         .frame(width: 265, height: 40)
                         .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                         .background(RoundedRectangle(cornerRadius: 10).fill(Resources.Color.Colors.white))
@@ -52,6 +58,7 @@ struct UserIDView: View {
                     }
                     .frame(alignment: .center)
                     .buttonStyle(Resources.CustomButtonStyle.SmallFrontPageButtonStyle())
+                    
                     Spacer()
                 }
             }

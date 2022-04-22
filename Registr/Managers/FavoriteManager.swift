@@ -28,8 +28,11 @@ class FavoriteManager: ObservableObject {
             // Updating the published variable to call a redraw of the view
             favorites.append(favorite)
             
+            
             // Updating and saving the DefaultsManager so next time we login we have the favorites stored
             DefaultsManager.shared.favorites = favorites
         }
+        favorites.sort() { $0 < $1 }
+        
     }
 }
