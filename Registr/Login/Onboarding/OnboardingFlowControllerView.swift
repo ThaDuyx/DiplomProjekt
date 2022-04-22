@@ -51,11 +51,14 @@ struct OnboardingFlowControllerView: View {
                                             alertMessage: "Giv appen lov til at tilgå data om dig."
                                         )
                                     } else if currentPage == 2 {
-                                        alertDetail = AlertDetail(
-                                            id: 2,
-                                            alertTitle: "Placeholder title",
-                                            alertMessage: "Placeholder message"
-                                        )
+                                        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { succes, _ in
+                                            guard succes else {
+                                                currentPage += 1
+                                                return
+                                            }
+                                            currentPage += 1
+                                            print("Succes in APNS registry")
+                                        }
                                     } else {
                                         currentPage += 1
                                     }
@@ -76,9 +79,6 @@ struct OnboardingFlowControllerView: View {
                 primaryButton: .default(Text("Godkend"), action: {
                     if currentPage == 1 {
                         dataAccess = true
-                    } else if currentPage == 2 {
-                        // TODO: - This is placeholder for push notification - CAD
-                        let _ = print("You have given the app access to use notifications.")
                     }
                     currentPage += 1
                 }), secondaryButton: .cancel(Text("Ikke godkendt"), action: {

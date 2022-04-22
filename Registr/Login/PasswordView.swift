@@ -12,6 +12,7 @@ struct PasswordView: View {
     @State private var password: String = "test1234"
     @State private var showActivity = false
     @StateObject private var context = FullScreenCoverContext()
+    @EnvironmentObject var notificationVM: NotificationViewModel
 
     var userName: String
     
@@ -55,7 +56,7 @@ struct PasswordView: View {
                                     .connectedScenes
                                     .flatMap{( $0 as? UIWindowScene)?.windows ?? [] }
                                     .first { $0.isKeyWindow }
-                                window?.rootViewController = UIHostingController(rootView: OnboardingControllerFlow())
+                                window?.rootViewController = UIHostingController(rootView: OnboardingControllerFlow().environmentObject(notificationVM))
                                 
                             } else {
                                 context.present(ErrorView(error: "alert_default_description".localize))
