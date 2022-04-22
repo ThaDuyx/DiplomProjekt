@@ -10,8 +10,12 @@ import FirebaseFirestoreSwift
 
 struct Statistics: Codable {
     @DocumentID var id: String?
-    let illegal: Int
-    let illness: Int
-    let late: Int
-    let legal: Int
+    var illegalMorning: Int
+    var illegalAfternoon: Int
+    var illnessMorning: Int
+    var illnessAfternoon: Int
+    var lateMorning: Int
+    var lateAfternoon: Int
+    var legalMorning: Int
+    var legalAfternoon: Int
 }

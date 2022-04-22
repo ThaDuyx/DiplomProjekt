@@ -14,8 +14,8 @@ struct ClassListView: View {
         NavigationView {
             ZStack {
                 List {
-                    ForEach(registrationManager.classes, id: \.self) { className in
-                        ClassEntity(className: className)
+                    ForEach(registrationManager.classList, id: \.self) { classInfo in
+                        ClassEntity(classInfo: classInfo)
                     }
                     .listRowBackground(Resources.Color.Colors.frolyRed)
                     .listRowSeparatorTint(Resources.Color.Colors.white)
@@ -28,15 +28,15 @@ struct ClassListView: View {
 }
 
 struct ClassEntity: View {
-    let className: String
+    let classInfo: ClassInfo
     
     var body: some View {
         HStack {
-            Text(className)
+            Text(classInfo.name)
                 .boldBodyTextStyle()
                 .frame(maxWidth: .infinity, alignment: .center)
             
-            NavigationLink(destination: ClassView(className: className)) {
+            NavigationLink(destination: ClassView(classInfo: classInfo)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)

@@ -11,7 +11,7 @@ import FirebaseFirestore
  This class is used to feed the database
  */
 class FeedDatabaseManager: ObservableObject {
-    @Published var dateArray: [String] = []
+    @Published var dateArray: [String] = ["20-04-2022"]
     @Published var students: [Student] = []
     
     init() {
@@ -85,12 +85,12 @@ class FeedDatabaseManager: ObservableObject {
         let db = Firestore.firestore()
         
         for date in dateArray {
-            let newRegistration = db
-                .collection("fb_classes_path".localize)
-                .document(className)
-                .collection("fb_date_path".localize)
-                .document(date)
-            newRegistration.setData(["exsists" : true])
+//            let newRegistration = db
+//                .collection("fb_classes_path".localize)
+//                .document(className)
+//                .collection("fb_date_path".localize)
+//                .document(date)
+//            newRegistration.setData(["exsists" : true])
             
             let afternoonRegistration = db
                 .collection("fb_classes_path".localize)
@@ -100,22 +100,22 @@ class FeedDatabaseManager: ObservableObject {
                 
             afternoonRegistration.setData(["exsists" : true])
                 
-            for student in students {
-                if let id = student.id {
-                    newRegistration.collection("fb_registrations_path".localize)
-                        .document(id)
-                        .setData(["className" : className,
-                                  "date" : date,
-                                  "isAbsenceRegistered" : false,
-                                  "reason" : "", "studentID" : id,
-                                  "studentName" : student.name,
-                                  "validated" : false])
-                }
-            }
+//            for student in students {
+//                if let id = student.id {
+//                    newRegistration.collection("fb_registrations_path".localize)
+//                        .document(id)
+//                        .setData(["className" : className,
+//                                  "date" : date,
+//                                  "isAbsenceRegistered" : false,
+//                                  "reason" : "", "studentID" : id,
+//                                  "studentName" : student.name,
+//                                  "validated" : false])
+//                }
+//            }
             
             for student in students {
                 if let id = student.id {
-                    newRegistration.collection("fb_afternoonRegistration_path".localize)
+                    afternoonRegistration.collection("fb_afternoonRegistration_path".localize)
                         .document(id)
                         .setData(["className" : className,
                                   "date" : date,

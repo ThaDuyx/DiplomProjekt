@@ -32,9 +32,10 @@ struct AbsenceRegistrationView: View {
     @State var selectedDate: String
     var isFromHistory: Bool
 
-    var selectedClass: String
+    var selectedClass: ClassInfo
     
-    init(selectedClass: String, selectedDate: String, isFromHistory: Bool) {
+    
+    init(selectedClass: ClassInfo, selectedDate: String, isFromHistory: Bool) {
         self.selectedClass = selectedClass
         _selectedDate = State(initialValue: selectedDate)
         self.isFromHistory = isFromHistory
@@ -107,7 +108,8 @@ struct AbsenceRegistrationView: View {
                             index: index+1,
                             studentName: registrationManager.registrations[index].studentName,
                             absenceReason: registrationManager.registrations[index].reason,
-                            studentID: registrationManager.registrations[index].studentID
+                            studentID: registrationManager.registrations[index].studentID,
+                            isMorning: isMorning
                         )
                         .environmentObject(statisticsManager)
                         .onTapGesture {
@@ -144,10 +146,10 @@ struct AbsenceRegistrationView: View {
                 }
                 
                 Button {
-                    registrationManager.saveRegistrations(className: selectedClass, date: selectedDate) { result in
+                    registrationManager.saveRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning) { result in
                         if result {
                             statisticsManager.commitBatch()
-                            statisticsManager.writeClassStats(className: selectedClass)
+                            statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning)
                             presentationMode.wrappedValue.dismiss()
                         } else {
                             // TODO: Present ErrorView
@@ -163,12 +165,17 @@ struct AbsenceRegistrationView: View {
         .navigationTitle("Registrer")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear() {
-            registrationManager.fetchRegistrations(className: selectedClass, date: selectedDate)
+            registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning)
         }
         .onChange(of: selectedDate) { newDate in
-            registrationManager.fetchRegistrations(className: selectedClass, date: newDate)
+            registrationManager.fetchRegistrations(className: selectedClass.name, date: newDate, isMorning: isMorning)
             
             // Resetting on change of date
+            statisticsManager.resetStatCounters()
+            statisticsManager.resetBatch()
+        }
+        .onChange(of: isMorning) { _ in
+            registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning)
             statisticsManager.resetStatCounters()
             statisticsManager.resetBatch()
         }
@@ -200,12 +207,14 @@ struct StudentRow: View {
     let studentName: String
     let absenceReason: String?
     let studentID: String
+    let isMorning: Bool
     
-    init(index: Int, studentName: String, absenceReason: String?, studentID: String) {
+    init(index: Int, studentName: String, absenceReason: String?, studentID: String, isMorning: Bool) {
         self.index = index
         self.studentName = studentName
         self.absenceReason = absenceReason
         self.studentID = studentID
+        self.isMorning = isMorning
     }
     
     var body: some View {
@@ -232,7 +241,7 @@ struct StudentRow: View {
                     .onChange(of: absenceReason) { [absenceReason] newValue in
                         // Force un-wrapping because we know we have the values and would like to receive an empty String
                         statisticsManager.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
-                        statisticsManager.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID)
+                        statisticsManager.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID, isMorning: isMorning)
                     }
             }
             .overlay(
@@ -247,6 +256,6 @@ struct StudentRow: View {
 
 struct AbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceRegistrationView(selectedClass: "", selectedDate: "", isFromHistory: false)
+        AbsenceRegistrationView(selectedClass: ClassInfo(name: "", isDoubleRegistrationActivated: false), selectedDate: "", isFromHistory: false)
     }
 }
