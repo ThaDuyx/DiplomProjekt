@@ -169,6 +169,12 @@ class StatisticsManager: ObservableObject {
         }
     }
     
+    /**
+     Function that  increments or decrements to the global counters in this class.
+     
+     - parameter oldValue:       The deselected value of the absence change that we need to use to decrement the global counters
+     - parameter newValue:       The newly chosen value of the absence  that we need to use to increment the global counters
+     */
     func updateClassStatistics(oldValue: String, newValue: String) {
         // We are incrementing the respective counters
         incrementCounters(value: newValue)
