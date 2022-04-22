@@ -72,7 +72,7 @@ class StatisticsManager: ObservableObject {
      - parameter docRef:           Reference to the specific student's stats
      - parameter value:            The value to be determined; illegal, illness or late
      - parameter inOrDecrement:    A constant that chooses either to increment or decrement the number in the database.
-     - parameter isMorning:      A boolean value that determines wether to update the morning or afternoon statistics.
+     - parameter isMorning:        A boolean value that determines wether to update the morning or afternoon statistics.
      */
     private func determineAbsence(docRef: DocumentReference, value: String, inOrDecrement: Int64, isMorning: Bool) {
         switch value {
