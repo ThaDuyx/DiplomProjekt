@@ -25,7 +25,7 @@ struct AbsenceClassListView: View {
                                     .boldDarkBodyTextStyle()
                             }
                     ) {
-                        ForEach(registrationManager.classList, id: \.self, content: { classInfo in
+                        ForEach(registrationManager.classes, id: \.self, content: { classInfo in
                             if favoriteManager.favorites.contains(classInfo.name) {
                                 ClassRow(classInfo: classInfo, isFavorite: true)
                             }
@@ -45,7 +45,7 @@ struct AbsenceClassListView: View {
                                     .boldDarkBodyTextStyle()
                             }
                     ) {
-                        ForEach(registrationManager.classList, id: \.self, content: { classInfo in
+                        ForEach(registrationManager.classes, id: \.self, content: { classInfo in
                             if !favoriteManager.favorites.contains(classInfo.name) {
                                 ClassRow(classInfo: classInfo, isFavorite: false)
                             }

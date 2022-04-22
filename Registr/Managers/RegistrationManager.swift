@@ -13,8 +13,7 @@ class RegistrationManager: ObservableObject {
     // Collections
     @Published var registrations = [Registration]()
     @Published var students = [Student]()
-    @Published var classes = [String]()
-    @Published var classList = [ClassInfo]()
+    @Published var classes = [ClassInfo]()
     @Published var studentRegistrationList = [Registration]()
     
     // Firestore db reference
@@ -55,7 +54,7 @@ class RegistrationManager: ObservableObject {
                 .document(className)
                 .collection("fb_date_path".localize)
                 .document(date)
-                .collection(selectedIsMorning ? "fb_registrations_path".localize : "fb_afternoonRegistration_path".localize)
+                .collection(selectedIsMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
                 .getDocuments() {  (querySnapshot, err) in
                     if let err = err {
                         print("Error getting documents: \(err)")
@@ -98,7 +97,7 @@ class RegistrationManager: ObservableObject {
                         .document(className)
                         .collection("fb_date_path".localize)
                         .document(date)
-                        .collection(isMorning ? "fb_registrations_path".localize : "fb_afternoonRegistration_path".localize)
+                        .collection(isMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
                         .document(registration.studentID)
                     
                     batch.updateData(["reason" : registration.reason, "isAbsenceRegistered": true], forDocument: registrationRef)
@@ -146,7 +145,7 @@ class RegistrationManager: ObservableObject {
                         .document(className)
                         .collection("fb_date_path".localize)
                         .document(date)
-                        .collection(isMorning ? "fb_registrations_path".localize : "fb_afternoonRegistration_path".localize)
+                        .collection(isMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
                         .document(registration.studentID)
                     
                     let absenceStudentRef = db
@@ -192,11 +191,9 @@ class RegistrationManager: ObservableObject {
                     print("Error getting documents: \(err)")
                 } else {
                     for document in querySnapshot!.documents {
-                        self.classes.append(document.documentID)
                         do {
                             if let classSnapshot = try document.data(as: ClassInfo.self) {
-                                self.classList.append(classSnapshot)
-                                print(classSnapshot)
+                                self.classes.append(classSnapshot)
                             }
                         }
                         catch {

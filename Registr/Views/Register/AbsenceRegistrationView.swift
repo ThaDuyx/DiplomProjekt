@@ -20,12 +20,12 @@ struct AbsenceRegistrationView: View {
     @EnvironmentObject var registrationManager: RegistrationManager
     @StateObject var statisticsManager = StatisticsManager()
     @StateObject private var context = FullScreenCoverContext()
-
-
+    
+    
     let currentDate = Date.now
     let comingDays = Date().comingDays(days: 7)
     let previousDays = Date().previousDays(days: 7)
-
+    
     @State private var selectedItem: Int? = nil
     @State private var isMorning: Bool = true
     @State private var showSheet: Bool = false
@@ -34,7 +34,7 @@ struct AbsenceRegistrationView: View {
     @State private var studentName: String = ""
     @State var selectedDate: String
     var isFromHistory: Bool
-
+    
     var selectedClass: ClassInfo
     
     
@@ -83,7 +83,9 @@ struct AbsenceRegistrationView: View {
                             }
                         }
                     }
-                    
+                }
+                
+                if selectedClass.isDoubleRegistrationActivated {
                     HStack {
                         Button {
                             isMorning = true
@@ -103,7 +105,6 @@ struct AbsenceRegistrationView: View {
                         .background(!isMorning ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
                     }
                 }
-                
                 
                 ScrollView {
                     ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
@@ -199,7 +200,7 @@ private func convertedArray(currentDay: Date, previousDays: [Date], comingDays: 
     array.append(contentsOf: reversedPreviousDays)
     array.insert(currentDay, at: 7)
     array.append(contentsOf: comingDays)
-
+    
     return array
 }
 

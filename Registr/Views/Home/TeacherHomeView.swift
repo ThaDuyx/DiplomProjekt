@@ -11,7 +11,7 @@ struct TeacherHomeView: View {
     
     @StateObject var reportManager = ReportManager()
     @EnvironmentObject var favoriteManager: FavoriteManager
-    @StateObject var FDM = FeedDatabaseManager()
+    @StateObject var feedDatabaseManager = FeedDatabaseManager()
     
     var body: some View {
         NavigationView {
@@ -34,9 +34,8 @@ struct TeacherHomeView: View {
                 .onChange(of: favoriteManager.favorites) { _ in
                     reportManager.fetchReports()
                 }
-                
-                Button("Feed") {
-                    FDM.createRegistrationDates(className: "0.x")
+                Button("feed") {
+                    feedDatabaseManager.createDoubleRegistrationDates()
                 }
             }
             .navigationTitle("Indberettelser")

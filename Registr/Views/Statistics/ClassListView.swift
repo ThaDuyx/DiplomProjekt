@@ -14,7 +14,7 @@ struct ClassListView: View {
         NavigationView {
             ZStack {
                 List {
-                    ForEach(registrationManager.classList, id: \.self) { classInfo in
+                    ForEach(registrationManager.classes, id: \.self) { classInfo in
                         ClassEntity(classInfo: classInfo)
                     }
                     .listRowBackground(Resources.Color.Colors.frolyRed)

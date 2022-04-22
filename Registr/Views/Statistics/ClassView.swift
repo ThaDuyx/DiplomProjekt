@@ -76,7 +76,7 @@ struct ClassView: View {
                         Text("Ulovligt: Morgen - \(statisticsManager.statistic.illegalMorning) & Eftermiddag - \(statisticsManager.statistic.illegalAfternoon)")
                             .lightBodyTextStyle()
                         
-                        Text("For sent: \(statisticsManager.statistic.lateMorning)")
+                        Text("For sent: Morgen - \(statisticsManager.statistic.lateMorning) & Eftermiddag - \(statisticsManager.statistic.lateAfternoon)")
                             .lightBodyTextStyle()
                             .padding(.bottom, 10)
                         
