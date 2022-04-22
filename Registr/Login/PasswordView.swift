@@ -32,24 +32,28 @@ struct PasswordView: View {
                     .offset(y: 80)
                 }
                 .ignoresSafeArea()
+                
                 Spacer()
+                
                 VStack(spacing: 10) {
                     Text("password")
                         .primaryHeaderTextStyle()
                         .frame(width: 280, alignment: .leading)
+                    
                     SecureField("password_field_text".localize, text: $password)
+                        .darkBodyTextStyle()
                         .frame(width: 265, height: 40)
                         .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                         .background(RoundedRectangle(cornerRadius: 10).fill(Resources.Color.Colors.white))
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Resources.Color.Colors.frolyRed, lineWidth: 1))
+                                .stroke(Resources.Color.Colors.frolyRed, lineWidth: 2))
+                    
                     Button("login") {
                         showActivity = true
                         AuthenticationManager.shared.signIn(email: userName, password: password, completion: { success in
                             if success {
                                 showActivity = false
-                                print(success)
                                 let window = UIApplication
                                     .shared
                                     .connectedScenes
@@ -65,11 +69,12 @@ struct PasswordView: View {
                     }
                     .frame(alignment: .center)
                     .buttonStyle(Resources.CustomButtonStyle.SmallFrontPageButtonStyle())
+                    
                     if showActivity {
                         ProgressView()
                             .foregroundColor(Resources.Color.Colors.frolyRed)
                     }
-                    //Toggle("Hide", isOn: $isHidden)
+                    
                     Spacer()
                 }
             }

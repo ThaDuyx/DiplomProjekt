@@ -117,3 +117,18 @@ extension Toggle {
             .font(.custom("Poppins-Regular", size: Resources.FontSize.body))
     }
 }
+
+extension SecureField {
+    /// Color: fiftyfifty, FontSize: 14pt
+    func darkBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
+            .font(.custom("Poppins-Medium", size: Resources.FontSize.body))
+    }
+}
+
+extension TextField {
+    func darkBodyTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
+            .font(.custom("Poppins-Medium", size: Resources.FontSize.body))
+    }
+}
