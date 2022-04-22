@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import SwiftUIKit
 
 struct PasswordView: View {
     @State private var password: String = "test1234"
     @State private var showActivity = false
+    @StateObject private var context = FullScreenCoverContext()
+
     var userName: String
     
     var body: some View {
@@ -40,7 +43,7 @@ struct PasswordView: View {
                         .background(RoundedRectangle(cornerRadius: 10).fill(Resources.Color.Colors.white))
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Resources.Color.Colors.darkPurple, lineWidth: 1))
+                                .stroke(Resources.Color.Colors.frolyRed, lineWidth: 1))
                     Button("login") {
                         showActivity = true
                         AuthenticationManager.shared.signIn(email: userName, password: password, completion: { success in
@@ -55,8 +58,8 @@ struct PasswordView: View {
                                 window?.rootViewController = UIHostingController(rootView: OnboardingControllerFlow())
                                 
                             } else {
+                                context.present(ErrorView(error: "alert_default_description".localize))
                                 showActivity = false
-                                // TODO: Present error Message || View
                             }
                         })
                     }
@@ -64,7 +67,7 @@ struct PasswordView: View {
                     .buttonStyle(Resources.CustomButtonStyle.SmallFrontPageButtonStyle())
                     if showActivity {
                         ProgressView()
-                            .foregroundColor(Resources.Color.Colors.darkBlue)
+                            .foregroundColor(Resources.Color.Colors.frolyRed)
                     }
                     //Toggle("Hide", isOn: $isHidden)
                     Spacer()
@@ -72,6 +75,7 @@ struct PasswordView: View {
             }
             .ignoresSafeArea(.keyboard)
         }
+        .fullScreenCover(context)
     }
 }
 

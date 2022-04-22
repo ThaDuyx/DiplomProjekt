@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIKit
 
 enum AbsenceType: String, CaseIterable {    
     case sickness = "Sygdom"
@@ -15,6 +16,7 @@ enum AbsenceType: String, CaseIterable {
 }
 
 struct ParentAbsenceRegistrationView: View {
+    @StateObject private var context = FullScreenCoverContext()
     @EnvironmentObject var childrenManager: ChildrenManager
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     
@@ -26,8 +28,7 @@ struct ParentAbsenceRegistrationView: View {
     @State private var isInterval = false
     @State var showsStartDatePicker = false
     @State var showsEndDatePicker = false
-    @State var showPlaceholderText = false
-    @State private var placeholderDescription: String = "Skriv beskrivelse"
+    @State private var showingAlert = false
     
     // For dismissing the keyboard
     enum Field: Hashable {
@@ -35,28 +36,13 @@ struct ParentAbsenceRegistrationView: View {
     }
     @FocusState private var focusedField: Field?
     
-    
-    private let dateRange: ClosedRange<Date> = {
-        let calendar = Calendar.current
-        let startComponents = DateComponents(year: Calendar.current.component(.year, from: Date()),month: 1, day: 1)
-        let endComponents = DateComponents(year: Calendar.current.component(.year, from: Date()), month: 12, day: 31)
-        return calendar.date(from:startComponents)!
-        ...
-        calendar.date(from:endComponents)!
-    }()
-    
-    init() {
-        // To make the List background transparent, so the gradient background can be used.
-        UITableView.appearance().backgroundColor = .clear
-    }
-    
     var body: some View {
         ZStack {
-            Resources.BackgroundGradient.backgroundGradient
-                .ignoresSafeArea()
             Form {
                 Section(
-                    header: Text("Barns navn")
+                    header:
+                        Text("Barn")
+                        .darkBodyTextStyle()
                 ) {
                     Menu {
                         ForEach(childrenManager.children, id: \.self) { child in
@@ -68,19 +54,21 @@ struct ParentAbsenceRegistrationView: View {
                     } label: {
                         HStack {
                             Image(systemName: "person")
-                                .foregroundColor(Resources.Color.Colors.lightMint)
+                                .foregroundColor(Resources.Color.Colors.white)
                             Text(selectedName.isEmpty ? "Vælg barn" : selectedName)
                                 .lightBodyTextStyle()
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             Image(systemName: "chevron.down")
-                                .foregroundColor(Resources.Color.Colors.lightMint)
+                                .foregroundColor(Resources.Color.Colors.white)
                         }
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
                 
                 Section(
-                    header: Text("Fraværs årsag")
+                    header:
+                        Text("Fraværs årsag")
+                        .darkBodyTextStyle()
                 ) {
                     Menu {
                         ForEach(AbsenceType.allCases, id: \.self) { absenceType in
@@ -91,36 +79,40 @@ struct ParentAbsenceRegistrationView: View {
                     } label: {
                         HStack {
                             Image(systemName: "questionmark")
-                                .foregroundColor(Resources.Color.Colors.lightMint)
+                                .foregroundColor(Resources.Color.Colors.white)
                             Text(selectedAbsence.isEmpty ? "Vælg fraværsårsag" : selectedAbsence)
                                 .lightBodyTextStyle()
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             Image(systemName: "chevron.down")
-                                .foregroundColor(Resources.Color.Colors.lightMint)
+                                .foregroundColor(Resources.Color.Colors.white)
                         }
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
                 
                 Section(
-                    header: Text("Interval")
+                    header:
+                        Text("Interval")
+                        .darkBodyTextStyle()
                 ) {
                     HStack {
                         Image(systemName: "calendar")
-                            .foregroundColor(Resources.Color.Colors.lightMint)
+                            .foregroundColor(Resources.Color.Colors.white)
                         Toggle("Aktivér for slutdato", isOn: $isInterval)
                             .lightBodyTextStyleToggle()
-                            .toggleStyle(SwitchToggleStyle(tint: Resources.Color.Colors.mediumMint))
+                            .toggleStyle(SwitchToggleStyle(tint: Resources.Color.Colors.white.opacity(0.5)))
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
                 
                 Section(
-                    header: Text("Startdato")
+                    header:
+                        Text("Startdato")
+                        .darkBodyTextStyle()
                 ) {
                     HStack {
                         Image(systemName: "calendar")
-                            .foregroundColor(Resources.Color.Colors.lightMint)
+                            .foregroundColor(Resources.Color.Colors.white)
                         Text(DateFormatter.abbreviationDayMonthYearFormatter.string(from: startDate))
                             .lightBodyTextStyle()
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -135,18 +127,20 @@ struct ParentAbsenceRegistrationView: View {
                             in: dateRange,
                             displayedComponents: .date)
                         .datePickerStyle(.graphical)
-                        .applyTextColor(Resources.Color.Colors.lightMint)
+                        .applyTextColor(Resources.Color.Colors.white)
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
                 
                 if isInterval {
                     Section(
-                        header: Text("Slutdato")
+                        header:
+                            Text("Slutdato")
+                            .darkBodyTextStyle()
                     ) {
                         HStack {
                             Image(systemName: "calendar")
-                                .foregroundColor(Resources.Color.Colors.lightMint)
+                                .foregroundColor(Resources.Color.Colors.white)
                             Text(DateFormatter.abbreviationDayMonthYearFormatter.string(from: endDate))
                                 .lightBodyTextStyle()
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -161,26 +155,24 @@ struct ParentAbsenceRegistrationView: View {
                                 in: dateRange,
                                 displayedComponents: .date)
                             .datePickerStyle(.graphical)
-                            .applyTextColor(Resources.Color.Colors.lightMint)
+                            .applyTextColor(Resources.Color.Colors.white)
                         }
                     }
-                    .listRowBackground(Resources.Color.Colors.darkBlue)
+                    .listRowBackground(Resources.Color.Colors.frolyRed)
                 }
                 
                 Section(
                     header:
-                        Text("student_absence_description").darkBlueBodyTextStyle()
+                        Text("student_absence_description")
+                        .darkBodyTextStyle()
                 ) {
                     HStack {
                         Image(systemName: "note.text")
-                            .foregroundColor(Resources.Color.Colors.lightMint)
+                            .foregroundColor(Resources.Color.Colors.white)
                         ZStack(alignment: .leading) {
-                            if textBindingManager.value.isEmpty && !showPlaceholderText {
-                                Text("Skriv beskrivelse")
-                                    .lightBodyTextStyle()
-                            }
                             TextEditor(text: $textBindingManager.value)
                                 .lightBodyTextStyleTextEditor()
+                                .accentColor(.white)
                                 .focused($focusedField, equals: .myField)
                                 .onTapGesture {
                                     if (focusedField != nil) {
@@ -188,41 +180,47 @@ struct ParentAbsenceRegistrationView: View {
                                     }
                                 }
                         }
-                        .onTapGesture {
-                            showPlaceholderText = true
-                        }
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.darkBlue)
+                .listRowBackground(Resources.Color.Colors.frolyRed)
                 
-                Button("Indberet") {
-                    if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsence.isEmpty {
-                        let report = Report(parentName: name, parentID: DefaultsManager.shared.currentProfileID, studentName: selectedChild.name, studentID: id, className: selectedChild.className, date: startDate, endDate: isInterval ? endDate : nil, description: textBindingManager.value, reason: selectedAbsence, validated: false, teacherValidation: "Afventer")
-                        
-                        childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
-                            if result {
-                                // TODO: Show that the report has been written and reset everything
-                                self.selectedChild = nil
-                                self.selectedName = ""
-                                self.textBindingManager.value = ""
-                                self.selectedAbsence = ""
-                                self.isInterval = false
-                                self.startDate = Date()
-                                self.endDate = Date()
-                            } else {
-                                // TODO: ErrorView shown and maybe animation or something
+                VStack(alignment: .center) {
+                    Button("Indberet") {
+                        if selectedName.isEmpty || selectedAbsence.isEmpty {
+                            showingAlert = true
+                        } else {
+                            if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsence.isEmpty {
+                                let report = Report(parentName: name, parentID: DefaultsManager.shared.currentProfileID, studentName: selectedChild.name, studentID: id, className: selectedChild.className, date: startDate, endDate: isInterval ? endDate : nil, description: textBindingManager.value, reason: selectedAbsence, validated: false, teacherValidation: "Afventer")
+                                
+                                childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
+                                    if result {
+                                        // TODO: Show that the report has been written and reset everything
+                                        self.selectedChild = nil
+                                        self.selectedName = ""
+                                        self.textBindingManager.value = ""
+                                        self.selectedAbsence = ""
+                                        self.isInterval = false
+                                        self.startDate = Date()
+                                        self.endDate = Date()
+                                    } else {
+                                        context.present(ErrorView(error: "alert_default_description".localize))
+                                    }
+                                }
                             }
                         }
                     }
-                    else {
-                        // TODO: ErrorView shown with 'Select a child'
-                    }
+                    .buttonStyle(Resources.CustomButtonStyle.FilledBodyTextButtonStyle())
+                    .listRowBackground(Color.clear)
+                    .alert("student_absence_alert_title".localize, isPresented: $showingAlert, actions: {
+                        Button("OK", role: .cancel) { }
+                    }, message: {
+                        Text("student_absence_alert_description".localize)
+                    })
                 }
-                .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
-                .padding(.leading, 200)
-                .listRowBackground(Color.clear)
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
+        .fullScreenCover(context)
         .navigationTitle("Indberettelse af elev")
         .navigationBarTitleDisplayMode(.inline)
     }

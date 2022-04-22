@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIKit
 
 enum AbsenceReasons: String, CaseIterable {
     case illegal = "Ulovligt"
@@ -18,6 +19,8 @@ struct AbsenceRegistrationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var registrationManager: RegistrationManager
     @StateObject var statisticsManager = StatisticsManager()
+    @StateObject private var context = FullScreenCoverContext()
+
 
     let currentDate = Date.now
     let comingDays = Date().comingDays(days: 7)
@@ -152,7 +155,7 @@ struct AbsenceRegistrationView: View {
                             statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning)
                             presentationMode.wrappedValue.dismiss()
                         } else {
-                            // TODO: Present ErrorView
+                            context.present(ErrorView(error: "alert_default_description".localize))
                         }
                     }
                 } label: {
@@ -162,6 +165,7 @@ struct AbsenceRegistrationView: View {
                 .padding(.bottom, 20)
             }
         }
+        .fullScreenCover(context)
         .navigationTitle("Registrer")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear() {

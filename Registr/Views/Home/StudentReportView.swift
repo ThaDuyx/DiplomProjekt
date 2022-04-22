@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftUIKit
 
 struct StudentReportView: View {
     
+    @StateObject private var context = FullScreenCoverContext()
     @EnvironmentObject var reportManager: ReportManager
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -57,9 +59,9 @@ struct StudentReportView: View {
                 Button("Afslå") {
                     reportManager.denyReport(selectedReport: report, teacherValidation: "Afslået") { result in
                         if result {
-                            // TODO: Dismiss this view
+                            presentationMode.wrappedValue.dismiss()
                         } else {
-                            // TODO: Add ErrorView
+                            context.present(ErrorView(error: "alert_default_description".localize))
                         }
                     }
                 }
@@ -72,7 +74,7 @@ struct StudentReportView: View {
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
-                            // TODO: Add ErrorView
+                            context.present(ErrorView(error: "alert_default_description".localize))
                         }
                     }
                 }
@@ -81,6 +83,7 @@ struct StudentReportView: View {
             .frame(width: 320)
             Spacer()
         }
+        .fullScreenCover(context)
         .navigationTitle("Indberettelse af elev")
         .navigationBarTitleDisplayMode(.inline)
     }

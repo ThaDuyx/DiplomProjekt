@@ -22,15 +22,14 @@ struct TabViews: View {
                 
             case .headmaster:
                 // TODO: Make headmaster view
-                ParentHomeScreenView()
+                ParentHomeView()
                     .tabItem {
                         Image(systemName: "house")
                         Text("Start")
                     }
                 
             case .none:
-                // Missing error handling here.
-                let _ = print("Something went wrong")
+                ErrorView(error: "alert_default_description".localize)
             }
         }
         .accentColor(Resources.Color.Colors.frolyRed)

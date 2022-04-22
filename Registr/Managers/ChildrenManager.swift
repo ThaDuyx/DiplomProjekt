@@ -14,7 +14,8 @@ class ChildrenManager: ObservableObject {
     @Published var absences: [Registration] = []
     @Published var reports: [Report] = []
     
-    var selectedChildID = String()
+    var selectedAbsenceID = String()
+    var selectedReportID = String()
     
     init() {
         fetchChildren(parentID: DefaultsManager.shared.currentProfileID)
@@ -51,14 +52,14 @@ class ChildrenManager: ObservableObject {
     }
     
     func fetchChildrenAbsence(studentID: String) {
-        if selectedChildID != studentID {
-            selectedChildID = studentID
+        if selectedAbsenceID != studentID {
+            selectedAbsenceID = studentID
             absences.removeAll()
             
             let db = Firestore.firestore()
             db
                 .collection("fb_students_path".localize)
-                .document(selectedChildID)
+                .document(selectedAbsenceID)
                 .collection("fb_absense_path".localize)
                 .getDocuments { querySnapshot, err in
                     if let err = err {
@@ -117,30 +118,32 @@ class ChildrenManager: ObservableObject {
     }
     
     func fetchChildrenReports(childID: String) {
-        let db = Firestore.firestore()
-        
-        db
-            .collection("fb_parent_path".localize)
-            .document(DefaultsManager.shared.currentProfileID)
-            .collection("fb_report_path".localize)
-            .whereField("studentID", isEqualTo: childID)
-            .getDocuments { querySnapshot, err in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        do {
-                            if let report = try document.data(as: Report.self) {
-                                self.reports.append(report)
-                                print(report)
+        if selectedReportID != childID {
+            selectedReportID = childID
+            reports.removeAll()
+            let db = Firestore.firestore()
+            db
+                .collection("fb_parent_path".localize)
+                .document(DefaultsManager.shared.currentProfileID)
+                .collection("fb_report_path".localize)
+                .whereField("studentID", isEqualTo: childID)
+                .getDocuments { querySnapshot, err in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            do {
+                                if let report = try document.data(as: Report.self) {
+                                    self.reports.append(report)
+                                }
+                            } catch {
+                                // TODO: Write no children absence and add error view
+                                print("No children")
                             }
-                        } catch {
-                            // TODO: Write no children absence and add error view
-                            print("No children")
                         }
                     }
                 }
-            }
+        }
     }
 }
 

@@ -59,7 +59,9 @@
 "student_absence_name" = "Elev";
 "student_absence_reason" = "Årsag";
 "student_absence_date" = "Dato";
-"student_absence_description" = "Beskrivelse";
+"student_absence_description" = "Skriv beskrivelse";
+"student_absence_alert_title" = "Hov! Du mangler og udfylde noget!";
+"student_absence_alert_description" = "Du mangler at vælge enten barn eller fraværs årsag. Udfyld disse for at forsætte.";
 
 // Mark: - Student class list
 "student_list_absence_description %@" = "Vælg årsag for %@ fravær";
@@ -74,3 +76,8 @@
 
 // MARK: - Absence History View
 "absence_day_pick" = "Den følgende dato er valgt:";
+
+// MARK: - Alert View
+"alert_title" = "Ups! Noget gik galt!";
+"alert_button_title" = "Luk";
+"alert_default_description" = "Der skete en fejl. Luk beskeden og prøv igen.";

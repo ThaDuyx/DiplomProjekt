@@ -16,8 +16,6 @@ struct OnboardFlowView: View {
     
     var body: some View {
         ZStack {
-            Resources.BackgroundGradient.backgroundGradient
-                .ignoresSafeArea()
             VStack {
                 VStack(spacing: 30) {
                     Text(title.localize)
@@ -26,7 +24,6 @@ struct OnboardFlowView: View {
                         .padding(.horizontal, 10)
                     
                     Text(details.localize)
-                        .subTitleTextStyle()
                         .multilineTextAlignment(.leading)
                         .padding(.horizontal, 20)
                 }
@@ -35,7 +32,7 @@ struct OnboardFlowView: View {
                     Image(systemName: image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(Resources.Color.Colors.darkBlue)
+                        .foregroundColor(Resources.Color.Colors.frolyRed)
                         .padding(100)
                 }
                 Spacer()
