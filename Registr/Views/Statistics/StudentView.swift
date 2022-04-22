@@ -58,17 +58,17 @@ struct StudentView: View {
                 }
                 VStack(alignment: .center, spacing: 15) {
                     
-                    Text("Lovligt: \(statisticsManager.statistic.legal)")
+                    Text("Lovligt: Morgen - \(statisticsManager.statistic.legalMorning) & Eftermiddag - \(statisticsManager.statistic.legalAfternoon)")
                         .lightBodyTextStyle()
                         .padding(.top, 10)
                     
-                    Text("Sygedage: \(statisticsManager.statistic.illness)")
+                    Text("Sygedage: Morgen - \(statisticsManager.statistic.illnessMorning) & Eftermiddag - \(statisticsManager.statistic.illnessAfternoon)")
                         .lightBodyTextStyle()
                     
-                    Text("Ulovligt: \(statisticsManager.statistic.illegal)")
+                    Text("Ulovligt: Morgen - \(statisticsManager.statistic.illegalMorning) & Eftermiddag - \(statisticsManager.statistic.illegalAfternoon)")
                         .lightBodyTextStyle()
                     
-                    Text("For sent: \(statisticsManager.statistic.late)")
+                    Text("For sent: Morgen - \(statisticsManager.statistic.lateMorning) & Eftermiddag - \(statisticsManager.statistic.lateAfternoon)")
                         .lightBodyTextStyle()
                         .padding(.bottom, 10)
                     

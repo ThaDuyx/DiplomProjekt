@@ -20,24 +20,25 @@ struct AbsenceRegistrationView: View {
     @EnvironmentObject var registrationManager: RegistrationManager
     @StateObject var statisticsManager = StatisticsManager()
     @StateObject private var context = FullScreenCoverContext()
-
-
+    
+    
     let currentDate = Date.now
     let comingDays = Date().comingDays(days: 7)
     let previousDays = Date().previousDays(days: 7)
-
+    
     @State private var selectedItem: Int? = nil
-    @State private var selectedTime: Int = 1
+    @State private var isMorning: Bool = true
     @State private var showSheet: Bool = false
     @State private var studentAbsenceState: String = ""
     @State private var studentIndex: Int = 0
     @State private var studentName: String = ""
     @State var selectedDate: String
     var isFromHistory: Bool
-
-    var selectedClass: String
     
-    init(selectedClass: String, selectedDate: String, isFromHistory: Bool) {
+    var selectedClass: ClassInfo
+    
+    
+    init(selectedClass: ClassInfo, selectedDate: String, isFromHistory: Bool) {
         self.selectedClass = selectedClass
         _selectedDate = State(initialValue: selectedDate)
         self.isFromHistory = isFromHistory
@@ -82,26 +83,28 @@ struct AbsenceRegistrationView: View {
                             }
                         }
                     }
-                    HStack {
-                        Button {
-                            selectedTime = 1
-                        } label: {
-                            Text("Formiddag")
-                                .mediumSubTitleTextStyle(color: selectedTime == 1 ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: selectedTime == 1 ? "Poppins-Medium" : "Poppins-Regular")
-                        }
-                        .frame(maxWidth: .infinity, minHeight: 35)
-                        .background(selectedTime == 1 ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
-                        
-                        Button {
-                            selectedTime = 2
-                        } label: {
-                            Text("Eftermiddag")
-                            .mediumSubTitleTextStyle(color: selectedTime == 2 ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: selectedTime == 2 ? "Poppins-Medium" : "Poppins-Regular")                    }
-                        .frame(maxWidth: .infinity, minHeight: 35)
-                        .background(selectedTime == 2 ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
-                    }
                 }
                 
+                if selectedClass.isDoubleRegistrationActivated {
+                    HStack {
+                        Button {
+                            isMorning = true
+                        } label: {
+                            Text("Formiddag")
+                                .mediumSubTitleTextStyle(color: isMorning ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: isMorning ? "Poppins-Medium" : "Poppins-Regular")
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 35)
+                        .background(isMorning ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
+                        
+                        Button {
+                            isMorning = false
+                        } label: {
+                            Text("Eftermiddag")
+                            .mediumSubTitleTextStyle(color: !isMorning ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: !isMorning ? "Poppins-Medium" : "Poppins-Regular")                    }
+                        .frame(maxWidth: .infinity, minHeight: 35)
+                        .background(!isMorning ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
+                    }
+                }
                 
                 ScrollView {
                     ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
@@ -109,7 +112,8 @@ struct AbsenceRegistrationView: View {
                             index: index+1,
                             studentName: registrationManager.registrations[index].studentName,
                             absenceReason: registrationManager.registrations[index].reason,
-                            studentID: registrationManager.registrations[index].studentID
+                            studentID: registrationManager.registrations[index].studentID,
+                            isMorning: isMorning
                         )
                         .environmentObject(statisticsManager)
                         .onTapGesture {
@@ -146,10 +150,10 @@ struct AbsenceRegistrationView: View {
                 }
                 
                 Button {
-                    registrationManager.saveRegistrations(className: selectedClass, date: selectedDate) { result in
+                    registrationManager.saveRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning) { result in
                         if result {
                             statisticsManager.commitBatch()
-                            statisticsManager.writeClassStats(className: selectedClass)
+                            statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning)
                             presentationMode.wrappedValue.dismiss()
                         } else {
                             context.present(ErrorView(error: "alert_default_description".localize))
@@ -166,12 +170,17 @@ struct AbsenceRegistrationView: View {
         .navigationTitle("Registrer")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear() {
-            registrationManager.fetchRegistrations(className: selectedClass, date: selectedDate)
+            registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning)
         }
         .onChange(of: selectedDate) { newDate in
-            registrationManager.fetchRegistrations(className: selectedClass, date: newDate)
+            registrationManager.fetchRegistrations(className: selectedClass.name, date: newDate, isMorning: isMorning)
             
             // Resetting on change of date
+            statisticsManager.resetStatCounters()
+            statisticsManager.resetBatch()
+        }
+        .onChange(of: isMorning) { _ in
+            registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning)
             statisticsManager.resetStatCounters()
             statisticsManager.resetBatch()
         }
@@ -191,7 +200,7 @@ private func convertedArray(currentDay: Date, previousDays: [Date], comingDays: 
     array.append(contentsOf: reversedPreviousDays)
     array.insert(currentDay, at: 7)
     array.append(contentsOf: comingDays)
-
+    
     return array
 }
 
@@ -203,12 +212,14 @@ struct StudentRow: View {
     let studentName: String
     let absenceReason: String?
     let studentID: String
+    let isMorning: Bool
     
-    init(index: Int, studentName: String, absenceReason: String?, studentID: String) {
+    init(index: Int, studentName: String, absenceReason: String?, studentID: String, isMorning: Bool) {
         self.index = index
         self.studentName = studentName
         self.absenceReason = absenceReason
         self.studentID = studentID
+        self.isMorning = isMorning
     }
     
     var body: some View {
@@ -235,7 +246,7 @@ struct StudentRow: View {
                     .onChange(of: absenceReason) { [absenceReason] newValue in
                         // Force un-wrapping because we know we have the values and would like to receive an empty String
                         statisticsManager.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
-                        statisticsManager.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID)
+                        statisticsManager.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID, isMorning: isMorning)
                     }
             }
             .overlay(
@@ -250,6 +261,6 @@ struct StudentRow: View {
 
 struct AbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceRegistrationView(selectedClass: "", selectedDate: "", isFromHistory: false)
+        AbsenceRegistrationView(selectedClass: ClassInfo(name: "", isDoubleRegistrationActivated: false), selectedDate: "", isFromHistory: false)
     }
 }

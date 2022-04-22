@@ -13,7 +13,7 @@ class RegistrationManager: ObservableObject {
     // Collections
     @Published var registrations = [Registration]()
     @Published var students = [Student]()
-    @Published var classes = [String]()
+    @Published var classes = [ClassInfo]()
     @Published var studentRegistrationList = [Registration]()
     
     // Firestore db reference
@@ -23,6 +23,7 @@ class RegistrationManager: ObservableObject {
     private var selectedClass = String()
     private var selectedDate = String()
     private var selectedStudent = String()
+    private var selectedIsMorning: Bool = true
     
     init() {
         fetchClasses()
@@ -38,21 +39,23 @@ class RegistrationManager: ObservableObject {
      
      - parameter className:      The unique name specifier of the class
      - parameter date:           A date string in the format: dd-MM-yyyy
+     - parameter isMorning:      A boolean value that determines to fetch the the morning or afternoon table.
      */
-    func fetchRegistrations(className: String, date: String) {
+    func fetchRegistrations(className: String, date: String, isMorning: Bool) {
         // If 'selectedClass' is the same as the className input we have already fetched the registration.
         // In this case will not have to fetch it again.
-        if selectedClass != className || selectedDate != date {
+        if selectedClass != className || selectedDate != date || selectedIsMorning != isMorning {
             registrations.removeAll()
             selectedClass = className
             selectedDate = date
+            selectedIsMorning = isMorning
             
             db
                 .collection("fb_classes_path".localize)
                 .document(className)
                 .collection("fb_date_path".localize)
                 .document(date)
-                .collection("fb_registrations_path".localize)
+                .collection(selectedIsMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
                 .getDocuments() {  (querySnapshot, err) in
                     if let err = err {
                         print("Error getting documents: \(err)")
@@ -75,6 +78,112 @@ class RegistrationManager: ObservableObject {
         }
     }
     
+    /**
+     Retrieves all the students' data from a given class
+     
+     - parameter className:      The unique name specifier of the class.
+     - parameter date:           A date string in the format: dd-MM-yyyy.
+     - parameter isMorning:      A boolean value that determines if the registration should be put in the morning or afternoon table.
+     - parameter completion:     A Callback that returns if the write to the database went through.
+     */
+    func saveRegistrations(className: String, date: String, isMorning: Bool, completion: @escaping (Bool) -> ()) {
+        if !registrations.isEmpty {
+            // Create new write batch that will pushed at the same time.
+            let batch = db.batch()
+            
+            for (var registration) in registrations {
+                if !registration.reason.isEmpty {
+                    // Absence registration for the class collection
+                    let registrationRef = db
+                        .collection("fb_classes_path".localize)
+                        .document(className)
+                        .collection("fb_date_path".localize)
+                        .document(date)
+                        .collection(isMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
+                        .document(registration.studentID)
+                    
+                    batch.updateData(["reason" : registration.reason, "isAbsenceRegistered": true], forDocument: registrationRef)
+                    
+                    // Absence for the student collection
+                    if registration.isAbsenceRegistered {
+                        let absenceStudentRef = db
+                            .collection("fb_students_path".localize)
+                            .document(registration.studentID)
+                            .collection("fb_absense_path".localize)
+                            .whereField("date", isEqualTo: date)
+                            .whereField("isMorning", isEqualTo: isMorning)
+                        
+                        absenceStudentRef.getDocuments { querySnapshot, err in
+                            if let err = err {
+                                print("Error getting documents: \(err)")
+                            } else {
+                                for document in querySnapshot!.documents {
+                                    document.reference.updateData(["reason" : registration.reason])
+                                }
+                            }
+                        }
+                    } else {
+                        let absenceStudentRef = db
+                            .collection("fb_students_path".localize)
+                            .document(registration.studentID)
+                            .collection("fb_absense_path".localize)
+                            .document()
+                        
+                        if let index = self.registrations.firstIndex(where: {$0.studentID == registration.studentID}) {
+                            self.registrations[index].isAbsenceRegistered = true
+                            registration.isAbsenceRegistered = true
+                        }
+                        
+                        do {
+                            try batch.setData(from: registration, forDocument: absenceStudentRef)
+                        } catch {
+                            print("Decoding failed")
+                        }
+                    }
+                    
+                } else if registration.reason.isEmpty && registration.isAbsenceRegistered {
+                    let registrationRef = db
+                        .collection("fb_classes_path".localize)
+                        .document(className)
+                        .collection("fb_date_path".localize)
+                        .document(date)
+                        .collection(isMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
+                        .document(registration.studentID)
+                    
+                    let absenceStudentRef = db
+                        .collection("fb_students_path".localize)
+                        .document(registration.studentID)
+                        .collection("fb_absense_path".localize)
+                        .whereField("date", isEqualTo: date)
+                        .whereField("isMorning", isEqualTo: isMorning)
+                    
+                    absenceStudentRef.getDocuments { querySnapshot, err in
+                        if let err = err {
+                            print("Error getting documents: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                document.reference.delete()
+                            }
+                        }
+                    }
+                    
+                    batch.updateData(["reason" : registration.reason, "isAbsenceRegistered" : false], forDocument: registrationRef)
+                }
+            }
+            
+            // Writing our big batch of data to firebase
+            batch.commit() { err in
+                if let err = err {
+                    print("Error writing batch \(err)")
+                    completion(false)
+                } else {
+                    print("Batch write succeeded.")
+                    completion(true)
+                }
+            }
+        }
+    }
+    
     // Retrieves every class name
     func fetchClasses() {
         db
@@ -84,7 +193,14 @@ class RegistrationManager: ObservableObject {
                     print("Error getting documents: \(err)")
                 } else {
                     for document in querySnapshot!.documents {
-                        self.classes.append(document.documentID)
+                        do {
+                            if let classSnapshot = try document.data(as: ClassInfo.self) {
+                                self.classes.append(classSnapshot)
+                            }
+                        }
+                        catch {
+                            print(error)
+                        }
                     }
                 }
             }
@@ -130,76 +246,6 @@ class RegistrationManager: ObservableObject {
                         }
                     }
                 }
-        }
-    }
-    
-    /**
-     Retrieves all the students' data from a given class
-     
-     - parameter className:      The unique name specifier of the class.
-     - parameter date:           A date string in the format: dd-MM-yyyy.
-     - parameter completion:     A Callback that returns if the write to the database went through.
-     */
-    func saveRegistrations(className: String, date: String, completion: @escaping (Bool) -> ()) {
-        if !registrations.isEmpty {
-            // Create new write batch that will pushed at the same time.
-            let batch = db.batch()
-            
-            for (var registration) in registrations {
-                if !registration.reason.isEmpty {
-                    let registrationRef = db
-                        .collection("fb_classes_path".localize)
-                        .document(className)
-                        .collection("fb_date_path".localize)
-                        .document(date)
-                        .collection("fb_registrations_path".localize)
-                        .document(registration.studentID)
-                    
-                    let registrationStudentRef = db
-                        .collection("fb_students_path".localize)
-                        .document(registration.studentID)
-                        .collection("fb_absense_path".localize)
-                        .document(date)
-                    
-                    registration.isAbsenceRegistered = true
-                    
-                    do {
-                        batch.updateData(["reason" : registration.reason, "isAbsenceRegistered": true], forDocument: registrationRef)
-                        try batch.setData(from: registration, forDocument: registrationStudentRef)
-                    } catch {
-                        print("Decoding failed")
-                    }
-                } else if registration.isAbsenceRegistered && registration.reason.isEmpty {
-                    let registrationRef = db
-                        .collection("fb_classes_path".localize)
-                        .document(className)
-                        .collection("fb_date_path".localize)
-                        .document(date)
-                        .collection("fb_registrations_path".localize)
-                        .document(registration.studentID)
-                    
-                    let registrationStudentRef = db
-                        .collection("fb_students_path".localize)
-                        .document(registration.studentID)
-                        .collection("fb_absense_path".localize)
-                        .document(date)
-                    
-                    
-                    batch.updateData(["reason" : registration.reason, "isAbsenceRegistered" : false], forDocument: registrationRef)
-                    batch.deleteDocument(registrationStudentRef)
-                }
-            }
-            
-            // Writing our big batch of data to firebase
-            batch.commit() { err in
-                if let err = err {
-                    print("Error writing batch \(err)")
-                    completion(false)
-                } else {
-                    print("Batch write succeeded.")
-                    completion(true)
-                }
-            }
         }
     }
     

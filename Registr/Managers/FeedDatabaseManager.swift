@@ -11,11 +11,17 @@ import FirebaseFirestore
  This class is used to feed the database
  */
 class FeedDatabaseManager: ObservableObject {
-    @Published var dateArray: [String] = []
-    @Published var students: [Student] = []
+    @Published var dateArray: [String] = ["22-04-2022", "23-04-2022"]
+    @Published var students = [Student]()
+    var classes = [ClassInfo]()
+    let db = Firestore.firestore()
+    
+    // Class selector, change this variable to choose the specific class
+    let selectedClass = "0.x"
     
     init() {
-        fetchStudents(className: "0.x")
+        fetchStudents(className: selectedClass)
+        fetchClasses()
     }
     
     /// This method fills our date array with date strings in the format 'dd-MM-yyyy'.
@@ -46,7 +52,6 @@ class FeedDatabaseManager: ObservableObject {
     
     /// This method is used to fill the 'students' array with student that can be used to create new absence registrations.
     func fetchStudents(className: String) {
-        let db = Firestore.firestore()
         db
             .collection("fb_classes_path".localize)
             .document(className)
@@ -57,7 +62,7 @@ class FeedDatabaseManager: ObservableObject {
                 } else {
                     for document in querySnapshot!.documents {
                         let studentID = document.documentID
-                        db.collection("fb_students_path".localize)
+                        self.db.collection("fb_students_path".localize)
                             .document(studentID)
                             .getDocument { studentDoc, error in
                                 if let data = studentDoc {
@@ -79,22 +84,63 @@ class FeedDatabaseManager: ObservableObject {
             }
     }
     
+    func fetchClasses() {
+        db
+            .collection("fb_classes_path".localize)
+            .getDocuments { querySnapshot, err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        do {
+                            if let classSnapshot = try document.data(as: ClassInfo.self) {
+                                self.classes.append(classSnapshot)
+                            }
+                        }
+                        catch {
+                            print(error)
+                        }
+                    }
+                }
+            }
+    }
+    
     /// This method will take the global date array from this class and create registrations from a class.
     /// Though the method 'fetchStudents' will have to be called first for this to be used.
-    func createRegistrationDates(className: String) {
-        let db = Firestore.firestore()
+    func createDoubleRegistrationDates() {
         
         for date in dateArray {
             let newRegistration = db
                 .collection("fb_classes_path".localize)
-                .document(className)
+                .document(selectedClass)
                 .collection("fb_date_path".localize)
                 .document(date)
+            
             newRegistration.setData(["exsists" : true])
-                
+
             for student in students {
                 if let id = student.id {
-                    newRegistration.collection("fb_registrations_path".localize).document(id).setData(["className" : className, "date" : date, "isAbsenceRegistered" : false, "reason" : "", "studentID" : id, "studentName" : student.name, "validated" : false])
+                    newRegistration.collection("fb_morningRegistration_path".localize)
+                        .document(id)
+                        .setData(["className" : selectedClass,
+                                  "date" : date,
+                                  "isAbsenceRegistered" : false,
+                                  "isMorning" : true,
+                                  "reason" : "", "studentID" : id,
+                                  "studentName" : student.name,
+                                  "validated" : false])
+                    
+                    if classes.contains(where: { $0.name == student.className && $0.isDoubleRegistrationActivated}) {
+                        newRegistration.collection("fb_afternoonRegistration_path".localize)
+                            .document(id)
+                            .setData(["className" : selectedClass,
+                                      "date" : date,
+                                      "isAbsenceRegistered" : false,
+                                      "isMorning" : false,
+                                      "reason" : "", "studentID" : id,
+                                      "studentName" : student.name,
+                                      "validated" : false])
+                    }
                 }
             }
         }

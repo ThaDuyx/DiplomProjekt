@@ -17,4 +17,5 @@ struct Registration: Codable, Hashable {
     var reason: String = ""
     var validated: Bool = false
     var isAbsenceRegistered: Bool = false
+    var isMorning: Bool?
 }

@@ -25,11 +25,12 @@ struct AbsenceClassListView: View {
                                     .boldDarkBodyTextStyle()
                             }
                     ) {
-                        ForEach(registrationManager.classes, id: \.self) { className in
-                            if favoriteManager.favorites.contains(className) {
-                                ClassRow(className: className, isFavorite: true)
+                        ForEach(registrationManager.classes, id: \.self, content: { classInfo in
+                            if favoriteManager.favorites.contains(classInfo.name) {
+                                ClassRow(classInfo: classInfo, isFavorite: true)
                             }
-                        }
+                            
+                        })
                     }
                     .listRowBackground(Resources.Color.Colors.frolyRed)
                     .listRowSeparatorTint(Resources.Color.Colors.white)
@@ -44,11 +45,11 @@ struct AbsenceClassListView: View {
                                     .boldDarkBodyTextStyle()
                             }
                     ) {
-                        ForEach(registrationManager.classes, id: \.self) { className in
-                            if !favoriteManager.favorites.contains(className) {
-                                ClassRow(className: className, isFavorite: false)
+                        ForEach(registrationManager.classes, id: \.self, content: { classInfo in
+                            if !favoriteManager.favorites.contains(classInfo.name) {
+                                ClassRow(classInfo: classInfo, isFavorite: false)
                             }
-                        }
+                        })
                     }
                     .listRowBackground(Resources.Color.Colors.frolyRed)
                     .listRowSeparatorTint(Resources.Color.Colors.white)
@@ -61,7 +62,7 @@ struct AbsenceClassListView: View {
     }
 }
 struct ClassRow: View {
-    var className: String
+    var classInfo: ClassInfo
     var isFavorite: Bool
     
     var body: some View {
@@ -70,12 +71,12 @@ struct ClassRow: View {
                 Image(systemName: isFavorite ? "star.fill" : "star")
                     .foregroundColor(Resources.Color.Colors.white)
                 
-                Text(className)
+                Text(classInfo.name)
                     .smallSubTitleTextStyle()
                     .frame(maxWidth: .infinity, alignment: .center)
             }
             // Setting frame and opacity to 0, to remove chevron
-            NavigationLink(destination: AbsenceRegistrationView(selectedClass: className, selectedDate: Date().currentDateFormatted, isFromHistory: false)) {
+            NavigationLink(destination: AbsenceRegistrationView(selectedClass: classInfo, selectedDate: Date().currentDateFormatted, isFromHistory: false)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)

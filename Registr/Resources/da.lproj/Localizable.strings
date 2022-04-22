@@ -40,7 +40,8 @@
 "fb_parent_path" = "parent";
 "fb_employee_path" = "employees";
 "fb_date_path" = "registrationDates";
-"fb_registrations_path" = "registrations";
+"fb_morningRegistration_path" = "morning";
+"fb_afternoonRegistration_path" = "afternoon";
 "fb_children_path" = "children";
 "fb_students_path" = "students";
 "fb_classes_path" = "classes";

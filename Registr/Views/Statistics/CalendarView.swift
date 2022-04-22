@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CalendarView: View {
     @State private var selectedDate: Date = Date()
-    let className: String
+    let classInfo: ClassInfo
     
     private let dateRange: ClosedRange<Date> = {
         let calendar = Calendar.current
@@ -36,7 +36,7 @@ struct CalendarView: View {
                 .datePickerStyle(.graphical)
                 .padding()
 
-                NavigationLink(destination: AbsenceRegistrationView(selectedClass: className, selectedDate: selectedDate.formatSpecificData(date: selectedDate), isFromHistory: true)) {
+                NavigationLink(destination: AbsenceRegistrationView(selectedClass: classInfo, selectedDate: selectedDate.formatSpecificData(date: selectedDate), isFromHistory: true)) {
                     Text("next_view")
                 }
                 .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
@@ -48,6 +48,6 @@ struct CalendarView: View {
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(className: "0.x")
+        CalendarView(classInfo: ClassInfo(name: "", isDoubleRegistrationActivated: false))
     }
 }

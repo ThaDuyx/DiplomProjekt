@@ -16,7 +16,7 @@ class StatisticsManager: ObservableObject {
     private var batch = Firestore.firestore().batch()
     
     // Object that contains statistic data and overrides every time it is written to.
-    @Published var statistic = Statistics(illegal: 0, illness: 0, late: 0, legal: 0)
+    @Published var statistic = Statistics(illegalMorning: 0, illegalAfternoon: 0, illnessMorning: 0, illnessAfternoon: 0, lateMorning: 0, lateAfternoon: 0, legalMorning: 0, legalAfternoon: 0)
     
     // Constants
     private let increment: Int64 = 1
@@ -47,21 +47,22 @@ class StatisticsManager: ObservableObject {
     /**
      Adds a new write action of the specific student's statistics to the global batch of writes.
      
-     - parameter oldValue:      The old value of the registration
-     - parameter newValue:      The new value of the registration
-     - parameter studentID:     The selected student's firestore id
+     - parameter oldValue:      The old value of the registration.
+     - parameter newValue:      The new value of the registration.
+     - parameter studentID:     The selected student's firestore id.
+     - parameter isMorning:      A boolean value that determines wether to update the morning or afternoon statistics.
      */
-    func updateStudentStatistics(oldValue: String, newValue: String, studentID: String) {
+    func updateStudentStatistics(oldValue: String, newValue: String, studentID: String, isMorning: Bool) {
         let studentStatRef = db
             .collection("fb_students_path".localize)
             .document(studentID)
             .collection("fb_statistics_path".localize)
             .document("fb_statistics_doc".localize)
         
-        determineAbsence(docRef: studentStatRef, value: newValue, inOrDecrement: increment)
+        determineAbsence(docRef: studentStatRef, value: newValue, inOrDecrement: increment, isMorning: isMorning)
         
         if !oldValue.isEmpty {
-            determineAbsence(docRef: studentStatRef, value: oldValue, inOrDecrement: decrement)
+            determineAbsence(docRef: studentStatRef, value: oldValue, inOrDecrement: decrement, isMorning: isMorning)
         }
     }
     
@@ -70,16 +71,17 @@ class StatisticsManager: ObservableObject {
      
      - parameter docRef:           Reference to the specific student's stats
      - parameter value:            The value to be determined; illegal, illness or late
-     - parameter inOrDecrement:    A constant that chooses either to increment or decrement the number in the database
+     - parameter inOrDecrement:    A constant that chooses either to increment or decrement the number in the database.
+     - parameter isMorning:        A boolean value that determines wether to update the morning or afternoon statistics.
      */
-    private func determineAbsence(docRef: DocumentReference, value: String, inOrDecrement: Int64) {
+    private func determineAbsence(docRef: DocumentReference, value: String, inOrDecrement: Int64, isMorning: Bool) {
         switch value {
         case AbsenceReasons.illegal.rawValue:
-            batch.updateData(["illegal" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
+            batch.updateData([isMorning ? "illegalMorning" : "illegalAfternoon" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
         case AbsenceReasons.illness.rawValue:
-            batch.updateData(["illness" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
+            batch.updateData([isMorning ? "illnessMorning" : "illnessAfternoon" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
         case AbsenceReasons.late.rawValue:
-            batch.updateData(["late" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
+            batch.updateData([isMorning ? "lateMorning" : "lateAfternoon" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
         default:
             break
         }
@@ -101,7 +103,6 @@ class StatisticsManager: ObservableObject {
                             if let newStat = try document.data(as: Statistics.self) {
                                 self.statistic = newStat
                             }
-                            print(self.statistic)
                         }
                         catch {
                             print(error)
@@ -117,6 +118,8 @@ class StatisticsManager: ObservableObject {
         db
             .collection("fb_classes_path".localize)
             .document(className)
+            .collection("fb_statistics_path".localize)
+            .document("fb_statistics_doc".localize)
             .getDocument { document, err in
                 if let err = err {
                     print("Error getting documents: \(err)")
@@ -139,25 +142,39 @@ class StatisticsManager: ObservableObject {
         illnessCounter = 0; illegalCounter = 0; lateCounter = 0
     }
     
-    func writeClassStats(className: String) {
+    /**
+     Function that writes the calculated statistcs to the specific class
+     
+     - parameter className:      Name of the selected class.
+     - parameter isMorning:      A boolean value that determines wether to update the morning or afternoon statistics.
+     */
+    func writeClassStats(className: String, isMorning: Bool) {
         let statisticsClassRef = db
             .collection("fb_classes_path".localize)
             .document(className)
+            .collection("fb_statistics_path".localize)
+            .document("fb_statistics_doc".localize)
         
         // If one of the following counters are zero we do not want to use them
         if illegalCounter != 0 {
-            statisticsClassRef.updateData(["illegal" : FieldValue.increment(illegalCounter)])
+            statisticsClassRef.updateData([isMorning ? "illegalMorning" : "illegalAfternoon" : FieldValue.increment(illegalCounter)])
         }
         
         if illnessCounter != 0 {
-            statisticsClassRef.updateData(["illness" : FieldValue.increment(illnessCounter)])
+            statisticsClassRef.updateData([isMorning ? "illnessMorning" : "illnessAfternoon" : FieldValue.increment(illnessCounter)])
         }
         
         if lateCounter != 0 {
-            statisticsClassRef.updateData(["late" : FieldValue.increment(lateCounter)])
+            statisticsClassRef.updateData([isMorning ? "lateMorning" : "lateAfternoon" : FieldValue.increment(lateCounter)])
         }
     }
     
+    /**
+     Function that  increments or decrements to the global counters in this class.
+     
+     - parameter oldValue:       The deselected value of the absence change that we need to use to decrement the global counters
+     - parameter newValue:       The newly chosen value of the absence  that we need to use to increment the global counters
+     */
     func updateClassStatistics(oldValue: String, newValue: String) {
         // We are incrementing the respective counters
         incrementCounters(value: newValue)

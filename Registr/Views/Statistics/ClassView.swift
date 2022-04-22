@@ -14,14 +14,14 @@ struct ClassView: View {
     
     @State private var followAction: Bool = false
     
-    let className: String
+    let classInfo: ClassInfo
     var studentID: String? = nil
     
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
-    init(className: String, studentID: String? = nil) {
-        self.className = className
+    init(classInfo: ClassInfo, studentID: String? = nil) {
+        self.classInfo = classInfo
         self.studentID = studentID
     }
     
@@ -31,20 +31,20 @@ struct ClassView: View {
                 Spacer()
                 Button {
                     followAction.toggle()
-                    favoriteManager.favoriteAction(favorite: className)
+                    favoriteManager.favoriteAction(favorite: classInfo.name)
                 } label: {
                     
                     HStack {
                         Image(systemName: "checkmark.diamond")
                         
-                        Text(favoriteManager.favorites.contains(className) ? "Følger" : "Følger ikke")
+                        Text(favoriteManager.favorites.contains(classInfo.name) ? "Følger" : "Følger ikke")
                     }
                 }
                 .buttonStyle(Resources.CustomButtonStyle.TransparentFollowButtonStyle())
                 
-                ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(className: className))
+                ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo))
                 
-                ButtonAction(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: className))
+                ButtonAction(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: classInfo.name))
                 
                 Spacer()
                 
@@ -66,17 +66,17 @@ struct ClassView: View {
                     }
                     VStack(alignment: .center, spacing: 15) {
                         
-                        Text("Lovligt: \(statisticsManager.statistic.legal)")
+                        Text("Lovligt: Morgen - \(statisticsManager.statistic.legalMorning) & Eftermiddag - \(statisticsManager.statistic.legalAfternoon)")
                             .lightBodyTextStyle()
                             .padding(.top, 10)
                         
-                        Text("Sygedage: \(statisticsManager.statistic.illness)")
+                        Text("Sygedage: Morgen - \(statisticsManager.statistic.illnessMorning) & Eftermiddag - \(statisticsManager.statistic.illnessAfternoon)")
                             .lightBodyTextStyle()
                         
-                        Text("Ulovligt: \(statisticsManager.statistic.illegal)")
+                        Text("Ulovligt: Morgen - \(statisticsManager.statistic.illegalMorning) & Eftermiddag - \(statisticsManager.statistic.illegalAfternoon)")
                             .lightBodyTextStyle()
                         
-                        Text("For sent: \(statisticsManager.statistic.late)")
+                        Text("For sent: Morgen - \(statisticsManager.statistic.lateMorning) & Eftermiddag - \(statisticsManager.statistic.lateAfternoon)")
                             .lightBodyTextStyle()
                             .padding(.bottom, 10)
                         
@@ -87,12 +87,12 @@ struct ClassView: View {
                     .padding()
                 }
                 .onAppear() {
-                    statisticsManager.fetchClassStats(className: className)
+                    statisticsManager.fetchClassStats(className: classInfo.name)
                 }
                 Spacer()
             }
         }
-        .navigationTitle(className)
+        .navigationTitle(classInfo.name)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -119,6 +119,6 @@ struct ButtonAction<TargetView: View>: View {
 
 struct ClassView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassView(className: "0.X")
+        ClassView(classInfo: ClassInfo(name: "", isDoubleRegistrationActivated: false))
     }
 }
