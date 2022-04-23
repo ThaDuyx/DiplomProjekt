@@ -16,6 +16,9 @@ class ReportManager: ObservableObject {
         fetchReports()
     }
     
+    /**
+     Fetches all the reports from the user selected favorites
+     */
     func fetchReports() {
         let db = Firestore.firestore()
         reports.removeAll()
@@ -44,12 +47,25 @@ class ReportManager: ObservableObject {
         }
     }
     
+    /**
+     If we remove a favorite, we will also remove all the objects with that class from our list.
+     
+     - parameter favorite:       A string on the name of the deselected favorite class.
+     */
     func reportFavoriteAction(favorite: String) {
         if DefaultsManager.shared.favorites.contains(favorite) {
             reports.removeAll(where: { $0.className == favorite })
         }
     }
     
+    /**
+     Validates the currently selected report and adds the selected reason to the database.
+     
+     - parameter selectedReport:       The selected report from the list of reports.
+     - parameter validationReason:     The reason selected from the user; illness, late, or illegal.
+     - parameter teacherValidation:    The teachers validation on the report, this will be 'Accepted' since we are validating.
+     - parameter completion:           A Callback that returns if the write to the database went through.
+     */
     func validateReport(selectedReport: Report, validationReason: String, teacherValidation: String, completion: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         let batch = db.batch()
@@ -282,6 +298,13 @@ class ReportManager: ObservableObject {
         }
     }
     
+    /**
+     Denies the currently selected report and adds the teacher validation to the parents report.
+     
+     - parameter selectedReport:       The selected report from the list of reports.
+     - parameter teacherValidation:    The teachers validation on the report, this will be 'Denied' since we are denying the report.
+     - parameter completion:           A Callback that returns if the write to the database went through.
+     */
     func denyReport(selectedReport: Report, teacherValidation: String, completion: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         let batch = db.batch()
