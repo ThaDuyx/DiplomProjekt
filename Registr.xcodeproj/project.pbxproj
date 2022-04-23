@@ -81,8 +81,8 @@
 		83547AFC280D51980082D641 /* ParentHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AFB280D51980082D641 /* ParentHomeView.swift */; };
 		836F149F27E35FF200FEFCB3 /* HalfSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F149E27E35FF200FEFCB3 /* HalfSheet.swift */; };
 		8387E78727E1FA660060C12D /* NavigationAndTabbarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */; };
-		8391A8DC27D8BBD700B5C698 /* OnboardingFlowControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DB27D8BBD700B5C698 /* OnboardingFlowControllerView.swift */; };
-		8391A8DE27D8C59900B5C698 /* OnboardFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DD27D8C59900B5C698 /* OnboardFlowView.swift */; };
+		8391A8DC27D8BBD700B5C698 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DB27D8BBD700B5C698 /* OnboardingView.swift */; };
+		8391A8DE27D8C59900B5C698 /* OnboardRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DD27D8C59900B5C698 /* OnboardRow.swift */; };
 		8391A8E027D8FD6100B5C698 /* OnboardingControllerFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DF27D8FD6100B5C698 /* OnboardingControllerFlow.swift */; };
 		8391A8F327DA2DC400B5C698 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F227DA2DC400B5C698 /* ProfileView.swift */; };
 		8391A8F927DA2DFD00B5C698 /* TabViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F827DA2DFD00B5C698 /* TabViews.swift */; };
@@ -170,8 +170,8 @@
 		83547AFB280D51980082D641 /* ParentHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentHomeView.swift; sourceTree = "<group>"; };
 		836F149E27E35FF200FEFCB3 /* HalfSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSheet.swift; sourceTree = "<group>"; };
 		8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAndTabbarAppearance.swift; sourceTree = "<group>"; };
-		8391A8DB27D8BBD700B5C698 /* OnboardingFlowControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowControllerView.swift; sourceTree = "<group>"; };
-		8391A8DD27D8C59900B5C698 /* OnboardFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardFlowView.swift; sourceTree = "<group>"; };
+		8391A8DB27D8BBD700B5C698 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		8391A8DD27D8C59900B5C698 /* OnboardRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardRow.swift; sourceTree = "<group>"; };
 		8391A8DF27D8FD6100B5C698 /* OnboardingControllerFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingControllerFlow.swift; sourceTree = "<group>"; };
 		8391A8F227DA2DC400B5C698 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8391A8F827DA2DFD00B5C698 /* TabViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViews.swift; sourceTree = "<group>"; };
@@ -355,8 +355,8 @@
 		8348596227D216F6009D8A51 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				8391A8DB27D8BBD700B5C698 /* OnboardingFlowControllerView.swift */,
-				8391A8DD27D8C59900B5C698 /* OnboardFlowView.swift */,
+				8391A8DB27D8BBD700B5C698 /* OnboardingView.swift */,
+				8391A8DD27D8C59900B5C698 /* OnboardRow.swift */,
 				8391A8DF27D8FD6100B5C698 /* OnboardingControllerFlow.swift */,
 			);
 			path = Onboarding;
@@ -555,7 +555,7 @@
 			files = (
 				8314F81A28072A6C00487C5F /* StringSeparator.swift in Sources */,
 				8348592C27CF92DB009D8A51 /* ButtonStyle.swift in Sources */,
-				8391A8DC27D8BBD700B5C698 /* OnboardingFlowControllerView.swift in Sources */,
+				8391A8DC27D8BBD700B5C698 /* OnboardingView.swift in Sources */,
 				6AAF51B62809AC8C00023945 /* TeacherTabs.swift in Sources */,
 				6AD2E1EC27F9FDAE0027036F /* FeedDatabaseManager.swift in Sources */,
 				8348592A27CF912E009D8A51 /* FontSizes.swift in Sources */,
@@ -602,7 +602,7 @@
 				6A18AF5328118ECD008CD7CA /* ClassInfo.swift in Sources */,
 				8314F81E2809614500487C5F /* AbsenceClassListView.swift in Sources */,
 				6AC078EB27CF97340048F0B1 /* UserManager.swift in Sources */,
-				8391A8DE27D8C59900B5C698 /* OnboardFlowView.swift in Sources */,
+				8391A8DE27D8C59900B5C698 /* OnboardRow.swift in Sources */,
 				6A0F350C27DB5395001E60D9 /* Student.swift in Sources */,
 				83547AFC280D51980082D641 /* ParentHomeView.swift in Sources */,
 				83201BBB2802558900007269 /* PasswordView.swift in Sources */,

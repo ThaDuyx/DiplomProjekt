@@ -14,7 +14,7 @@ struct OnboardingControllerFlow: View {
         if currentPage > 3 {
             TabViews()
         } else {
-            OnboardingFlowControllerView()
+            OnboardingView()
         }
     }
 }
