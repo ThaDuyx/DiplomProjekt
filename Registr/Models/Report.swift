@@ -17,8 +17,10 @@ struct Report: Codable, Hashable {
     let className: String
     let date: Date
     let endDate: Date?
+    let timeOfDay: String?
     let description: String?
     let reason: String
     let validated: Bool
     let teacherValidation: String
+    let isDoubleRegistrationActivated: Bool?
 }

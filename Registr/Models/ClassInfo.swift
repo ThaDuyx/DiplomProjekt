@@ -10,6 +10,6 @@ import FirebaseFirestoreSwift
 
 struct ClassInfo: Codable, Hashable {
     @DocumentID var id: String?
-    let name: String
     let isDoubleRegistrationActivated: Bool
+    let name: String
 }
