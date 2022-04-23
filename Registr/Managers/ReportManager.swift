@@ -74,7 +74,7 @@ class ReportManager: ObservableObject {
             let date = selectedReport.date.formatSpecificData(date: selectedReport.date)
 
             switch selectedReport.timeOfDay {
-            case "Morgen":
+            case .morning:
                 // MARK: - Updating morning registration in class collection
                 let classMorningAbsenceRef = db
                     .collection("fb_classes_path".localize)
@@ -129,7 +129,7 @@ class ReportManager: ObservableObject {
                     }
                 }
             
-            case "Eftermiddag":
+            case .afternoon:
                 // MARK: - Updating afternoon registration in class collection
                 let classAfternoonAbsenceRef = db
                     .collection("fb_classes_path".localize)
@@ -184,7 +184,7 @@ class ReportManager: ObservableObject {
                     }
                 }
             
-            case "Hele Dagen":
+            case .allDay:
                 // MARK: - Updating morning & afternoon registration in class collection
                 let classMorningAbsenceRef = db
                     .collection("fb_classes_path".localize)
@@ -263,9 +263,6 @@ class ReportManager: ObservableObject {
                         }
                     }
                 }
-                
-            default:
-                print("")
             }
             
             let parentReportRef = db

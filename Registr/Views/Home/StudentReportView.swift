@@ -25,7 +25,7 @@ struct StudentReportView: View {
     
     var body: some View {
         VStack {
-            AbsenceInformationView(name: report.studentName, reason: report.reason, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay ?? "Morgen")
+            AbsenceInformationView(name: report.studentName, reason: report.reason, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue )
             Spacer()
             VStack(spacing: 10) {
                 Section(
@@ -146,6 +146,6 @@ struct AbsenceRow : View {
 
 struct StudentReportView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentReportView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: "", description: "", reason: "", validated: false, teacherValidation: "", isDoubleRegistrationActivated: nil))
+        StudentReportView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: "", isDoubleRegistrationActivated: nil))
     }
 }
