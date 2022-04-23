@@ -17,7 +17,7 @@ struct Report: Codable, Hashable {
     let className: String
     let date: Date
     let endDate: Date?
-    let timeOfDay: String?
+    let timeOfDay: String
     let description: String?
     let reason: String
     let validated: Bool

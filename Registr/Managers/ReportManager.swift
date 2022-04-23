@@ -70,10 +70,10 @@ class ReportManager: ObservableObject {
         let db = Firestore.firestore()
         let batch = db.batch()
         
-        if let id = selectedReport.id, let timeOfDay = selectedReport.timeOfDay {
+        if let id = selectedReport.id {
             let date = selectedReport.date.formatSpecificData(date: selectedReport.date)
 
-            switch timeOfDay {
+            switch selectedReport.timeOfDay {
             case "Morgen":
                 // MARK: - Updating morning registration in class collection
                 let classMorningAbsenceRef = db
