@@ -97,6 +97,11 @@ extension Text {
             .font(.custom("Poppins-SemiBold", size: Resources.FontSize.subTitle))
     }
     
+    func smallDarkSubTitleTextStyle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
+            .font(.custom("Poppins-SemiBold", size: Resources.FontSize.subTitle))
+    }
+    
     func mediumSubTitleTextStyle(color: Color, font: String) -> some View {
         self.foregroundColor(color)
             .font(.custom(font, size: Resources.FontSize.subTitle))
