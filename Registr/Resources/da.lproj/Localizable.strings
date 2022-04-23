@@ -7,6 +7,7 @@
 */
 // MARK: - App Name
 "application_name" = "Registr";
+"app_info" = "Diplomingeniørprojekt - Udviklet af Simon Andersen & Christoffer Adrian Detlef";
 // MARK: - Login flow
 "parent_login" = "Forældre login";
 "school_login" = "Skole login";
@@ -80,3 +81,8 @@
 "alert_title" = "Ups! Noget gik galt!";
 "alert_button_title" = "Luk";
 "alert_default_description" = "Der skete en fejl. Luk beskeden og prøv igen.";
+
+// MARK: - Notification Row
+"notification_title" = "Du har slået notificationer fra.";
+"notification_description" = "For at app'en kan sende dig notifikationer, når der er sket noget vigtig på det som du følger, så skal du slå notifikationer til i telefonens indstillinger.";
+"notification_button_title" = "Åben indstillinger";

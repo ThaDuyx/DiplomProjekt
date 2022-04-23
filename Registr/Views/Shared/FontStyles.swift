@@ -116,4 +116,9 @@ extension Toggle {
         self.foregroundColor(Resources.Color.Colors.white)
             .font(.custom("Poppins-Regular", size: Resources.FontSize.body))
     }
+    
+    func darkBodyTextStyleToggle() -> some View {
+        self.foregroundColor(Resources.Color.Colors.fiftyfifty)
+            .font(.custom("Poppins-Regular", size: Resources.FontSize.body))
+    }
 }

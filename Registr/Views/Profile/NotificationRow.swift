@@ -14,9 +14,23 @@ struct NotificationRow: View {
     var body: some View {
         Group {
             if notificationVM.permission == .authorized {
-                Toggle("Show welcome message", isOn: $notificationVM.subscribeToNotification)
+                Toggle("Tilladelse til at modtage notifikationer, når der er blevet registreret fravær.", isOn: $notificationVM.subscribeToNotification)
+                    .darkBodyTextStyleToggle()
+                    .toggleStyle(SwitchToggleStyle(tint: Resources.Color.Colors.frolyRed.opacity(0.5)))
+                    .padding()
             } else {
-                Text("Hello World")
+                VStack(spacing: 0) {
+                    Text("notification_title")
+                        .boldDarkBodyTextStyle()
+                        .padding()
+                    Text("notification_description")
+                        .darkBodyTextStyle()
+                        .padding()
+                    Link(destination: URL(string: UIApplication.openSettingsURLString)!, label: {
+                        Text("notification_button_title")
+                    })
+                    .buttonStyle(Resources.CustomButtonStyle.FilledSmallButtonStyle())
+                }
             }
         }
         .onChange(of: notificationVM.isViewActive, perform: { phase in
