@@ -261,6 +261,6 @@ struct StudentRow: View {
 
 struct AbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceRegistrationView(selectedClass: ClassInfo(name: "", isDoubleRegistrationActivated: false), selectedDate: "", isFromHistory: false)
+        AbsenceRegistrationView(selectedClass: ClassInfo(isDoubleRegistrationActivated: false, name: ""), selectedDate: "", isFromHistory: false)
     }
 }

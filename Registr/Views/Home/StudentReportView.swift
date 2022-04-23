@@ -25,7 +25,7 @@ struct StudentReportView: View {
     
     var body: some View {
         VStack {
-            AbsenceInformationView(name: report.studentName, reason: report.reason, date: report.date, description: report.description ?? "")
+            AbsenceInformationView(name: report.studentName, reason: report.reason, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay ?? "Morgen")
             Spacer()
             VStack(spacing: 10) {
                 Section(
@@ -54,7 +54,9 @@ struct StudentReportView: View {
                     )
                 }
             }
+            
             Spacer()
+            
             HStack {
                 Button("Afslå") {
                     reportManager.denyReport(selectedReport: report, teacherValidation: "Afslået") { result in
@@ -94,6 +96,7 @@ struct AbsenceInformationView: View {
     let reason: String
     let date: Date
     let description: String
+    let timeOfDay: String
     
     var body: some View {
         VStack {
@@ -104,6 +107,7 @@ struct AbsenceInformationView: View {
                 .background(.white)
             AbsenceRow(title: "Elev", icon: "person", description: name)
             AbsenceRow(title: "Årsag", icon: "questionmark.circle", description: reason)
+            AbsenceRow(title: "Tidspunkt", icon: "clock", description: timeOfDay)
             AbsenceRow(title: "Dato", icon: "calendar", description: DateFormatter.abbreviationDayMonthYearFormatter.string(from: date))
             AbsenceRow(title: "Beskrivelse", icon: "note.text", description: description)
         }
@@ -142,6 +146,6 @@ struct AbsenceRow : View {
 
 struct StudentReportView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentReportView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), description: "", reason: "", validated: false, teacherValidation: ""))
+        StudentReportView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: "", description: "", reason: "", validated: false, teacherValidation: "", isDoubleRegistrationActivated: nil))
     }
 }

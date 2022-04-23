@@ -39,7 +39,7 @@ class ChildrenManager: ObservableObject {
                                 do {
                                     if let child = try data.data(as: Student.self) {
                                         self.children.append(child)
-                                        self.children.sort { $0.name < $1.name }
+                                        self.children.sort { $0.className < $1.className }
                                     }
                                 }
                                 catch {
