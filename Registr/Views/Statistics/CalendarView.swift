@@ -25,11 +25,11 @@ struct CalendarView: View {
             VStack {
                 VStack(spacing: 0) {
                     Text("absence_day_pick")
-                        .boldSubTitleTextStyle(color: Resources.Color.Colors.fiftyfifty)
+                        .subTitleTextStyle(color: Color.fiftyfifty, font: .poppinsBold)
                         .padding(.horizontal)
                     let date = DateFormatter.abbreviationDayMonthYearFormatter.string(from: selectedDate)
                     Text(date)
-                        .boldSubTitleTextStyle(color: Resources.Color.Colors.fiftyfifty)
+                        .subTitleTextStyle(color: Color.fiftyfifty, font: .poppinsBold)
                         .padding(.horizontal)
                 }
                 DatePicker("", selection: $selectedDate, in: dateRange, displayedComponents: .date)
@@ -39,7 +39,7 @@ struct CalendarView: View {
                 NavigationLink(destination: AbsenceRegistrationView(selectedClass: classInfo, selectedDate: selectedDate.formatSpecificData(date: selectedDate), isFromHistory: true)) {
                     Text("next_view")
                 }
-                .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
+                .buttonStyle(Resources.CustomButtonStyle.SmallFilledButtonStyle())
                 .padding(.leading, 200)
             }
         }

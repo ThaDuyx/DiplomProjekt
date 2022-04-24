@@ -18,18 +18,18 @@ struct TeacherHomeView: View {
                 List(favoriteManager.favorites, id: \.self) { favorite in
                     Section(
                         header: Text(favorite)
-                            .headerTextStyle()
+                            .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
                     ) {
                         ForEach(reportManager.reports, id: \.self) { report in
                             if report.className == favorite {
                                 AbsencesRow(report: report)
                             }
                         }
-                        .listRowBackground(Resources.Color.Colors.frolyRed)
-                        .listRowSeparatorTint(Resources.Color.Colors.white)
+                        .listRowBackground(Color.frolyRed)
+                        .listRowSeparatorTint(Color.white)
                     }
                 }
-                .accentColor(Resources.Color.Colors.fiftyfifty)
+                .accentColor(Color.fiftyfifty)
                 .onChange(of: favoriteManager.favorites) { _ in
                     reportManager.fetchReports()
                 }
@@ -50,21 +50,21 @@ struct AbsencesRow: View {
                 Button { } label: {
                     Text(stringSeparator(reason: report.reason).uppercased())
                         .frame(width: 35, height: 35)
-                        .foregroundColor(Resources.Color.Colors.white)
-                        .background(Resources.Color.Colors.frolyRed)
+                        .foregroundColor(Color.white)
+                        .background(Color.frolyRed)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Resources.Color.Colors.white, lineWidth: 2)
+                                .stroke(Color.white, lineWidth: 2)
                         )
                 }
                 
                 VStack {
                     Text(report.studentName)
-                        .boldBodyTextStyle()
+                        .bodyTextStyle(color: Color.white, font: .poppinsBold)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     Text(report.description ?? "")
-                        .smallBodyTextStyle()
+                        .smallBodyTextStyle(color: .white, font: .poppinsRegular)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .lineLimit(2)
                 }
@@ -76,7 +76,7 @@ struct AbsencesRow: View {
             .frame(width: 0, height: 0)
             
             Image(systemName: "chevron.right")
-                .foregroundColor(Resources.Color.Colors.white)
+                .foregroundColor(Color.white)
                 .padding(.trailing, 10)
         }
     }

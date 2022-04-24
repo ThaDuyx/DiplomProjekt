@@ -40,7 +40,7 @@ struct ClassView: View {
                         Text(favoriteManager.favorites.contains(classInfo.name) ? "Følger" : "Følger ikke")
                     }
                 }
-                .buttonStyle(Resources.CustomButtonStyle.TransparentFollowButtonStyle())
+                .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle())
                 
                 ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo))
                 
@@ -52,37 +52,37 @@ struct ClassView: View {
                     PieChart()
                         .data(demoData)
                         .chartStyle(ChartStyle(backgroundColor: .white,
-                                               foregroundColor: ColorGradient(Resources.Color.Colors.fiftyfifty, Resources.Color.Colors.fiftyfifty)))
+                                               foregroundColor: ColorGradient(Color.fiftyfifty, Color.fiftyfifty)))
                 }
                 .frame(width: 150, height: 150)
                 
                 VStack(alignment: .leading, spacing: -10) {
                     HStack {
                         Image(systemName: "chart.line.uptrend.xyaxis")
-                            .foregroundColor(Resources.Color.Colors.fiftyfifty)
+                            .foregroundColor(Color.fiftyfifty)
                         Text("Statistik")
-                            .boldDarkBodyTextStyle()
+                            .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             .padding(.leading, 20)
                     }
                     VStack(alignment: .center, spacing: 15) {
                         
                         Text("Lovligt: Morgen - \(statisticsManager.statistic.legalMorning) & Eftermiddag - \(statisticsManager.statistic.legalAfternoon)")
-                            .lightBodyTextStyle()
+                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
                             .padding(.top, 10)
                         
                         Text("Sygedage: Morgen - \(statisticsManager.statistic.illnessMorning) & Eftermiddag - \(statisticsManager.statistic.illnessAfternoon)")
-                            .lightBodyTextStyle()
-                        
+                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
+
                         Text("Ulovligt: Morgen - \(statisticsManager.statistic.illegalMorning) & Eftermiddag - \(statisticsManager.statistic.illegalAfternoon)")
-                            .lightBodyTextStyle()
-                        
+                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
+
                         Text("For sent: Morgen - \(statisticsManager.statistic.lateMorning) & Eftermiddag - \(statisticsManager.statistic.lateAfternoon)")
-                            .lightBodyTextStyle()
+                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
                             .padding(.bottom, 10)
                         
                     }
                     .frame(width: 290)
-                    .background(Resources.Color.Colors.frolyRed)
+                    .background(Color.frolyRed)
                     .cornerRadius(20)
                     .padding()
                 }
@@ -113,7 +113,7 @@ struct ButtonAction<TargetView: View>: View {
                     .padding(.leading, -50)
             }
         }
-        .buttonStyle(Resources.CustomButtonStyle.FilledBodyTextButtonStyle())
+        .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsBold, fontSize: Resources.FontSize.body))
     }
 }
 

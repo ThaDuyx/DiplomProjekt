@@ -19,13 +19,13 @@ struct ErrorView: View {
             Image(systemName: "exclamationmark.circle.fill")
                 .resizable()
                 .frame(width: 130, height: 130)
-                .foregroundColor(Resources.Color.Colors.frolyRed)
+                .foregroundColor(.frolyRed)
             
             Text("alert_title")
-                .headerTextStyle()
+                .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
             
             Text(error)
-                .darkBodyTextStyle()
+                .bodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
             
             Spacer()
             
@@ -34,7 +34,7 @@ struct ErrorView: View {
             } label: {
                 Text("alert_button_title")
             }
-            .buttonStyle(Resources.CustomButtonStyle.FilledWideButtonStyle())
+            .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
             .padding(.bottom, 20)
         }
     }
