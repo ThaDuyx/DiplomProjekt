@@ -114,7 +114,7 @@ struct ParentAbsenceRegistrationView: View {
                                 HStack {
                                     Image(systemName: "clock")
                                         .foregroundColor(.white)
-                                    Text(selectedTimeOfDay.isEmpty ? "Vælg tidspunkt" : selectedTimeOfDay)
+                                    Text(selectedTime.isEmpty ? "Vælg tidspunkt" : selectedTime)
                                         .bodyTextStyle(color: .white, font: .poppinsRegular)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Image(systemName: "chevron.down")
