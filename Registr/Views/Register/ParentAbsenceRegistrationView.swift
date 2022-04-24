@@ -46,7 +46,7 @@ struct ParentAbsenceRegistrationView: View {
                 Section(
                     header:
                         Text("Barn")
-                        .darkBodyTextStyle()
+                        .bodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                 ) {
                     Menu {
                         ForEach(childrenManager.children, id: \.self) { child in
@@ -60,22 +60,22 @@ struct ParentAbsenceRegistrationView: View {
                     } label: {
                         HStack {
                             Image(systemName: "person")
-                                .foregroundColor(Resources.Color.Colors.white)
+                                .foregroundColor(Color.white)
                             Text(selectedName.isEmpty ? "Vælg barn" : selectedName)
-                                .lightBodyTextStyle()
+                                .bodyTextStyle(color: .white, font: .poppinsRegular)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             Image(systemName: "chevron.down")
-                                .foregroundColor(Resources.Color.Colors.white)
+                                .foregroundColor(.white)
                         }
                     }
                 }
-                .listRowBackground(Resources.Color.Colors.frolyRed)
+                .listRowBackground(Color.frolyRed)
                 
                 if selectedChild != nil {
                     Section(
                         header:
                             Text("Fraværs årsag")
-                            .darkBodyTextStyle()
+                            .bodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                     ) {
                         Menu {
                             ForEach(AbsenceType.allCases, id: \.self) { absenceType in
@@ -86,22 +86,22 @@ struct ParentAbsenceRegistrationView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "questionmark")
-                                    .foregroundColor(Resources.Color.Colors.white)
+                                    .foregroundColor(.white)
                                 Text(selectedAbsence.isEmpty ? "Vælg fraværsårsag" : selectedAbsence)
-                                    .lightBodyTextStyle()
+                                    .bodyTextStyle(color: .white, font: .poppinsRegular)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 Image(systemName: "chevron.down")
-                                    .foregroundColor(Resources.Color.Colors.white)
+                                    .foregroundColor(.white)
                             }
                         }
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
+                    .listRowBackground(Color.frolyRed)
                     
                     if isDoubleRegistrationActivated {
                         Section(
                             header:
                                 Text("Tidspunkt")
-                                .darkBodyTextStyle()
+                                .bodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                         ) {
                             Menu {
                                 ForEach(TimeOfDay.allCases, id: \.self) { timeType in
@@ -113,43 +113,43 @@ struct ParentAbsenceRegistrationView: View {
                             } label: {
                                 HStack {
                                     Image(systemName: "clock")
-                                        .foregroundColor(Resources.Color.Colors.white)
-                                    Text(selectedTime.isEmpty ? "Vælg tidspunkt" : selectedTime)
-                                        .lightBodyTextStyle()
+                                        .foregroundColor(.white)
+                                    Text(selectedTimeOfDay.isEmpty ? "Vælg tidspunkt" : selectedTimeOfDay)
+                                        .bodyTextStyle(color: .white, font: .poppinsRegular)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Image(systemName: "chevron.down")
-                                        .foregroundColor(Resources.Color.Colors.white)
+                                        .foregroundColor(.white)
                                 }
                             }
                         }
-                        .listRowBackground(Resources.Color.Colors.frolyRed)
+                        .listRowBackground(Color.frolyRed)
                     }
                     
                     Section(
                         header:
                             Text("Interval")
-                            .darkBodyTextStyle()
+                            .bodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                     ) {
                         HStack {
                             Image(systemName: "calendar")
-                                .foregroundColor(Resources.Color.Colors.white)
+                                .foregroundColor(.white)
                             Toggle("Aktivér for slutdato", isOn: $isInterval)
-                                .lightBodyTextStyleToggle()
-                                .toggleStyle(SwitchToggleStyle(tint: Resources.Color.Colors.white.opacity(0.5)))
+                                .textStyleToggle(color: .white, font: .poppinsRegular, size: Resources.FontSize.body)
+                                .toggleStyle(SwitchToggleStyle(tint: .white.opacity(0.5)))
                         }
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
+                    .listRowBackground(Color.frolyRed)
                     
                     Section(
                         header:
                             Text("Startdato")
-                            .darkBodyTextStyle()
+                            .bodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
                     ) {
                         HStack {
                             Image(systemName: "calendar")
-                                .foregroundColor(Resources.Color.Colors.white)
+                                .foregroundColor(.white)
                             Text(DateFormatter.abbreviationDayMonthYearFormatter.string(from: startDate))
-                                .lightBodyTextStyle()
+                                .bodyTextStyle(color: .white, font: .poppinsRegular)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .onTapGesture {
                                     self.showsStartDatePicker.toggle()
@@ -162,22 +162,22 @@ struct ParentAbsenceRegistrationView: View {
                                 in: dateRange,
                                 displayedComponents: .date)
                             .datePickerStyle(.graphical)
-                            .applyTextColor(Resources.Color.Colors.white)
+                            .applyTextColor(Color.white)
                         }
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
+                    .listRowBackground(Color.frolyRed)
                     
                     if isInterval {
                         Section(
                             header:
                                 Text("Slutdato")
-                                .darkBodyTextStyle()
+                                .bodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
                         ) {
                             HStack {
                                 Image(systemName: "calendar")
-                                    .foregroundColor(Resources.Color.Colors.white)
+                                    .foregroundColor(.white)
                                 Text(DateFormatter.abbreviationDayMonthYearFormatter.string(from: endDate))
-                                    .lightBodyTextStyle()
+                                    .bodyTextStyle(color: .white, font: .poppinsRegular)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .onTapGesture {
                                         self.showsEndDatePicker.toggle()
@@ -190,23 +190,23 @@ struct ParentAbsenceRegistrationView: View {
                                     in: dateRange,
                                     displayedComponents: .date)
                                 .datePickerStyle(.graphical)
-                                .applyTextColor(Resources.Color.Colors.white)
+                                .applyTextColor(.white)
                             }
                         }
-                        .listRowBackground(Resources.Color.Colors.frolyRed)
+                        .listRowBackground(Color.frolyRed)
                     }
                     
                     Section(
                         header:
                             Text("student_absence_description")
-                            .darkBodyTextStyle()
+                            .bodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
                     ) {
                         HStack {
                             Image(systemName: "note.text")
-                                .foregroundColor(Resources.Color.Colors.white)
+                                .foregroundColor(.white)
                             ZStack(alignment: .leading) {
                                 TextEditor(text: $textBindingManager.value)
-                                    .lightBodyTextStyleTextEditor()
+                                    .textStyleTextEditor(color: .white, font: .poppinsRegular, size: Resources.FontSize.body)
                                     .accentColor(.white)
                                     .focused($focusedField, equals: .myField)
                                     .onTapGesture {
@@ -217,7 +217,7 @@ struct ParentAbsenceRegistrationView: View {
                             }
                         }
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
+                    .listRowBackground(Color.frolyRed)
                     
                     VStack(alignment: .center) {
                         Button("Indberet") {
@@ -256,7 +256,7 @@ struct ParentAbsenceRegistrationView: View {
                                 }
                             }
                         }
-                        .buttonStyle(Resources.CustomButtonStyle.FilledBodyTextButtonStyle())
+                        .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsBold, fontSize: Resources.FontSize.body))
                         .listRowBackground(Color.clear)
                         .alert("student_absence_alert_title".localize, isPresented: $showingAlert, actions: {
                             Button("OK", role: .cancel) { }

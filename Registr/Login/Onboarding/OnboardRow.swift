@@ -18,7 +18,7 @@ struct OnboardRow: View {
             VStack {
                 ZStack(alignment: .top) {
                     Rectangle()
-                        .fill(Resources.Color.Colors.moonMist.opacity(0.7))
+                        .fill(Color.moonMist.opacity(0.7))
                         .frame(height: 170)
                         .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
                     
@@ -27,7 +27,7 @@ struct OnboardRow: View {
                     Image(systemName: image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .foregroundStyle(.white, Resources.Color.Colors.frolyRed)
+                        .foregroundStyle(.white, Color.frolyRed)
                         .frame(height: 160)
                         .offset(y: 80)
                 }
@@ -38,18 +38,18 @@ struct OnboardRow: View {
                 VStack {
                     VStack(spacing: 40) {
                         Text(title.localize)
-                            .smallDarkSubTitleTextStyle()
+                            .subTitleTextStyle(color: Color.fiftyfifty, font: .poppinsSemiBold)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 10)
                         
                         Text(details.localize)
-                            .mediumSubTitleTextStyle(color: Resources.Color.Colors.fiftyfifty, font: "Poppins-Regular")
+                            .subTitleTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                             .frame(width: 250)
                             .multilineTextAlignment(.leading)
                             .padding(20)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Resources.Color.Colors.frolyRed, lineWidth: 2)
+                                    .stroke(Color.frolyRed, lineWidth: 2)
                             )
                     }
                     .offset(y: 40)

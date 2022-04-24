@@ -31,9 +31,9 @@ struct StudentReportView: View {
                 Section(
                     header: HStack {
                         Image(systemName: "person.crop.circle.badge.questionmark")
-                            .foregroundColor(Resources.Color.Colors.fiftyfifty)
+                            .foregroundColor(Color.fiftyfifty)
                         Text("Vælg fravær - \(selectedAbsence)")
-                            .boldDarkSmallBodyTextStyle()
+                            .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                     }
                         .frame(width: 320, alignment: .leading)
                 ) {
@@ -50,7 +50,7 @@ struct StudentReportView: View {
                     .clipped()
                     .overlay(
                         RoundedRectangle(cornerRadius: 5)
-                            .stroke(Resources.Color.Colors.frolyRed, lineWidth: 1)
+                            .stroke(Color.frolyRed, lineWidth: 1)
                     )
                 }
             }
@@ -67,7 +67,7 @@ struct StudentReportView: View {
                         }
                     }
                 }
-                .buttonStyle(Resources.CustomButtonStyle.DeclineButtonStyle())
+                .buttonStyle(Resources.CustomButtonStyle.SmallTransparentButtonStyle())
                 
                 Spacer()
                 
@@ -80,7 +80,7 @@ struct StudentReportView: View {
                         }
                     }
                 }
-                .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
+                .buttonStyle(Resources.CustomButtonStyle.SmallFilledButtonStyle())
             }
             .frame(width: 320)
             Spacer()
@@ -101,7 +101,7 @@ struct AbsenceInformationView: View {
     var body: some View {
         VStack {
             Text("Indberettelse")
-                .boldBodyTextStyle()
+                .bodyTextStyle(color: Color.white, font: .poppinsBold)
             Divider()
                 .frame(height: 1)
                 .background(.white)
@@ -113,7 +113,7 @@ struct AbsenceInformationView: View {
         }
         .frame(width: 320)
         .padding(.vertical, 20)
-        .background(Resources.Color.Colors.frolyRed)
+        .background(Color.frolyRed)
         .cornerRadius(20)
     }
 }
@@ -125,19 +125,19 @@ struct AbsenceRow : View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(title)
-                .boldSmallBodyTextStyle()
+                .smallBodyTextStyle(color: .white, font: .poppinsBold)
             HStack {
                 Image(systemName: icon)
-                    .foregroundColor(Resources.Color.Colors.white)
+                    .foregroundColor(Color.white)
                 Text(description)
-                    .smallBodyTextStyle()
+                    .smallBodyTextStyle(color: .white, font: .poppinsRegular)
                     .padding(4)
             }
             .padding(.leading, 10)
             .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Resources.Color.Colors.white, lineWidth: 1)
+                    .stroke(Color.white, lineWidth: 1)
             )
         }
         .frame(width: 275)

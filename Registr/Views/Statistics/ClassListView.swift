@@ -17,8 +17,8 @@ struct ClassListView: View {
                     ForEach(registrationManager.classes, id: \.self) { classInfo in
                         ClassEntity(classInfo: classInfo)
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
-                    .listRowSeparatorTint(Resources.Color.Colors.white)
+                    .listRowBackground(Color.frolyRed)
+                    .listRowSeparatorTint(Color.white)
                 }
             }
             .navigationTitle("Statistik")
@@ -33,7 +33,7 @@ struct ClassEntity: View {
     var body: some View {
         HStack {
             Text(classInfo.name)
-                .boldBodyTextStyle()
+                .bodyTextStyle(color: Color.white, font: .poppinsBold)
                 .frame(maxWidth: .infinity, alignment: .center)
             
             NavigationLink(destination: ClassView(classInfo: classInfo)) {
@@ -42,7 +42,7 @@ struct ClassEntity: View {
             .frame(width: 0, height: 0)
             
             Image(systemName: "chevron.right")
-                .foregroundColor(Resources.Color.Colors.white)
+                .foregroundColor(Color.white)
                 .padding(.trailing, 10)
         }
         .frame(height: 35)

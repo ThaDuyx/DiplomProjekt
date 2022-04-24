@@ -50,10 +50,10 @@ struct AbsenceRegistrationView: View {
                 if isFromHistory {
                     VStack {
                         Text("Valgte dag")
-                            .bigBodyTextStyle(color: Resources.Color.Colors.fiftyfifty)
+                            .bigBodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                         
                         Text(selectedDate)
-                            .boldSubTitleTextStyle(color: Resources.Color.Colors.frolyRed)
+                            .subTitleTextStyle(color: .frolyRed, font: .poppinsBold)
                     }
                 } else {
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -63,11 +63,11 @@ struct AbsenceRegistrationView: View {
                                     VStack {
                                         if element == currentDate {
                                             Text("I dag")
-                                                .bigBodyTextStyle(color: Resources.Color.Colors.fiftyfifty)
+                                                .bigBodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                                         }
                                         
                                         Text("\(element.formatSpecificToDayAndMonthData(date: element))")
-                                            .boldSubTitleTextStyle(color: self.selectedItem == number ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty)
+                                            .subTitleTextStyle(color: self.selectedItem == number ? .frolyRed : Color.fiftyfifty, font: .poppinsBold)
                                     }
                                     .id(number)
                                     .onTapGesture {
@@ -91,18 +91,19 @@ struct AbsenceRegistrationView: View {
                             isMorning = true
                         } label: {
                             Text("Formiddag")
-                                .mediumSubTitleTextStyle(color: isMorning ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: isMorning ? "Poppins-Medium" : "Poppins-Regular")
+                                .subTitleTextStyle(color: isMorning ? .frolyRed : Color.fiftyfifty, font: isMorning ? .poppinsMedium : .poppinsRegular)
                         }
                         .frame(maxWidth: .infinity, minHeight: 35)
-                        .background(isMorning ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
+                        .background(isMorning ? .white : Color.fiftyfifty.opacity(0.15) )
                         
                         Button {
                             isMorning = false
                         } label: {
                             Text("Eftermiddag")
-                            .mediumSubTitleTextStyle(color: !isMorning ? Resources.Color.Colors.frolyRed : Resources.Color.Colors.fiftyfifty, font: !isMorning ? "Poppins-Medium" : "Poppins-Regular")                    }
+                                .subTitleTextStyle(color: isMorning ? .frolyRed : Color.fiftyfifty, font: isMorning ? .poppinsMedium : .poppinsRegular)
+                        }
                         .frame(maxWidth: .infinity, minHeight: 35)
-                        .background(!isMorning ? .white : Resources.Color.Colors.fiftyfifty.opacity(0.15) )
+                        .background(!isMorning ? .white : Color.fiftyfifty.opacity(0.15) )
                     }
                 }
                 
@@ -126,7 +127,7 @@ struct AbsenceRegistrationView: View {
                         }
                         
                         Divider()
-                            .background(Resources.Color.Colors.fiftyfifty)
+                            .background(Color.fiftyfifty)
                     }
                 }
                 .listStyle(.plain)
@@ -134,15 +135,15 @@ struct AbsenceRegistrationView: View {
                     
                     VStack {
                         Text("student_list_absence_description \(studentName)")
-                            .boldDarkBodyTextStyle()
-                        
+                            .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+
                         ForEach(AbsenceReasons.allCases, id: \.self) { absenceReasons in
                             Button(absenceReasons.rawValue.isEmpty ? "Ryd felt" : absenceReasons.rawValue) {
                                 studentAbsenceState = absenceReasons.rawValue
                                 registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
                                 showSheet.toggle()
                             }
-                            .buttonStyle(Resources.CustomButtonStyle.FilledWideButtonStyle())
+                            .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
                         }
                     }
                 } onEnd: {
@@ -162,7 +163,7 @@ struct AbsenceRegistrationView: View {
                 } label: {
                     Text("Gem")
                 }
-                .buttonStyle(Resources.CustomButtonStyle.FilledWideButtonStyle())
+                .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
                 .padding(.bottom, 20)
             }
         }
@@ -225,23 +226,23 @@ struct StudentRow: View {
     var body: some View {
         HStack {
             Text("\(index)")
-                .boldSubTitleTextStyle(color: Resources.Color.Colors.fiftyfifty)
+                .subTitleTextStyle(color: Color.fiftyfifty, font: .poppinsBold)
                 .padding(.leading, 20)
             
             Image(systemName: "person.crop.circle.fill")
                 .resizable()
                 .frame(width: 40, height: 40)
-                .foregroundColor(Resources.Color.Colors.fiftyfifty)
+                .foregroundColor(Color.fiftyfifty)
             
             Text(studentName)
-                .mediumSubTitleTextStyle(color: absenceReason?.isEmpty ?? true ? Resources.Color.Colors.fiftyfifty : Resources.Color.Colors.frolyRed, font: "Poppins-Regular")
+                .subTitleTextStyle(color: absenceReason?.isEmpty ?? true ? Color.fiftyfifty : .frolyRed, font: .poppinsRegular)
             
             Spacer()
             
             Button { } label: {
                 Text(absenceReason?.isEmpty ?? true ? "" : stringSeparator(reason: absenceReason ?? "").uppercased())
                     .frame(width: 35, height: 35)
-                    .foregroundColor(Resources.Color.Colors.frolyRed)
+                    .foregroundColor(.frolyRed)
                 // Note: absenceReason in the following code is the old state value.
                     .onChange(of: absenceReason) { [absenceReason] newValue in
                         // Force un-wrapping because we know we have the values and would like to receive an empty String
@@ -251,7 +252,7 @@ struct StudentRow: View {
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(absenceReason?.isEmpty ?? true ? Resources.Color.Colors.fiftyfifty : Resources.Color.Colors.frolyRed, lineWidth: 2)
+                    .stroke(absenceReason?.isEmpty ?? true ? Color.fiftyfifty : .frolyRed, lineWidth: 2)
             )
             .padding(.trailing, 20)
         }

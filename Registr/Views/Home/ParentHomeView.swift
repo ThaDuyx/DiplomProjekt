@@ -28,15 +28,15 @@ struct ParentHomeView: View {
                             
                             VStack(spacing: 13) {
                                 Text("Navn: \(child.name)")
-                                    .boldSmallBodyTextStyle()
+                                    .smallBodyTextStyle(color: .white, font: .poppinsBold)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 
                                 Text("Klasse: \(child.className)")
-                                    .boldSmallBodyTextStyle()
+                                    .smallBodyTextStyle(color: .white, font: .poppinsBold)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 
                                 Text("Email: \(child.email)")
-                                    .boldSmallBodyTextStyle()
+                                    .smallBodyTextStyle(color: .white, font: .poppinsBold)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                             if let id = child.id {
@@ -47,12 +47,12 @@ struct ParentHomeView: View {
                             }
                             
                             Image(systemName: "chevron.right")
-                                .foregroundColor(Resources.Color.Colors.white)
+                                .foregroundColor(Color.white)
                                 .padding(.trailing, 10)
                         }
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
-                    .listRowSeparatorTint(Resources.Color.Colors.white)
+                    .listRowBackground(Color.frolyRed)
+                    .listRowSeparatorTint(Color.white)
                 }
             }
             .navigationTitle("Børn")

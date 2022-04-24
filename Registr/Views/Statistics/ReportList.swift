@@ -51,35 +51,35 @@ struct ReportListRow: View {
             Image(systemName: validationImage(report: report))
                 .foregroundColor(.white)
                 .frame(width: 36, height: 36)
-                .background(Resources.Color.Colors.frolyRed)
+                .background(Color.frolyRed)
                 .clipShape(Circle())
             
             VStack {
                 Text("Validering")
-                    .boldDarkSmallBodyTextStyle()
-                
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+
                 Text(report.teacherValidation)
-                    .smallDarkBodyTextStyle()
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             }
             
             VStack {
                 Text("Dato")
-                    .boldDarkSmallBodyTextStyle()
-                
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+
                 Text(report.date.formatSpecificData(date: report.date))
-                    .smallDarkBodyTextStyle()
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             }
             
             VStack {
                 Text("Årsag")
-                    .boldDarkSmallBodyTextStyle()
-                
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+
                 Text(report.reason)
-                    .smallDarkBodyTextStyle()
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             }
                         
             Image(systemName: "ellipsis")
-                .foregroundColor(Resources.Color.Colors.fiftyfifty)
+                .foregroundColor(Color.fiftyfifty)
                 .padding(.trailing, 10)
         }
     }
