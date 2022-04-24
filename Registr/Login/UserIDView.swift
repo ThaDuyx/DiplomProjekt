@@ -29,7 +29,7 @@ struct UserIDView: View {
                     Spacer()
                     
                     VStack(spacing: 0) {
-                        Image("Group 4")
+                        Image("AppLogo")
                         Text("application_name")
                             .titleTextStyle(color: .frolyRed, font: .poppinsSemiBold)
                     }
