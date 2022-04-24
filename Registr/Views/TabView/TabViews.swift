@@ -32,7 +32,7 @@ struct TabViews: View {
                 ErrorView(error: "alert_default_description".localize)
             }
         }
-        .accentColor(Resources.Color.Colors.frolyRed)
+        .accentColor(.frolyRed)
     }
 }
 

@@ -20,14 +20,14 @@ struct PasswordView: View {
             VStack {
                 ZStack(alignment: .top) {
                     Rectangle()
-                        .fill(Resources.Color.Colors.moonMist.opacity(0.7))
+                        .fill(Color.moonMist.opacity(0.7))
                         .frame(height: 170)
                         .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
                     Spacer()
                     VStack(spacing: 0) {
                         Image("Group 4")
                         Text("application_name")
-                            .titleTextStyle()
+                            .titleTextStyle(color: .frolyRed, font: .poppinsSemiBold)
                     }
                     .offset(y: 80)
                 }
@@ -37,17 +37,17 @@ struct PasswordView: View {
                 
                 VStack(spacing: 10) {
                     Text("password")
-                        .primaryHeaderTextStyle()
-                        .frame(width: 280, alignment: .leading)
+                        .headerTextStyle(color: .frolyRed, font: .poppinsMedium)
+                        .frame(width: 290, alignment: .leading)
                     
                     SecureField("password_field_text".localize, text: $password)
-                        .darkBodyTextStyle()
-                        .frame(width: 265, height: 40)
+                        .bodyTextStyle(color: .fiftyfifty, font: .poppinsMedium, size: Resources.FontSize.body)
+                        .frame(width: 275, height: 40)
                         .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                        .background(RoundedRectangle(cornerRadius: 10).fill(Resources.Color.Colors.white))
+                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Resources.Color.Colors.frolyRed, lineWidth: 2))
+                                .stroke(Color.frolyRed, lineWidth: 2))
                     
                     Button("login") {
                         showActivity = true
@@ -68,11 +68,11 @@ struct PasswordView: View {
                         })
                     }
                     .frame(alignment: .center)
-                    .buttonStyle(Resources.CustomButtonStyle.SmallFrontPageButtonStyle())
+                    .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
                     
                     if showActivity {
                         ProgressView()
-                            .foregroundColor(Resources.Color.Colors.frolyRed)
+                            .foregroundColor(.frolyRed)
                     }
                     
                     Spacer()

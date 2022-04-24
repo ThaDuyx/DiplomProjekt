@@ -28,7 +28,7 @@ struct OnboardingView: View {
                                     currentPage += 1
                                 }
                             }
-                                .buttonStyle(Resources.CustomButtonStyle.SmallFrontPageButtonStyle())
+                                .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
                                 .padding(.bottom, 20)
                             ,alignment: .bottom
                         )

@@ -7,6 +7,7 @@
 
 
 import UIKit
+import SwiftUI
 
 struct NavigationAndTabbarAppearance {
     static func configureAppearance() {
@@ -17,18 +18,18 @@ struct NavigationAndTabbarAppearance {
 
         navigationAppearance.titleTextAttributes = [
             // It is okay to force unwrap, since we have imported the font into the project - CAD
-            .font: UIFont(name: "Poppins-Regular", size: 20)!,
-            .foregroundColor: UIColor(Resources.Color.Colors.fiftyfifty)
+            .font: UIFont(name: .poppinsRegular, size: 20)!,
+            .foregroundColor: Color.fiftyfifty
         ]
 
-        UINavigationBar.appearance().tintColor = UIColor(Resources.Color.Colors.frolyRed)
+        UINavigationBar.appearance().tintColor = UIColor(.frolyRed)
         UINavigationBar.appearance().standardAppearance = navigationAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navigationAppearance
         UINavigationBar.appearance().isOpaque = true
         
         let tabBarAppearance = UITabBarAppearance(barAppearance: UIBarAppearance())
         tabBarAppearance.configureWithOpaqueBackground()
-        tabBarAppearance.backgroundColor = UIColor(Resources.Color.Colors.white)
+        tabBarAppearance.backgroundColor = UIColor(Color.white)
         tabBarAppearance.shadowColor = UIColor.clear
         
         UITabBar.appearance().standardAppearance = tabBarAppearance

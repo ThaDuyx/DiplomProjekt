@@ -22,7 +22,7 @@ struct AbsenceClassListView: View {
                                 Image(systemName: "star")
                                 
                                 Text("register_section_header_favoritter")
-                                    .boldDarkBodyTextStyle()
+                                    .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             }
                     ) {
                         ForEach(registrationManager.classes, id: \.self, content: { classInfo in
@@ -32,8 +32,8 @@ struct AbsenceClassListView: View {
                             
                         })
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
-                    .listRowSeparatorTint(Resources.Color.Colors.white)
+                    .listRowBackground(Color.frolyRed)
+                    .listRowSeparatorTint(Color.white)
                     
                     // Non-favorite classes
                     Section(
@@ -42,7 +42,7 @@ struct AbsenceClassListView: View {
                                 Image(systemName: "person.3")
                                 
                                 Text("register_section_header_classes")
-                                    .boldDarkBodyTextStyle()
+                                    .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             }
                     ) {
                         ForEach(registrationManager.classes, id: \.self, content: { classInfo in
@@ -51,8 +51,8 @@ struct AbsenceClassListView: View {
                             }
                         })
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
-                    .listRowSeparatorTint(Resources.Color.Colors.white)
+                    .listRowBackground(Color.frolyRed)
+                    .listRowSeparatorTint(Color.white)
                 }
                 .listStyle(.insetGrouped)
             }
@@ -69,10 +69,10 @@ struct ClassRow: View {
         HStack {
             HStack {
                 Image(systemName: isFavorite ? "star.fill" : "star")
-                    .foregroundColor(Resources.Color.Colors.white)
+                    .foregroundColor(Color.white)
                 
                 Text(classInfo.name)
-                    .smallSubTitleTextStyle()
+                    .subTitleTextStyle(color: .white, font: .poppinsSemiBold)
                     .frame(maxWidth: .infinity, alignment: .center)
             }
             // Setting frame and opacity to 0, to remove chevron
@@ -83,7 +83,7 @@ struct ClassRow: View {
             .opacity(0)
             
             Image(systemName: "chevron.right")
-                .foregroundColor(Resources.Color.Colors.white)
+                .foregroundColor(Color.white)
                 .padding(.trailing, 10)
         }
         .frame(height: 55)
