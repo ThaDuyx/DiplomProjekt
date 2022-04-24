@@ -18,7 +18,7 @@ struct LoginOptions: View {
                             .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
                         Spacer()
                         VStack {
-                            Image("Group 4")
+                            Image("AppLogo")
                             Text("application_name")
                                 .titleTextStyle(color: .frolyRed, font: .poppinsSemiBold)
                         }
