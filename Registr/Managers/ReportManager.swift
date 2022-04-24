@@ -8,6 +8,11 @@
 import Foundation
 import FirebaseFirestore
 
+enum StatisticTime: String {
+    case morning = "Morning"
+    case afternoon = "Afternoon"
+}
+
 class ReportManager: ObservableObject {
     
     @Published var reports = [Report]()
@@ -94,7 +99,8 @@ class ReportManager: ObservableObject {
                     .whereField("date", isEqualTo: date)
                     .whereField("isMorning", isEqualTo: true)
                 
-                absenceStudentRef.getDocuments { querySnapshot, err in
+                absenceStudentRef
+                    .getDocuments { querySnapshot, err in
                     if let err = err {
                         print("Error getting documents: \(err)")
                     } else {
@@ -102,7 +108,15 @@ class ReportManager: ObservableObject {
                             // If the query snapshot is empty we will create the absence
                             if !querySnapshot.isEmpty {
                                 for document in querySnapshot.documents {
-                                    document.reference.updateData(["reason" : validationReason])
+                                    do {
+                                        if let registration = try document.data(as: Registration.self) {
+                                            self.updateStatistics(className: registration.className, studentID: registration.studentID, oldReason: registration.reason, newReason: validationReason, time: .morning)
+                                            
+                                            document.reference.updateData(["reason" : validationReason])
+                                        }
+                                    } catch {
+                                        print("Error decoding registration: \(error)")
+                                    }
                                 }
                             } else {
                                 let newAbsence = Registration(studentID: selectedReport.studentID,
@@ -149,7 +163,8 @@ class ReportManager: ObservableObject {
                     .whereField("date", isEqualTo: date)
                     .whereField("isMorning", isEqualTo: false)
                 
-                absenceStudentRef.getDocuments { querySnapshot, err in
+                absenceStudentRef
+                    .getDocuments { querySnapshot, err in
                     if let err = err {
                         print("Error getting documents: \(err)")
                     } else {
@@ -157,7 +172,15 @@ class ReportManager: ObservableObject {
                             // If the query snapshot is empty we will create the absence
                             if !querySnapshot.isEmpty {
                                 for document in querySnapshot.documents {
-                                    document.reference.updateData(["reason" : validationReason])
+                                    do {
+                                        if let registration = try document.data(as: Registration.self) {
+                                            self.updateStatistics(className: registration.className, studentID: registration.studentID, oldReason: registration.reason, newReason: validationReason, time: .afternoon)
+                                            
+                                            document.reference.updateData(["reason" : validationReason])
+                                        }
+                                    } catch {
+                                        print("Error decoding registration: \(error)")
+                                    }
                                 }
                             } else {
                                 let newAbsence = Registration(studentID: selectedReport.studentID,
@@ -212,7 +235,8 @@ class ReportManager: ObservableObject {
                     .collection("fb_absense_path".localize)
                     .whereField("date", isEqualTo: date)
                 
-                absenceStudentRef.getDocuments { querySnapshot, err in
+                absenceStudentRef
+                    .getDocuments { querySnapshot, err in
                     if let err = err {
                         print("Error getting documents: \(err)")
                     } else {
@@ -220,7 +244,15 @@ class ReportManager: ObservableObject {
                             // If the query snapshot is empty we will create the absence
                             if !querySnapshot.isEmpty {
                                 for document in querySnapshot.documents {
-                                    document.reference.updateData(["reason" : validationReason])
+                                    do {
+                                        if let registration = try document.data(as: Registration.self) {
+                                            self.updateStatistics(className: registration.className, studentID: registration.studentID, oldReason: registration.reason, newReason: validationReason, time: .afternoon)
+                                            
+                                            document.reference.updateData(["reason" : validationReason])
+                                        }
+                                    } catch {
+                                        print("Error decoding registration: \(error)")
+                                    }
                                 }
                             } else {
                                 let newMorningAbsence = Registration(studentID: selectedReport.studentID,
@@ -335,5 +367,51 @@ class ReportManager: ObservableObject {
                 }
             }
         }
+    }
+    
+    private func updateStatistics(className: String, studentID: String, oldReason: String, newReason: String, time: StatisticTime) {
+        let db = Firestore.firestore()
+        
+        let statisticsClassRef = db
+            .collection("fb_classes_path".localize)
+            .document(className)
+            .collection("fb_statistics_path".localize)
+            .document("fb_statistics_doc".localize)
+        
+        let statisticsStudentRef = db
+            .collection("fb_students_path".localize)
+            .document(studentID)
+            .collection("fb_statistics_path".localize)
+            .document("fb_statistics_doc".localize)
+        
+        
+            switch oldReason {
+            case AbsenceReasons.illegal.rawValue:
+                statisticsClassRef.updateData(["illegal\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+                statisticsStudentRef.updateData(["illegal\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+            case AbsenceReasons.illness.rawValue:
+                statisticsClassRef.updateData(["illness\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+                statisticsStudentRef.updateData(["illness\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+            case AbsenceReasons.late.rawValue:
+                statisticsClassRef.updateData(["late\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+                statisticsStudentRef.updateData(["late\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+            default:
+                print("")
+            }
+            
+            switch newReason {
+            case AbsenceReasons.illegal.rawValue:
+                statisticsClassRef.updateData(["illegal\(time.rawValue)" : FieldValue.increment(Int64(1))])
+                statisticsStudentRef.updateData(["illegal\(time.rawValue)" : FieldValue.increment(Int64(1))])
+            case AbsenceReasons.illness.rawValue:
+                statisticsClassRef.updateData(["illness\(time.rawValue)" : FieldValue.increment(Int64(1))])
+                statisticsStudentRef.updateData(["illness\(time.rawValue)" : FieldValue.increment(Int64(1))])
+            case AbsenceReasons.late.rawValue:
+                statisticsClassRef.updateData(["late\(time.rawValue)" : FieldValue.increment(Int64(1))])
+                statisticsStudentRef.updateData(["late\(time.rawValue)" : FieldValue.increment(Int64(1))])
+            default:
+                print("")
+            }
+
     }
 }
