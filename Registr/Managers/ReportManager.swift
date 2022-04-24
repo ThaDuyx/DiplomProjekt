@@ -136,7 +136,7 @@ class ReportManager: ObservableObject {
                                         .addDocument(from: newAbsence)
                                     print("A new absence were created: \(newAbsenceRef)")
                                     
-                                    self.updateStudentAndClassStats(className: newAbsence.className, studentID: newAbsence.studentID, oldReason: newAbsence.reason, newReason: validationReason, time: .afternoon, isNewAbsence: true)
+                                    self.updateStudentAndClassStats(className: newAbsence.className, studentID: newAbsence.studentID, oldReason: newAbsence.reason, newReason: validationReason, time: .morning, isNewAbsence: true)
                                 } catch {
                                     print(error)
                                 }
