@@ -8,12 +8,6 @@
 import SwiftUI
 import SwiftUIKit
 
-enum TimeOfDay: String, CaseIterable {
-    case morning = "Morgen"
-    case afternoon = "Eftermiddag"
-    case allDay = "Hele Dagen"
-}
-
 enum AbsenceType: String, CaseIterable {    
     case sickness = "Sygdom"
     case late = "For Sent"
@@ -27,7 +21,8 @@ struct ParentAbsenceRegistrationView: View {
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     
     @State private var selectedAbsence = ""
-    @State private var selectedTimeOfDay = ""
+    @State private var selectedTime = ""
+    @State private var selectedTimeOfDay: TimeOfDay = .morning
     @State private var selectedName = ""
     @State private var selectedChild: Student?
     @State private var startDate: Date = Date()
@@ -59,6 +54,7 @@ struct ParentAbsenceRegistrationView: View {
                                 selectedName = child.name
                                 selectedChild = child
                                 isDoubleRegistrationActivated = child.classInfo.isDoubleRegistrationActivated
+                                selectedTimeOfDay = .morning
                             }
                         }
                     } label: {
@@ -110,14 +106,15 @@ struct ParentAbsenceRegistrationView: View {
                             Menu {
                                 ForEach(TimeOfDay.allCases, id: \.self) { timeType in
                                     Button(timeType.rawValue) {
-                                        selectedTimeOfDay = timeType.rawValue
+                                        selectedTime = timeType.rawValue
+                                        selectedTimeOfDay = timeType
                                     }
                                 }
                             } label: {
                                 HStack {
                                     Image(systemName: "clock")
                                         .foregroundColor(.white)
-                                    Text(selectedTimeOfDay.isEmpty ? "Vælg tidspunkt" : selectedTimeOfDay)
+                                    Text(selectedTime.isEmpty ? "Vælg tidspunkt" : selectedTime)
                                         .bodyTextStyle(color: .white, font: .poppinsRegular)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Image(systemName: "chevron.down")
@@ -224,7 +221,7 @@ struct ParentAbsenceRegistrationView: View {
                     
                     VStack(alignment: .center) {
                         Button("Indberet") {
-                            if selectedName.isEmpty || selectedAbsence.isEmpty || isDoubleRegistrationActivated && selectedTimeOfDay.isEmpty {
+                            if selectedName.isEmpty || selectedAbsence.isEmpty || isDoubleRegistrationActivated && selectedTime.isEmpty {
                                 showingAlert = true
                             } else {
                                 if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsence.isEmpty {
@@ -235,7 +232,7 @@ struct ParentAbsenceRegistrationView: View {
                                                         className: selectedChild.className,
                                                         date: startDate,
                                                         endDate: isInterval ? endDate : nil,
-                                                        timeOfDay: isDoubleRegistrationActivated ? selectedTimeOfDay : "Morgen",
+                                                        timeOfDay: isDoubleRegistrationActivated ? selectedTimeOfDay : .morning,
                                                         description: textBindingManager.value,
                                                         reason: selectedAbsence,
                                                         validated: false,

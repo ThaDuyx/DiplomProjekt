@@ -8,6 +8,11 @@
 import Foundation
 import FirebaseFirestore
 
+enum StatisticTime: String {
+    case morning = "Morning"
+    case afternoon = "Afternoon"
+}
+
 class ReportManager: ObservableObject {
     
     @Published var reports = [Report]()
@@ -74,7 +79,7 @@ class ReportManager: ObservableObject {
             let date = selectedReport.date.formatSpecificData(date: selectedReport.date)
 
             switch selectedReport.timeOfDay {
-            case "Morgen":
+            case .morning:
                 // MARK: - Updating morning registration in class collection
                 let classMorningAbsenceRef = db
                     .collection("fb_classes_path".localize)
@@ -94,7 +99,8 @@ class ReportManager: ObservableObject {
                     .whereField("date", isEqualTo: date)
                     .whereField("isMorning", isEqualTo: true)
                 
-                absenceStudentRef.getDocuments { querySnapshot, err in
+                absenceStudentRef
+                    .getDocuments { querySnapshot, err in
                     if let err = err {
                         print("Error getting documents: \(err)")
                     } else {
@@ -102,7 +108,15 @@ class ReportManager: ObservableObject {
                             // If the query snapshot is empty we will create the absence
                             if !querySnapshot.isEmpty {
                                 for document in querySnapshot.documents {
-                                    document.reference.updateData(["reason" : validationReason])
+                                    do {
+                                        if let registration = try document.data(as: Registration.self) {
+                                            self.updateStudentAndClassStats(className: registration.className, studentID: registration.studentID, oldReason: registration.reason, newReason: validationReason, time: .morning, isNewAbsence: false)
+                                            
+                                            document.reference.updateData(["reason" : validationReason])
+                                        }
+                                    } catch {
+                                        print("Error decoding registration: \(error)")
+                                    }
                                 }
                             } else {
                                 let newAbsence = Registration(studentID: selectedReport.studentID,
@@ -121,6 +135,8 @@ class ReportManager: ObservableObject {
                                         .collection("fb_absense_path".localize)
                                         .addDocument(from: newAbsence)
                                     print("A new absence were created: \(newAbsenceRef)")
+                                    
+                                    self.updateStudentAndClassStats(className: newAbsence.className, studentID: newAbsence.studentID, oldReason: newAbsence.reason, newReason: validationReason, time: .morning, isNewAbsence: true)
                                 } catch {
                                     print(error)
                                 }
@@ -129,7 +145,7 @@ class ReportManager: ObservableObject {
                     }
                 }
             
-            case "Eftermiddag":
+            case .afternoon:
                 // MARK: - Updating afternoon registration in class collection
                 let classAfternoonAbsenceRef = db
                     .collection("fb_classes_path".localize)
@@ -149,7 +165,8 @@ class ReportManager: ObservableObject {
                     .whereField("date", isEqualTo: date)
                     .whereField("isMorning", isEqualTo: false)
                 
-                absenceStudentRef.getDocuments { querySnapshot, err in
+                absenceStudentRef
+                    .getDocuments { querySnapshot, err in
                     if let err = err {
                         print("Error getting documents: \(err)")
                     } else {
@@ -157,7 +174,15 @@ class ReportManager: ObservableObject {
                             // If the query snapshot is empty we will create the absence
                             if !querySnapshot.isEmpty {
                                 for document in querySnapshot.documents {
-                                    document.reference.updateData(["reason" : validationReason])
+                                    do {
+                                        if let registration = try document.data(as: Registration.self) {
+                                            self.updateStudentAndClassStats(className: registration.className, studentID: registration.studentID, oldReason: registration.reason, newReason: validationReason, time: .afternoon, isNewAbsence: false)
+                                            
+                                            document.reference.updateData(["reason" : validationReason])
+                                        }
+                                    } catch {
+                                        print("Error decoding registration: \(error)")
+                                    }
                                 }
                             } else {
                                 let newAbsence = Registration(studentID: selectedReport.studentID,
@@ -176,6 +201,8 @@ class ReportManager: ObservableObject {
                                         .collection("fb_absense_path".localize)
                                         .addDocument(from: newAbsence)
                                     print("A new absence were created: \(newAbsenceRef)")
+                                    
+                                    self.updateStudentAndClassStats(className: newAbsence.className, studentID: newAbsence.studentID, oldReason: newAbsence.reason, newReason: validationReason, time: .afternoon, isNewAbsence: true)
                                 } catch {
                                     print(error)
                                 }
@@ -184,7 +211,7 @@ class ReportManager: ObservableObject {
                     }
                 }
             
-            case "Hele Dagen":
+            case .allDay:
                 // MARK: - Updating morning & afternoon registration in class collection
                 let classMorningAbsenceRef = db
                     .collection("fb_classes_path".localize)
@@ -212,7 +239,8 @@ class ReportManager: ObservableObject {
                     .collection("fb_absense_path".localize)
                     .whereField("date", isEqualTo: date)
                 
-                absenceStudentRef.getDocuments { querySnapshot, err in
+                absenceStudentRef
+                    .getDocuments { querySnapshot, err in
                     if let err = err {
                         print("Error getting documents: \(err)")
                     } else {
@@ -220,7 +248,19 @@ class ReportManager: ObservableObject {
                             // If the query snapshot is empty we will create the absence
                             if !querySnapshot.isEmpty {
                                 for document in querySnapshot.documents {
-                                    document.reference.updateData(["reason" : validationReason])
+                                    do {
+                                        if let registration = try document.data(as: Registration.self) {
+                                            if registration.isMorning {
+                                                self.updateStudentAndClassStats(className: registration.className, studentID: registration.studentID, oldReason: registration.reason, newReason: validationReason, time: .morning, isNewAbsence: false)
+                                            } else {
+                                                self.updateStudentAndClassStats(className: registration.className, studentID: registration.studentID, oldReason: registration.reason, newReason: validationReason, time: .afternoon, isNewAbsence: false)
+                                            }
+                                            
+                                            document.reference.updateData(["reason" : validationReason])
+                                        }
+                                    } catch {
+                                        print("Error decoding registration: \(error)")
+                                    }
                                 }
                             } else {
                                 let newMorningAbsence = Registration(studentID: selectedReport.studentID,
@@ -256,6 +296,9 @@ class ReportManager: ObservableObject {
                                     print("A new absence were created: \(newMorningAbsenceRef)")
                                     print("A new absence were created: \(newAfternoonAbsenceRef)")
                                     
+                                    self.updateStudentAndClassStats(className: newMorningAbsence.className, studentID: newMorningAbsence.studentID, oldReason: newMorningAbsence.reason, newReason: validationReason, time: .morning, isNewAbsence: true)
+                                    self.updateStudentAndClassStats(className: newAfternoonAbsence.className, studentID: newAfternoonAbsence.studentID, oldReason: newAfternoonAbsence.reason, newReason: validationReason, time: .afternoon, isNewAbsence: true)
+                                    
                                 } catch {
                                     print(error)
                                 }
@@ -263,9 +306,6 @@ class ReportManager: ObservableObject {
                         }
                     }
                 }
-                
-            default:
-                print("")
             }
             
             let parentReportRef = db
@@ -338,5 +378,62 @@ class ReportManager: ObservableObject {
                 }
             }
         }
+    }
+    
+    /**
+     Updates the statistics tables in both the student and class collections.
+     
+     - parameter className:       String of the name of the specific class.
+     - parameter studentID:       String of the ID of the specific student.
+     - parameter oldReason:       The old reason selected of the chosen registration.
+     - parameter newReason:       The new reason selected of the chosen registration.
+     - parameter time:            Enumeration value of which time of day to choose, either; morning or afternoon
+     - parameter isNewAbsence:    Boolean determining wether there already exists an absence in the database.
+     */
+    private func updateStudentAndClassStats(className: String, studentID: String, oldReason: String, newReason: String, time: StatisticTime, isNewAbsence: Bool) {
+        let db = Firestore.firestore()
+        
+        let statisticsClassRef = db
+            .collection("fb_classes_path".localize)
+            .document(className)
+            .collection("fb_statistics_path".localize)
+            .document("fb_statistics_doc".localize)
+        
+        let statisticsStudentRef = db
+            .collection("fb_students_path".localize)
+            .document(studentID)
+            .collection("fb_statistics_path".localize)
+            .document("fb_statistics_doc".localize)
+        
+        // If it is a new absence that we are creating in the student collection we do not want to decrement the statistic counters
+        if !isNewAbsence {
+            switch oldReason {
+            case AbsenceReasons.illegal.rawValue:
+                statisticsClassRef.updateData(["illegal\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+                statisticsStudentRef.updateData(["illegal\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+            case AbsenceReasons.illness.rawValue:
+                statisticsClassRef.updateData(["illness\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+                statisticsStudentRef.updateData(["illness\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+            case AbsenceReasons.late.rawValue:
+                statisticsClassRef.updateData(["late\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+                statisticsStudentRef.updateData(["late\(time.rawValue)" : FieldValue.increment(Int64(-1))])
+            default:
+                print("")
+            }
+        }
+            
+            switch newReason {
+            case AbsenceReasons.illegal.rawValue:
+                statisticsClassRef.updateData(["illegal\(time.rawValue)" : FieldValue.increment(Int64(1))])
+                statisticsStudentRef.updateData(["illegal\(time.rawValue)" : FieldValue.increment(Int64(1))])
+            case AbsenceReasons.illness.rawValue:
+                statisticsClassRef.updateData(["illness\(time.rawValue)" : FieldValue.increment(Int64(1))])
+                statisticsStudentRef.updateData(["illness\(time.rawValue)" : FieldValue.increment(Int64(1))])
+            case AbsenceReasons.late.rawValue:
+                statisticsClassRef.updateData(["late\(time.rawValue)" : FieldValue.increment(Int64(1))])
+                statisticsStudentRef.updateData(["late\(time.rawValue)" : FieldValue.increment(Int64(1))])
+            default:
+                print("")
+            }
     }
 }

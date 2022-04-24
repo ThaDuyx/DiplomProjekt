@@ -11,7 +11,7 @@ import FirebaseFirestore
  This class is used to feed the database
  */
 class FeedDatabaseManager: ObservableObject {
-    @Published var dateArray: [String] = ["22-04-2022", "23-04-2022"]
+    @Published var dateArray: [String] = []
     @Published var students = [Student]()
     var classes = [ClassInfo]()
     let db = Firestore.firestore()
@@ -107,8 +107,7 @@ class FeedDatabaseManager: ObservableObject {
     
     /// This method will take the global date array from this class and create registrations from a class.
     /// Though the method 'fetchStudents' will have to be called first for this to be used.
-    func createDoubleRegistrationDates() {
-        
+    func createRegistrationDates() {
         for date in dateArray {
             let newRegistration = db
                 .collection("fb_classes_path".localize)
