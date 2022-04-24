@@ -119,6 +119,6 @@ struct ButtonAction<TargetView: View>: View {
 
 struct ClassView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassView(classInfo: ClassInfo(name: "", isDoubleRegistrationActivated: false))
+        ClassView(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""))
     }
 }
