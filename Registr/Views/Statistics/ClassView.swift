@@ -40,7 +40,7 @@ struct ClassView: View {
                         Text(favoriteManager.favorites.contains(classInfo.name) ? "Følger" : "Følger ikke")
                     }
                 }
-                .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle())
+                .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(isFollowed: favoriteManager.favorites.contains(classInfo.name)))
                 
                 ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo))
                 
