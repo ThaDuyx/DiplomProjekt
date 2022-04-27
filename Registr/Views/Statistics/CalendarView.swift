@@ -10,15 +10,28 @@ import SwiftUI
 struct CalendarView: View {
     @State private var selectedDate: Date = Date()
     let classInfo: ClassInfo
+    let startDate = Date()
     
-    private let dateRange: ClosedRange<Date> = {
-        let calendar = Calendar.current
-        let startComponents = DateComponents(year: Calendar.current.component(.year, from: Date()),month: 1, day: 1)
-        let endComponents = DateComponents(year: Calendar.current.component(.year, from: Date()), month: 12, day: 31)
-        return calendar.date(from:startComponents)!
-        ...
-        calendar.date(from:endComponents)!
-    }()
+    func dateRanges(amountOfDaysSinceStart: Int, amountOfDayssinceStop: Int) -> ClosedRange<Date> {
+        let min = Calendar.current.date(byAdding: .day, value: amountOfDaysSinceStart, to: Date())!
+        let max = Calendar.current.date(byAdding: .day, value: -amountOfDayssinceStop, to: Date())!
+        return min...max
+    }
+    
+    func dateClosedRange(date: Date) -> Int {
+        
+        var dateComponent = DateComponents()
+        dateComponent.day = 251
+        let futureDate = Calendar.current.date(byAdding: dateComponent, to: date) ?? .now
+        
+        // can be used when we get the real date.
+//        let date = Calendar.current.startOfDay(for: futureDate)
+                
+        let components = Calendar.current.dateComponents([.day], from: futureDate, to: .now)
+        
+        // Force unwraps, since we know that we will have a date, since we have a default value.
+        return components.day!
+    }
     
     var body: some View {
         ZStack {
@@ -32,7 +45,7 @@ struct CalendarView: View {
                         .subTitleTextStyle(color: Color.fiftyfifty, font: .poppinsBold)
                         .padding(.horizontal)
                 }
-                DatePicker("", selection: $selectedDate, in: dateRange, displayedComponents: .date)
+                DatePicker("", selection: $selectedDate, in: dateRanges(amountOfDaysSinceStart: dateClosedRange(date: startDate), amountOfDayssinceStop: dateClosedRange(date: startDate)), displayedComponents: .date)
                 .datePickerStyle(.graphical)
                 .padding()
 
