@@ -65,7 +65,7 @@ struct ReportListRow: View {
                 Text("Dato")
                     .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
 
-                Text(report.date.formatSpecificData(date: report.date))
+                Text(report.date.formatSpecificDate(date: report.date))
                     .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             }
             

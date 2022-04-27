@@ -191,7 +191,7 @@ class ReportManager: ObservableObject {
         let batch = db.batch()
         
         if let id = selectedReport.id {
-            let date = selectedReport.date.formatSpecificData(date: selectedReport.date)
+            let date = selectedReport.date.formatSpecificDate(date: selectedReport.date)
 
             switch selectedReport.timeOfDay {
             case .morning:
@@ -332,7 +332,7 @@ class ReportManager: ObservableObject {
                     .collection("fb_classes_path".localize)
                     .document(selectedReport.className)
                     .collection("fb_date_path".localize)
-                    .document(Date().formatSpecificData(date: selectedReport.date))
+                    .document(Date().formatSpecificDate(date: selectedReport.date))
                     .collection("fb_morningRegistration_path".localize)
                     .document(selectedReport.studentID)
 
@@ -340,7 +340,7 @@ class ReportManager: ObservableObject {
                     .collection("fb_classes_path".localize)
                     .document(selectedReport.className)
                     .collection("fb_date_path".localize)
-                    .document(Date().formatSpecificData(date: selectedReport.date))
+                    .document(Date().formatSpecificDate(date: selectedReport.date))
                     .collection("fb_afternoonRegistration_path".localize)
                     .document(selectedReport.studentID)
 

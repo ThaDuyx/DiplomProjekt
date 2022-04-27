@@ -19,7 +19,7 @@ extension Date {
         return currentDateFormatted
     }
     
-    func formatSpecificData(date: Date) -> String {
+    func formatSpecificDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         let currentDateFormatted = dateFormatter.string(from: date)
@@ -27,7 +27,7 @@ extension Date {
         return currentDateFormatted
     }
     
-    func formatSpecificToDayAndMonthData(date: Date) -> String {
+    func formatSpecificToDayAndMonthDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MMM"
         let currentDateFormatted = dateFormatter.string(from: date)
