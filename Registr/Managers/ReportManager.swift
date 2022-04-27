@@ -31,7 +31,7 @@ class ReportManager: ObservableObject {
     /**
      Attaches a snapshotlistener for all reports from the user selected favorites
      */
-    func attachReportListeners() {
+    private func attachReportListeners() {
         for favorite in DefaultsManager.shared.favorites {
             let listener = db
                 .collection("fb_classes_path".localize)
