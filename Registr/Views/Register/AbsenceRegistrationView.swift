@@ -91,7 +91,7 @@ struct AbsenceRegistrationView: View {
                             isMorning = true
                         } label: {
                             Text("Formiddag")
-                                .subTitleTextStyle(color: isMorning ? .frolyRed : Color.fiftyfifty, font: isMorning ? .poppinsMedium : .poppinsRegular)
+                                .subTitleTextStyle(color: isMorning ? .frolyRed : .fiftyfifty, font: isMorning ? .poppinsMedium : .poppinsRegular)
                         }
                         .frame(maxWidth: .infinity, minHeight: 35)
                         .background(isMorning ? .white : Color.fiftyfifty.opacity(0.15) )
@@ -100,10 +100,10 @@ struct AbsenceRegistrationView: View {
                             isMorning = false
                         } label: {
                             Text("Eftermiddag")
-                                .subTitleTextStyle(color: isMorning ? .frolyRed : Color.fiftyfifty, font: isMorning ? .poppinsMedium : .poppinsRegular)
+                                .subTitleTextStyle(color: !isMorning ? .frolyRed : .fiftyfifty, font: !isMorning ? .poppinsMedium : .poppinsRegular)
                         }
                         .frame(maxWidth: .infinity, minHeight: 35)
-                        .background(!isMorning ? .white : Color.fiftyfifty.opacity(0.15) )
+                        .background(!isMorning ? .white : .fiftyfifty.opacity(0.15) )
                     }
                 }
                 
