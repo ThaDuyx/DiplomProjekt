@@ -66,16 +66,15 @@ extension Resources.CustomButtonStyle {
     }
     
     struct FollowButtonStyle: ButtonStyle {
+        let isFollowed: Bool
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .frame(width: 170, height: 45)
                 .font(.custom(.poppinsRegular, size: Resources.FontSize.subTitle))
-                .foregroundColor(.frolyRed)
-                .background(.clear)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.frolyRed, lineWidth: 2)
-                )
+                .foregroundColor(isFollowed ? .white : .frolyRed)
+                .background(isFollowed ? Color.frolyRed : .clear)
+                .cornerRadius(isFollowed ? 20 : 0)
+                .overlay(isFollowed ? nil : RoundedRectangle(cornerRadius: 20).stroke(Color.frolyRed, lineWidth: 2))
         }
     }
 }
