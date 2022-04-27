@@ -15,32 +15,140 @@ enum StatisticTime: String {
 
 class ReportManager: ObservableObject {
     
+    // Container for our reports
     @Published var reports = [Report]()
     
+    // Container that keeps track of our snapshot listeners in order to detach when not in use anymore.
+    private var snapshotListeners = [SnapshotData]()
+    
+    // Firestore reference
+    let db = Firestore.firestore()
+    
     init() {
-        fetchReports()
+        attachReportListeners()
     }
     
     /**
-     Fetches all the reports from the user selected favorites
+     Attaches a snapshotlistener for all reports from the user selected favorites
      */
-    func fetchReports() {
-        let db = Firestore.firestore()
-        reports.removeAll()
-        
+    func attachReportListeners() {
         for favorite in DefaultsManager.shared.favorites {
-            db
+            let listener = db
                 .collection("fb_classes_path".localize)
                 .document(favorite)
                 .collection("fb_report_path".localize)
-                .getDocuments() {  (querySnapshot, err) in
+                .addSnapshotListener { querySnapshot, err in
                     if let err = err {
-                        print("Error getting documents: \(err)")
+                        print("Error in subscribing to snapshotListener: \(err)")
                     } else {
-                        for document in querySnapshot!.documents {
+                        guard let snapshot = querySnapshot else {
+                            print("Error fetching snapshots: \(err!)")
+                            return
+                        }
+                        
+                        snapshot.documentChanges.forEach { diff in
+                            // When a document has been added we will add the new report to our list
+                            if (diff.type == .added) {
+                                do {
+                                    if let report = try diff.document.data(as: Report.self) {
+                                        self.reports.append(report)
+                                    }
+                                }
+                                catch {
+                                    print(error)
+                                }
+                            }
+                            
+                            // When a document has been modified we will fetch the repective report and update its content
+                            if (diff.type == .modified) {
+                                do {
+                                    if let modifiedReport = try diff.document.data(as: Report.self) {
+                                        if let modifiedId = modifiedReport.id, let index = self.reports.firstIndex(where: {$0.id == modifiedId}) {
+                                            self.reports[index] = modifiedReport
+                                        }
+                                    }
+                                }
+                                catch {
+                                    print(error)
+                                }
+                            }
+                            
+                            // When a document has been removed we will fetch the repective report and removed its content from our list
+                            if (diff.type == .removed) {
+                                do {
+                                    if let removedReport = try diff.document.data(as: Report.self) {
+                                        if let removedId = removedReport.id, let index = self.reports.firstIndex(where: {$0.id == removedId}) {
+                                            self.reports.remove(at: index)
+                                        }
+                                    }
+                                }
+                                catch {
+                                    print(error)
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            // We add the snapshotlistener to our list of references so we can uniquely identify them.
+            snapshotListeners.append(SnapshotData(favoriteName: favorite, listenerRegistration: listener))
+
+        }
+    }
+    
+    /**
+     When we add a new class favorite we add the snapshot listener for that class.
+     
+     - parameter newFavorite:       A string on the name of the selected favorite class.
+     */
+    func addFavorite(newFavorite: String) {
+        let listener = db
+            .collection("fb_classes_path".localize)
+            .document(newFavorite)
+            .collection("fb_report_path".localize)
+            .addSnapshotListener { querySnapshot, err in
+                if let err = err {
+                    print("Error in subscribing to snapshotListener: \(err)")
+                } else {
+                    guard let snapshot = querySnapshot else {
+                        print("Error fetching snapshots: \(err!)")
+                        return
+                    }
+                    
+                    snapshot.documentChanges.forEach { diff in
+                        // When a document has been added we will add the new report to our list
+                        if (diff.type == .added) {
                             do {
-                                if let report = try document.data(as: Report.self) {
+                                if let report = try diff.document.data(as: Report.self) {
                                     self.reports.append(report)
+                                }
+                            }
+                            catch {
+                                print(error)
+                            }
+                        }
+                        
+                        // When a document has been modified we will fetch the repective report and update its content
+                        if (diff.type == .modified) {
+                            do {
+                                if let modifiedReport = try diff.document.data(as: Report.self) {
+                                    if let modifiedId = modifiedReport.id, let index = self.reports.firstIndex(where: {$0.id == modifiedId}) {
+                                        self.reports[index] = modifiedReport
+                                    }
+                                }
+                            }
+                            catch {
+                                print(error)
+                            }
+                        }
+                        
+                        // When a document has been removed we will fetch the repective report and removed its content from our list
+                        if (diff.type == .removed) {
+                            do {
+                                if let removedReport = try diff.document.data(as: Report.self) {
+                                    if let removedId = removedReport.id, let index = self.reports.firstIndex(where: {$0.id == removedId}) {
+                                        self.reports.remove(at: index)
+                                    }
                                 }
                             }
                             catch {
@@ -49,17 +157,25 @@ class ReportManager: ObservableObject {
                         }
                     }
                 }
-        }
+            }
+        
+        // We add the snapshotlistener to our list of references so we can uniquely identify them.
+        snapshotListeners.append(SnapshotData(favoriteName: newFavorite, listenerRegistration: listener))
     }
     
     /**
-     If we remove a favorite, we will also remove all the objects with that class from our list.
+     If we remove a favorite, we will also remove all the objects within that class from our list.
      
      - parameter favorite:       A string on the name of the deselected favorite class.
      */
-    func reportFavoriteAction(favorite: String) {
-        if DefaultsManager.shared.favorites.contains(favorite) {
+    func removeFavorite(favorite: String) {
+        if !DefaultsManager.shared.favorites.contains(favorite) {
             reports.removeAll(where: { $0.className == favorite })
+            
+            if let index = snapshotListeners.firstIndex(where: { $0.favoriteName == favorite }) {
+                snapshotListeners[index].listenerRegistration.remove()
+                snapshotListeners.remove(at: index)
+            }
         }
     }
     
@@ -72,7 +188,6 @@ class ReportManager: ObservableObject {
      - parameter completion:           A Callback that returns if the write to the database went through.
      */
     func validateReport(selectedReport: Report, validationReason: String, teacherValidation: String, completion: @escaping (Bool) -> ()) {
-        let db = Firestore.firestore()
         let batch = db.batch()
         
         if let id = selectedReport.id {
@@ -129,7 +244,7 @@ class ReportManager: ObservableObject {
                                                               isMorning: true)
                                 
                                 do {
-                                    let newAbsenceRef = try db
+                                    let newAbsenceRef = try self.db
                                         .collection("fb_students_path".localize)
                                         .document(selectedReport.studentID)
                                         .collection("fb_absense_path".localize)
@@ -195,7 +310,7 @@ class ReportManager: ObservableObject {
                                                               isMorning: false)
                                 
                                 do {
-                                    let newAbsenceRef = try db
+                                    let newAbsenceRef = try self.db
                                         .collection("fb_students_path".localize)
                                         .document(selectedReport.studentID)
                                         .collection("fb_absense_path".localize)
@@ -282,13 +397,13 @@ class ReportManager: ObservableObject {
                                                                          isMorning: false)
                                 
                                 do {
-                                    let newMorningAbsenceRef = try db
+                                    let newMorningAbsenceRef = try self.db
                                         .collection("fb_students_path".localize)
                                         .document(selectedReport.studentID)
                                         .collection("fb_absense_path".localize)
                                         .addDocument(from: newMorningAbsence)
                                     
-                                    let newAfternoonAbsenceRef = try db
+                                    let newAfternoonAbsenceRef = try self.db
                                         .collection("fb_students_path".localize)
                                         .document(selectedReport.studentID)
                                         .collection("fb_absense_path".localize)
