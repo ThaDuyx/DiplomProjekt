@@ -22,7 +22,7 @@ class ChildrenManager: ObservableObject {
     var selectedAbsenceID = String()
     var selectedReportID = String()
     
-    // 
+    // Firebase reference
     let db = Firestore.firestore()
     
     init() {
