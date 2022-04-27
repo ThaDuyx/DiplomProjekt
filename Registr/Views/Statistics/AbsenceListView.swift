@@ -23,23 +23,22 @@ struct AbsenceListView: View {
         ZStack {
             List() {
                 ForEach(childrenManager.absences, id: \.self) { absence in
-                    ReportSectionView(absence: absence)
-                        .padding(.bottom, 20)
-                        .sheet(isPresented: $showModal) {
-                            ParentAbsenceRegistrationView()
-                        }
-                        .onTapGesture {
-                            showModal = true
-                        }
+                    if absence.studentID == selectedStudent {
+                        ReportSectionView(absence: absence)
+                            .padding(.bottom, 20)
+                            .sheet(isPresented: $showModal) {
+                                ParentAbsenceRegistrationView()
+                            }
+                            .onTapGesture {
+                                showModal = true
+                            }
+                    }
                 }
                 .listRowSeparatorTint(Color.fiftyfifty)
             }
         }
         .navigationTitle(studentName)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear(){
-            childrenManager.fetchChildrenAbsence(studentID: selectedStudent)
-        }
     }
 }
 
