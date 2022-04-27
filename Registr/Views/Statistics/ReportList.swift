@@ -23,22 +23,21 @@ struct ReportList: View {
         ZStack {
             List() {
                 ForEach(childrenManager.reports, id: \.self) { report in
-                    ReportListRow(report: report)
-                        .padding(.bottom, 20)
-                        .sheet(isPresented: $showModal) {
-                            ParentAbsenceRegistrationView()
-                        }
-                        .onTapGesture {
-                            showModal = true
-                        }
+                    if report.studentID == selectedStudent {
+                        ReportListRow(report: report)
+                            .padding(.bottom, 20)
+                            .sheet(isPresented: $showModal) {
+                                ParentAbsenceRegistrationView()
+                            }
+                            .onTapGesture {
+                                showModal = true
+                            }
+                    }
                 }
             }
         }
         .navigationTitle(studentName)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear(){
-            childrenManager.fetchChildrenReports(childID: selectedStudent)
-        }
     }
 }
 

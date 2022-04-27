@@ -30,8 +30,11 @@ struct TeacherHomeView: View {
                     }
                 }
                 .accentColor(Color.fiftyfifty)
-                .onChange(of: favoriteManager.favorites) { _ in
-                    reportManager.fetchReports()
+                .onChange(of: favoriteManager.newFavorite) { newValue in
+                    reportManager.addFavorite(newFavorite: newValue)
+                }
+                .onChange(of: favoriteManager.deselectedFavorite) { deselectedValue in
+                    reportManager.removeFavorite(favorite: deselectedValue)
                 }
             }
             .navigationTitle("Indberettelser")

@@ -9,6 +9,8 @@ import Foundation
 
 class FavoriteManager: ObservableObject {
     @Published var favorites: [String] = []
+    @Published var newFavorite = String()
+    @Published var deselectedFavorite = String()
     
     init() {
         fetchFavorites()
@@ -23,10 +25,12 @@ class FavoriteManager: ObservableObject {
             if let index = favorites.firstIndex(of: favorite) {
                 favorites.remove(at: index)
                 DefaultsManager.shared.favorites = favorites
+                deselectedFavorite = favorite
             }
         } else {
             // Updating the published variable to call a redraw of the view
             favorites.append(favorite)
+            newFavorite = favorite
             
             
             // Updating and saving the DefaultsManager so next time we login we have the favorites stored
