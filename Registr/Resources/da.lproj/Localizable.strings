@@ -7,16 +7,24 @@
 */
 // MARK: - App Name
 "application_name" = "Registr";
+
+// MARK: - Standard
+"next_view" = "Næste";
+"ok" = "OK";
+
 // MARK: - Login flow
 "parent_login" = "Forældre login";
 "school_login" = "Skole login";
 "user_id" = "BrugerID";
-"next_view" = "Næste";
 "password" = "Kodeord";
 "login" = "Log ind";
 "password_field_text" = "Indtast dit kodeord";
 "user_id_field_text" = "Indtast dit BrugerID";
 
+// MARK: - Teacher validation
+"tv-pending" = "Afventer";
+"tv-denied" = "Afslået";
+"tv-accepted" = "Godkendt";
 
 // MARK: - Onboarding flow page 1
 "onboard_flow_page_one_title" = "Notifikationer.";
@@ -52,13 +60,22 @@
 "parent_home_class" = "Klasse:";
 "parent_home_email" = "Email:";
 
-// MARK: - Student Absence
-"student_absence_name" = "Elev";
-"student_absence_reason" = "Årsag";
-"student_absence_date" = "Dato";
-"student_absence_description" = "Skriv beskrivelse";
-"student_absence_alert_title" = "Hov! Du mangler og udfylde noget!";
-"student_absence_alert_description" = "Du mangler at vælge enten barn eller fraværs årsag. Udfyld disse for at forsætte.";
+// MARK: - Parent Absence Registration
+"parent_absence_registration_kid" = "Barn";
+"parent_absence_registration_pick_kid" = "Vælg barn";
+"parent_absence_registration_reason" = "Fraværsårsag";
+"parent_absence_registration_pick_reason" = "Vælg fraværsårsag";
+"parent_absence_registration_time" = "Tidspunkt";
+"parent_absence_registration_pick_time" = "Vælg tidspunkt";
+"parent_absence_registration_interval" = "Interval";
+"parent_absence_registration_enable_end_date" = "Aktivér for slutdato";
+"parent_absence_registration_start_date" = "Startdato";
+"parent_absence_registration_end_date" = "Slutdato";
+"parent_absence_registration_description" = "Skriv beskrivelse";
+"parent_absence_registration_report" = "Indberet";
+"parent_absence_registration_alert_title" = "Hov! Du mangler og udfylde noget!";
+"parent_absence_registration_alert_description" = "Du mangler at vælge enten barn eller fraværs årsag. Udfyld disse for at forsætte.";
+"parent_absence_registration_nav_title" = "Indberettelse af barn";
 
 // Mark: - Student class list
 "student_list_absence_description %@" = "Vælg årsag for %@ fravær";
