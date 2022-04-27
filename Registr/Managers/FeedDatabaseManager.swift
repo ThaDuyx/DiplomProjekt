@@ -42,7 +42,7 @@ class FeedDatabaseManager: ObservableObject {
             print(endDate)
             while futureDate < endDate {
                 futureDate = calendar.date(byAdding: componentTwo, to: futureDate)!
-                let nextDay = futureDate.formatSpecificData(date: futureDate)
+                let nextDay = futureDate.formatSpecificDate(date: futureDate)
                 print(futureDate)
                 dateArray.append(nextDay)
             }
