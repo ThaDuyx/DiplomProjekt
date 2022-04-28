@@ -42,6 +42,7 @@
 "general_error" = "Something went wrong. Error description: ";
 
 // MARK: - Firebase paths
+"fb_schools_path" = "schools";
 "fb_parent_path" = "parent";
 "fb_employee_path" = "employees";
 "fb_date_path" = "registrationDates";

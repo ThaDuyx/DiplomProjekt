@@ -15,6 +15,15 @@ class StatisticsManager: ObservableObject {
     // Collection of Firestore write actions
     private var batch = Firestore.firestore().batch()
     
+    // The school that the user is accociated with
+    private var selectedSchool: String {
+        if let schoolID = UserManager.shared.user?.associatedSchool {
+            return schoolID
+        } else {
+            return ""
+        }
+    }
+    
     // Object that contains statistic data and overrides every time it is written to.
     @Published var statistic = Statistics(illegalMorning: 0, illegalAfternoon: 0, illnessMorning: 0, illnessAfternoon: 0, lateMorning: 0, lateAfternoon: 0, legalMorning: 0, legalAfternoon: 0)
     
@@ -116,6 +125,8 @@ class StatisticsManager: ObservableObject {
     /// Fetches the statistic variables for a specific class
     func fetchClassStats(className: String) {
         db
+            .collection("fb_schools_path".localize)
+            .document(selectedSchool)
             .collection("fb_classes_path".localize)
             .document(className)
             .collection("fb_statistics_path".localize)
@@ -150,6 +161,8 @@ class StatisticsManager: ObservableObject {
      */
     func writeClassStats(className: String, isMorning: Bool) {
         let statisticsClassRef = db
+            .collection("fb_schools_path".localize)
+            .document(selectedSchool)
             .collection("fb_classes_path".localize)
             .document(className)
             .collection("fb_statistics_path".localize)
