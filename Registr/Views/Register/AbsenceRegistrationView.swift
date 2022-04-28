@@ -110,11 +110,32 @@ struct AbsenceRegistrationView: View {
                 }
                 if Calendar.current.isDateInWeekend(elementDate) {
                     Spacer()
+                    
                     Text("Den valgte dato er en weekend")
                         .headerTextStyle(color: .frolyRed, font: .poppinsSemiBold)
                         .frame(alignment: .center)
                     Spacer()
                 } else {
+                    if isMorning && registrationManager.registrationInfo.hasMorningBeenRegistrered {
+                        HStack {
+                            Text("Fraværsregistrering gennemgået")
+                                .bodyTextStyle(color: Color.completionGreen, font: .poppinsMedium)
+                            
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(Color.completionGreen)
+                        }
+                        .padding(.top, 10)
+                    } else if !isMorning && registrationManager.registrationInfo.hasAfternoonBeenRegistrered {
+                        HStack {
+                            Text("Fraværsregistrering gennemgået")
+                                .bodyTextStyle(color: Color.completionGreen, font: .poppinsMedium)
+                            
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(Color.completionGreen)
+                        }
+                        .padding(.top, 10)
+                    }
+                    
                     ScrollView {
                         ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
                             StudentRow(

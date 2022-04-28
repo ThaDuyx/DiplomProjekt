@@ -11,13 +11,13 @@ import FirebaseFirestore
  This class is used to feed the database
  */
 class FeedDatabaseManager: ObservableObject {
-    @Published var dateArray: [String] = []
+    @Published var dateArray: [String] = ["28-04-2022"]
     @Published var students = [Student]()
     var classes = [ClassInfo]()
     let db = Firestore.firestore()
     
     // Class selector, change this variable to choose the specific class
-    let selectedClass = "0.x"
+    let selectedClass = "9.x"
     
     init() {
         fetchStudents(className: selectedClass)
@@ -115,7 +115,12 @@ class FeedDatabaseManager: ObservableObject {
                 .collection("fb_date_path".localize)
                 .document(date)
             
-            newRegistration.setData(["exsists" : true])
+            do {
+                let registrationinfo = RegistrationInfo()
+                try newRegistration.setData(from: registrationinfo)
+            } catch {
+                print("Error in encoding data \(error)")
+            }
 
             for student in students {
                 if let id = student.id {
