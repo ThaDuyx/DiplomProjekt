@@ -7,6 +7,11 @@
 
 import Foundation
 import FirebaseFirestoreSwift
+enum TimeOfDay: String, CaseIterable, Codable {
+    case morning = "Morgen"
+    case afternoon = "Eftermiddag"
+    case allDay = "Hele Dagen"
+}
 
 struct Report: Codable, Hashable {
     @DocumentID var id: String?
@@ -17,8 +22,10 @@ struct Report: Codable, Hashable {
     let className: String
     let date: Date
     let endDate: Date?
+    let timeOfDay: TimeOfDay
     let description: String?
     let reason: String
     let validated: Bool
     let teacherValidation: String
+    let isDoubleRegistrationActivated: Bool?
 }

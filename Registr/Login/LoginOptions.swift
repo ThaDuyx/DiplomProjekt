@@ -13,14 +13,14 @@ struct LoginOptions: View {
                 VStack {
                     ZStack(alignment: .top) {
                         Rectangle()
-                            .fill(Resources.Color.Colors.moonMist.opacity(0.7))
+                            .fill(Color.moonMist.opacity(0.7))
                             .frame(height: 170)
                             .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
                         Spacer()
                         VStack {
-                            Image("Group 4")
+                            Image("AppLogo")
                             Text("application_name")
-                                .titleTextStyle()
+                                .titleTextStyle(color: .frolyRed, font: .poppinsSemiBold)
                         }
                         .offset(y: 80)
                     }
@@ -32,13 +32,13 @@ struct LoginOptions: View {
                         }.simultaneousGesture(TapGesture().onEnded{
                             AuthenticationManager.shared.loginSelection = .parent
                         })
-                            .buttonStyle(Resources.CustomButtonStyle.TransparentButtonStyle())
+                            .buttonStyle(Resources.CustomButtonStyle.LoginOptionsButtonStyle())
                         NavigationLink(destination: UserIDView(username: "teacher@test.com")) {
                             Text("school_login")
                         }.simultaneousGesture(TapGesture().onEnded{
                             AuthenticationManager.shared.loginSelection = .school
                         })
-                            .buttonStyle(Resources.CustomButtonStyle.TransparentButtonStyle())
+                            .buttonStyle(Resources.CustomButtonStyle.LoginOptionsButtonStyle())
                         Spacer()
                     }
                     .offset(y: 80)

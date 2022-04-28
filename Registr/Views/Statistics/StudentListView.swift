@@ -22,8 +22,8 @@ struct StudentListView: View {
                 ForEach(0..<registrationManager.students.count, id: \.self) { student in
                     StudentEntity(studentName: registrationManager.students[student].name, studentID: registrationManager.students[student].id ?? "")
                 }
-                .listRowBackground(Resources.Color.Colors.frolyRed)
-                .listRowSeparatorTint(Resources.Color.Colors.white)
+                .listRowBackground(Color.frolyRed)
+                .listRowSeparatorTint(Color.white)
             }
         }
         .navigationTitle("Elever i \(selectedClass)")
@@ -41,7 +41,7 @@ struct StudentEntity: View {
     var body: some View {
         HStack {
             Text(studentName)
-                .boldBodyTextStyle()
+                .bodyTextStyle(color: Color.white, font: .poppinsBold)
                 .frame(maxWidth: .infinity, alignment: .center)
             
             NavigationLink(destination: StudentView(studentName: studentName, isParent: false, studentID: studentID)) {
@@ -51,7 +51,7 @@ struct StudentEntity: View {
             .opacity(0)
 
             Image(systemName: "chevron.right")
-                .foregroundColor(Resources.Color.Colors.white)
+                .foregroundColor(Color.white)
                 .padding(.trailing, 10)
         }
         .frame(height: 35)

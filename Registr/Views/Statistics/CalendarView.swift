@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CalendarView: View {
     @State private var selectedDate: Date = Date()
-    let className: String
+    let classInfo: ClassInfo
     
     private let dateRange: ClosedRange<Date> = {
         let calendar = Calendar.current
@@ -25,21 +25,21 @@ struct CalendarView: View {
             VStack {
                 VStack(spacing: 0) {
                     Text("absence_day_pick")
-                        .boldSubTitleTextStyle(color: Resources.Color.Colors.fiftyfifty)
+                        .subTitleTextStyle(color: Color.fiftyfifty, font: .poppinsBold)
                         .padding(.horizontal)
                     let date = DateFormatter.abbreviationDayMonthYearFormatter.string(from: selectedDate)
                     Text(date)
-                        .boldSubTitleTextStyle(color: Resources.Color.Colors.fiftyfifty)
+                        .subTitleTextStyle(color: Color.fiftyfifty, font: .poppinsBold)
                         .padding(.horizontal)
                 }
                 DatePicker("", selection: $selectedDate, in: dateRange, displayedComponents: .date)
                 .datePickerStyle(.graphical)
                 .padding()
 
-                NavigationLink(destination: AbsenceRegistrationView(selectedClass: className, selectedDate: selectedDate.formatSpecificData(date: selectedDate), isFromHistory: true)) {
+                NavigationLink(destination: AbsenceRegistrationView(selectedClass: classInfo, selectedDate: selectedDate.formatSpecificDate(date: selectedDate), isFromHistory: true)) {
                     Text("next_view")
                 }
-                .buttonStyle(Resources.CustomButtonStyle.RegisterButtonStyle())
+                .buttonStyle(Resources.CustomButtonStyle.SmallFilledButtonStyle())
                 .padding(.leading, 200)
             }
         }
@@ -48,6 +48,6 @@ struct CalendarView: View {
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(className: "0.x")
+        CalendarView(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""))
     }
 }

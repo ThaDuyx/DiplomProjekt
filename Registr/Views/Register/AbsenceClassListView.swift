@@ -22,17 +22,18 @@ struct AbsenceClassListView: View {
                                 Image(systemName: "star")
                                 
                                 Text("register_section_header_favoritter")
-                                    .boldDarkBodyTextStyle()
+                                    .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             }
                     ) {
-                        ForEach(registrationManager.classes, id: \.self) { className in
-                            if favoriteManager.favorites.contains(className) {
-                                ClassRow(className: className, isFavorite: true)
+                        ForEach(registrationManager.classes, id: \.self, content: { classInfo in
+                            if favoriteManager.favorites.contains(classInfo.name) {
+                                ClassRow(classInfo: classInfo, isFavorite: true)
                             }
-                        }
+                            
+                        })
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
-                    .listRowSeparatorTint(Resources.Color.Colors.white)
+                    .listRowBackground(Color.frolyRed)
+                    .listRowSeparatorTint(Color.white)
                     
                     // Non-favorite classes
                     Section(
@@ -41,17 +42,17 @@ struct AbsenceClassListView: View {
                                 Image(systemName: "person.3")
                                 
                                 Text("register_section_header_classes")
-                                    .boldDarkBodyTextStyle()
+                                    .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             }
                     ) {
-                        ForEach(registrationManager.classes, id: \.self) { className in
-                            if !favoriteManager.favorites.contains(className) {
-                                ClassRow(className: className, isFavorite: false)
+                        ForEach(registrationManager.classes, id: \.self, content: { classInfo in
+                            if !favoriteManager.favorites.contains(classInfo.name) {
+                                ClassRow(classInfo: classInfo, isFavorite: false)
                             }
-                        }
+                        })
                     }
-                    .listRowBackground(Resources.Color.Colors.frolyRed)
-                    .listRowSeparatorTint(Resources.Color.Colors.white)
+                    .listRowBackground(Color.frolyRed)
+                    .listRowSeparatorTint(Color.white)
                 }
                 .listStyle(.insetGrouped)
             }
@@ -61,28 +62,28 @@ struct AbsenceClassListView: View {
     }
 }
 struct ClassRow: View {
-    var className: String
+    var classInfo: ClassInfo
     var isFavorite: Bool
     
     var body: some View {
         HStack {
             HStack {
                 Image(systemName: isFavorite ? "star.fill" : "star")
-                    .foregroundColor(Resources.Color.Colors.white)
+                    .foregroundColor(Color.white)
                 
-                Text(className)
-                    .smallSubTitleTextStyle()
+                Text(classInfo.name)
+                    .subTitleTextStyle(color: .white, font: .poppinsSemiBold)
                     .frame(maxWidth: .infinity, alignment: .center)
             }
             // Setting frame and opacity to 0, to remove chevron
-            NavigationLink(destination: AbsenceRegistrationView(selectedClass: className, selectedDate: Date().currentDateFormatted, isFromHistory: false)) {
+            NavigationLink(destination: AbsenceRegistrationView(selectedClass: classInfo, selectedDate: Date().currentDateFormatted, isFromHistory: false)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
             .opacity(0)
             
             Image(systemName: "chevron.right")
-                .foregroundColor(Resources.Color.Colors.white)
+                .foregroundColor(Color.white)
                 .padding(.trailing, 10)
         }
         .frame(height: 55)

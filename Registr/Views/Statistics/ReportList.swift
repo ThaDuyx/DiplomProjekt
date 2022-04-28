@@ -23,22 +23,21 @@ struct ReportList: View {
         ZStack {
             List() {
                 ForEach(childrenManager.reports, id: \.self) { report in
-                    ReportListRow(report: report)
-                        .padding(.bottom, 20)
-                        .sheet(isPresented: $showModal) {
-                            ParentAbsenceRegistrationView()
-                        }
-                        .onTapGesture {
-                            showModal = true
-                        }
+                    if report.studentID == selectedStudent {
+                        ReportListRow(report: report)
+                            .padding(.bottom, 20)
+                            .sheet(isPresented: $showModal) {
+                                ParentAbsenceRegistrationView()
+                            }
+                            .onTapGesture {
+                                showModal = true
+                            }
+                    }
                 }
             }
         }
         .navigationTitle(studentName)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear(){
-            childrenManager.fetchChildrenReports(childID: selectedStudent)
-        }
     }
 }
 
@@ -51,35 +50,35 @@ struct ReportListRow: View {
             Image(systemName: validationImage(report: report))
                 .foregroundColor(.white)
                 .frame(width: 36, height: 36)
-                .background(Resources.Color.Colors.frolyRed)
+                .background(Color.frolyRed)
                 .clipShape(Circle())
             
             VStack {
                 Text("Validering")
-                    .boldDarkSmallBodyTextStyle()
-                
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+
                 Text(report.teacherValidation)
-                    .smallDarkBodyTextStyle()
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             }
             
             VStack {
                 Text("Dato")
-                    .boldDarkSmallBodyTextStyle()
-                
-                Text(report.date.formatSpecificData(date: report.date))
-                    .smallDarkBodyTextStyle()
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+
+                Text(report.date.formatSpecificDate(date: report.date))
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             }
             
             VStack {
                 Text("Årsag")
-                    .boldDarkSmallBodyTextStyle()
-                
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+
                 Text(report.reason)
-                    .smallDarkBodyTextStyle()
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             }
                         
             Image(systemName: "ellipsis")
-                .foregroundColor(Resources.Color.Colors.fiftyfifty)
+                .foregroundColor(Color.fiftyfifty)
                 .padding(.trailing, 10)
         }
     }

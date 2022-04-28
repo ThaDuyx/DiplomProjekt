@@ -23,23 +23,22 @@ struct AbsenceListView: View {
         ZStack {
             List() {
                 ForEach(childrenManager.absences, id: \.self) { absence in
-                    ReportSectionView(absence: absence)
-                        .padding(.bottom, 20)
-                        .sheet(isPresented: $showModal) {
-                            ParentAbsenceRegistrationView()
-                        }
-                        .onTapGesture {
-                            showModal = true
-                        }
+                    if absence.studentID == selectedStudent {
+                        ReportSectionView(absence: absence)
+                            .padding(.bottom, 20)
+                            .sheet(isPresented: $showModal) {
+                                ParentAbsenceRegistrationView()
+                            }
+                            .onTapGesture {
+                                showModal = true
+                            }
+                    }
                 }
-                .listRowSeparatorTint(Resources.Color.Colors.fiftyfifty)
+                .listRowSeparatorTint(Color.fiftyfifty)
             }
         }
         .navigationTitle(studentName)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear(){
-            childrenManager.fetchChildrenAbsence(studentID: selectedStudent)
-        }
     }
 }
 
@@ -55,33 +54,33 @@ struct ReportSectionView: View {
     var body: some View {
         HStack {
             Text(stringSeparator(reason: absence.reason).uppercased())
-                .boldSmallBodyTextStyle()
+                .smallBodyTextStyle(color: .white, font: .poppinsBold)
                 .frame(width: 36, height: 36)
-                .background(Resources.Color.Colors.frolyRed)
+                .background(Color.frolyRed)
                 .clipShape(Circle())
             
             Spacer()
             
             VStack {
                 Text("Dato")
-                    .boldDarkSmallBodyTextStyle()
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                 Text(absence.date)
-                    .smallDarkBodyTextStyle()
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             }
             
             Spacer()
             
             VStack {
                 Text("Årsag")
-                    .boldDarkSmallBodyTextStyle()
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                 Text(absence.reason)
-                    .smallDarkBodyTextStyle()
+                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             }
             
             Spacer()
 
             Image(systemName: "ellipsis")
-                .foregroundColor(Resources.Color.Colors.fiftyfifty)
+                .foregroundColor(Color.fiftyfifty)
                 .padding(.trailing, 10)
         }
         .listRowBackground(Color.clear)

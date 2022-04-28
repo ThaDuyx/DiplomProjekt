@@ -14,14 +14,14 @@ struct ClassView: View {
     
     @State private var followAction: Bool = false
     
-    let className: String
+    let classInfo: ClassInfo
     var studentID: String? = nil
     
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
-    init(className: String, studentID: String? = nil) {
-        self.className = className
+    init(classInfo: ClassInfo, studentID: String? = nil) {
+        self.classInfo = classInfo
         self.studentID = studentID
     }
     
@@ -31,20 +31,20 @@ struct ClassView: View {
                 Spacer()
                 Button {
                     followAction.toggle()
-                    favoriteManager.favoriteAction(favorite: className)
+                    favoriteManager.favoriteAction(favorite: classInfo.name)
                 } label: {
                     
                     HStack {
                         Image(systemName: "checkmark.diamond")
                         
-                        Text(favoriteManager.favorites.contains(className) ? "Følger" : "Følger ikke")
+                        Text(favoriteManager.favorites.contains(classInfo.name) ? "Følger" : "Følger ikke")
                     }
                 }
-                .buttonStyle(Resources.CustomButtonStyle.TransparentFollowButtonStyle())
+                .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(isFollowed: favoriteManager.favorites.contains(classInfo.name)))
                 
-                ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(className: className))
+                ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo))
                 
-                ButtonAction(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: className))
+                ButtonAction(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: classInfo.name))
                 
                 Spacer()
                 
@@ -52,47 +52,47 @@ struct ClassView: View {
                     PieChart()
                         .data(demoData)
                         .chartStyle(ChartStyle(backgroundColor: .white,
-                                               foregroundColor: ColorGradient(Resources.Color.Colors.fiftyfifty, Resources.Color.Colors.fiftyfifty)))
+                                               foregroundColor: ColorGradient(Color.fiftyfifty, Color.fiftyfifty)))
                 }
                 .frame(width: 150, height: 150)
                 
                 VStack(alignment: .leading, spacing: -10) {
                     HStack {
                         Image(systemName: "chart.line.uptrend.xyaxis")
-                            .foregroundColor(Resources.Color.Colors.fiftyfifty)
+                            .foregroundColor(Color.fiftyfifty)
                         Text("Statistik")
-                            .boldDarkBodyTextStyle()
+                            .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             .padding(.leading, 20)
                     }
                     VStack(alignment: .center, spacing: 15) {
                         
-                        Text("Lovligt: \(statisticsManager.statistic.legal)")
-                            .lightBodyTextStyle()
+                        Text("Lovligt: Morgen - \(statisticsManager.statistic.legalMorning) & Eftermiddag - \(statisticsManager.statistic.legalAfternoon)")
+                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
                             .padding(.top, 10)
                         
-                        Text("Sygedage: \(statisticsManager.statistic.illness)")
-                            .lightBodyTextStyle()
-                        
-                        Text("Ulovligt: \(statisticsManager.statistic.illegal)")
-                            .lightBodyTextStyle()
-                        
-                        Text("For sent: \(statisticsManager.statistic.late)")
-                            .lightBodyTextStyle()
+                        Text("Sygedage: Morgen - \(statisticsManager.statistic.illnessMorning) & Eftermiddag - \(statisticsManager.statistic.illnessAfternoon)")
+                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
+
+                        Text("Ulovligt: Morgen - \(statisticsManager.statistic.illegalMorning) & Eftermiddag - \(statisticsManager.statistic.illegalAfternoon)")
+                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
+
+                        Text("For sent: Morgen - \(statisticsManager.statistic.lateMorning) & Eftermiddag - \(statisticsManager.statistic.lateAfternoon)")
+                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
                             .padding(.bottom, 10)
                         
                     }
                     .frame(width: 290)
-                    .background(Resources.Color.Colors.frolyRed)
+                    .background(Color.frolyRed)
                     .cornerRadius(20)
                     .padding()
                 }
                 .onAppear() {
-                    statisticsManager.fetchClassStats(className: className)
+                    statisticsManager.fetchClassStats(className: classInfo.name)
                 }
                 Spacer()
             }
         }
-        .navigationTitle(className)
+        .navigationTitle(classInfo.name)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -113,12 +113,12 @@ struct ButtonAction<TargetView: View>: View {
                     .padding(.leading, -50)
             }
         }
-        .buttonStyle(Resources.CustomButtonStyle.FilledBodyTextButtonStyle())
+        .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsBold, fontSize: Resources.FontSize.body))
     }
 }
 
 struct ClassView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassView(className: "0.X")
+        ClassView(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""))
     }
 }
