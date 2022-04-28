@@ -288,7 +288,6 @@
 				6A0F350227D8C8A9001E60D9 /* Registration.swift */,
 				6A0F350B27DB5395001E60D9 /* Student.swift */,
 				6AAC4E54280D912400AB59C2 /* Statistics.swift */,
-				83D6298F2812D371005EA006 /* NotificationViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -460,6 +459,7 @@
 		83D6298E2812D34B005EA006 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				83D6298F2812D371005EA006 /* NotificationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";

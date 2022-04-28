@@ -28,7 +28,7 @@ struct RegistrApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ProfileView().environmentObject(notificationVM)
+            LoginOptions().environmentObject(notificationVM)
         }
         .onChange(of: scenePhase) { phase in
             print("The newValue iss: \(phase)")
