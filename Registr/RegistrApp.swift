@@ -17,7 +17,6 @@ struct RegistrApp: App {
 
     init() {
         NavigationAndTabbarAppearance.configureAppearance()
-        FirebaseApp.configure()
         
         // Hardcoded for test
         if DefaultsManager.shared.favorites.isEmpty {
@@ -31,7 +30,6 @@ struct RegistrApp: App {
             LoginOptions().environmentObject(notificationVM)
         }
         .onChange(of: scenePhase) { phase in
-            print("The newValue iss: \(phase)")
             if phase == .active {
                 notificationVM.isViewActive = true
             } else {

@@ -15,26 +15,25 @@ struct NotificationRow: View {
         Group {
             if notificationVM.permission == .authorized {
                 Toggle("Tilladelse til at modtage notifikationer, når der er blevet registreret fravær.", isOn: $notificationVM.subscribeToNotification)
-                    .darkBodyTextStyleToggle()
-                    .toggleStyle(SwitchToggleStyle(tint: Resources.Color.Colors.frolyRed.opacity(0.5)))
+                    .textStyleToggle(color: .fiftyfifty, font: .poppinsRegular, size: Resources.FontSize.body)
+                    .toggleStyle(SwitchToggleStyle(tint: .frolyRed.opacity(0.5)))
                     .padding()
             } else {
                 VStack(spacing: 0) {
                     Text("notification_title")
-                        .boldDarkBodyTextStyle()
+                        .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                         .padding()
                     Text("notification_description")
-                        .darkBodyTextStyle()
+                        .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                         .padding()
                     Link(destination: URL(string: UIApplication.openSettingsURLString)!, label: {
                         Text("notification_button_title")
                     })
-                    .buttonStyle(Resources.CustomButtonStyle.FilledSmallButtonStyle())
+                        .buttonStyle(Resources.CustomButtonStyle.SmallFilledButtonStyle())
                 }
             }
         }
         .onChange(of: notificationVM.isViewActive, perform: { phase in
-            print("The phase is: \(phase)")
             if phase {
                 notificationVM.getNotificationSettings()
             }

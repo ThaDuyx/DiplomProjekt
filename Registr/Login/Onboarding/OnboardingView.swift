@@ -24,8 +24,18 @@ struct OnboardingView: View {
                     page
                         .overlay(
                             Button("next_view") {
-                                withAnimation(.easeInOut) {
-                                    currentPage += 1
+                                if page.id == 1 {
+                                    UNUserNotificationCenter.current().requestAuthorization(
+                                        options: [.alert, .sound, .badge]) { succes, _ in
+                                            guard succes else {
+                                                nextPage()
+                                                return
+                                            }
+                                            nextPage()
+                                            print("Succes in APNS registry")
+                                        }
+                                } else {
+                                    nextPage()
                                 }
                             }
                                 .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
@@ -36,7 +46,14 @@ struct OnboardingView: View {
             }
         }
     }
+    func nextPage() {
+        withAnimation(.easeInOut) {
+            currentPage += 1
+        }
+    }
 }
+
+
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {

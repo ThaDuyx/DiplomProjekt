@@ -18,9 +18,9 @@ struct ProfileView: View {
             } label: {
                 Text("Log ud")
             }
-            .buttonStyle(Resources.CustomButtonStyle.FilledWideButtonStyle())
+            .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
             Text("app_info")
-                .smallDarkBodyTextStyle()
+                .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .padding()

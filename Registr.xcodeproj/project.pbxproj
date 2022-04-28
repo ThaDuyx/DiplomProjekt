@@ -50,7 +50,6 @@
 		6AC078DD27CF73EB0048F0B1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078DC27CF73EB0048F0B1 /* FirebaseAuth */; };
 		6AC078DF27CF73EB0048F0B1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078DE27CF73EB0048F0B1 /* FirebaseCrashlytics */; };
 		6AC078E127CF73EB0048F0B1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC078E027CF73EB0048F0B1 /* FirebaseFirestore */; };
-		6AC078E327CF88C20048F0B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AC078E227CF88C20048F0B1 /* GoogleService-Info.plist */; };
 		6AC078E727CF8D0B0048F0B1 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC078E627CF8D0B0048F0B1 /* AuthenticationManager.swift */; };
 		6AC078EB27CF97340048F0B1 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC078EA27CF97340048F0B1 /* UserManager.swift */; };
 		6AC078ED27CF9A8C0048F0B1 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC078EC27CF9A8C0048F0B1 /* UserProfile.swift */; };
@@ -101,6 +100,7 @@
 		83D629902812D371005EA006 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6298F2812D371005EA006 /* NotificationViewModel.swift */; };
 		83DFAE182812EF42007C0D50 /* NotificationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DFAE172812EF42007C0D50 /* NotificationRow.swift */; };
 		83DFAE1A2814217B007C0D50 /* FontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DFAE192814217B007C0D50 /* FontStyle.swift */; };
+		83DFAE2C281A8C13007C0D50 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83DFAE2B281A8C12007C0D50 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,7 +143,6 @@
 		6AAF51B52809AC8C00023945 /* TeacherTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherTabs.swift; sourceTree = "<group>"; };
 		6AAF51B72809ACB200023945 /* ParentTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentTabs.swift; sourceTree = "<group>"; };
 		6AAF955827F47A6500A6C37B /* ChildrenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenManager.swift; sourceTree = "<group>"; };
-		6AC078E227CF88C20048F0B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6AC078E627CF8D0B0048F0B1 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		6AC078EA27CF97340048F0B1 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		6AC078EC27CF9A8C0048F0B1 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
@@ -193,6 +192,7 @@
 		83D6298F2812D371005EA006 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		83DFAE172812EF42007C0D50 /* NotificationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRow.swift; sourceTree = "<group>"; };
 		83DFAE192814217B007C0D50 /* FontStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStyle.swift; sourceTree = "<group>"; };
+		83DFAE2B281A8C12007C0D50 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,7 +243,7 @@
 			children = (
 				83D62987281173E2005EA006 /* Registr.entitlements */,
 				8348593127CFAE1D009D8A51 /* Info.plist */,
-				6AC078E227CF88C20048F0B1 /* GoogleService-Info.plist */,
+				83DFAE2B281A8C12007C0D50 /* GoogleService-Info.plist */,
 				6A31FD4827CF61B700EFECDD /* RegistrApp.swift */,
 				83D6298A281176E5005EA006 /* RegistrAppDelegate.swift */,
 				8391A8E827DA2D4900B5C698 /* Views */,
@@ -561,9 +561,9 @@
 				6A0F34EC27D89876001E60D9 /* Poppins-Bold.ttf in Resources */,
 				6A0F34F827D89876001E60D9 /* Poppins-LightItalic.ttf in Resources */,
 				6A31FD5027CF61B700EFECDD /* Preview Assets.xcassets in Resources */,
+				83DFAE2C281A8C13007C0D50 /* GoogleService-Info.plist in Resources */,
 				6A0F34F227D89876001E60D9 /* Poppins-ExtraLightItalic.ttf in Resources */,
 				6A0F34F627D89876001E60D9 /* OFL.txt in Resources */,
-				6AC078E327CF88C20048F0B1 /* GoogleService-Info.plist in Resources */,
 				83D5016527CF75240083AEE7 /* Localizable.strings in Resources */,
 				6A31FD4D27CF61B700EFECDD /* Assets.xcassets in Resources */,
 				6A0F34EE27D89876001E60D9 /* Poppins-Regular.ttf in Resources */,
@@ -782,8 +782,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Registr/Registr.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Registr/Preview Content\"";
 				DEVELOPMENT_TEAM = G6TSQJ6DQ5;
@@ -805,7 +806,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.DTU.Registr.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Registr Provisioning Profile";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -818,8 +819,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Registr/Registr.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Registr/Preview Content\"";
 				DEVELOPMENT_TEAM = G6TSQJ6DQ5;
@@ -841,7 +843,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.DTU.Registr.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Registr Provisioning Profile";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
