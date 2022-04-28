@@ -116,7 +116,7 @@ struct AbsenceRegistrationView: View {
                         .frame(alignment: .center)
                     Spacer()
                 } else {
-                    if isMorning && registrationManager.registrationInfo.hasMorningBeenRegistrered  || !isMorning && registrationManager.registrationInfo.hasAfternoonBeenRegistrered{
+                    if isMorning && registrationManager.registrationInfo.hasMorningBeenRegistrered  || !isMorning && registrationManager.registrationInfo.hasAfternoonBeenRegistrered {
                         HStack {
                             Text("Fraværsregistrering gennemgået")
                                 .bodyTextStyle(color: .completionGreen, font: .poppinsMedium)
