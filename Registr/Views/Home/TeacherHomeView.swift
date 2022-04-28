@@ -11,7 +11,6 @@ struct TeacherHomeView: View {
     
     @StateObject var reportManager = ReportManager()
     @EnvironmentObject var favoriteManager: FavoriteManager
-    @StateObject var feeeder = FeedDatabaseManager()
     
     var body: some View {
         NavigationView {
@@ -36,9 +35,6 @@ struct TeacherHomeView: View {
                 }
                 .onChange(of: favoriteManager.deselectedFavorite) { deselectedValue in
                     reportManager.removeFavorite(favorite: deselectedValue)
-                }
-                Button("Feed") {
-                    feeeder.createRegistrationDates()
                 }
             }
             .navigationTitle("Indberettelser")
