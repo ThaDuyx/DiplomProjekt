@@ -116,22 +116,13 @@ struct AbsenceRegistrationView: View {
                         .frame(alignment: .center)
                     Spacer()
                 } else {
-                    if isMorning && registrationManager.registrationInfo.hasMorningBeenRegistrered {
+                    if isMorning && registrationManager.registrationInfo.hasMorningBeenRegistrered  || !isMorning && registrationManager.registrationInfo.hasAfternoonBeenRegistrered{
                         HStack {
                             Text("Fraværsregistrering gennemgået")
-                                .bodyTextStyle(color: Color.completionGreen, font: .poppinsMedium)
+                                .bodyTextStyle(color: .completionGreen, font: .poppinsMedium)
                             
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(Color.completionGreen)
-                        }
-                        .padding(.top, 10)
-                    } else if !isMorning && registrationManager.registrationInfo.hasAfternoonBeenRegistrered {
-                        HStack {
-                            Text("Fraværsregistrering gennemgået")
-                                .bodyTextStyle(color: Color.completionGreen, font: .poppinsMedium)
-                            
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(Color.completionGreen)
+                                .foregroundColor(.completionGreen)
                         }
                         .padding(.top, 10)
                     }
