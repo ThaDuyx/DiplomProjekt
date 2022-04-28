@@ -68,7 +68,7 @@ class RegistrationManager: ObservableObject {
                                 }
                             }
                         } catch {
-                            
+                            print(error)
                         }
                     }
                 }
