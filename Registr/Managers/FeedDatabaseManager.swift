@@ -115,7 +115,12 @@ class FeedDatabaseManager: ObservableObject {
                 .collection("fb_date_path".localize)
                 .document(date)
             
-            newRegistration.setData(["exsists" : true])
+            do {
+                let registrationinfo = RegistrationInfo()
+                try newRegistration.setData(from: registrationinfo)
+            } catch {
+                print("Error in encoding data \(error)")
+            }
 
             for student in students {
                 if let id = student.id {

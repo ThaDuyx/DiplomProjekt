@@ -11,6 +11,7 @@ import FirebaseFirestore
 class RegistrationManager: ObservableObject {
     
     // Collections
+    @Published var registrationInfo = RegistrationInfo()
     @Published var registrations = [Registration]()
     @Published var students = [Student]()
     @Published var classes = [ClassInfo]()
@@ -46,9 +47,31 @@ class RegistrationManager: ObservableObject {
         // In this case will not have to fetch it again.
         if selectedClass != className || selectedDate != date || selectedIsMorning != isMorning {
             registrations.removeAll()
+            registrationInfo = RegistrationInfo()
             selectedClass = className
             selectedDate = date
             selectedIsMorning = isMorning
+            
+            db
+                .collection("fb_classes_path".localize)
+                .document(className)
+                .collection("fb_date_path".localize)
+                .document(date)
+                .getDocument { documentSnapshot, err in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        do {
+                            if let registrationInfoDocument = documentSnapshot{
+                                if let registrationInfoData = try registrationInfoDocument.data(as: RegistrationInfo.self) {
+                                    self.registrationInfo = registrationInfoData
+                                }
+                            }
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
             
             db
                 .collection("fb_classes_path".localize)
@@ -168,6 +191,28 @@ class RegistrationManager: ObservableObject {
                     }
                     
                     batch.updateData(["reason" : registration.reason, "isAbsenceRegistered" : false], forDocument: registrationRef)
+                }
+            }
+            
+            let registrationInfoRef = db
+                .collection("fb_classes_path".localize)
+                .document(className)
+                .collection("fb_date_path".localize)
+                .document(date)
+            
+            if isMorning && !registrationInfo.hasMorningBeenRegistrered {
+                do {
+                    registrationInfo.hasMorningBeenRegistrered = true
+                    try batch.setData(from: registrationInfo, forDocument: registrationInfoRef)
+                } catch {
+                    print("Error encoding document \(error)")
+                }
+            } else if !isMorning && !registrationInfo.hasAfternoonBeenRegistrered {
+                do {
+                    registrationInfo.hasAfternoonBeenRegistrered = true
+                    try batch.setData(from: registrationInfo, forDocument: registrationInfoRef)
+                } catch {
+                    print("Error encoding document \(error)")
                 }
             }
             
