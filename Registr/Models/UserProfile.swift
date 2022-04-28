@@ -8,22 +8,20 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-enum Role: Codable {
-    case teacher
-    case parent
-    case headmaster
+enum Role: String, Codable {
+    case teacher = "teacher"
+    case parent = "parent"
+    case headmaster = "headmaster"
 }
 
 class UserProfile: Codable {
-    @DocumentID var id: String? 
-    var uid: String
+    @DocumentID var id: String?
     var email: String
     var name: String
     var role: Role
     var associatedSchool: String
     
-    init(uid: String, email: String, name: String, role: Role, associatedSchool: String) {
-        self.uid = uid
+    init(email: String, name: String, role: Role, associatedSchool: String) {
         self.email = email
         self.name = name
         self.role = role

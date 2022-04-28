@@ -35,7 +35,7 @@ class AuthenticationManager {
                 return
                 
             } else {
-                if let id = authResult?.user.uid, let email = authResult?.user.email {
+                if let id = authResult?.user.uid {
                     
                     // Retrieve data from Firestore parent collection
                     let db = Firestore.firestore()
@@ -43,13 +43,17 @@ class AuthenticationManager {
                     case .parent:
                         let docRef = db.collection("fb_parent_path".localize).document(id)
                         docRef.getDocument { (document, error) in
-                            if let document = document, document.exists, let data = document.data() {
-                                let name = data["name"] as? String ?? "nil"
-                                let school = data["associatedSchool"] as? String ?? "nil"
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, associatedSchool: school)
-                                UserManager.shared.user = userLoggedIn
-                                DefaultsManager.shared.currentProfileID = id
-                                completion(true)
+                            if let document = document, document.exists {
+                                
+                                do {
+                                    let user = try document.data(as: UserProfile.self)
+                                    UserManager.shared.user = user
+                                    DefaultsManager.shared.currentProfileID = id
+                                    completion(true)
+                                } catch {
+                                    print("Error decoding user: \(error)")
+                                    completion(false)
+                                }
                                 
                             } else {
                                 print("Document does not exist")
@@ -60,14 +64,16 @@ class AuthenticationManager {
                     case .school:
                         let docRef = db.collection("fb_employee_path".localize).document(id)
                         docRef.getDocument { (document, error) in
-                            if let document = document, document.exists, let data = document.data() {
-                                let name = data["name"] as? String ?? "nil"
-                                let roleData = data["role"] as? Bool ?? false
-                                let role: Role = roleData ? .headmaster : .teacher
-                                let school = data["associatedSchool"] as? String ?? "nil"
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: role, associatedSchool: school)
-                                UserManager.shared.user = userLoggedIn
-                                completion(true)
+                            if let document = document, document.exists {
+                                do {
+                                    let user = try document.data(as: UserProfile.self)
+                                    UserManager.shared.user = user
+                                    DefaultsManager.shared.currentProfileID = id
+                                    completion(true)
+                                } catch {
+                                    print("Error decoding user: \(error)")
+                                    completion(false)
+                                }
                                 
                             } else {
                                 print("Document does not exist")
