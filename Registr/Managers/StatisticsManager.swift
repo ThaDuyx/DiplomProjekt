@@ -15,9 +15,7 @@ class StatisticsManager: ObservableObject {
     // Collection of Firestore write actions
     private var batch = Firestore.firestore().batch()
     
-    // Object that contains statistic data and overrides every time it is written to.
-    @Published var statistic = Statistics(illegalMorning: 0, illegalAfternoon: 0, illnessMorning: 0, illnessAfternoon: 0, lateMorning: 0, lateAfternoon: 0, legalMorning: 0, legalAfternoon: 0)
-    
+    // The school that the user is accociated with
     private var selectedSchool: String {
         if let schoolID = UserManager.shared.user?.associatedSchool {
             return schoolID
@@ -25,6 +23,9 @@ class StatisticsManager: ObservableObject {
             return ""
         }
     }
+    
+    // Object that contains statistic data and overrides every time it is written to.
+    @Published var statistic = Statistics(illegalMorning: 0, illegalAfternoon: 0, illnessMorning: 0, illnessAfternoon: 0, lateMorning: 0, lateAfternoon: 0, legalMorning: 0, legalAfternoon: 0)
     
     // Constants
     private let increment: Int64 = 1

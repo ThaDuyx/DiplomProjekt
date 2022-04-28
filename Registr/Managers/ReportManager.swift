@@ -21,6 +21,7 @@ class ReportManager: ObservableObject {
     // Container that keeps track of our snapshot listeners in order to detach when not in use anymore.
     private var snapshotListeners = [SnapshotData]()
     
+    // The school that the user is accociated with
     private var selectedSchool: String {
         if let schoolID = UserManager.shared.user?.associatedSchool {
             return schoolID
