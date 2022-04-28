@@ -45,7 +45,8 @@ class AuthenticationManager {
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists, let data = document.data() {
                                 let name = data["name"] as? String ?? "nil"
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent)
+                                let school = data["associatedSchool"] as? String ?? "nil"
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: .parent, associatedSchool: school)
                                 UserManager.shared.user = userLoggedIn
                                 DefaultsManager.shared.currentProfileID = id
                                 completion(true)
@@ -56,7 +57,6 @@ class AuthenticationManager {
                             }
                         }
                         
-                        //TODO: --- Add headmaster UserProfile ---
                     case .school:
                         let docRef = db.collection("fb_employee_path".localize).document(id)
                         docRef.getDocument { (document, error) in
@@ -64,7 +64,8 @@ class AuthenticationManager {
                                 let name = data["name"] as? String ?? "nil"
                                 let roleData = data["role"] as? Bool ?? false
                                 let role: Role = roleData ? .headmaster : .teacher
-                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: role)
+                                let school = data["associatedSchool"] as? String ?? "nil"
+                                let userLoggedIn = UserProfile(uid: id, email: email, name: name, role: role, associatedSchool: school)
                                 UserManager.shared.user = userLoggedIn
                                 completion(true)
                                 

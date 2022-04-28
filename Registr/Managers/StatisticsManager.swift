@@ -18,6 +18,14 @@ class StatisticsManager: ObservableObject {
     // Object that contains statistic data and overrides every time it is written to.
     @Published var statistic = Statistics(illegalMorning: 0, illegalAfternoon: 0, illnessMorning: 0, illnessAfternoon: 0, lateMorning: 0, lateAfternoon: 0, legalMorning: 0, legalAfternoon: 0)
     
+    private var selectedSchool: String {
+        if let schoolID = UserManager.shared.user?.associatedSchool {
+            return schoolID
+        } else {
+            return ""
+        }
+    }
+    
     // Constants
     private let increment: Int64 = 1
     private let decrement: Int64 = -1
@@ -116,6 +124,8 @@ class StatisticsManager: ObservableObject {
     /// Fetches the statistic variables for a specific class
     func fetchClassStats(className: String) {
         db
+            .collection("fb_schools_path".localize)
+            .document(selectedSchool)
             .collection("fb_classes_path".localize)
             .document(className)
             .collection("fb_statistics_path".localize)
@@ -150,6 +160,8 @@ class StatisticsManager: ObservableObject {
      */
     func writeClassStats(className: String, isMorning: Bool) {
         let statisticsClassRef = db
+            .collection("fb_schools_path".localize)
+            .document(selectedSchool)
             .collection("fb_classes_path".localize)
             .document(className)
             .collection("fb_statistics_path".localize)

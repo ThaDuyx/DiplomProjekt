@@ -14,4 +14,5 @@ struct Student: Codable, Identifiable, Hashable {
     let className: String
     let email: String
     var classInfo: ClassInfo
+    let associatedSchool: String
 }

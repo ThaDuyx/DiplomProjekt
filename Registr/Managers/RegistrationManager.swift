@@ -25,6 +25,13 @@ class RegistrationManager: ObservableObject {
     private var selectedDate = String()
     private var selectedStudent = String()
     private var selectedIsMorning: Bool = true
+    private var selectedSchool: String {
+        if let schoolID = UserManager.shared.user?.associatedSchool {
+            return schoolID
+        } else {
+            return ""
+        }
+    }
     
     init() {
         fetchClasses()
@@ -53,6 +60,8 @@ class RegistrationManager: ObservableObject {
             selectedIsMorning = isMorning
             
             db
+                .collection("fb_schools_path".localize)
+                .document(selectedSchool)
                 .collection("fb_classes_path".localize)
                 .document(className)
                 .collection("fb_date_path".localize)
@@ -74,6 +83,8 @@ class RegistrationManager: ObservableObject {
                 }
             
             db
+                .collection("fb_schools_path".localize)
+                .document(selectedSchool)
                 .collection("fb_classes_path".localize)
                 .document(className)
                 .collection("fb_date_path".localize)
@@ -87,9 +98,7 @@ class RegistrationManager: ObservableObject {
                             do {
                                 if let registration = try document.data(as: Registration.self) {
                                     self.registrations.append(registration)
-                                    self.registrations.sort {
-                                        $0.studentName < $1.studentName
-                                    }
+                                    self.registrations.sort { $0.studentName < $1.studentName }
                                 }
                             }
                             catch {
@@ -118,6 +127,8 @@ class RegistrationManager: ObservableObject {
                 if !registration.reason.isEmpty {
                     // Absence registration for the class collection
                     let registrationRef = db
+                        .collection("fb_schools_path".localize)
+                        .document(selectedSchool)
                         .collection("fb_classes_path".localize)
                         .document(className)
                         .collection("fb_date_path".localize)
@@ -166,6 +177,8 @@ class RegistrationManager: ObservableObject {
                     
                 } else if registration.reason.isEmpty && registration.isAbsenceRegistered {
                     let registrationRef = db
+                        .collection("fb_schools_path".localize)
+                        .document(selectedSchool)
                         .collection("fb_classes_path".localize)
                         .document(className)
                         .collection("fb_date_path".localize)
@@ -195,6 +208,8 @@ class RegistrationManager: ObservableObject {
             }
             
             let registrationInfoRef = db
+                .collection("fb_schools_path".localize)
+                .document(selectedSchool)
                 .collection("fb_classes_path".localize)
                 .document(className)
                 .collection("fb_date_path".localize)
@@ -232,6 +247,8 @@ class RegistrationManager: ObservableObject {
     // Retrieves every class name
     func fetchClasses() {
         db
+            .collection("fb_schools_path".localize)
+            .document(selectedSchool)
             .collection("fb_classes_path".localize)
             .getDocuments { querySnapshot, err in
                 if let err = err {
@@ -257,11 +274,12 @@ class RegistrationManager: ObservableObject {
      - parameter className:      The unique name specifier of the class
      */
     func fetchStudents(className: String) {
-        if selectedClass != className {
             students.removeAll()
             selectedClass = className
             
             db
+                .collection("fb_schools_path".localize)
+                .document(selectedSchool)
                 .collection("fb_classes_path".localize)
                 .document(className)
                 .collection("fb_students_path".localize)
@@ -278,9 +296,7 @@ class RegistrationManager: ObservableObject {
                                         do {
                                             if let student = try data.data(as: Student.self) {
                                                 self.students.append(student)
-                                                self.students.sort {
-                                                    $0.name < $1.name
-                                                }
+                                                self.students.sort { $0.name < $1.name }
                                             }
                                         }
                                         catch {
@@ -291,7 +307,6 @@ class RegistrationManager: ObservableObject {
                         }
                     }
                 }
-        }
     }
     
     func fetchStudentAbsence(studentID: String) {

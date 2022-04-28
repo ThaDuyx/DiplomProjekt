@@ -20,11 +20,13 @@ class UserProfile: Codable {
     var email: String
     var name: String
     var role: Role
+    var associatedSchool: String
     
-    init(uid: String, email: String, name: String, role: Role) {
+    init(uid: String, email: String, name: String, role: Role, associatedSchool: String) {
         self.uid = uid
         self.email = email
         self.name = name
         self.role = role
+        self.associatedSchool = associatedSchool
     }
 }

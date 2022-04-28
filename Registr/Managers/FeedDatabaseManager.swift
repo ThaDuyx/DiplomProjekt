@@ -16,7 +16,8 @@ class FeedDatabaseManager: ObservableObject {
     var classes = [ClassInfo]()
     let db = Firestore.firestore()
     
-    // Class selector, change this variable to choose the specific class
+    // School & Class selectors, change these variable to choose the specific school or class.
+    let selectedSchool = "EXvXPS4HuVnxu7LhZRPt"
     let selectedClass = "0.x"
     
     init() {
@@ -53,6 +54,8 @@ class FeedDatabaseManager: ObservableObject {
     /// This method is used to fill the 'students' array with student that can be used to create new absence registrations.
     func fetchStudents(className: String) {
         db
+            .collection("fb_schools_path".localize)
+            .document(selectedSchool)
             .collection("fb_classes_path".localize)
             .document(className)
             .collection("fb_students_path".localize)
@@ -69,9 +72,7 @@ class FeedDatabaseManager: ObservableObject {
                                     do {
                                         if let student = try data.data(as: Student.self) {
                                             self.students.append(student)
-                                            self.students.sort {
-                                                $0.name < $1.name
-                                            }
+                                            self.students.sort { $0.name < $1.name }
                                         }
                                     }
                                     catch {
@@ -86,6 +87,8 @@ class FeedDatabaseManager: ObservableObject {
     
     func fetchClasses() {
         db
+            .collection("fb_schools_path".localize)
+            .document(selectedSchool)
             .collection("fb_classes_path".localize)
             .getDocuments { querySnapshot, err in
                 if let err = err {
@@ -110,6 +113,8 @@ class FeedDatabaseManager: ObservableObject {
     func createRegistrationDates() {
         for date in dateArray {
             let newRegistration = db
+                .collection("fb_schools_path".localize)
+                .document(selectedSchool)
                 .collection("fb_classes_path".localize)
                 .document(selectedClass)
                 .collection("fb_date_path".localize)
@@ -124,7 +129,8 @@ class FeedDatabaseManager: ObservableObject {
 
             for student in students {
                 if let id = student.id {
-                    newRegistration.collection("fb_morningRegistration_path".localize)
+                    newRegistration
+                        .collection("fb_morningRegistration_path".localize)
                         .document(id)
                         .setData(["className" : selectedClass,
                                   "date" : date,
@@ -135,7 +141,8 @@ class FeedDatabaseManager: ObservableObject {
                                   "validated" : false])
                     
                     if classes.contains(where: { $0.name == student.className && $0.isDoubleRegistrationActivated}) {
-                        newRegistration.collection("fb_afternoonRegistration_path".localize)
+                        newRegistration
+                            .collection("fb_afternoonRegistration_path".localize)
                             .document(id)
                             .setData(["className" : selectedClass,
                                       "date" : date,
