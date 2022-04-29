@@ -15,9 +15,9 @@ class NotificationViewModel: ObservableObject {
     @AppStorage("subscribeToNotification") var subscribeToNotification : Bool = false {
         didSet {
             if subscribeToNotification {
-                subscribeToTopic()
+                subscribe(to: "weather")
             } else {
-                unsubscribeFromTopic()
+                unsubscribe(from: "weather")
             }
         }
     }
@@ -35,9 +35,9 @@ class NotificationViewModel: ObservableObject {
                 }
                 
                 if self.subscribeToNotification {
-                    self.subscribeToTopic()
+                    self.subscribe(to: "weather")
                 } else {
-                    self.unsubscribeFromTopic()
+                    self.unsubscribe(from: "weather")
                 }
                 
             } else {
@@ -47,31 +47,31 @@ class NotificationViewModel: ObservableObject {
                     self.current.removeAllDeliveredNotifications()
                 }
                 
-                self.unsubscribeFromTopic()
+                self.unsubscribe(from: "weather")
             }
         }
     }
     
-    private func subscribeToTopic() {
+    func subscribe(to topic: String) {
         guard permission == .authorized else {
             return
         }
         
-        Messaging.messaging().subscribe(toTopic: "topic") { error in
+        Messaging.messaging().subscribe(toTopic: topic) { error in
             if let error = error {
                 print("Error while subscribing: ", error)
                 return
             }
-            print("Subscribed to notifications for topic")
+            print("Subscribed to notifications from: \(topic)")
         }
     }
-    private func unsubscribeFromTopic() {
-        Messaging.messaging().unsubscribe(fromTopic: "topic") { error in
+    func unsubscribe(from topic: String) {
+        Messaging.messaging().unsubscribe(fromTopic: topic) { error in
             if let error = error {
                 print("Error while unsubscribing: ", error)
                 return
             }
-            print("Unsubcribed to notifications for topic")
+            print("Unsubcribed to notifications from: \(topic)")
         }
     }
 }

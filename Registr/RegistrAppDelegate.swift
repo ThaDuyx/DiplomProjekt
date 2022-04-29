@@ -18,7 +18,7 @@ class RegistrAppDelegate: NSObject, UIApplicationDelegate {
         
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
-
+        
         application.registerForRemoteNotifications()
         
         return true
@@ -44,24 +44,13 @@ extension RegistrAppDelegate: MessagingDelegate {
 
 @available(iOS 10, *)
 extension RegistrAppDelegate: UNUserNotificationCenterDelegate {
-  // Receive displayed notifications for iOS 10 devices.
-  func userNotificationCenter(_ center: UNUserNotificationCenter,
-                              willPresent notification: UNNotification,
-                              withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
-                                -> Void) {
-    let userInfo = notification.request.content.userInfo
-
-    // With swizzling disabled you must let Messaging know about the message, for Analytics
-    // Messaging.messaging().appDidReceiveMessage(userInfo)
-
-    // ...
-
-    // Print full message.
-    print(userInfo)
-
-    // Change this to your preferred presentation option
-      completionHandler([[.banner, .badge, .sound]])
-  }
+    // Receive displayed notifications for iOS 10 devices.
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        process(notification)
+        
+        completionHandler([[.banner, .badge, .sound]])
+    }
     // Used for debugging only
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         print("didRegisterForRemoteNotificationsWithDeviceToken")
@@ -71,20 +60,22 @@ extension RegistrAppDelegate: UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("didFailToRegisterForRemoteNotificationsWithError")
     }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        process(response.notification)
+        
+        completionHandler()
+    }
+    
+    private func process(_ notification: UNNotification) {
+      let userInfo = notification.request.content.userInfo
+      UIApplication.shared.applicationIconBadgeNumber = 0
+      if let notificationTitle = userInfo["notificationTitle"] as? String,
+        let notificationBody = userInfo["notificationBody"] as? String {
+        let notificationItem = NotificationItem(title: notificationTitle, body: notificationBody, date: Date())
+        NotificationModel.shared.add([notificationItem])
+      }
+    }
 
-  func userNotificationCenter(_ center: UNUserNotificationCenter,
-                              didReceive response: UNNotificationResponse,
-                              withCompletionHandler completionHandler: @escaping () -> Void) {
-    let userInfo = response.notification.request.content.userInfo
-
-    // ...
-
-    // With swizzling disabled you must let Messaging know about the message, for Analytics
-    // Messaging.messaging().appDidReceiveMessage(userInfo)
-
-    // Print full message.
-    print(userInfo)
-
-    completionHandler()
-  }
 }

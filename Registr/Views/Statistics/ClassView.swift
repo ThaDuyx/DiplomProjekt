@@ -95,6 +95,10 @@ struct ClassView: View {
         .navigationTitle(classInfo.name)
         .navigationBarTitleDisplayMode(.inline)
     }
+    
+    private func topicSubscription() {
+        
+    }
 }
 
 struct ButtonAction<TargetView: View>: View {
