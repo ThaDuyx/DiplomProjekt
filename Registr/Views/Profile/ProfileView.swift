@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ProfileView: View {
+    let isTeacher: Bool
     var body: some View {
         VStack {
-            NotificationRow()
+            NotificationRow(isTeacher: isTeacher)
                 .padding(.top, 20)
             Spacer()
             Button {
@@ -25,11 +26,13 @@ struct ProfileView: View {
                 .lineLimit(2)
                 .padding()
         }
+        .navigationTitle("Profil")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(isTeacher: true)
     }
 }

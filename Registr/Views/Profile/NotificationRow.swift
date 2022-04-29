@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct NotificationRow: View {
+    let isTeacher: Bool
     @EnvironmentObject var notificationVM: NotificationViewModel
     @Environment(\.scenePhase) private var scenePhase
     
     var body: some View {
         Group {
             if notificationVM.permission == .authorized {
-                Toggle("Tilladelse til at modtage notifikationer, når der er blevet registreret fravær.", isOn: $notificationVM.subscribeToNotification)
+                Toggle("Tilladelse til at modtage notifikationer, når der sker noget vigtigt.", isOn: isTeacher ? $notificationVM.teacherSubscribeToNotification : $notificationVM.teacherSubscribeToNotification)
                     .textStyleToggle(color: .fiftyfifty, font: .poppinsRegular, size: Resources.FontSize.body)
                     .toggleStyle(SwitchToggleStyle(tint: .frolyRed.opacity(0.5)))
                     .padding()
@@ -46,6 +47,6 @@ struct NotificationRow: View {
 
 struct NotificationRow_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationRow()
+        NotificationRow(isTeacher: true)
     }
 }

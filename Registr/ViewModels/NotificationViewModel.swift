@@ -9,34 +9,18 @@ import SwiftUI
 import UserNotifications
 import FirebaseMessaging
 
-extension Array: RawRepresentable where Element: Codable {
-    public init?(rawValue: String) {
-        guard let data = rawValue.data(using: .utf8),
-              let result = try? JSONDecoder().decode([Element].self, from: data)
-        else {
-            return nil
-        }
-        self = result
-    }
-
-    public var rawValue: String {
-        guard let data = try? JSONEncoder().encode(self),
-              let result = String(data: data, encoding: .utf8)
-        else {
-            return "[]"
-        }
-        return result
-    }
-}
-
 class NotificationViewModel: ObservableObject {
     @Published var isViewActive : Bool = false
     @Published var permission: UNAuthorizationStatus?
     @AppStorage("nameOfSubscriptions") var nameOfSubscriptions: String = ""
-    @AppStorage("nameOfSubscription") var nameOfSubscription: [String] = []
     @AppStorage("subscribeToNotification") var subscribeToNotification : Bool = false {
         didSet {
             updateSubscription(for: nameOfSubscriptions, subscribed: subscribeToNotification)
+        }
+    }
+    @AppStorage("teacherSubscribeToNotification") var teacherSubscribeToNotification : Bool = false {
+        didSet {
+            teacherUpdateSubscription(subscribed: teacherSubscribeToNotification)
         }
     }
     let current = UNUserNotificationCenter.current()
@@ -51,27 +35,33 @@ class NotificationViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
-                
-                if self.subscribeToNotification {
-                    self.subscribe(to: "weather")
-                } else {
-                    self.unsubscribe(from: "weather")
-                }
-                
             } else {
                 DispatchQueue.main.async {
                     UIApplication.shared.unregisterForRemoteNotifications()
                     self.current.removeAllPendingNotificationRequests()
                     self.current.removeAllDeliveredNotifications()
                 }
-                
-                self.unsubscribe(from: "weather")
+            }
+        }
+    }
+    
+    private func teacherUpdateSubscription(subscribed: Bool) {
+        if subscribed {
+            for topics in DefaultsManager.shared.favorites {
+                print("subscribing to \(topics)")
+                subscribe(to: topics)
+            }
+        } else {
+            for topics in DefaultsManager.shared.favorites {
+                print("unsubscribing to \(topics)")
+                unsubscribe(from: topics)
             }
         }
     }
     
     private func updateSubscription(for topic: String, subscribed: Bool) {
       if subscribed {
+          
         subscribe(to: topic)
       } else {
         unsubscribe(from: topic)
