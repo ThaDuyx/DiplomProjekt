@@ -9,16 +9,34 @@ import SwiftUI
 import UserNotifications
 import FirebaseMessaging
 
+extension Array: RawRepresentable where Element: Codable {
+    public init?(rawValue: String) {
+        guard let data = rawValue.data(using: .utf8),
+              let result = try? JSONDecoder().decode([Element].self, from: data)
+        else {
+            return nil
+        }
+        self = result
+    }
+
+    public var rawValue: String {
+        guard let data = try? JSONEncoder().encode(self),
+              let result = String(data: data, encoding: .utf8)
+        else {
+            return "[]"
+        }
+        return result
+    }
+}
+
 class NotificationViewModel: ObservableObject {
     @Published var isViewActive : Bool = false
     @Published var permission: UNAuthorizationStatus?
+    @AppStorage("nameOfSubscriptions") var nameOfSubscriptions: String = ""
+    @AppStorage("nameOfSubscription") var nameOfSubscription: [String] = []
     @AppStorage("subscribeToNotification") var subscribeToNotification : Bool = false {
         didSet {
-            if subscribeToNotification {
-                subscribe(to: "weather")
-            } else {
-                unsubscribe(from: "weather")
-            }
+            updateSubscription(for: nameOfSubscriptions, subscribed: subscribeToNotification)
         }
     }
     let current = UNUserNotificationCenter.current()
@@ -50,6 +68,14 @@ class NotificationViewModel: ObservableObject {
                 self.unsubscribe(from: "weather")
             }
         }
+    }
+    
+    private func updateSubscription(for topic: String, subscribed: Bool) {
+      if subscribed {
+        subscribe(to: topic)
+      } else {
+        unsubscribe(from: topic)
+      }
     }
     
     func subscribe(to topic: String) {
