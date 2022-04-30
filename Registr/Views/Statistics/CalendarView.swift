@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct CalendarView: View {
+    @StateObject private var schoolManager = SchoolManager()
     @State private var selectedDate: Date = Date()
     let classInfo: ClassInfo
+    let school: School
     let startDate = Date()
     
     func dateRanges(amountOfDaysSinceStart: Int, amountOfDayssinceStop: Int) -> ClosedRange<Date> {
@@ -19,6 +21,8 @@ struct CalendarView: View {
     }
     
     func dateClosedRange(date: Date) -> Int {
+        
+        print("The date is: \(date)")
         
         var dateComponent = DateComponents()
         dateComponent.day = 251
@@ -45,7 +49,7 @@ struct CalendarView: View {
                         .subTitleTextStyle(color: Color.fiftyfifty, font: .poppinsBold)
                         .padding(.horizontal)
                 }
-                DatePicker("", selection: $selectedDate, in: dateRanges(amountOfDaysSinceStart: dateClosedRange(date: startDate), amountOfDayssinceStop: dateClosedRange(date: startDate)), displayedComponents: .date)
+                DatePicker("", selection: $selectedDate, in: dateRanges(amountOfDaysSinceStart: dateClosedRange(date: school.startDate), amountOfDayssinceStop: dateClosedRange(date: school.endDate)), displayedComponents: .date)
                 .datePickerStyle(.graphical)
                 .padding()
 
@@ -55,12 +59,12 @@ struct CalendarView: View {
                 .buttonStyle(Resources.CustomButtonStyle.SmallFilledButtonStyle())
                 .padding(.leading, 200)
             }
-        }
+        }.environmentObject(schoolManager)
     }
 }
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""))
+        CalendarView(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), school: School(startDate: .now, endDate: .now, name: "SchollName"))
     }
 }
