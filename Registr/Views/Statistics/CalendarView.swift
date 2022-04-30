@@ -26,7 +26,6 @@ struct CalendarView: View {
         let components = Calendar.current.dateComponents([.day], from: date, to: .now)
         
         // Force unwraps, since we know that we will have a date, since we have a default value.
-        print(components.day!)
         return components.day!
     }
     
