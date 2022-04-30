@@ -15,7 +15,7 @@ struct ClassListView: View {
             ZStack {
                 List {
                     ForEach(registrationManager.classes, id: \.self) { classInfo in
-                        ClassEntity(classInfo: classInfo)
+                        ClassSection(classInfo: classInfo)
                     }
                     .listRowBackground(Color.frolyRed)
                     .listRowSeparatorTint(Color.white)
@@ -24,28 +24,6 @@ struct ClassListView: View {
             .navigationTitle("Statistik")
             .navigationBarTitleDisplayMode(.inline)
         }
-    }
-}
-
-struct ClassEntity: View {
-    let classInfo: ClassInfo
-    
-    var body: some View {
-        HStack {
-            Text(classInfo.name)
-                .bodyTextStyle(color: Color.white, font: .poppinsBold)
-                .frame(maxWidth: .infinity, alignment: .center)
-            
-            NavigationLink(destination: ClassView(classInfo: classInfo)) {
-                EmptyView()
-            }
-            .frame(width: 0, height: 0)
-            
-            Image(systemName: "chevron.right")
-                .foregroundColor(Color.white)
-                .padding(.trailing, 10)
-        }
-        .frame(height: 35)
     }
 }
 

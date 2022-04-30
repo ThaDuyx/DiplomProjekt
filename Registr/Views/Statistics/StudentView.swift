@@ -34,9 +34,9 @@ struct StudentView: View {
                     
                     Spacer()
                     
-                    ButtonAction(systemName: "doc.text.fill", titleText: "Indberettelser", destination: ReportList(selectedStudent: studentID, studentName: studentName))
+                    StatisticsButtonSection(systemName: "doc.text.fill", titleText: "Indberettelser", destination: ReportListView(selectedStudent: studentID, studentName: studentName))
 
-                    ButtonAction(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: AbsenceListView(selectedStudent: studentID, studentName: studentName))
+                    StatisticsButtonSection(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: AbsenceListView(selectedStudent: studentID, studentName: studentName))
                     
                 }
             }
