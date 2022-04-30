@@ -76,7 +76,7 @@ struct ClassRow: View {
                     .frame(maxWidth: .infinity, alignment: .center)
             }
             // Setting frame and opacity to 0, to remove chevron
-            NavigationLink(destination: AbsenceRegistrationView(selectedClass: classInfo, selectedDate: Date().currentDateFormatted, isFromHistory: false)) {
+            NavigationLink(destination: AbsenceRegistrationView(selectedClass: classInfo, selectedDate: Date(), isFromHistory: false)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
