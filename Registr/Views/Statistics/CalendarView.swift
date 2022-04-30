@@ -49,7 +49,7 @@ struct CalendarView: View {
                 .datePickerStyle(.graphical)
                 .padding()
 
-                NavigationLink(destination: AbsenceRegistrationView(selectedClass: classInfo, selectedDate: selectedDate.formatSpecificData(date: selectedDate), isFromHistory: true)) {
+                NavigationLink(destination: AbsenceRegistrationView(selectedClass: classInfo, selectedDate: selectedDate.formatSpecificDate(date: selectedDate), isFromHistory: true)) {
                     Text("next_view")
                 }
                 .buttonStyle(Resources.CustomButtonStyle.SmallFilledButtonStyle())

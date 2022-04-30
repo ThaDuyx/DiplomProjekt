@@ -29,6 +29,8 @@ extension Color {
     static var frolyRed = Color(hex: 0xf97c7c)
     /// Hexcode is 505050
     static var fiftyfifty = Color(hex: 0x505050)
+    /// Hexcode is 6BD76B
+    static var completionGreen = Color(hex: 0x6BD76B)
 }
 
 private class BundleClass {}

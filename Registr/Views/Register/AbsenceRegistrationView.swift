@@ -32,6 +32,7 @@ struct AbsenceRegistrationView: View {
     @State private var studentAbsenceState: String = ""
     @State private var studentIndex: Int = 0
     @State private var studentName: String = ""
+    @State var elementDate = Date()
     @State var selectedDate: String
     var isFromHistory: Bool
     
@@ -66,13 +67,14 @@ struct AbsenceRegistrationView: View {
                                                 .bigBodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                                         }
                                         
-                                        Text("\(element.formatSpecificToDayAndMonthData(date: element))")
+                                        Text("\(element.formatSpecificToDayAndMonthDate(date: element))")
                                             .subTitleTextStyle(color: self.selectedItem == number ? .frolyRed : Color.fiftyfifty, font: .poppinsBold)
                                     }
                                     .id(number)
                                     .onTapGesture {
                                         self.selectedItem = number
-                                        selectedDate = element.formatSpecificData(date: element)
+                                        selectedDate = element.formatSpecificDate(date: element)
+                                        elementDate = element
                                     }
                                 }.onAppear {
                                     withAnimation(.spring()) {
@@ -91,7 +93,7 @@ struct AbsenceRegistrationView: View {
                             isMorning = true
                         } label: {
                             Text("Formiddag")
-                                .subTitleTextStyle(color: isMorning ? .frolyRed : Color.fiftyfifty, font: isMorning ? .poppinsMedium : .poppinsRegular)
+                                .subTitleTextStyle(color: isMorning ? .frolyRed : .fiftyfifty, font: isMorning ? .poppinsMedium : .poppinsRegular)
                         }
                         .frame(maxWidth: .infinity, minHeight: 35)
                         .background(isMorning ? .white : Color.fiftyfifty.opacity(0.15) )
@@ -100,95 +102,114 @@ struct AbsenceRegistrationView: View {
                             isMorning = false
                         } label: {
                             Text("Eftermiddag")
-                                .subTitleTextStyle(color: isMorning ? .frolyRed : Color.fiftyfifty, font: isMorning ? .poppinsMedium : .poppinsRegular)
+                                .subTitleTextStyle(color: !isMorning ? .frolyRed : .fiftyfifty, font: !isMorning ? .poppinsMedium : .poppinsRegular)
                         }
                         .frame(maxWidth: .infinity, minHeight: 35)
-                        .background(!isMorning ? .white : Color.fiftyfifty.opacity(0.15) )
+                        .background(!isMorning ? .white : .fiftyfifty.opacity(0.15) )
                     }
                 }
-                
-                ScrollView {
-                    ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
-                        StudentRow(
-                            index: index+1,
-                            studentName: registrationManager.registrations[index].studentName,
-                            absenceReason: registrationManager.registrations[index].reason,
-                            studentID: registrationManager.registrations[index].studentID,
-                            isMorning: isMorning
-                        )
-                        .environmentObject(statisticsManager)
-                        .onTapGesture {
-                            if !studentAbsenceState.isEmpty {
-                                studentAbsenceState = ""
-                            }
-                            studentIndex = index
-                            studentName = registrationManager.registrations[index].studentName
-                            showSheet.toggle()
-                        }
-                        
-                        Divider()
-                            .background(Color.fiftyfifty)
-                    }
-                }
-                .listStyle(.plain)
-                .halfSheet(showSheet: $showSheet) {
+                if Calendar.current.isDateInWeekend(elementDate) {
+                    Spacer()
                     
-                    VStack {
-                        Text("student_list_absence_description \(studentName)")
-                            .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
-
-                        ForEach(AbsenceReasons.allCases, id: \.self) { absenceReasons in
-                            Button(absenceReasons.rawValue.isEmpty ? "Ryd felt" : absenceReasons.rawValue) {
-                                studentAbsenceState = absenceReasons.rawValue
-                                registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
-                                showSheet.toggle()
+                    Text("Den valgte dato er en weekend")
+                        .headerTextStyle(color: .frolyRed, font: .poppinsSemiBold)
+                        .frame(alignment: .center)
+                    Spacer()
+                } else {
+                    if isMorning && registrationManager.registrationInfo.hasMorningBeenRegistrered  || !isMorning && registrationManager.registrationInfo.hasAfternoonBeenRegistrered {
+                        HStack {
+                            Text("Fraværsregistrering gennemgået")
+                                .bodyTextStyle(color: .completionGreen, font: .poppinsMedium)
+                            
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.completionGreen)
+                        }
+                        .padding(.top, 10)
+                    }
+                    
+                    ScrollView {
+                        ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
+                            StudentRow(
+                                index: index+1,
+                                studentName: registrationManager.registrations[index].studentName,
+                                absenceReason: registrationManager.registrations[index].reason,
+                                studentID: registrationManager.registrations[index].studentID,
+                                isMorning: isMorning
+                            )
+                                .environmentObject(statisticsManager)
+                                .onTapGesture {
+                                    if !studentAbsenceState.isEmpty {
+                                        studentAbsenceState = ""
+                                    }
+                                    studentIndex = index
+                                    studentName = registrationManager.registrations[index].studentName
+                                    showSheet.toggle()
+                                }
+                            
+                            Divider()
+                                .background(Color.fiftyfifty)
+                        }
+                    }
+                    .listStyle(.plain)
+                    .halfSheet(showSheet: $showSheet) {
+                        
+                        VStack {
+                            Text("student_list_absence_description \(studentName)")
+                                .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+                            
+                            ForEach(AbsenceReasons.allCases, id: \.self) { absenceReasons in
+                                Button(absenceReasons.rawValue.isEmpty ? "Ryd felt" : absenceReasons.rawValue) {
+                                    studentAbsenceState = absenceReasons.rawValue
+                                    registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
+                                    showSheet.toggle()
+                                }
+                                .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
                             }
-                            .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
                         }
+                    } onEnd: {
+                        showSheet.toggle()
                     }
-                } onEnd: {
-                    showSheet.toggle()
-                }
-                
-                Button {
-                    registrationManager.saveRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning) { result in
-                        if result {
-                            statisticsManager.commitBatch()
-                            statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning)
-                            presentationMode.wrappedValue.dismiss()
-                        } else {
-                            context.present(ErrorView(error: "alert_default_description".localize))
+                    
+                    Button {
+                        registrationManager.saveRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning) { result in
+                            if result {
+                                statisticsManager.commitBatch()
+                                statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning)
+                                presentationMode.wrappedValue.dismiss()
+                            } else {
+                                context.present(ErrorView(error: "alert_default_description".localize))
+                            }
                         }
+                    } label: {
+                        Text("Gem")
                     }
-                } label: {
-                    Text("Gem")
+                    .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
+                    .padding(.bottom, 20)
                 }
-                .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
-                .padding(.bottom, 20)
             }
-        }
-        .fullScreenCover(context)
-        .navigationTitle("Registrer")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear() {
-            registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning)
-        }
-        .onChange(of: selectedDate) { newDate in
-            registrationManager.fetchRegistrations(className: selectedClass.name, date: newDate, isMorning: isMorning)
-            
-            // Resetting on change of date
-            statisticsManager.resetStatCounters()
-            statisticsManager.resetBatch()
-        }
-        .onChange(of: isMorning) { _ in
-            registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning)
-            statisticsManager.resetStatCounters()
-            statisticsManager.resetBatch()
-        }
-        .onChange(of: selectedClass) { _ in
-            // Resetting on change of class
-            statisticsManager.resetStatCounters()
-            statisticsManager.resetBatch()
+            .fullScreenCover(context)
+            .navigationTitle("Registrer")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear() {
+                registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning)
+            }
+            .onChange(of: selectedDate) { newDate in
+                registrationManager.fetchRegistrations(className: selectedClass.name, date: newDate, isMorning: isMorning)
+                
+                // Resetting on change of date
+                statisticsManager.resetStatCounters()
+                statisticsManager.resetBatch()
+            }
+            .onChange(of: isMorning) { _ in
+                registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning)
+                statisticsManager.resetStatCounters()
+                statisticsManager.resetBatch()
+            }
+            .onChange(of: selectedClass) { _ in
+                // Resetting on change of class
+                statisticsManager.resetStatCounters()
+                statisticsManager.resetBatch()
+            }
         }
     }
 }
