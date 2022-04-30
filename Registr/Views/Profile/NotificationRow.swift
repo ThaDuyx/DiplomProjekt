@@ -15,7 +15,7 @@ struct NotificationRow: View {
     var body: some View {
         Group {
             if notificationVM.permission == .authorized {
-                Toggle("Tilladelse til at modtage notifikationer, når der sker noget vigtigt.", isOn: isTeacher ? $notificationVM.teacherSubscribeToNotification : $notificationVM.teacherSubscribeToNotification)
+                Toggle("Tilladelse til at modtage notifikationer, når der sker noget vigtigt.", isOn: isTeacher ? $notificationVM.teacherSubscribeToNotification : $notificationVM.parentSubscribeToNotification)
                     .textStyleToggle(color: .fiftyfifty, font: .poppinsRegular, size: Resources.FontSize.body)
                     .toggleStyle(SwitchToggleStyle(tint: .frolyRed.opacity(0.5)))
                     .padding()

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ParentHomeView: View {
     @EnvironmentObject var childrenManager: ChildrenManager
+    @EnvironmentObject var notificationVM: NotificationViewModel
 
     var body: some View {
         NavigationView {
@@ -53,7 +54,13 @@ struct ParentHomeView: View {
                     }
                     .listRowBackground(Color.frolyRed)
                     .listRowSeparatorTint(Color.white)
+                    .onAppear() {
+                        notificationVM.parentSubscribeToNotification = true
+                    }
                 }
+            }
+            .onAppear() {
+                notificationVM.getNotificationSettings()
             }
             .navigationTitle("Børn")
             .navigationBarTitleDisplayMode(.inline)

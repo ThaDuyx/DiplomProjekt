@@ -23,6 +23,12 @@ class NotificationViewModel: ObservableObject {
             teacherUpdateSubscription(subscribed: teacherSubscribeToNotification)
         }
     }
+    @AppStorage("parentSubscribeToNotification") var parentSubscribeToNotification : Bool = false {
+        didSet {
+            parentUpdateSubscription(subscribed: parentSubscribeToNotification)
+        }
+    }
+    
     let current = UNUserNotificationCenter.current()
     
     func getNotificationSettings() {
@@ -45,15 +51,25 @@ class NotificationViewModel: ObservableObject {
         }
     }
     
+    private func parentUpdateSubscription(subscribed: Bool) {
+        if subscribed {
+            for topics in DefaultsManager.shared.childrenID {
+                subscribe(to: topics)
+            }
+        } else {
+            for topics in DefaultsManager.shared.childrenID {
+                unsubscribe(from: topics)
+            }
+        }
+    }
+    
     private func teacherUpdateSubscription(subscribed: Bool) {
         if subscribed {
             for topics in DefaultsManager.shared.favorites {
-                print("subscribing to \(topics)")
                 subscribe(to: topics)
             }
         } else {
             for topics in DefaultsManager.shared.favorites {
-                print("unsubscribing to \(topics)")
                 unsubscribe(from: topics)
             }
         }
@@ -61,7 +77,6 @@ class NotificationViewModel: ObservableObject {
     
     private func updateSubscription(for topic: String, subscribed: Bool) {
       if subscribed {
-          
         subscribe(to: topic)
       } else {
         unsubscribe(from: topic)

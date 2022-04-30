@@ -17,6 +17,7 @@ final class DefaultsManager {
         case currentProfileID = "DefaultsManager_currentProfileID"
         case favorites = "DefaultsManager_favorites"
         case userRole = "DefaultsManager_userRole"
+        case childrenID = "DefaultsManager_childrenID"
     }
     
     // MARK: - Properties
@@ -39,6 +40,16 @@ final class DefaultsManager {
         }
         set {
             defaults.set(newValue, forKey: Key.favorites.rawValue)
+            defaults.synchronize()
+        }
+    }
+    
+    var childrenID: [String] {
+        get {
+            return defaults.stringArray(forKey: Key.childrenID.rawValue) ?? []
+        }
+        set {
+            defaults.set(newValue, forKey: Key.childrenID.rawValue)
             defaults.synchronize()
         }
     }

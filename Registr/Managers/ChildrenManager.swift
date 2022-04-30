@@ -48,6 +48,7 @@ class ChildrenManager: ObservableObject {
                     for document in querySnapshot!.documents {
                         let childID = document.documentID
                         self.childrenIds.append(childID)
+                        DefaultsManager.shared.childrenID = self.childrenIds
                         self.db.collection("fb_students_path".localize).document(childID).getDocument { childDoc, error in
                             if let data = childDoc {
                                 do {
