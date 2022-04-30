@@ -42,7 +42,7 @@ struct ClassView: View {
                 }
                 .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(isFollowed: favoriteManager.favorites.contains(classInfo.name)))
                 
-                ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo, school: <#School#>))
+                ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo))
                 
                 ButtonAction(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: classInfo.name))
                 

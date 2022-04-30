@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 class SchoolManager: ObservableObject {
     
-    @Published var school = [School]()
+    @Published var school: School?
     
     // Firestore db reference
     private let db = Firestore.firestore()
@@ -38,7 +38,7 @@ class SchoolManager: ObservableObject {
                     for document in querySnapshot!.documents {
                         do {
                             if let schoolSnapshot = try document.data(as: School.self) {
-                                self.school.append(schoolSnapshot)
+                                self.school = schoolSnapshot
                             }
                         }
                         catch {
