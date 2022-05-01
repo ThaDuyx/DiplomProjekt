@@ -84,6 +84,7 @@ class ChildrenManager: ObservableObject {
                             do {
                                 if let report = try diff.document.data(as: Report.self) {
                                     self.reports.append(report)
+                                    self.reports.sort { $0.date < $1.date }
                                 }
                             }
                             catch {
@@ -97,6 +98,7 @@ class ChildrenManager: ObservableObject {
                                 if let modifiedReport = try diff.document.data(as: Report.self) {
                                     if let modifiedId = modifiedReport.id, let index = self.reports.firstIndex(where: {$0.id == modifiedId}) {
                                         self.reports[index] = modifiedReport
+                                        self.reports.sort { $0.date < $1.date }
                                     }
                                 }
                             }
@@ -111,6 +113,7 @@ class ChildrenManager: ObservableObject {
                                 if let removedReport = try diff.document.data(as: Report.self) {
                                     if let removedId = removedReport.id, let index = self.reports.firstIndex(where: {$0.id == removedId}) {
                                         self.reports.remove(at: index)
+                                        self.reports.sort { $0.date < $1.date }
                                     }
                                 }
                             }
@@ -185,7 +188,6 @@ class ChildrenManager: ObservableObject {
     }
     
     func createAbsenceReport(child: Student, report: Report, completion: @escaping (Bool) -> ()) {
-        let db = Firestore.firestore()
         let batch = db.batch()
         
         let newClassReport = db
@@ -219,6 +221,78 @@ class ChildrenManager: ObservableObject {
             } else {
                 print("Batch write succeeded.")
                 completion(true)
+            }
+        }
+    }
+    
+    func updateAbsenceReport(child: Student, report: Report, completion: @escaping (Bool) -> ()) {
+        let batch = db.batch()
+        
+        if let reportID = report.id {
+            
+            let newClassReport = db
+                .collection("fb_schools_path".localize)
+                .document(child.associatedSchool)
+                .collection("fb_classes_path".localize)
+                .document(child.className)
+                .collection("fb_report_path".localize)
+                .document(reportID)
+            
+            let newParentReport = db
+                .collection("fb_parent_path".localize)
+                .document(DefaultsManager.shared.currentProfileID)
+                .collection("fb_report_path".localize)
+                .document(reportID)
+            
+            do {
+                try batch.setData(from: report, forDocument: newClassReport)
+                try batch.setData(from: report, forDocument: newParentReport)
+            }
+            catch {
+                print(error)
+            }
+            
+            batch.commit() { err in
+                if let err = err {
+                    print("Error writing batch \(err)")
+                    completion(false)
+                } else {
+                    print("Batch write succeeded.")
+                    completion(true)
+                }
+            }
+        }
+    }
+    
+    func deleteReport(report: Report, child: Student) {
+        let batch = db.batch()
+        
+        if let reportID = report.id {
+            
+            let newClassReport = db
+                .collection("fb_schools_path".localize)
+                .document(child.associatedSchool)
+                .collection("fb_classes_path".localize)
+                .document(child.className)
+                .collection("fb_report_path".localize)
+                .document(reportID)
+            
+            let newParentReport = db
+                .collection("fb_parent_path".localize)
+                .document(DefaultsManager.shared.currentProfileID)
+                .collection("fb_report_path".localize)
+                .document(reportID)
+            
+            batch.deleteDocument(newClassReport)
+            batch.deleteDocument(newParentReport)
+            
+            
+            batch.commit() { err in
+                if let err = err {
+                    print("Error writing batch \(err)")
+                } else {
+                    print("Batch write succeeded.")
+                }
             }
         }
     }

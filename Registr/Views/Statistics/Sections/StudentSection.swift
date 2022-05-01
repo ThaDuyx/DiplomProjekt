@@ -10,6 +10,7 @@ import SwiftUI
 struct StudentSection: View {
     let studentName: String
     let studentID: String
+    let student: Student
     
     var body: some View {
         HStack {
@@ -17,7 +18,7 @@ struct StudentSection: View {
                 .bodyTextStyle(color: Color.white, font: .poppinsBold)
                 .frame(maxWidth: .infinity, alignment: .center)
             
-            NavigationLink(destination: StudentView(studentName: studentName, isParent: false, studentID: studentID)) {
+            NavigationLink(destination: StudentView(studentName: studentName, isParent: false, studentID: studentID, student: student)) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
@@ -33,6 +34,6 @@ struct StudentSection: View {
 
 struct StudentSection_Previews: PreviewProvider {
     static var previews: some View {
-        StudentSection(studentName: "", studentID: "")
+        StudentSection(studentName: "", studentID: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""))
     }
 }

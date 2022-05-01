@@ -9,14 +9,15 @@ import SwiftUI
 
 struct ReportListView: View {
     @EnvironmentObject var childrenManager: ChildrenManager
-    @State var showModal = false
     
-    var selectedStudent: String
-    var studentName: String
+    private var selectedStudent: String
+    private var studentName: String
+    private let student: Student
     
-    init(selectedStudent: String, studentName: String) {
+    init(selectedStudent: String, studentName: String, student: Student) {
         self.selectedStudent = selectedStudent
         self.studentName = studentName
+        self.student = student
     }
     
     var body: some View {
@@ -24,14 +25,8 @@ struct ReportListView: View {
             List() {
                 ForEach(childrenManager.reports, id: \.self) { report in
                     if report.studentID == selectedStudent {
-                        ReportSection(report: report)
+                        ReportSection(report: report, student: student)
                             .padding(.bottom, 20)
-                            .sheet(isPresented: $showModal) {
-                                ParentAbsenceRegistrationView()
-                            }
-                            .onTapGesture {
-                                showModal = true
-                            }
                     }
                 }
             }
@@ -43,6 +38,6 @@ struct ReportListView: View {
 
 struct ReportList_Previews: PreviewProvider {
     static var previews: some View {
-        ReportListView(selectedStudent: "", studentName: "")
+        ReportListView(selectedStudent: "", studentName: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""))
     }
 }

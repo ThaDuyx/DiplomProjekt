@@ -16,10 +16,13 @@ enum AbsenceType: String, CaseIterable {
 }
 
 struct ParentAbsenceRegistrationView: View {
+    // Manager objects
     @StateObject private var context = FullScreenCoverContext()
     @EnvironmentObject var childrenManager: ChildrenManager
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
+    @Environment(\.dismiss) var dismiss
     
+    // States variables
     @State private var selectedAbsence = ""
     @State private var selectedTime = ""
     @State private var selectedTimeOfDay: TimeOfDay = .morning
@@ -29,16 +32,50 @@ struct ParentAbsenceRegistrationView: View {
     @State private var endDate: Date = Date()
     @State private var isDoubleRegistrationActivated = false
     @State private var isInterval = false
-    @State var showsStartDatePicker = false
-    @State var showsEndDatePicker = false
+    @State private var showsStartDatePicker = false
+    @State private var showsEndDatePicker = false
     @State private var showingAlert = false
+    @State private var shouldDismiss = false
+    @FocusState private var focusedField: Field?
+    
+    // Selectors
+    private var report: Report?
+    private let child: Student?
+    private let shouldUpdate: Bool
     
     // For dismissing the keyboard
     enum Field: Hashable {
         case myField
     }
     
-    @FocusState private var focusedField: Field?
+    init(report: Report?, child: Student?, shouldUpdate: Bool) {
+        self.report = report
+        self.child = child
+        self.shouldUpdate = shouldUpdate
+        
+        if let availableReport = report {
+            _selectedAbsence = State(initialValue: availableReport.reason)
+            _isDoubleRegistrationActivated = State(initialValue: availableReport.isDoubleRegistrationActivated)
+            _selectedTimeOfDay = State(initialValue: availableReport.timeOfDay)
+            _selectedTime = State(initialValue: availableReport.timeOfDay.rawValue)
+            _startDate = State(initialValue: availableReport.date)
+            
+            if let availableEndDate = availableReport.endDate {
+                _isInterval = State(initialValue: true)
+                _showsEndDatePicker = State(initialValue: true)
+                _endDate = State(initialValue: availableEndDate)
+            }
+            
+            if let availableDescription = availableReport.description {
+                textBindingManager.value = availableDescription
+            }
+        }
+        
+        if let availableChild = child {
+            _selectedChild = State(initialValue: availableChild)
+            _selectedName = State(initialValue: availableChild.name)
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -57,6 +94,7 @@ struct ParentAbsenceRegistrationView: View {
                                     isDoubleRegistrationActivated = child.classInfo.isDoubleRegistrationActivated
                                     selectedTimeOfDay = .morning
                                 }
+                                .disabled(shouldUpdate)
                             }
                         } label: {
                             HStack {
@@ -162,8 +200,8 @@ struct ParentAbsenceRegistrationView: View {
                                     selection: $startDate,
                                     in: dateRange,
                                     displayedComponents: .date)
-                                    .datePickerStyle(.graphical)
-                                    .applyTextColor(Color.white)
+                                .datePickerStyle(.graphical)
+                                .applyTextColor(Color.white)
                             }
                         }
                         .listRowBackground(Color.frolyRed)
@@ -190,8 +228,8 @@ struct ParentAbsenceRegistrationView: View {
                                         selection: $endDate,
                                         in: dateRange,
                                         displayedComponents: .date)
-                                        .datePickerStyle(.graphical)
-                                        .applyTextColor(.white)
+                                    .datePickerStyle(.graphical)
+                                    .applyTextColor(.white)
                                 }
                             }
                             .listRowBackground(Color.frolyRed)
@@ -221,12 +259,13 @@ struct ParentAbsenceRegistrationView: View {
                         .listRowBackground(Color.frolyRed)
                         
                         VStack(alignment: .center) {
-                            Button("parent_absence_registration_report".localize) {
+                            Button(shouldUpdate ? "Opdater" : "parent_absence_registration_report".localize) {
                                 if selectedName.isEmpty || selectedAbsence.isEmpty || isDoubleRegistrationActivated && selectedTime.isEmpty {
                                     showingAlert = true
                                 } else {
                                     if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsence.isEmpty {
-                                        let report = Report(parentName: name,
+                                        let report = Report(id: shouldUpdate ? report?.id : nil,
+                                                            parentName: name,
                                                             parentID: DefaultsManager.shared.currentProfileID,
                                                             studentName: selectedChild.name,
                                                             studentID: id,
@@ -240,18 +279,34 @@ struct ParentAbsenceRegistrationView: View {
                                                             teacherValidation: "tv-pending".localize,
                                                             isDoubleRegistrationActivated: isDoubleRegistrationActivated)
                                         
-                                        childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
-                                            if result {
-                                                // TODO: Show that the report has been written and reset everything
-                                                self.selectedChild = nil
-                                                self.selectedName = ""
-                                                self.textBindingManager.value = ""
-                                                self.selectedAbsence = ""
-                                                self.isInterval = false
-                                                self.startDate = Date()
-                                                self.endDate = Date()
-                                            } else {
-                                                context.present(ErrorView(error: "alert_default_description".localize))
+                                        if shouldUpdate {
+                                            childrenManager.updateAbsenceReport(child: selectedChild, report: report) { result in
+                                                if result {
+                                                    self.selectedChild = nil
+                                                    self.selectedName = ""
+                                                    self.textBindingManager.value = ""
+                                                    self.selectedAbsence = ""
+                                                    self.isInterval = false
+                                                    self.startDate = Date()
+                                                    self.endDate = Date()
+                                                    dismiss()
+                                                } else {
+                                                    context.present(ErrorView(error: "alert_default_description".localize))
+                                                }
+                                            }
+                                        } else {
+                                            childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
+                                                if result {
+                                                    self.selectedChild = nil
+                                                    self.selectedName = ""
+                                                    self.textBindingManager.value = ""
+                                                    self.selectedAbsence = ""
+                                                    self.isInterval = false
+                                                    self.startDate = Date()
+                                                    self.endDate = Date()
+                                                } else {
+                                                    context.present(ErrorView(error: "alert_default_description".localize))
+                                                }
                                             }
                                         }
                                     }
@@ -279,6 +334,6 @@ struct ParentAbsenceRegistrationView: View {
 
 struct ParentAbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        ParentAbsenceRegistrationView()
+        ParentAbsenceRegistrationView(report: nil, child: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""), shouldUpdate: false)
     }
 }

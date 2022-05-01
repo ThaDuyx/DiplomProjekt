@@ -27,7 +27,7 @@ struct AbsenceListView: View {
                         AbsenceReportSection(absence: absence)
                             .padding(.bottom, 20)
                             .sheet(isPresented: $showModal) {
-                                ParentAbsenceRegistrationView()
+                                ParentAbsenceRegistrationView(report: nil, child: nil, shouldUpdate: false)
                             }
                             .onTapGesture {
                                 showModal = true

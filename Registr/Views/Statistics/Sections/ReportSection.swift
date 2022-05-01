@@ -8,44 +8,60 @@
 import SwiftUI
 
 struct ReportSection: View {
+    @EnvironmentObject var childrenManager: ChildrenManager
+    @State var showModal = false
     let report: Report
+    let student: Student
     
     var body: some View {
-        HStack(spacing: 20) {
-            
-            Image(systemName: validationImage(report: report))
-                .foregroundColor(.white)
-                .frame(width: 36, height: 36)
-                .background(Color.frolyRed)
-                .clipShape(Circle())
-            
-            VStack {
-                Text("Validering")
-                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
-
-                Text(report.teacherValidation)
-                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+        Menu {
+            Button("Rediger") {
+                showModal = true
             }
             
-            VStack {
-                Text("Dato")
-                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
-
-                Text(report.date.formatSpecificDate(date: report.date))
-                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+            Button("Slet") {
+                childrenManager.deleteReport(report: report, child: student)
             }
-            
-            VStack {
-                Text("Årsag")
-                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
-
-                Text(report.reason)
-                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+        } label: {
+            HStack(spacing: 20) {
+                
+                Image(systemName: validationImage(report: report))
+                    .foregroundColor(.white)
+                    .frame(width: 36, height: 36)
+                    .background(Color.frolyRed)
+                    .clipShape(Circle())
+                
+                VStack {
+                    Text("Validering")
+                        .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+                    
+                    Text(report.teacherValidation)
+                        .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+                }
+                
+                VStack {
+                    Text("Dato")
+                        .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+                    
+                    Text(report.date.formatSpecificDate(date: report.date))
+                        .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+                }
+                
+                VStack {
+                    Text("Årsag")
+                        .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+                    
+                    Text(report.reason)
+                        .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+                }
+                
+                Image(systemName: "ellipsis")
+                    .foregroundColor(Color.fiftyfifty)
+                    .padding(.trailing, 10)
             }
-                        
-            Image(systemName: "ellipsis")
-                .foregroundColor(Color.fiftyfifty)
-                .padding(.trailing, 10)
+            .sheet(isPresented: $showModal) {
+                ParentAbsenceRegistrationView(report: report, child: student, shouldUpdate: true)
+            }
         }
     }
     
@@ -64,6 +80,6 @@ struct ReportSection: View {
 
 struct ReportSection_Previews: PreviewProvider {
     static var previews: some View {
-        ReportSection(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: "", isDoubleRegistrationActivated: nil))
+        ReportSection(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: "", isDoubleRegistrationActivated: false), student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""))
     }
 }

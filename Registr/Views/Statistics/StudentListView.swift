@@ -19,8 +19,8 @@ struct StudentListView: View {
     var body: some View {
         ZStack {
             List {
-                ForEach(0..<registrationManager.students.count, id: \.self) { student in
-                    StudentSection(studentName: registrationManager.students[student].name, studentID: registrationManager.students[student].id ?? "")
+                ForEach(registrationManager.students, id: \.self) { student in
+                    StudentSection(studentName: student.name, studentID: student.id ?? "", student: student)
                 }
                 .listRowBackground(Color.frolyRed)
                 .listRowSeparatorTint(Color.white)
