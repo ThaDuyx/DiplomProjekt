@@ -22,8 +22,6 @@ struct ReportSection: View {
             Button("Slet") {
                 childrenManager.deleteReport(report: report, child: student)
             }
-            
-            .background(Color.frolyRed)
         } label: {
             HStack(spacing: 20) {
                 

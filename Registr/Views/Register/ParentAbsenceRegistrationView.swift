@@ -93,7 +93,8 @@ struct ParentAbsenceRegistrationView: View {
                                     selectedChild = child
                                     isDoubleRegistrationActivated = child.classInfo.isDoubleRegistrationActivated
                                     selectedTimeOfDay = .morning
-                                }.disabled(shouldUpdate)
+                                }
+                                .disabled(shouldUpdate)
                             }
                         } label: {
                             HStack {
