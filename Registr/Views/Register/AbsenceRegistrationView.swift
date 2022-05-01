@@ -33,13 +33,12 @@ struct AbsenceRegistrationView: View {
     @State private var studentIndex: Int = 0
     @State private var studentName: String = ""
     @State var elementDate = Date()
-    @State var selectedDate: String
+    @State var selectedDate = Date()
     var isFromHistory: Bool
     
     var selectedClass: ClassInfo
     
-    
-    init(selectedClass: ClassInfo, selectedDate: String, isFromHistory: Bool) {
+    init(selectedClass: ClassInfo, selectedDate: Date, isFromHistory: Bool) {
         self.selectedClass = selectedClass
         _selectedDate = State(initialValue: selectedDate)
         self.isFromHistory = isFromHistory
@@ -53,7 +52,7 @@ struct AbsenceRegistrationView: View {
                         Text("Valgte dag")
                             .bigBodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                         
-                        Text(selectedDate)
+                        Text(selectedDate.formatSpecificDate(date: selectedDate))
                             .subTitleTextStyle(color: .frolyRed, font: .poppinsBold)
                     }
                 } else {
@@ -73,7 +72,7 @@ struct AbsenceRegistrationView: View {
                                     .id(number)
                                     .onTapGesture {
                                         self.selectedItem = number
-                                        selectedDate = element.formatSpecificDate(date: element)
+                                        selectedDate = element
                                         elementDate = element
                                     }
                                 }.onAppear {
@@ -108,7 +107,7 @@ struct AbsenceRegistrationView: View {
                         .background(!isMorning ? .white : .fiftyfifty.opacity(0.15) )
                     }
                 }
-                if Calendar.current.isDateInWeekend(elementDate) {
+                if Calendar.current.isDateInWeekend(isFromHistory ? selectedDate : elementDate) {
                     Spacer()
                     
                     Text("Den valgte dato er en weekend")
@@ -171,7 +170,7 @@ struct AbsenceRegistrationView: View {
                     }
                     
                     Button {
-                        registrationManager.saveRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning) { result in
+                        registrationManager.saveRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning) { result in
                             if result {
                                 statisticsManager.commitBatch()
                                 statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning)
@@ -191,9 +190,9 @@ struct AbsenceRegistrationView: View {
             .navigationTitle("Registrer")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear() {
-                registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning)
+                registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
             }
-            .onChange(of: selectedDate) { newDate in
+            .onChange(of: selectedDate.formatSpecificDate(date: selectedDate)) { newDate in
                 registrationManager.fetchRegistrations(className: selectedClass.name, date: newDate, isMorning: isMorning)
                 
                 // Resetting on change of date
@@ -201,7 +200,7 @@ struct AbsenceRegistrationView: View {
                 statisticsManager.resetBatch()
             }
             .onChange(of: isMorning) { _ in
-                registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate, isMorning: isMorning)
+                registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
                 statisticsManager.resetStatCounters()
                 statisticsManager.resetBatch()
             }
@@ -283,6 +282,6 @@ struct StudentRow: View {
 
 struct AbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceRegistrationView(selectedClass: ClassInfo(isDoubleRegistrationActivated: false, name: ""), selectedDate: "", isFromHistory: false)
+        AbsenceRegistrationView(selectedClass: ClassInfo(isDoubleRegistrationActivated: false, name: ""), selectedDate: .now, isFromHistory: false)
     }
 }
