@@ -27,5 +27,5 @@ struct Report: Codable, Hashable {
     let reason: String
     let validated: Bool
     let teacherValidation: String
-    let isDoubleRegistrationActivated: Bool?
+    let isDoubleRegistrationActivated: Bool
 }

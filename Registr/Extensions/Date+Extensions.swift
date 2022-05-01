@@ -51,8 +51,6 @@ extension Date {
         return finalCurrentDate
     }
     
-    // ------------------------------------------------------------------------
-    
     func comingDays(days: Int) -> [Date] {
         var daysArray: [Date] = []
         for i in 1..<days+1 {

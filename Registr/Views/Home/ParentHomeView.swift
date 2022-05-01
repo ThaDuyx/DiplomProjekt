@@ -41,10 +41,11 @@ struct ParentHomeView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                             if let id = child.id {
-                                NavigationLink(destination: StudentView(studentName: child.name, isParent: true, studentID: id)) {
+                                NavigationLink(destination: StudentView(studentName: child.name, isParent: true, studentID: id, student: child)) {
                                     EmptyView()
                                 }
                                 .frame(width: 0, height: 0)
+                                .environmentObject(childrenManager)
                             }
                             
                             Image(systemName: "chevron.right")
