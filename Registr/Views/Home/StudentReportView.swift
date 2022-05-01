@@ -25,7 +25,7 @@ struct StudentReportView: View {
     
     var body: some View {
         VStack {
-            AbsenceInformationView(name: report.studentName, reason: report.reason, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue )
+            StudentAbsenceInformationSection(name: report.studentName, reason: report.reason, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue )
             Spacer()
             VStack(spacing: 10) {
                 Section(
@@ -88,59 +88,6 @@ struct StudentReportView: View {
         .fullScreenCover(context)
         .navigationTitle("Indberettelse af elev")
         .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-struct AbsenceInformationView: View {
-    let name: String
-    let reason: String
-    let date: Date
-    let description: String
-    let timeOfDay: String
-    
-    var body: some View {
-        VStack {
-            Text("Indberettelse")
-                .bodyTextStyle(color: Color.white, font: .poppinsBold)
-            Divider()
-                .frame(height: 1)
-                .background(.white)
-            AbsenceRow(title: "Elev", icon: "person", description: name)
-            AbsenceRow(title: "Årsag", icon: "questionmark.circle", description: reason)
-            AbsenceRow(title: "Tidspunkt", icon: "clock", description: timeOfDay)
-            AbsenceRow(title: "Dato", icon: "calendar", description: DateFormatter.abbreviationDayMonthYearFormatter.string(from: date))
-            AbsenceRow(title: "Beskrivelse", icon: "note.text", description: description)
-        }
-        .frame(width: 320)
-        .padding(.vertical, 20)
-        .background(Color.frolyRed)
-        .cornerRadius(20)
-    }
-}
-
-struct AbsenceRow : View {
-    let title: String
-    let icon: String
-    let description: String
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(title)
-                .smallBodyTextStyle(color: .white, font: .poppinsBold)
-            HStack {
-                Image(systemName: icon)
-                    .foregroundColor(Color.white)
-                Text(description)
-                    .smallBodyTextStyle(color: .white, font: .poppinsRegular)
-                    .padding(4)
-            }
-            .padding(.leading, 10)
-            .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.white, lineWidth: 1)
-            )
-        }
-        .frame(width: 275)
     }
 }
 

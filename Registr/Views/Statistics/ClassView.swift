@@ -42,9 +42,9 @@ struct ClassView: View {
                 }
                 .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(isFollowed: favoriteManager.favorites.contains(classInfo.name)))
                 
-                ButtonAction(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo))
+                StatisticsButtonSection(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo))
                 
-                ButtonAction(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: classInfo.name))
+                StatisticsButtonSection(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: classInfo.name))
                 
                 Spacer()
                 
@@ -94,26 +94,6 @@ struct ClassView: View {
         }
         .navigationTitle(classInfo.name)
         .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-struct ButtonAction<TargetView: View>: View {
-    let systemName: String
-    let titleText: String
-    let destination: TargetView
-    
-    var body: some View {
-        NavigationLink(destination: destination) {
-            HStack {
-                Image(systemName: systemName)
-                    .frame(alignment: .leading)
-                    .padding(.leading, 20)
-                Text(titleText)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.leading, -50)
-            }
-        }
-        .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsBold, fontSize: Resources.FontSize.body))
     }
 }
 

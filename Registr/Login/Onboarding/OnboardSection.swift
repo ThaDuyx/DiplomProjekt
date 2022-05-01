@@ -1,5 +1,5 @@
 //
-//  OnboardRow.swift
+//  OnboardSection.swift
 //  Registr
 //
 //  Created by Christoffer Detlef on 09/03/2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OnboardRow: View {
+struct OnboardSection: View {
     var id: Int
     var title: String
     var details: String
@@ -62,6 +62,6 @@ struct OnboardRow: View {
 
 struct OnboardRow_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardRow(id: 1, title: "onboard_flow_page_one_title", details: "onboard_flow_page_one_description", image: "checkmark.shield.fill")
+        OnboardSection(id: 1, title: "onboard_flow_page_one_title", details: "onboard_flow_page_one_description", image: "checkmark.shield.fill")
     }
 }

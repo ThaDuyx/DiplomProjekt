@@ -15,3 +15,19 @@ let dateRange: ClosedRange<Date> = {
     ...
     calendar.date(from:endComponents)!
 }()
+
+func dateRanges(amountOfDaysSinceStart: Int, amountOfDayssinceStop: Int) -> ClosedRange<Date> {
+    let min = Calendar.current.date(byAdding: .day, value: -amountOfDaysSinceStart, to: Date())!
+    let max = Calendar.current.date(byAdding: .day, value: -amountOfDayssinceStop + 1, to: Date())!
+    return min...max
+}
+
+func dateClosedRange(date: Date) -> Int {
+    // can be used when we get the real date.
+    let date = Calendar.current.startOfDay(for: date)
+            
+    let components = Calendar.current.dateComponents([.day], from: date, to: .now)
+    
+    // Force unwraps, since we know that we will have a date, since we have a default value.
+    return components.day!
+}
