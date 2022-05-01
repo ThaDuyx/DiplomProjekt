@@ -23,7 +23,7 @@ struct ParentTabs: View {
                 Text("Indberet")
             }.environmentObject(childrenManager)
         
-        ProfileView()
+        ProfileView(isTeacher: false)
             .tabItem {
                 Image(systemName: "person")
                 Text("Profil")

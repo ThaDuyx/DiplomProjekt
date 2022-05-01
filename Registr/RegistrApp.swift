@@ -11,9 +11,12 @@ import FirebaseCore
 @main
 struct RegistrApp: App {
     
+    @UIApplicationDelegateAdaptor(RegistrAppDelegate.self) var delegate
+    @Environment(\.scenePhase) private var scenePhase
+    @StateObject var notificationVM = NotificationViewModel()
+
     init() {
         NavigationAndTabbarAppearance.configureAppearance()
-        FirebaseApp.configure()
         
         // Hardcoded for test
         if DefaultsManager.shared.favorites.isEmpty {
@@ -24,7 +27,14 @@ struct RegistrApp: App {
     
     var body: some Scene {
         WindowGroup {
-            LoginOptions()
+            LoginOptions().environmentObject(notificationVM)
+        }
+        .onChange(of: scenePhase) { phase in
+            if phase == .active {
+                notificationVM.isViewActive = true
+            } else {
+                notificationVM.isViewActive = false
+            }
         }
     }
 }

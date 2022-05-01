@@ -10,6 +10,7 @@ import SwiftUICharts
 
 struct ClassView: View {
     @EnvironmentObject var favoriteManager: FavoriteManager
+    @EnvironmentObject var notificationVM: NotificationViewModel
     @ObservedObject var statisticsManager = StatisticsManager()
     
     @State private var followAction: Bool = false
@@ -32,6 +33,7 @@ struct ClassView: View {
                 Button {
                     followAction.toggle()
                     favoriteManager.favoriteAction(favorite: classInfo.name)
+                    addNotification()
                 } label: {
                     
                     HStack {
@@ -92,8 +94,21 @@ struct ClassView: View {
                 Spacer()
             }
         }
+        .onAppear() {
+            notificationVM.getNotificationSettings()
+        }
         .navigationTitle(classInfo.name)
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private func addNotification() {
+        notificationVM.nameOfSubscriptions = classInfo.name
+        
+        if favoriteManager.favorites.contains(classInfo.name) {
+            notificationVM.subscribeToNotification = true
+        } else {
+            notificationVM.subscribeToNotification = false
+        }
     }
 }
 

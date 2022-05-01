@@ -37,6 +37,17 @@ struct TeacherHomeView: View {
                     reportManager.removeFavorite(favorite: deselectedValue)
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    ZStack {
+                        NavigationLink {
+                            ProfileView(isTeacher: true)
+                        } label: {
+                            Image(systemName: "person")
+                        }
+                    }
+                }
+            }
             .navigationTitle("Indberettelser")
             .navigationBarTitleDisplayMode(.inline)
             .navigationAppearance(backgroundColor: .white)
