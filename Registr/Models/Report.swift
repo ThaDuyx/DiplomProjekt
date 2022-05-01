@@ -13,6 +13,12 @@ enum TimeOfDay: String, CaseIterable, Codable {
     case allDay = "Hele Dagen"
 }
 
+enum TeacherValidation: String, CaseIterable, Codable {
+    case accepted = "Godkendt"
+    case pending = "Afventer"
+    case denied = "Afslået"
+}
+
 struct Report: Codable, Hashable {
     @DocumentID var id: String?
     let parentName: String
@@ -26,6 +32,6 @@ struct Report: Codable, Hashable {
     let description: String?
     let reason: String
     let validated: Bool
-    let teacherValidation: String
+    let teacherValidation: TeacherValidation
     let isDoubleRegistrationActivated: Bool
 }

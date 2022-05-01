@@ -39,19 +39,25 @@ struct ParentAbsenceRegistrationView: View {
     @FocusState private var focusedField: Field?
     
     // Selectors
-    private var report: Report?
+    private let report: Report?
+    private let absence: Registration?
     private let child: Student?
+    
+    // Operators
     private let shouldUpdate: Bool
+    private let isAbsenceChange: Bool
     
     // For dismissing the keyboard
     enum Field: Hashable {
         case myField
     }
     
-    init(report: Report?, child: Student?, shouldUpdate: Bool) {
+    init(report: Report?, absence: Registration?, child: Student?, shouldUpdate: Bool, isAbsenceChange: Bool) {
         self.report = report
+        self.absence = absence
         self.child = child
         self.shouldUpdate = shouldUpdate
+        self.isAbsenceChange = isAbsenceChange
         
         if let availableReport = report {
             _selectedAbsence = State(initialValue: availableReport.reason)
@@ -69,6 +75,14 @@ struct ParentAbsenceRegistrationView: View {
             if let availableDescription = availableReport.description {
                 textBindingManager.value = availableDescription
             }
+        }
+        
+        if let availableAbsence = absence {
+            _selectedAbsence = State(initialValue: availableAbsence.reason)
+            _isDoubleRegistrationActivated = State(initialValue: false)
+            _selectedTimeOfDay = State(initialValue: availableAbsence.isMorning ? .morning : .afternoon)
+            _selectedTime = State(initialValue: availableAbsence.isMorning ? TimeOfDay.morning.rawValue : TimeOfDay.afternoon.rawValue)
+            _startDate = State(initialValue: availableAbsence.date.dateFromString)
         }
         
         if let availableChild = child {
@@ -94,7 +108,7 @@ struct ParentAbsenceRegistrationView: View {
                                     isDoubleRegistrationActivated = child.classInfo.isDoubleRegistrationActivated
                                     selectedTimeOfDay = .morning
                                 }
-                                .disabled(shouldUpdate)
+                                .disabled(shouldUpdate || isAbsenceChange)
                             }
                         } label: {
                             HStack {
@@ -163,21 +177,22 @@ struct ParentAbsenceRegistrationView: View {
                             }
                             .listRowBackground(Color.frolyRed)
                         }
-                        
-                        Section(
-                            header:
-                                Text("parent_absence_registration_interval")
-                                .bodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
-                        ) {
-                            HStack {
-                                Image(systemName: "calendar")
-                                    .foregroundColor(.white)
-                                Toggle("parent_absence_registration_enable_end_date".localize, isOn: $isInterval)
-                                    .textStyleToggle(color: .white, font: .poppinsRegular, size: Resources.FontSize.body)
-                                    .toggleStyle(SwitchToggleStyle(tint: .white.opacity(0.5)))
+                        if !isAbsenceChange {
+                            Section(
+                                header:
+                                    Text("parent_absence_registration_interval")
+                                    .bodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
+                            ) {
+                                HStack {
+                                    Image(systemName: "calendar")
+                                        .foregroundColor(.white)
+                                    Toggle("parent_absence_registration_enable_end_date".localize, isOn: $isInterval)
+                                        .textStyleToggle(color: .white, font: .poppinsRegular, size: Resources.FontSize.body)
+                                        .toggleStyle(SwitchToggleStyle(tint: .white.opacity(0.5)))
+                                }
                             }
+                            .listRowBackground(Color.frolyRed)
                         }
-                        .listRowBackground(Color.frolyRed)
                         
                         Section(
                             header:
@@ -191,7 +206,9 @@ struct ParentAbsenceRegistrationView: View {
                                     .bodyTextStyle(color: .white, font: .poppinsRegular)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .onTapGesture {
-                                        self.showsStartDatePicker.toggle()
+                                        if !isAbsenceChange {
+                                            self.showsStartDatePicker.toggle()
+                                        }
                                     }
                             }
                             if showsStartDatePicker {
@@ -276,7 +293,7 @@ struct ParentAbsenceRegistrationView: View {
                                                             description: textBindingManager.value,
                                                             reason: selectedAbsence,
                                                             validated: false,
-                                                            teacherValidation: "tv-pending".localize,
+                                                            teacherValidation: .pending,
                                                             isDoubleRegistrationActivated: isDoubleRegistrationActivated)
                                         
                                         if shouldUpdate {
@@ -307,6 +324,9 @@ struct ParentAbsenceRegistrationView: View {
                                                 } else {
                                                     context.present(ErrorView(error: "alert_default_description".localize))
                                                 }
+                                                if isAbsenceChange {
+                                                    dismiss()
+                                                }
                                             }
                                         }
                                     }
@@ -334,6 +354,6 @@ struct ParentAbsenceRegistrationView: View {
 
 struct ParentAbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        ParentAbsenceRegistrationView(report: nil, child: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""), shouldUpdate: false)
+        ParentAbsenceRegistrationView(report: nil, absence: nil, child: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""), shouldUpdate: false, isAbsenceChange: false)
     }
 }

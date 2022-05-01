@@ -201,7 +201,7 @@ class ReportManager: ObservableObject {
      - parameter teacherValidation:    The teachers validation on the report, this will be 'Accepted' since we are validating.
      - parameter completion:           A Callback that returns if the write to the database went through.
      */
-    func validateReport(selectedReport: Report, validationReason: String, teacherValidation: String, completion: @escaping (Bool) -> ()) {
+    func validateReport(selectedReport: Report, validationReason: String, teacherValidation: TeacherValidation, completion: @escaping (Bool) -> ()) {
         let batch = db.batch()
         
         if let id = selectedReport.id {
@@ -484,7 +484,7 @@ class ReportManager: ObservableObject {
      - parameter teacherValidation:    The teachers validation on the report, this will be 'Denied' since we are denying the report.
      - parameter completion:           A Callback that returns if the write to the database went through.
      */
-    func denyReport(selectedReport: Report, teacherValidation: String, completion: @escaping (Bool) -> ()) {
+    func denyReport(selectedReport: Report, teacherValidation: TeacherValidation, completion: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         let batch = db.batch()
         
