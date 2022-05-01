@@ -50,6 +50,6 @@ struct TeacherAbsencesSection: View {
 
 struct TeacherAbsencesSection_Previews: PreviewProvider {
     static var previews: some View {
-        TeacherAbsencesSection(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: "", isDoubleRegistrationActivated: false))
+        TeacherAbsencesSection(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: .pending, isDoubleRegistrationActivated: false))
     }
 }

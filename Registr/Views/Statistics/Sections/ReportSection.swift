@@ -35,7 +35,7 @@ struct ReportSection: View {
                     Text("Validering")
                         .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                     
-                    Text(report.teacherValidation)
+                    Text(report.teacherValidation.rawValue)
                         .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
                 }
                 
@@ -63,14 +63,13 @@ struct ReportSection: View {
                 ParentAbsenceRegistrationView(report: report, absence: nil, child: student, shouldUpdate: true, isAbsenceChange: false)
             }
         }
+        .disabled(report.teacherValidation != .pending)
     }
     
     private func validationImage(report: Report) -> String {
-        let denied = "tv-denied".localize
-        
-        if !report.validated && report.teacherValidation == denied {
+        if !report.validated && report.teacherValidation == .denied {
             return "xmark.circle"
-        } else if !report.validated && report.teacherValidation != denied {
+        } else if !report.validated && report.teacherValidation != .denied {
             return "questionmark.circle"
         } else {
             return "checkmark.circle"
@@ -80,6 +79,6 @@ struct ReportSection: View {
 
 struct ReportSection_Previews: PreviewProvider {
     static var previews: some View {
-        ReportSection(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: "", isDoubleRegistrationActivated: false), student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""))
+        ReportSection(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: .pending, isDoubleRegistrationActivated: false), student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""))
     }
 }

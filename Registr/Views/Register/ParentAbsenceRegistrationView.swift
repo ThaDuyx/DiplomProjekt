@@ -293,7 +293,7 @@ struct ParentAbsenceRegistrationView: View {
                                                             description: textBindingManager.value,
                                                             reason: selectedAbsence,
                                                             validated: false,
-                                                            teacherValidation: "tv-pending".localize,
+                                                            teacherValidation: .pending,
                                                             isDoubleRegistrationActivated: isDoubleRegistrationActivated)
                                         
                                         if shouldUpdate {
