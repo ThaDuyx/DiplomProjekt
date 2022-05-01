@@ -46,9 +46,7 @@ extension RegistrAppDelegate: MessagingDelegate {
 extension RegistrAppDelegate: UNUserNotificationCenterDelegate {
     // Receive displayed notifications for iOS 10 devices.
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-        process(notification)
-        
+                
         completionHandler([[.banner, .badge, .sound]])
     }
     // Used for debugging only
@@ -63,19 +61,6 @@ extension RegistrAppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        process(response.notification)
-        
         completionHandler()
     }
-    
-    private func process(_ notification: UNNotification) {
-      let userInfo = notification.request.content.userInfo
-      UIApplication.shared.applicationIconBadgeNumber = 0
-      if let notificationTitle = userInfo["notificationTitle"] as? String,
-        let notificationBody = userInfo["notificationBody"] as? String {
-        let notificationItem = NotificationItem(title: notificationTitle, body: notificationBody, date: Date())
-        NotificationModel.shared.add([notificationItem])
-      }
-    }
-
 }
