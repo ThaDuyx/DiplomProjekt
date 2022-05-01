@@ -1,13 +1,13 @@
 //
-//  AbsenceListView.swift
+//  ReportList.swift
 //  Registr
 //
-//  Created by Christoffer Detlef on 01/04/2022.
+//  Created by Christoffer Detlef on 18/04/2022.
 //
 
 import SwiftUI
 
-struct AbsenceListView: View {
+struct ReportListView: View {
     @EnvironmentObject var childrenManager: ChildrenManager
     @State var showModal = false
     
@@ -22,9 +22,9 @@ struct AbsenceListView: View {
     var body: some View {
         ZStack {
             List() {
-                ForEach(childrenManager.absences, id: \.self) { absence in
-                    if absence.studentID == selectedStudent {
-                        AbsenceReportSection(absence: absence)
+                ForEach(childrenManager.reports, id: \.self) { report in
+                    if report.studentID == selectedStudent {
+                        ReportSection(report: report)
                             .padding(.bottom, 20)
                             .sheet(isPresented: $showModal) {
                                 ParentAbsenceRegistrationView()
@@ -34,7 +34,6 @@ struct AbsenceListView: View {
                             }
                     }
                 }
-                .listRowSeparatorTint(Color.fiftyfifty)
             }
         }
         .navigationTitle(studentName)
@@ -42,8 +41,8 @@ struct AbsenceListView: View {
     }
 }
 
-struct AbsenceListView_Previews: PreviewProvider {
+struct ReportList_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceListView(selectedStudent: "", studentName: "")
+        ReportListView(selectedStudent: "", studentName: "")
     }
 }

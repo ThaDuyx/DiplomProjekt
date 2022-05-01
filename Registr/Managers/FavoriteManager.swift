@@ -36,7 +36,7 @@ class FavoriteManager: ObservableObject {
             // Updating and saving the DefaultsManager so next time we login we have the favorites stored
             DefaultsManager.shared.favorites = favorites
         }
-        favorites.sort() { $0 < $1 }
+        favorites.sort{ $0 < $1 }
         
     }
 }

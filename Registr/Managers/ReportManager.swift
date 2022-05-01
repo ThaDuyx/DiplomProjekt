@@ -21,6 +21,15 @@ class ReportManager: ObservableObject {
     // Container that keeps track of our snapshot listeners in order to detach when not in use anymore.
     private var snapshotListeners = [SnapshotData]()
     
+    // The school that the user is accociated with
+    private var selectedSchool: String {
+        if let schoolID = UserManager.shared.user?.associatedSchool {
+            return schoolID
+        } else {
+            return ""
+        }
+    }
+    
     // Firestore reference
     let db = Firestore.firestore()
     
@@ -34,6 +43,8 @@ class ReportManager: ObservableObject {
     private func attachReportListeners() {
         for favorite in DefaultsManager.shared.favorites {
             let listener = db
+                .collection("fb_schools_path".localize)
+                .document(selectedSchool)
                 .collection("fb_classes_path".localize)
                 .document(favorite)
                 .collection("fb_report_path".localize)
@@ -52,6 +63,7 @@ class ReportManager: ObservableObject {
                                 do {
                                     if let report = try diff.document.data(as: Report.self) {
                                         self.reports.append(report)
+                                        self.reports.sort{ $0.className < $1.className }
                                     }
                                 }
                                 catch {
@@ -103,6 +115,8 @@ class ReportManager: ObservableObject {
      */
     func addFavorite(newFavorite: String) {
         let listener = db
+            .collection("fb_schools_path".localize)
+            .document(selectedSchool)
             .collection("fb_classes_path".localize)
             .document(newFavorite)
             .collection("fb_report_path".localize)
@@ -197,6 +211,8 @@ class ReportManager: ObservableObject {
             case .morning:
                 // MARK: - Updating morning registration in class collection
                 let classMorningAbsenceRef = db
+                    .collection("fb_schools_path".localize)
+                    .document(selectedSchool)
                     .collection("fb_classes_path".localize)
                     .document(selectedReport.className)
                     .collection("fb_date_path".localize)
@@ -263,6 +279,8 @@ class ReportManager: ObservableObject {
             case .afternoon:
                 // MARK: - Updating afternoon registration in class collection
                 let classAfternoonAbsenceRef = db
+                    .collection("fb_schools_path".localize)
+                    .document(selectedSchool)
                     .collection("fb_classes_path".localize)
                     .document(selectedReport.className)
                     .collection("fb_date_path".localize)
@@ -329,6 +347,8 @@ class ReportManager: ObservableObject {
             case .allDay:
                 // MARK: - Updating morning & afternoon registration in class collection
                 let classMorningAbsenceRef = db
+                    .collection("fb_schools_path".localize)
+                    .document(selectedSchool)
                     .collection("fb_classes_path".localize)
                     .document(selectedReport.className)
                     .collection("fb_date_path".localize)
@@ -337,6 +357,8 @@ class ReportManager: ObservableObject {
                     .document(selectedReport.studentID)
 
                 let classAfternoonAbsenceRef = db
+                    .collection("fb_schools_path".localize)
+                    .document(selectedSchool)
                     .collection("fb_classes_path".localize)
                     .document(selectedReport.className)
                     .collection("fb_date_path".localize)
@@ -430,6 +452,8 @@ class ReportManager: ObservableObject {
                 .document(id)
 
             let classReportRef = db
+                .collection("fb_schools_path".localize)
+                .document(selectedSchool)
                 .collection("fb_classes_path".localize)
                 .document(selectedReport.className)
                 .collection("fb_report_path".localize)
@@ -466,6 +490,8 @@ class ReportManager: ObservableObject {
         
         if let id = selectedReport.id {
             let classReportRef = db
+                .collection("fb_schools_path".localize)
+                .document(selectedSchool)
                 .collection("fb_classes_path".localize)
                 .document(selectedReport.className)
                 .collection("fb_report_path".localize)
@@ -509,6 +535,8 @@ class ReportManager: ObservableObject {
         let db = Firestore.firestore()
         
         let statisticsClassRef = db
+            .collection("fb_schools_path".localize)
+            .document(selectedSchool)
             .collection("fb_classes_path".localize)
             .document(className)
             .collection("fb_statistics_path".localize)

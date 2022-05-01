@@ -18,10 +18,6 @@ class ChildrenManager: ObservableObject {
     // Array of the parents children ids, that we use to create snapshot listeners for their absences
     private var childrenIds = [String]()
     
-    // Selectors
-    var selectedAbsenceID = String()
-    var selectedReportID = String()
-    
     // Firebase reference
     let db = Firestore.firestore()
     
@@ -193,6 +189,8 @@ class ChildrenManager: ObservableObject {
         let batch = db.batch()
         
         let newClassReport = db
+            .collection("fb_schools_path".localize)
+            .document(child.associatedSchool)
             .collection("fb_classes_path".localize)
             .document(child.className)
             .collection("fb_report_path".localize)
