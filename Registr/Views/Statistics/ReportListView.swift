@@ -23,10 +23,17 @@ struct ReportListView: View {
     var body: some View {
         ZStack {
             List() {
-                ForEach(childrenManager.reports, id: \.self) { report in
-                    if report.studentID == selectedStudent {
-                        ReportSection(report: report, student: student)
-                            .padding(.bottom, 20)
+                ForEach(TeacherValidation.allCases, id: \.rawValue) { validation in
+                    Section(
+                        header: Text(validation.rawValue)
+                            .bigBodyTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
+                    ) {
+                        ForEach(childrenManager.reports, id: \.self) { report in
+                            if report.studentID == selectedStudent && report.teacherValidation == validation {
+                                ReportSection(report: report, student: student)
+                                    .padding(.bottom, 20)
+                            }
+                        }
                     }
                 }
             }

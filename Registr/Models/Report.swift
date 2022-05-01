@@ -14,8 +14,8 @@ enum TimeOfDay: String, CaseIterable, Codable {
 }
 
 enum TeacherValidation: String, CaseIterable, Codable {
-    case accepted = "Godkendt"
     case pending = "Afventer"
+    case accepted = "Godkendt"
     case denied = "Afslået"
 }
 
