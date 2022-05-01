@@ -60,7 +60,7 @@ struct ReportSection: View {
                     .padding(.trailing, 10)
             }
             .sheet(isPresented: $showModal) {
-                ParentAbsenceRegistrationView(report: report, child: student, shouldUpdate: true)
+                ParentAbsenceRegistrationView(report: report, absence: nil, child: student, shouldUpdate: true, isAbsenceChange: false)
             }
         }
     }

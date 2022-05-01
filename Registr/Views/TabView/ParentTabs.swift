@@ -17,7 +17,7 @@ struct ParentTabs: View {
                 Text("Børn")
             }.environmentObject(childrenManager)
         
-        ParentAbsenceRegistrationView(report: nil, child: nil, shouldUpdate: false)
+        ParentAbsenceRegistrationView(report: nil, absence: nil, child: nil, shouldUpdate: false, isAbsenceChange: false)
             .tabItem {
                 Image(systemName: "square.and.pencil")
                 Text("Indberet")
