@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ReportSection: View {
     @EnvironmentObject var childrenManager: ChildrenManager
+    @State var showModal = false
     let report: Report
     let student: Student
-    @State var showModal = false
     
     var body: some View {
         Menu {

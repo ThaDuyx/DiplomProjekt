@@ -13,7 +13,7 @@ struct StudentView: View {
     // This is for testing the chart
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
-    @ObservedObject var statisticsManager = StatisticsManager()
+    @StateObject var statisticsManager = StatisticsManager()
     @State private var weekdaysArray: [String] = ["Man", "Tir", "Ons", "Tor", "Fre"]
     
     let studentName: String

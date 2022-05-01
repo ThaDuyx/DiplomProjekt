@@ -169,18 +169,18 @@ class ChildrenManager: ObservableObject {
                             }
                             
                             // When a document has been removed we will fetch the repective registration and removed its content from our list
-//                            if (diff.type == .removed) {
-//                                do {
-//                                    if let removedAbsence = try diff.document.data(as: Registration.self) {
-//                                        if let removedId = removedAbsence.id, let index = self.absences.firstIndex(where: {$0.id == removedId}) {
-//                                            self.absences.remove(at: index)
-//                                        }
-//                                    }
-//                                }
-//                                catch {
-//                                    print(error)
-//                                }
-//                            }
+                            if (diff.type == .removed) {
+                                do {
+                                    if let removedAbsence = try diff.document.data(as: Registration.self) {
+                                        if let removedId = removedAbsence.id, let index = self.absences.firstIndex(where: {$0.id == removedId}) {
+                                            self.absences.remove(at: index)
+                                        }
+                                    }
+                                }
+                                catch {
+                                    print(error)
+                                }
+                            }
                         }
                     }
                 }
@@ -292,7 +292,6 @@ class ChildrenManager: ObservableObject {
                     print("Error writing batch \(err)")
                 } else {
                     print("Batch write succeeded.")
-                    self.reports.removeAll(where: {$0.id == reportID})
                 }
             }
         }

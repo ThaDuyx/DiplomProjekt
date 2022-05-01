@@ -282,11 +282,17 @@ struct ParentAbsenceRegistrationView: View {
                                             childrenManager.updateAbsenceReport(child: selectedChild, report: report) { result in
                                                 if result {
                                                     self.selectedChild = nil
+                                                    self.selectedName = ""
+                                                    self.textBindingManager.value = ""
+                                                    self.selectedAbsence = ""
+                                                    self.isInterval = false
+                                                    self.startDate = Date()
+                                                    self.endDate = Date()
+                                                    dismiss()
                                                 } else {
                                                     context.present(ErrorView(error: "alert_default_description".localize))
                                                 }
                                             }
-                                            dismiss()
                                         } else {
                                             childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
                                                 if result {
@@ -302,7 +308,6 @@ struct ParentAbsenceRegistrationView: View {
                                                 }
                                             }
                                         }
-                                    
                                     }
                                 }
                             }
