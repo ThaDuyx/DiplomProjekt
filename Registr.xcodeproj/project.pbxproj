@@ -91,6 +91,8 @@
 		83717383281D5DB900A73B7F /* ReportSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83717382281D5DB900A73B7F /* ReportSection.swift */; };
 		83717386281D5EB400A73B7F /* RegistrationClassSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83717385281D5EB400A73B7F /* RegistrationClassSection.swift */; };
 		83717388281D5F2900A73B7F /* RegistrationStudentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83717387281D5F2900A73B7F /* RegistrationStudentSection.swift */; };
+		8371736F281D2B8B00A73B7F /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371736E281D2B8B00A73B7F /* School.swift */; };
+		83717371281D2F2200A73B7F /* SchoolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83717370281D2F2200A73B7F /* SchoolManager.swift */; };
 		8387E78727E1FA660060C12D /* NavigationAndTabbarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */; };
 		8391A8DC27D8BBD700B5C698 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DB27D8BBD700B5C698 /* OnboardingView.swift */; };
 		8391A8DE27D8C59900B5C698 /* OnboardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8DD27D8C59900B5C698 /* OnboardSection.swift */; };
@@ -192,6 +194,8 @@
 		83717382281D5DB900A73B7F /* ReportSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSection.swift; sourceTree = "<group>"; };
 		83717385281D5EB400A73B7F /* RegistrationClassSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationClassSection.swift; sourceTree = "<group>"; };
 		83717387281D5F2900A73B7F /* RegistrationStudentSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationStudentSection.swift; sourceTree = "<group>"; };
+		8371736E281D2B8B00A73B7F /* School.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
+		83717370281D2F2200A73B7F /* SchoolManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolManager.swift; sourceTree = "<group>"; };
 		8387E78627E1FA660060C12D /* NavigationAndTabbarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAndTabbarAppearance.swift; sourceTree = "<group>"; };
 		8391A8DB27D8BBD700B5C698 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		8391A8DD27D8C59900B5C698 /* OnboardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardSection.swift; sourceTree = "<group>"; };
@@ -289,6 +293,7 @@
 				6AAC4E52280D546600AB59C2 /* StatisticsManager.swift */,
 				6AD2E1EB27F9FDAE0027036F /* FeedDatabaseManager.swift */,
 				6A25CFCA2801A70C006B2685 /* FavoriteManager.swift */,
+				83717370281D2F2200A73B7F /* SchoolManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -304,6 +309,7 @@
 				6A18AF5228118ECD008CD7CA /* ClassInfo.swift */,
 				6AA308D8281937D100AE9665 /* SnapshotData.swift */,
 				6AA308DA281A86DA00AE9665 /* RegistrationInfo.swift */,
+				8371736E281D2B8B00A73B7F /* School.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -624,6 +630,7 @@
 				6A0F350827DA0CF7001E60D9 /* RegistrationManager.swift in Sources */,
 				830FD5C627F5C54100F87E0D /* ColorMultiply+Extensions.swift in Sources */,
 				83BB1B6127EE0D03002FF81E /* CalendarView.swift in Sources */,
+				8371736F281D2B8B00A73B7F /* School.swift in Sources */,
 				8314F8132806BD7B00487C5F /* NavigationController+Extensions.swift in Sources */,
 				830FD5C227F4829600F87E0D /* DateFormatter+Extensions.swift in Sources */,
 				83DFAE1A2814217B007C0D50 /* FontStyle.swift in Sources */,
@@ -632,6 +639,7 @@
 				8348592427CF8C3D009D8A51 /* TextStyles.swift in Sources */,
 				6A0F34FD27D8A870001E60D9 /* Report.swift in Sources */,
 				6A0F350327D8C8A9001E60D9 /* Registration.swift in Sources */,
+				83717371281D2F2200A73B7F /* SchoolManager.swift in Sources */,
 				8348592827CF8D1C009D8A51 /* Resources.swift in Sources */,
 				83717386281D5EB400A73B7F /* RegistrationClassSection.swift in Sources */,
 				6A63250F27EB565D000EF260 /* DefaultsManager.swift in Sources */,
