@@ -13,10 +13,12 @@ struct AbsenceListView: View {
     
     var selectedStudent: String
     var studentName: String
+    let student: Student
     
-    init(selectedStudent: String, studentName: String) {
+    init(selectedStudent: String, studentName: String, student: Student) {
         self.selectedStudent = selectedStudent
         self.studentName = studentName
+        self.student = student
     }
     
     var body: some View {
@@ -27,7 +29,7 @@ struct AbsenceListView: View {
                         AbsenceReportSection(absence: absence)
                             .padding(.bottom, 20)
                             .sheet(isPresented: $showModal) {
-                                ParentAbsenceRegistrationView(report: nil, child: nil, shouldUpdate: false)
+                                ParentAbsenceRegistrationView(report: nil, absence: absence, child: student, shouldUpdate: false, isAbsenceChange: true)
                             }
                             .onTapGesture {
                                 showModal = true
@@ -44,6 +46,6 @@ struct AbsenceListView: View {
 
 struct AbsenceListView_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceListView(selectedStudent: "", studentName: "")
+        AbsenceListView(selectedStudent: "", studentName: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""))
     }
 }

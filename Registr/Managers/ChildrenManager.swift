@@ -84,7 +84,7 @@ class ChildrenManager: ObservableObject {
                             do {
                                 if let report = try diff.document.data(as: Report.self) {
                                     self.reports.append(report)
-                                    self.reports.sort { $0.date < $1.date }
+                                    self.reports.sort { $0.date > $1.date }
                                 }
                             }
                             catch {
@@ -98,7 +98,7 @@ class ChildrenManager: ObservableObject {
                                 if let modifiedReport = try diff.document.data(as: Report.self) {
                                     if let modifiedId = modifiedReport.id, let index = self.reports.firstIndex(where: {$0.id == modifiedId}) {
                                         self.reports[index] = modifiedReport
-                                        self.reports.sort { $0.date < $1.date }
+                                        self.reports.sort { $0.date > $1.date }
                                     }
                                 }
                             }
@@ -113,7 +113,7 @@ class ChildrenManager: ObservableObject {
                                 if let removedReport = try diff.document.data(as: Report.self) {
                                     if let removedId = removedReport.id, let index = self.reports.firstIndex(where: {$0.id == removedId}) {
                                         self.reports.remove(at: index)
-                                        self.reports.sort { $0.date < $1.date }
+                                        self.reports.sort { $0.date > $1.date }
                                     }
                                 }
                             }
@@ -147,6 +147,7 @@ class ChildrenManager: ObservableObject {
                                 do {
                                     if let absence = try diff.document.data(as: Registration.self) {
                                         self.absences.append(absence)
+                                        self.absences.sort { $0.date > $1.date }
                                     }
                                 }
                                 catch {
@@ -160,6 +161,7 @@ class ChildrenManager: ObservableObject {
                                     if let modifiedAbsence = try diff.document.data(as: Registration.self) {
                                         if let modifiedId = modifiedAbsence.id, let index = self.absences.firstIndex(where: {$0.id == modifiedId}) {
                                             self.absences[index] = modifiedAbsence
+                                            self.absences.sort { $0.date > $1.date }
                                         }
                                     }
                                 }
@@ -174,6 +176,7 @@ class ChildrenManager: ObservableObject {
                                     if let removedAbsence = try diff.document.data(as: Registration.self) {
                                         if let removedId = removedAbsence.id, let index = self.absences.firstIndex(where: {$0.id == removedId}) {
                                             self.absences.remove(at: index)
+                                            self.absences.sort { $0.date > $1.date }
                                         }
                                     }
                                 }

@@ -26,12 +26,15 @@ struct StudentReportView: View {
     var body: some View {
         VStack {
             StudentAbsenceInformationSection(name: report.studentName, reason: report.reason, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue )
+            
             Spacer()
+            
             VStack(spacing: 10) {
                 Section(
                     header: HStack {
                         Image(systemName: "person.crop.circle.badge.questionmark")
-                            .foregroundColor(Color.fiftyfifty)
+                            .foregroundColor(.fiftyfifty)
+                        
                         Text("Vælg fravær - \(selectedAbsence)")
                             .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                     }
@@ -59,7 +62,7 @@ struct StudentReportView: View {
             
             HStack {
                 Button("Afslå") {
-                    reportManager.denyReport(selectedReport: report, teacherValidation: "Afslået") { result in
+                    reportManager.denyReport(selectedReport: report, teacherValidation: .denied) { result in
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
@@ -72,7 +75,7 @@ struct StudentReportView: View {
                 Spacer()
                 
                 Button("Registrer") {
-                    reportManager.validateReport(selectedReport: report, validationReason: selectedAbsence, teacherValidation: "Godkendt") { result in
+                    reportManager.validateReport(selectedReport: report, validationReason: selectedAbsence, teacherValidation: .accepted) { result in
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
@@ -93,6 +96,6 @@ struct StudentReportView: View {
 
 struct StudentReportView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentReportView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: "", isDoubleRegistrationActivated: false))
+        StudentReportView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: .pending, isDoubleRegistrationActivated: false))
     }
 }
