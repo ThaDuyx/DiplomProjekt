@@ -55,9 +55,11 @@ struct ReportSection: View {
                         .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
                 }
                 
-                Image(systemName: "ellipsis")
-                    .foregroundColor(Color.fiftyfifty)
-                    .padding(.trailing, 10)
+                if report.teacherValidation == .pending {
+                    Image(systemName: "ellipsis")
+                        .foregroundColor(Color.fiftyfifty)
+                        .padding(.trailing, 10)
+                }
             }
             .sheet(isPresented: $showModal) {
                 ParentAbsenceRegistrationView(report: report, absence: nil, child: student, shouldUpdate: true, isAbsenceChange: false)
@@ -67,9 +69,9 @@ struct ReportSection: View {
     }
     
     private func validationImage(report: Report) -> String {
-        if !report.validated && report.teacherValidation == .denied {
+        if report.teacherValidation == .denied {
             return "xmark.circle"
-        } else if !report.validated && report.teacherValidation != .denied {
+        } else if report.teacherValidation == .pending {
             return "questionmark.circle"
         } else {
             return "checkmark.circle"

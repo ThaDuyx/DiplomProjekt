@@ -26,12 +26,15 @@ struct StudentReportView: View {
     var body: some View {
         VStack {
             StudentAbsenceInformationSection(name: report.studentName, reason: report.reason, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue )
+            
             Spacer()
+            
             VStack(spacing: 10) {
                 Section(
                     header: HStack {
                         Image(systemName: "person.crop.circle.badge.questionmark")
                             .foregroundColor(Color.fiftyfifty)
+                        
                         Text("Vælg fravær - \(selectedAbsence)")
                             .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                     }
