@@ -39,7 +39,6 @@ struct StudentView: View {
                         StatisticsButtonSection(systemName: "doc.text.fill", titleText: "statistics_reports".localize, destination: ReportListView(selectedStudent: studentID, studentName: studentName, student: student))
                         
                         StatisticsButtonSection(systemName: "person.crop.circle.badge.questionmark", titleText: "statistics_absence".localize, destination: AbsenceListView(selectedStudent: studentID, studentName: studentName, student: student))
-                        
                     }
                 }
                 
@@ -95,11 +94,11 @@ extension StudentView {
     
     private func statisticsWeekDay() -> [Int] {
         var weekdayArray: [Int] = []
-        weekdayArray.append(4)
-        weekdayArray.append(4)
-        weekdayArray.append(4)
-        weekdayArray.append(4)
-        weekdayArray.append(4)
+        weekdayArray.append(statisticsManager.statistic.mon)
+        weekdayArray.append(statisticsManager.statistic.tue)
+        weekdayArray.append(statisticsManager.statistic.wed)
+        weekdayArray.append(statisticsManager.statistic.thu)
+        weekdayArray.append(statisticsManager.statistic.fri)
         return weekdayArray
     }
 }

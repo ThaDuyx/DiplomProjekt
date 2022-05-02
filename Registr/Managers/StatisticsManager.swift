@@ -42,7 +42,7 @@ class StatisticsManager: ObservableObject {
     }
     
     // Object that contains statistic data and overrides every time it is written to.
-    @Published var statistic = Statistics(illegalMorning: 0, illegalAfternoon: 0, illnessMorning: 0, illnessAfternoon: 0, lateMorning: 0, lateAfternoon: 0, legalMorning: 0, legalAfternoon: 0)
+    @Published var statistic = Statistics(illegalMorning: 0, illegalAfternoon: 0, illnessMorning: 0, illnessAfternoon: 0, lateMorning: 0, lateAfternoon: 0, legalMorning: 0, legalAfternoon: 0, mon: 0, tue: 0, wed: 0, thu: 0, fri: 0)
     
     // Constants
     private let increment: Int64 = 1
@@ -76,19 +76,27 @@ class StatisticsManager: ObservableObject {
      - parameter oldValue:      The old value of the registration.
      - parameter newValue:      The new value of the registration.
      - parameter studentID:     The selected student's firestore id.
-     - parameter isMorning:      A boolean value that determines wether to update the morning or afternoon statistics.
+     - parameter isMorning:     A boolean value that determines wether to update the morning or afternoon statistics.
+     - parameter date:          Date to determine which day we will add to the overall statistics.
      */
-    func updateStudentStatistics(oldValue: String, newValue: String, studentID: String, isMorning: Bool) {
+    func updateStudentStatistics(oldValue: String, newValue: String, studentID: String, isMorning: Bool, date: Date) {
         let studentStatRef = db
             .collection("fb_students_path".localize)
             .document(studentID)
             .collection("fb_statistics_path".localize)
             .document("fb_statistics_doc".localize)
         
+        // Determining statistics for the absence reason
         determineAbsence(docRef: studentStatRef, value: newValue, inOrDecrement: increment, isMorning: isMorning)
-        
         if !oldValue.isEmpty {
             determineAbsence(docRef: studentStatRef, value: oldValue, inOrDecrement: decrement, isMorning: isMorning)
+        }
+        
+        // Determining statistics for the day
+        if newValue.isEmpty {
+            determineAbsenceDay(docRef: studentStatRef, inOrDecrement: decrement, date: date)
+        } else {
+            determineAbsenceDay(docRef: studentStatRef, inOrDecrement: increment, date: date)
         }
     }
     
@@ -108,6 +116,31 @@ class StatisticsManager: ObservableObject {
             batch.updateData([isMorning ? "illnessMorning" : "illnessAfternoon" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
         case AbsenceReasons.late.rawValue:
             batch.updateData([isMorning ? "lateMorning" : "lateAfternoon" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
+        default:
+            break
+        }
+    }
+    
+    /**
+     Determines wether to increment or decrement either the mon, tue, wed, thu or fri variable in the database.
+     
+     - parameter docRef:           Reference to the specific student's stats
+     - parameter inOrDecrement:    A constant that chooses either to increment or decrement the number in the database.
+     - parameter date:             The day chosen to open the AbsenceRegistrationView.
+     */
+    private func determineAbsenceDay(docRef: DocumentReference, inOrDecrement: Int64, date: Date) {
+        let day = date.dayOfDate
+        switch day {
+        case WeekDays.mon.rawValue:
+            batch.updateData(["mon" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
+        case WeekDays.tue.rawValue:
+            batch.updateData(["tue" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
+        case WeekDays.wed.rawValue:
+            batch.updateData(["wed" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
+        case WeekDays.thu.rawValue:
+            batch.updateData(["thu" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
+        case WeekDays.fri.rawValue:
+            batch.updateData(["fri" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
         default:
             break
         }
@@ -176,7 +209,7 @@ class StatisticsManager: ObservableObject {
      - parameter className:      Name of the selected class.
      - parameter isMorning:      A boolean value that determines wether to update the morning or afternoon statistics.
      */
-    func writeClassStats(className: String, isMorning: Bool) {
+    func writeClassStats(className: String, isMorning: Bool, date: Date) {
         let statisticsClassRef = db
             .collection("fb_schools_path".localize)
             .document(selectedSchool)
@@ -188,16 +221,20 @@ class StatisticsManager: ObservableObject {
         // If one of the following counters are zero we do not want to use them
         if illegalCounter != 0 {
             statisticsClassRef.updateData([isMorning ? "illegalMorning" : "illegalAfternoon" : FieldValue.increment(illegalCounter)])
+            calculateDayOfAbsenceInClass(docRef: statisticsClassRef, counter: illegalCounter, date: date)
         }
         
         if illnessCounter != 0 {
             statisticsClassRef.updateData([isMorning ? "illnessMorning" : "illnessAfternoon" : FieldValue.increment(illnessCounter)])
+            calculateDayOfAbsenceInClass(docRef: statisticsClassRef, counter: illnessCounter, date: date)
         }
         
         if lateCounter != 0 {
             statisticsClassRef.updateData([isMorning ? "lateMorning" : "lateAfternoon" : FieldValue.increment(lateCounter)])
+            calculateDayOfAbsenceInClass(docRef: statisticsClassRef, counter: lateCounter, date: date)
         }
     }
+
     
     /**
      Function that  increments or decrements to the global counters in this class.
@@ -236,6 +273,24 @@ class StatisticsManager: ObservableObject {
             illnessCounter += decrement
         case AbsenceReasons.late.rawValue:
             lateCounter += decrement
+        default:
+            break
+        }
+    }
+    
+    private func calculateDayOfAbsenceInClass(docRef: DocumentReference, counter: Int64, date: Date) {
+        let day = date.dayOfDate
+        switch day {
+        case WeekDays.mon.rawValue:
+            docRef.updateData(["mon" : FieldValue.increment(counter)])
+        case WeekDays.tue.rawValue:
+            docRef.updateData(["tue" : FieldValue.increment(counter)])
+        case WeekDays.wed.rawValue:
+            docRef.updateData(["wed" : FieldValue.increment(counter)])
+        case WeekDays.thu.rawValue:
+            docRef.updateData(["thu" : FieldValue.increment(counter)])
+        case WeekDays.fri.rawValue:
+            docRef.updateData(["fri" : FieldValue.increment(counter)])
         default:
             break
         }
