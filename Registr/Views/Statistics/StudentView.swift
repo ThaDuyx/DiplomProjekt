@@ -39,7 +39,6 @@ struct StudentView: View {
                         StatisticsButtonSection(systemName: "doc.text.fill", titleText: "statistics_reports".localize, destination: ReportListView(selectedStudent: studentID, studentName: studentName, student: student))
                         
                         StatisticsButtonSection(systemName: "person.crop.circle.badge.questionmark", titleText: "statistics_absence".localize, destination: AbsenceListView(selectedStudent: studentID, studentName: studentName, student: student))
-                        
                     }
                 }
                 
