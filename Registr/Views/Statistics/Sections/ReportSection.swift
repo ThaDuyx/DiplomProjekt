@@ -57,7 +57,7 @@ struct ReportSection: View {
                 
                 if report.teacherValidation == .pending {
                     Image(systemName: "ellipsis")
-                        .foregroundColor(Color.fiftyfifty)
+                        .foregroundColor(.fiftyfifty)
                         .padding(.trailing, 10)
                 }
             }
