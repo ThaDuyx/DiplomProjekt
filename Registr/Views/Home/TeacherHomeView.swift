@@ -11,6 +11,7 @@ struct TeacherHomeView: View {
     
     @StateObject var reportManager = ReportManager()
     @EnvironmentObject var favoriteManager: FavoriteManager
+    @EnvironmentObject var notificationVM: NotificationViewModel
     
     var body: some View {
         NavigationView {
@@ -24,6 +25,9 @@ struct TeacherHomeView: View {
                             if report.className == favorite {
                                 TeacherAbsencesSection(report: report)
                             }
+                        }
+                        .onAppear() {
+                            notificationVM.teacherSubscribeToNotification = true
                         }
                         .listRowBackground(Color.frolyRed)
                         .listRowSeparatorTint(Color.white)
@@ -47,6 +51,9 @@ struct TeacherHomeView: View {
                         }
                     }
                 }
+            }
+            .onAppear() {
+                notificationVM.getNotificationSettings()
             }
             .navigationTitle("Indberettelser")
             .navigationBarTitleDisplayMode(.inline)
