@@ -26,7 +26,7 @@ struct ReportListView: View {
                 ForEach(TeacherValidation.allCases, id: \.rawValue) { validation in
                     Section(
                         header: Text(validation.rawValue)
-                            .bigBodyTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
+                            .bigBodyTextStyle(color: .fiftyfifty, font: .poppinsMedium)
                     ) {
                         ForEach(childrenManager.reports, id: \.self) { report in
                             if report.studentID == selectedStudent && report.teacherValidation == validation {
