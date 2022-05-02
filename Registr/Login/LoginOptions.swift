@@ -7,6 +7,9 @@
 import SwiftUI
 
 struct LoginOptions: View {
+    init() {
+        NavigationAndTabbarAppearance.configureAppearance()
+    }
     var body: some View {
         NavigationView {
             ZStack {
@@ -44,7 +47,6 @@ struct LoginOptions: View {
                     .offset(y: 80)
                 }
             }
-            .navigationTitle("")
             .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)
         }

@@ -58,11 +58,11 @@ struct StudentView: View {
                 Spacer()
                 
                 VStack(spacing: 20) {
-                    AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, array: statisticMorning())
+                    AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, statArray: statisticMorning())
                     if student.classInfo.isDoubleRegistrationActivated {
-                        AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_afternoon".localize, array: statisticAfternoon())
+                        AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_afternoon".localize, statArray: statisticAfternoon())
                     }
-                    AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, array: statisticsWeekDay())
+                    AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, statArray: statisticsWeekDay())
                 }
                 .onAppear() {
                     statisticsManager.fetchStudentStats(studentID: studentID)

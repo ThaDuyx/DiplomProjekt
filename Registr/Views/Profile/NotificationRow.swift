@@ -30,7 +30,7 @@ struct NotificationRow: View {
                     Link(destination: URL(string: UIApplication.openSettingsURLString)!, label: {
                         Text("notification_button_title")
                     })
-                        .buttonStyle(Resources.CustomButtonStyle.SmallFilledButtonStyle())
+                    .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsRegular, fontSize: Resources.FontSize.subTitle))
                 }
             }
         }

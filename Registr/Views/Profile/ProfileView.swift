@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import SwiftUIKit
 
 struct ProfileView: View {
+    @EnvironmentObject var notificationVM: NotificationViewModel
+    @StateObject private var context = FullScreenCoverContext()
     let isTeacher: Bool
     var body: some View {
         VStack {
@@ -15,7 +18,7 @@ struct ProfileView: View {
                 .padding(.top, 20)
             Spacer()
             Button {
-                print("You have logout")
+                logOut()
             } label: {
                 Text("Log ud")
             }
@@ -26,8 +29,31 @@ struct ProfileView: View {
                 .lineLimit(2)
                 .padding()
         }
+        .fullScreenCover(context)
         .navigationTitle("Profil")
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+extension ProfileView {
+    private func logOut() {
+        AuthenticationManager.shared.signOut { status in
+            if status {
+                if UserManager.shared.user?.role == .parent {
+                    notificationVM.parentSubscribeToNotification = false
+                } else {
+                    notificationVM.teacherSubscribeToNotification = false
+                }
+                let window = UIApplication
+                    .shared
+                    .connectedScenes
+                    .flatMap{( $0 as? UIWindowScene)?.windows ?? [] }
+                    .first { $0.isKeyWindow }
+                window?.rootViewController = UIHostingController(rootView: LoginOptions().environmentObject(notificationVM))
+            } else {
+                context.present(ErrorView(error: "alert_default_description".localize))
+            }
+        }
     }
 }
 

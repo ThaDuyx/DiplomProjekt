@@ -90,13 +90,14 @@ class AuthenticationManager {
         }
     }
     
-    func signOut()
-    {
+    func signOut(completion: @escaping (Bool) -> ()) {
+        let firebaseAuth = Auth.auth()
         do {
-            // TODO: --- Change view to log in screen & probably add a completion handler to this function ---
-            try Auth.auth().signOut()
-        } catch {
-            print("general_error" + error.localizedDescription)
+            try firebaseAuth.signOut()
+            completion(true)
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+            completion(false)
         }
     }
 }
