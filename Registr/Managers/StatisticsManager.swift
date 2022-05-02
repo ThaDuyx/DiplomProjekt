@@ -235,7 +235,6 @@ class StatisticsManager: ObservableObject {
         }
     }
     
-    
     /**
      Function that  increments or decrements to the global counters in this class.
      
