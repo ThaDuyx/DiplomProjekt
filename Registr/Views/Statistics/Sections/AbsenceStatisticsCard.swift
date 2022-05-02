@@ -10,7 +10,7 @@ import SwiftUI
 struct AbsenceStatisticsCard: View {
     var isWeekDayUsed: Bool
     var title: String
-    var array: [Int]
+    var statArray: [Int]
     private let weekArray: [String] = StatisticsManager.WeekDays.allCases.map { $0.rawValue }
     private let absencesReasonsArray: [String] = StatisticsManager.AbsencesReasons.allCases.map { $0.rawValue }
     
@@ -38,7 +38,7 @@ struct AbsenceStatisticsCard: View {
                         }
                         
                         HStack {
-                            ForEach(array, id: \.self) { value in
+                            ForEach(statArray, id: \.self) { value in
                                 Text("\(value)")
                                     .bodyTextStyle(color: .white, font: .poppinsRegular)
                                     .frame(maxWidth: .infinity, alignment: .center)
@@ -57,6 +57,6 @@ struct AbsenceStatisticsCard: View {
 
 struct AbsenceStatisticsCard_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceStatisticsCard(isWeekDayUsed: false, title: "Title", array: [0, 0, 1, 2])
+        AbsenceStatisticsCard(isWeekDayUsed: false, title: "Title", statArray: [0, 0, 1, 2])
     }
 }
