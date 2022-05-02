@@ -459,7 +459,7 @@ class ReportManager: ObservableObject {
                 .collection("fb_report_path".localize)
                 .document(id)
 
-            batch.updateData(["teacherValidation" : teacherValidation], forDocument: parentReportRef)
+            batch.updateData(["teacherValidation" : teacherValidation.rawValue], forDocument: parentReportRef)
             batch.deleteDocument(classReportRef)
 
             batch.commit() { err in
@@ -504,7 +504,7 @@ class ReportManager: ObservableObject {
                 .document(id)
             
             batch.deleteDocument(classReportRef)
-            batch.updateData(["teacherValidation" : teacherValidation], forDocument: parentReportRef)
+            batch.updateData(["teacherValidation" : teacherValidation.rawValue], forDocument: parentReportRef)
             
             batch.commit() { err in
                 if let err = err {
