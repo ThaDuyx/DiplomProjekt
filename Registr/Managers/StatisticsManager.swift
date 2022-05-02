@@ -9,6 +9,23 @@ import Foundation
 import FirebaseFirestore
 
 class StatisticsManager: ObservableObject {
+    
+    // Enums for Weekdays and absences reasons
+    enum WeekDays: String, CaseIterable {
+        case mon = "Man"
+        case tue = "Tir"
+        case wed = "Ons"
+        case thu = "Tor"
+        case fri = "Fre"
+    }
+
+    enum AbsencesReasons: String, CaseIterable {
+        case late = "For sent"
+        case sick = "Syg"
+        case legal = "Lovligt"
+        case Illegal = "Ulovligt"
+    }
+
     // Firestore db reference
     private let db = Firestore.firestore()
     

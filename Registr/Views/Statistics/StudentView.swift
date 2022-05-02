@@ -14,7 +14,6 @@ struct StudentView: View {
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
     @StateObject var statisticsManager = StatisticsManager()
-    @State private var weekdaysArray: [String] = ["Man", "Tir", "Ons", "Tor", "Fre"]
     
     let studentName: String
     var isParent: Bool
@@ -30,71 +29,44 @@ struct StudentView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-        VStack {
-            
-            if isParent {
-                if let studentID = studentID {
-                    
-                    Spacer()
-                    
-                    StatisticsButtonSection(systemName: "doc.text.fill", titleText: "Indberettelser", destination: ReportListView(selectedStudent: studentID, studentName: studentName, student: student))
-
-                    StatisticsButtonSection(systemName: "person.crop.circle.badge.questionmark", titleText: "Fravær", destination: AbsenceListView(selectedStudent: studentID, studentName: studentName))
-                    
+            VStack(spacing: 15) {
+                
+                if isParent {
+                    if let studentID = studentID {
+                        
+                        Spacer()
+                        
+                        StatisticsButtonSection(systemName: "doc.text.fill", titleText: "statistics_reports".localize, destination: ReportListView(selectedStudent: studentID, studentName: studentName, student: student))
+                        
+                        StatisticsButtonSection(systemName: "person.crop.circle.badge.questionmark", titleText: "statistics_absence".localize, destination: AbsenceListView(selectedStudent: studentID, studentName: studentName))
+                        
+                    }
                 }
-            }
-
+                
+                Spacer()
+                
                 VStack {
                     PieChart()
                         .data(demoData)
-                        .chartStyle(ChartStyle(backgroundColor: .white,
-                                               foregroundColor: ColorGradient(Color.fiftyfifty, Color.fiftyfifty)))
+                        .chartStyle(ChartStyle(
+                            backgroundColor: .white,
+                            foregroundColor: ColorGradient(.fiftyfifty, .fiftyfifty))
+                        )
                 }
                 .frame(width: 150, height: 150)
                 
-                VStack(alignment: .leading, spacing: -10) {
-                    HStack {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
-                            .foregroundColor(Color.fiftyfifty)
-                        Text("Statistik")
-                            .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
-                            .padding(.leading, 20)
+                Spacer()
+                
+                VStack(spacing: 20) {
+                    AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, array: statisticMorning())
+                    if student.classInfo.isDoubleRegistrationActivated {
+                        AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_afternoon".localize, array: statisticAfternoon())
                     }
-                    VStack(alignment: .center, spacing: 10) {
-                        
-                        StatisticCollection(isDoubleRegistrationActivated: student.classInfo.isDoubleRegistrationActivated, statistics: statisticsManager.statistic)
-                        
-                        VStack(spacing: 10) {
-                            Text("Forseelser:")
-                                .bodyTextStyle(color: Color.white, font: .poppinsRegular)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 20)
-                            
-                            HStack {
-                                ForEach(weekdaysArray, id: \.self) { index in
-                                    VStack {
-                                        Text(index)
-                                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
-                                        Text("4")
-                                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
-                                    }
-                                    .padding(.leading, 20)
-                                    .padding(.bottom, 10)
-                                    Spacer()
-                                }
-                            }
-                        }
-                    }
-                    .frame(width: 290)
-                    .background(Color.frolyRed)
-                    .cornerRadius(20)
-                    .padding()
+                    AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, array: statisticsWeekDay())
                 }
                 .onAppear() {
                     statisticsManager.fetchStudentStats(studentID: studentID)
                 }
-                
-                Spacer()
             }
             .navigationTitle(studentName)
             .navigationBarTitleDisplayMode(.inline)
@@ -102,48 +74,33 @@ struct StudentView: View {
     }
 }
 
-struct StatisticCollection: View {
-    let isDoubleRegistrationActivated: Bool
-    var statistics: Statistics
-    
-    var body: some View {
-        
-        StatisticsInfo(heading: "For sent:", morningStatistic: statistics.lateMorning, afterNoonStatistic: statistics.lateAfternoon, isDoubleRegistrationActivated: isDoubleRegistrationActivated)
-        
-        StatisticsInfo(heading: "Syg:", morningStatistic: statistics.illnessAfternoon, afterNoonStatistic: statistics.illnessAfternoon, isDoubleRegistrationActivated: isDoubleRegistrationActivated)
-        
-        StatisticsInfo(heading: "Ulovligt:", morningStatistic: statistics.illegalMorning, afterNoonStatistic: statistics.illegalAfternoon, isDoubleRegistrationActivated: isDoubleRegistrationActivated)
-        
-        StatisticsInfo(heading: "Lovligt:", morningStatistic: statistics.legalMorning, afterNoonStatistic: statistics.legalAfternoon, isDoubleRegistrationActivated: isDoubleRegistrationActivated)
-        
+extension StudentView {
+    private func statisticMorning() -> [Int] {
+        var morningArray: [Int] = []
+        morningArray.append(statisticsManager.statistic.lateMorning)
+        morningArray.append(statisticsManager.statistic.illnessMorning)
+        morningArray.append(statisticsManager.statistic.legalMorning)
+        morningArray.append(statisticsManager.statistic.illegalMorning)
+        return morningArray
     }
-}
-
-struct StatisticsInfo: View {
-    let heading: String
-    let morningStatistic: Int
-    let afterNoonStatistic: Int
-    let isDoubleRegistrationActivated: Bool
     
-    var body: some View {
-        Text(heading)
-            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, 20)
-        
-        VStack {
-            Text("Morgen - \(morningStatistic)")
-                .bodyTextStyle(color: Color.white, font: .poppinsRegular)
-            
-            if isDoubleRegistrationActivated {
-                Text("Eftermiddag - \(afterNoonStatistic)")
-                    .bodyTextStyle(color: Color.white, font: .poppinsRegular)
-            }
-        }
-        
-        Divider()
-            .frame(height: 1)
-            .background(.white)
+    private func statisticAfternoon() -> [Int] {
+        var afternoonArray: [Int] = []
+        afternoonArray.append(statisticsManager.statistic.lateAfternoon)
+        afternoonArray.append(statisticsManager.statistic.illnessAfternoon)
+        afternoonArray.append(statisticsManager.statistic.legalAfternoon)
+        afternoonArray.append(statisticsManager.statistic.illegalAfternoon)
+        return afternoonArray
+    }
+    
+    private func statisticsWeekDay() -> [Int] {
+        var weekdayArray: [Int] = []
+        weekdayArray.append(4)
+        weekdayArray.append(4)
+        weekdayArray.append(4)
+        weekdayArray.append(4)
+        weekdayArray.append(4)
+        return weekdayArray
     }
 }
 

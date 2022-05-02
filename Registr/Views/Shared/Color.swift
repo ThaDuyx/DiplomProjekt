@@ -21,8 +21,6 @@ extension Color {
             opacity: alpha
         )
     }
-    /// Hexcode is FFFFFF
-    static var white = Color(hex: 0xFFFFFF)
     /// Hexcode is e2e0d4
     static var moonMist = Color(hex: 0xe2e0d4)
     /// Hexcode is f97c7c
