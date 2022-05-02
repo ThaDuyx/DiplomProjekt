@@ -18,14 +18,14 @@ class StatisticsManager: ObservableObject {
         case thu = "Tor"
         case fri = "Fre"
     }
-
+    
     enum AbsencesReasons: String, CaseIterable {
         case late = "For sent"
         case sick = "Syg"
         case legal = "Lovligt"
         case illegal = "Ulovligt"
     }
-
+    
     // Firestore db reference
     private let db = Firestore.firestore()
     
@@ -64,7 +64,7 @@ class StatisticsManager: ObservableObject {
             }
         }
     }
-
+    
     /// Resetting the global batch of writes creating a clean object.
     func resetBatch() {
         batch = Firestore.firestore().batch()
@@ -145,7 +145,7 @@ class StatisticsManager: ObservableObject {
             break
         }
     }
-
+    
     /// Fetches the statistic variables for a specific student
     func fetchStudentStats(studentID: String) {
         db
@@ -234,7 +234,7 @@ class StatisticsManager: ObservableObject {
             calculateDayOfAbsenceInClass(docRef: statisticsClassRef, counter: lateCounter, date: date)
         }
     }
-
+    
     
     /**
      Function that  increments or decrements to the global counters in this class.
@@ -278,6 +278,13 @@ class StatisticsManager: ObservableObject {
         }
     }
     
+    /**
+     Function that updates the class statistics collection with the specific day of the week.
+     
+     - parameter docRef:         The document reference from the selected class statistcs collection.
+     - parameter counter:        One of three counters in this manager class; illegalCounter, illnessCounter or lateCounter.
+     - parameter date:           The date of the selected registration.
+     */
     private func calculateDayOfAbsenceInClass(docRef: DocumentReference, counter: Int64, date: Date) {
         let day = date.dayOfDate
         switch day {
