@@ -102,3 +102,11 @@
 "notification_title" = "Du har slået notificationer fra.";
 "notification_description" = "For at app'en kan sende dig notifikationer, når der er sket noget vigtig på det som du følger, så skal du slå notifikationer til i telefonens indstillinger.";
 "notification_button_title" = "Åben indstillinger";
+
+// MARK: - Statistics
+"statistics_morning" = "Formiddag";
+"statistics_afternoon" = "Eftermiddag";
+"statistics_offenses" = "Forseelser";
+"statistics_absence" = "Fravær";
+"statistics_reports" = "Indberettelser";
+
