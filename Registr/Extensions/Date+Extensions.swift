@@ -9,16 +9,6 @@ import Foundation
 
 extension Date {
     
-    /// Returns todays date in the format "dd-MM-yyyy"
-    var currentDateFormatted: String {
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        let currentDateFormatted = dateFormatter.string(from: currentDate)
-        
-        return currentDateFormatted
-    }
-    
     var selectedDateFormatted: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
