@@ -23,7 +23,7 @@ class StatisticsManager: ObservableObject {
         case late = "For sent"
         case sick = "Syg"
         case legal = "Lovligt"
-        case Illegal = "Ulovligt"
+        case illegal = "Ulovligt"
     }
 
     // Firestore db reference
