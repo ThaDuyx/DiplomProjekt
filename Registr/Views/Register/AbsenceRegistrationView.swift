@@ -176,7 +176,7 @@ struct AbsenceRegistrationView: View {
                                 statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning)
                                 presentationMode.wrappedValue.dismiss()
                             } else {
-                                context.present(ErrorView(error: "alert_default_description".localize))
+                                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
                             }
                         }
                     } label: {

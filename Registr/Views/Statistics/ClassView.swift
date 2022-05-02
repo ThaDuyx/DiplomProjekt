@@ -7,11 +7,13 @@
 
 import SwiftUI
 import SwiftUICharts
+import SwiftUIKit
 
 struct ClassView: View {
     @EnvironmentObject var favoriteManager: FavoriteManager
     @EnvironmentObject var notificationVM: NotificationViewModel
     @ObservedObject var statisticsManager = StatisticsManager()
+    @StateObject private var context = FullScreenCoverContext()
     
     @State private var followAction: Bool = false
     
@@ -91,7 +93,13 @@ struct ClassView: View {
                 .onAppear() {
                     statisticsManager.fetchClassStats(className: classInfo.name)
                 }
+                
                 Spacer()
+            }
+        }
+        .fullScreenCover(item: $statisticsManager.appError) { appError in
+            ErrorView(title: appError.title,error: appError.description) {
+                statisticsManager.fetchClassStats(className: classInfo.name)
             }
         }
         .onAppear() {

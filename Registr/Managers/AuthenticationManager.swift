@@ -31,7 +31,7 @@ class AuthenticationManager {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 //TODO: --- Insert error view ---
-                print("general_error" + error.localizedDescription)
+                print("general_error " + error.localizedDescription)
                 return
                 
             } else {

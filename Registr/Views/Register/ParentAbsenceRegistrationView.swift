@@ -308,7 +308,7 @@ struct ParentAbsenceRegistrationView: View {
                                                     self.endDate = Date()
                                                     dismiss()
                                                 } else {
-                                                    context.present(ErrorView(error: "alert_default_description".localize))
+                                                    context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
                                                 }
                                             }
                                         } else {
@@ -322,7 +322,7 @@ struct ParentAbsenceRegistrationView: View {
                                                     self.startDate = Date()
                                                     self.endDate = Date()
                                                 } else {
-                                                    context.present(ErrorView(error: "alert_default_description".localize))
+                                                    context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
                                                 }
                                                 if isAbsenceChange {
                                                     dismiss()

@@ -10,7 +10,9 @@ import SwiftUI
 struct ErrorView: View {
     @Environment(\.presentationMode) var presentationMode
     
+    let title: String
     let error: String
+    var action: (() -> Void)?
     
     var body: some View {
         VStack {
@@ -21,7 +23,7 @@ struct ErrorView: View {
                 .frame(width: 130, height: 130)
                 .foregroundColor(.frolyRed)
             
-            Text("alert_title")
+            Text(title)
                 .headerTextStyle(color: .fiftyfifty, font: .poppinsMedium)
             
             Text(error)
@@ -29,9 +31,10 @@ struct ErrorView: View {
             
             Spacer()
             
-            Button{
+            Button(action: {
+                action?()
                 presentationMode.wrappedValue.dismiss()
-            } label: {
+            } ) {
                 Text("alert_button_title")
             }
             .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
@@ -42,6 +45,8 @@ struct ErrorView: View {
 
 struct ErrorView_Previews: PreviewProvider {
     static var previews: some View {
-        ErrorView(error: "Error code 101")
+        ErrorView(title: "alert_title".localize, error: "Error code 101") {
+            print("Hello world")
+        }
     }
 }

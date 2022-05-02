@@ -44,6 +44,8 @@ class StatisticsManager: ObservableObject {
     // Object that contains statistic data and overrides every time it is written to.
     @Published var statistic = Statistics(illegalMorning: 0, illegalAfternoon: 0, illnessMorning: 0, illnessAfternoon: 0, lateMorning: 0, lateAfternoon: 0, legalMorning: 0, legalAfternoon: 0)
     
+    @Published var appError: ErrorType? = nil
+    
     // Constants
     private let increment: Int64 = 1
     private let decrement: Int64 = -1
@@ -151,6 +153,7 @@ class StatisticsManager: ObservableObject {
             .getDocument { document, err in
                 if let err = err {
                     print("Error getting documents: \(err)")
+                    self.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription)
                 } else {
                     if let document = document {
                         do {
@@ -159,6 +162,7 @@ class StatisticsManager: ObservableObject {
                             }
                         }
                         catch {
+                            self.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription)
                             print(error)
                         }
                     }

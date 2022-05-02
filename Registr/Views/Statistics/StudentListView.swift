@@ -34,7 +34,9 @@ struct StudentListView: View {
             registrationManager.fetchStudents(className: selectedClass)
         }
         .fullScreenCover(item: $registrationManager.appError) { appError in
-            ErrorView(error: appError.description)
+            ErrorView(title: appError.title, error: appError.description) {
+                registrationManager.fetchStudents(className: selectedClass)
+            }
         }
     }
 }

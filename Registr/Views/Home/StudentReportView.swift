@@ -66,7 +66,9 @@ struct StudentReportView: View {
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
-                            context.present(ErrorView(error: "alert_default_description".localize))
+                            context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
+                                presentationMode.wrappedValue.dismiss()
+                            })
                         }
                     }
                 }
@@ -79,7 +81,9 @@ struct StudentReportView: View {
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
-                            context.present(ErrorView(error: "alert_default_description".localize))
+                            context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
+                                presentationMode.wrappedValue.dismiss()
+                            })
                         }
                     }
                 }

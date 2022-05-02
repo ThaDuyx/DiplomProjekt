@@ -29,7 +29,7 @@ struct TabViews: View {
                     }
                 
             case .none:
-                ErrorView(error: "alert_default_description".localize)
+                ErrorView(title: "alert_title".localize, error: "alert_default_description".localize)
             }
         }
         .accentColor(.frolyRed)
