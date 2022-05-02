@@ -16,13 +16,15 @@ struct RegistrationStudentSection: View {
     let absenceReason: String?
     let studentID: String
     let isMorning: Bool
+    let selectedDate: Date
     
-    init(index: Int, studentName: String, absenceReason: String?, studentID: String, isMorning: Bool) {
+    init(index: Int, studentName: String, absenceReason: String?, studentID: String, isMorning: Bool, selectedDate: Date) {
         self.index = index
         self.studentName = studentName
         self.absenceReason = absenceReason
         self.studentID = studentID
         self.isMorning = isMorning
+        self.selectedDate = selectedDate
     }
     
     var body: some View {
@@ -49,7 +51,7 @@ struct RegistrationStudentSection: View {
                     .onChange(of: absenceReason) { [absenceReason] newValue in
                         // Force un-wrapping because we know we have the values and would like to receive an empty String
                         statisticsManager.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
-                        statisticsManager.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID, isMorning: isMorning)
+                        statisticsManager.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID, isMorning: isMorning, date: selectedDate)
                     }
             }
             .overlay(
@@ -64,6 +66,6 @@ struct RegistrationStudentSection: View {
 
 struct RegistrationStudentSection_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrationStudentSection(index: 0, studentName: "", absenceReason: "", studentID: "", isMorning: false)
+        RegistrationStudentSection(index: 0, studentName: "", absenceReason: "", studentID: "", isMorning: false, selectedDate: Date())
     }
 }

@@ -19,6 +19,24 @@ extension Date {
         return currentDateFormatted
     }
     
+    var selectedDateFormatted: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let currentDateFormatted = dateFormatter.string(from: self)
+        
+        return currentDateFormatted
+    }
+    
+    var dayOfDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "da_DK")
+        dateFormatter.dateFormat = "E"
+        
+        let dayOfDate = dateFormatter.string(from: self).dropLast()
+        
+        return String(dayOfDate).capitalized
+    }
+    
     func formatSpecificDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
