@@ -36,6 +36,7 @@ struct AbsenceStatisticsCard: View {
                                 
                             }
                         }
+                        
                         HStack {
                             ForEach(array, id: \.self) { value in
                                 Text("\(value)")
