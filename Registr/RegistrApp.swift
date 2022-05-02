@@ -15,9 +15,7 @@ struct RegistrApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject var notificationVM = NotificationViewModel()
 
-    init() {
-        NavigationAndTabbarAppearance.configureAppearance()
-        
+    init() {        
         // Hardcoded for test
         if DefaultsManager.shared.favorites.isEmpty {
             let favoriteArray = ["0.x", "1.x"]
