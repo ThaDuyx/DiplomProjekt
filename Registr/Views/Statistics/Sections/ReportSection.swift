@@ -71,10 +71,10 @@ struct ReportSection: View {
     private func validationImage(report: Report) -> String {
         if report.teacherValidation == .denied {
             return "xmark.circle"
-        } else if report.teacherValidation == .pending {
-            return "questionmark.circle"
-        } else {
+        } else if report.teacherValidation == .accepted {
             return "checkmark.circle"
+        } else {
+            return "questionmark.circle"
         }
     }
 }
