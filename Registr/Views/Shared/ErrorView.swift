@@ -22,10 +22,10 @@ struct ErrorView: View {
                 .foregroundColor(.frolyRed)
             
             Text("alert_title")
-                .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
+                .headerTextStyle(color: .fiftyfifty, font: .poppinsMedium)
             
             Text(error)
-                .bodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
+                .bodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             
             Spacer()
             
