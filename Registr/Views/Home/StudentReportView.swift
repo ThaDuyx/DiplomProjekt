@@ -33,7 +33,7 @@ struct StudentReportView: View {
                 Section(
                     header: HStack {
                         Image(systemName: "person.crop.circle.badge.questionmark")
-                            .foregroundColor(Color.fiftyfifty)
+                            .foregroundColor(.fiftyfifty)
                         
                         Text("Vælg fravær - \(selectedAbsence)")
                             .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
