@@ -16,6 +16,7 @@ class RegistrationManager: ObservableObject {
     @Published var students = [Student]()
     @Published var classes = [ClassInfo]()
     @Published var studentRegistrationList = [Registration]()
+    @Published var appError: ErrorType? = nil
     
     // Firestore db reference
     private let db = Firestore.firestore()
@@ -286,6 +287,7 @@ class RegistrationManager: ObservableObject {
                 .getDocuments { querySnapshot, err in
                     if let err = err {
                         print("Error getting documents: \(err)")
+                        self.appError = ErrorType(title: "test1", description: "test2")
                     } else {
                         for document in querySnapshot!.documents {
                             let studentID = document.documentID
@@ -301,39 +303,12 @@ class RegistrationManager: ObservableObject {
                                         }
                                         catch {
                                             print(error)
+                                            self.appError = ErrorType(title: "test1", description: "test3")
                                         }
                                     }
                                 }
                         }
                     }
                 }
-    }
-    
-    func fetchStudentAbsence(studentID: String) {
-        if selectedStudent != studentID {
-            studentRegistrationList.removeAll()
-            
-            db
-                .collection("fb_students_path".localize)
-                .document(studentID)
-                .collection("fb_absense_path".localize)
-                .getDocuments { querySnapshot, err in
-                    if let err = err {
-                        // TODO: Error Handling
-                        print("Error getting documents: \(err)")
-                    } else {
-                        for document in querySnapshot!.documents {
-                            do {
-                                if let registration = try document.data(as: Registration.self) {
-                                    self.studentRegistrationList.append(registration)
-                                }
-                            }
-                            catch {
-                                print(error)
-                            }
-                        }
-                    }
-                }
-        }
     }
 }

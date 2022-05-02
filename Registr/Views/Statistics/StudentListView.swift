@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftUIKit
 
 struct StudentListView: View {
     @EnvironmentObject var registrationManager: RegistrationManager
-    
+    @StateObject private var context = FullScreenCoverContext()
+
     var selectedClass: String
     
     init(selectedClass: String) {
@@ -30,6 +32,9 @@ struct StudentListView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(){
             registrationManager.fetchStudents(className: selectedClass)
+        }
+        .fullScreenCover(item: $registrationManager.appError) { appError in
+            ErrorView(error: appError.description)
         }
     }
 }
