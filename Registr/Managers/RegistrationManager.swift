@@ -16,6 +16,8 @@ class RegistrationManager: ObservableObject {
     @Published var students = [Student]()
     @Published var classes = [ClassInfo]()
     @Published var studentRegistrationList = [Registration]()
+    
+    // Object for the ErrorType, used to present an error view.
     @Published var appError: ErrorType? = nil
     
     // Firestore db reference
@@ -69,7 +71,7 @@ class RegistrationManager: ObservableObject {
                 .document(date)
                 .getDocument { documentSnapshot, err in
                     if let err = err {
-                        print("Error getting documents: \(err)")
+                        self.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerError)
                     } else {
                         do {
                             if let registrationInfoDocument = documentSnapshot{
@@ -78,7 +80,7 @@ class RegistrationManager: ObservableObject {
                                 }
                             }
                         } catch {
-                            print(error)
+                            self.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerError)
                         }
                     }
                 }
@@ -93,18 +95,17 @@ class RegistrationManager: ObservableObject {
                 .collection(selectedIsMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
                 .getDocuments() {  (querySnapshot, err) in
                     if let err = err {
-                        print("Error getting documents: \(err)")
+                        self.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerError)
                     } else {
                         for document in querySnapshot!.documents {
                             do {
                                 if let registration = try document.data(as: Registration.self) {
                                     self.registrations.append(registration)
                                     self.registrations.sort { $0.studentName < $1.studentName }
-                                    print(registration)
                                 }
                             }
                             catch {
-                                print(error)
+                                self.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerError)
                             }
                         }
                     }
@@ -151,7 +152,7 @@ class RegistrationManager: ObservableObject {
                         
                         absenceStudentRef.getDocuments { querySnapshot, err in
                             if let err = err {
-                                print("Error getting documents: \(err)")
+                                completion(false)
                             } else {
                                 for document in querySnapshot!.documents {
                                     document.reference.updateData(["reason" : registration.reason])
@@ -173,7 +174,7 @@ class RegistrationManager: ObservableObject {
                         do {
                             try batch.setData(from: registration, forDocument: absenceStudentRef)
                         } catch {
-                            print("Decoding failed")
+                            completion(false)
                         }
                     }
                     
@@ -197,7 +198,7 @@ class RegistrationManager: ObservableObject {
                     
                     absenceStudentRef.getDocuments { querySnapshot, err in
                         if let err = err {
-                            print("Error getting documents: \(err)")
+                            completion(false)
                         } else {
                             for document in querySnapshot!.documents {
                                 document.reference.delete()
@@ -222,24 +223,22 @@ class RegistrationManager: ObservableObject {
                     registrationInfo.hasMorningBeenRegistrered = true
                     try batch.setData(from: registrationInfo, forDocument: registrationInfoRef)
                 } catch {
-                    print("Error encoding document \(error)")
+                    completion(false)
                 }
             } else if !isMorning && !registrationInfo.hasAfternoonBeenRegistrered && date == Date().selectedDateFormatted {
                 do {
                     registrationInfo.hasAfternoonBeenRegistrered = true
                     try batch.setData(from: registrationInfo, forDocument: registrationInfoRef)
                 } catch {
-                    print("Error encoding document \(error)")
+                    completion(false)
                 }
             }
             
             // Writing our big batch of data to firebase
             batch.commit() { err in
                 if let err = err {
-                    print("Error writing batch \(err)")
                     completion(false)
                 } else {
-                    print("Batch write succeeded.")
                     completion(true)
                 }
             }
@@ -288,7 +287,7 @@ class RegistrationManager: ObservableObject {
                 .getDocuments { querySnapshot, err in
                     if let err = err {
                         print("Error getting documents: \(err)")
-                        self.appError = ErrorType(title: "test1", description: "test2")
+                        self.appError = ErrorType(title: "test1", description: "test2", type: .registrationManagerError)
                     } else {
                         for document in querySnapshot!.documents {
                             let studentID = document.documentID
@@ -304,7 +303,7 @@ class RegistrationManager: ObservableObject {
                                         }
                                         catch {
                                             print(error)
-                                            self.appError = ErrorType(title: "test1", description: "test3")
+                                            self.appError = ErrorType(title: "test1", description: "test3", type: .registrationManagerError)
                                         }
                                     }
                                 }

@@ -44,6 +44,7 @@ class StatisticsManager: ObservableObject {
     // Object that contains statistic data and overrides every time it is written to.
     @Published var statistic = Statistics(illegalMorning: 0, illegalAfternoon: 0, illnessMorning: 0, illnessAfternoon: 0, lateMorning: 0, lateAfternoon: 0, legalMorning: 0, legalAfternoon: 0, mon: 0, tue: 0, wed: 0, thu: 0, fri: 0)
     
+    // Object for the ErrorType, used to present an error view.
     @Published var appError: ErrorType? = nil
     
     // Constants
@@ -60,7 +61,7 @@ class StatisticsManager: ObservableObject {
     func commitBatch() {
         batch.commit() { err in
             if let err = err {
-                print("Error writing batch \(err)")
+                self.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .statisticsManagerError)
             } else {
                 print("Batch write succeeded.")
             }
@@ -157,7 +158,7 @@ class StatisticsManager: ObservableObject {
             .document("fb_statistics_doc".localize)
             .getDocument { document, err in
                 if let err = err {
-                    print("Error getting documents: \(err)")
+                    self.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .statisticsManagerError)
                 } else {
                     if let document = document {
                         do {
@@ -166,7 +167,7 @@ class StatisticsManager: ObservableObject {
                             }
                         }
                         catch {
-                            print(error)
+                            self.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .statisticsManagerError)
                         }
                     }
                 }
@@ -185,8 +186,7 @@ class StatisticsManager: ObservableObject {
             .document("fb_statistics_doc".localize)
             .getDocument { document, err in
                 if let err = err {
-                    print("Error getting documents: \(err)")
-                    self.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription)
+                    self.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .statisticsManagerError)
                 } else {
                     if let document = document {
                         do {
@@ -195,8 +195,7 @@ class StatisticsManager: ObservableObject {
                             }
                         }
                         catch {
-                            self.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription)
-                            print(error)
+                            self.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .statisticsManagerError)
                         }
                     }
                 }

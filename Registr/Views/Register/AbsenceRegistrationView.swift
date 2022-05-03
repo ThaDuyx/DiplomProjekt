@@ -194,6 +194,17 @@ struct AbsenceRegistrationView: View {
                 }
             }
             .fullScreenCover(context)
+            .fullScreenCover(item: $statisticsManager.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    statisticsManager.commitBatch()
+                }
+            })
+            .fullScreenCover(item: $registrationManager.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    registrationManager.fetchClasses()
+                    registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
+                }
+            })
             .navigationTitle("Registrer")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear() {

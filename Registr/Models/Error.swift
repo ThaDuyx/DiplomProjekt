@@ -8,11 +8,13 @@
 import Foundation
 
 enum RegistrError: Error, LocalizedError {
-    case registrError
+    case registrationManagerError
+    case statisticsManagerError
 }
 
 struct ErrorType: Identifiable {
     let id = UUID()
     let title: String
     let description: String
+    let type: RegistrError?
 }
