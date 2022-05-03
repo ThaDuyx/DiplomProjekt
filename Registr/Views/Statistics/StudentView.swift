@@ -14,6 +14,7 @@ struct StudentView: View {
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
     @StateObject var statisticsManager = StatisticsManager()
+    @StateObject var errorHandling = ErrorHandling()
     
     let studentName: String
     var isParent: Bool
@@ -65,6 +66,11 @@ struct StudentView: View {
                 }
                 .onAppear() {
                     statisticsManager.fetchStudentStats(studentID: studentID)
+                }
+                .fullScreenCover(item: $errorHandling.appError) { appError in
+                    ErrorView(title: appError.title, error: appError.description) {
+                        statisticsManager.fetchStudentStats(studentID: studentID)
+                    }
                 }
             }
             .navigationTitle(studentName)

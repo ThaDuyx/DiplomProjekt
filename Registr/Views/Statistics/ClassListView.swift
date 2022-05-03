@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ClassListView: View {
     @EnvironmentObject var registrationManager: RegistrationManager
+    @StateObject var errorHandling = ErrorHandling()
     
     var body: some View {
         NavigationView {
@@ -21,6 +22,11 @@ struct ClassListView: View {
                     .listRowSeparatorTint(Color.white)
                 }
             }
+            .fullScreenCover(item: $errorHandling.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    registrationManager.fetchClasses()
+                }
+            })
             .navigationTitle("Statistik")
             .navigationBarTitleDisplayMode(.inline)
         }

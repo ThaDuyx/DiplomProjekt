@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReportSection: View {
     @EnvironmentObject var childrenManager: ChildrenManager
+    @StateObject var errorHandling = ErrorHandling()
     @State var showModal = false
     let report: Report
     let student: Student
@@ -64,6 +65,20 @@ struct ReportSection: View {
             .sheet(isPresented: $showModal) {
                 ParentAbsenceRegistrationView(report: report, absence: nil, child: student, shouldUpdate: true, isAbsenceChange: false)
             }
+            .fullScreenCover(item: $errorHandling.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    if appError.type == .childrenManagerDeleteError {
+                        childrenManager.deleteReport(report: report, child: student)
+                    } else {
+                        childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                            if result {
+                                childrenManager.attachAbsenceListeners()
+                            }
+                        }
+                        childrenManager.attachReportListeners()
+                    }
+                }
+            })
         }
         .disabled(report.teacherValidation != .pending)
     }

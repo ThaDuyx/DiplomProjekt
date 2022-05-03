@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CalendarView: View {
     @StateObject private var schoolManager = SchoolManager()
+    @StateObject var errorHandling = ErrorHandling()
     @State private var selectedDate: Date = Date()
     let classInfo: ClassInfo
     let startDate = Date()
@@ -35,6 +36,11 @@ struct CalendarView: View {
                 }
                 .buttonStyle(Resources.CustomButtonStyle.SmallFilledButtonStyle())
                 .padding(.leading, 200)
+            }
+            .fullScreenCover(item: $errorHandling.appError) { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    schoolManager.fetchSchool()
+                }
             }
         }.environmentObject(schoolManager)
     }
