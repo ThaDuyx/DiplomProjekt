@@ -99,7 +99,6 @@ class RegistrationManager: ObservableObject {
                                 if let registration = try document.data(as: Registration.self) {
                                     self.registrations.append(registration)
                                     self.registrations.sort { $0.studentName < $1.studentName }
-                                    print(registration)
                                 }
                             }
                             catch {

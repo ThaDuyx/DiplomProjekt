@@ -14,14 +14,11 @@ enum signInType {
     case school
 }
 
-enum schoolRole {
-    case teacher
-    case headmaster
-}
-
 class AuthenticationManager {
     
     static let shared = AuthenticationManager()
+    
+    let db = Firestore.firestore()
     
     var loginSelection: signInType?
     
@@ -38,10 +35,9 @@ class AuthenticationManager {
                 if let id = authResult?.user.uid {
                     
                     // Retrieve data from Firestore parent collection
-                    let db = Firestore.firestore()
                     switch self.loginSelection {
                     case .parent:
-                        let docRef = db.collection("fb_parent_path".localize).document(id)
+                        let docRef = self.db.collection("fb_parent_path".localize).document(id)
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists {
                                 
@@ -49,6 +45,9 @@ class AuthenticationManager {
                                     let user = try document.data(as: UserProfile.self)
                                     UserManager.shared.user = user
                                     DefaultsManager.shared.currentProfileID = id
+//                                    if let role = user?.role {
+//                                        DefaultsManager.shared.userRole = role
+//                                    }
                                     completion(true)
                                 } catch {
                                     print("Error decoding user: \(error)")
@@ -62,13 +61,17 @@ class AuthenticationManager {
                         }
                         
                     case .school:
-                        let docRef = db.collection("fb_employee_path".localize).document(id)
+                        let docRef = self.db.collection("fb_employee_path".localize).document(id)
                         docRef.getDocument { (document, error) in
                             if let document = document, document.exists {
                                 do {
                                     let user = try document.data(as: UserProfile.self)
                                     UserManager.shared.user = user
+                                    
                                     DefaultsManager.shared.currentProfileID = id
+//                                    if let role = user?.role {
+//                                        DefaultsManager.shared.userRole = role
+//                                    }
                                     completion(true)
                                 } catch {
                                     print("Error decoding user: \(error)")
