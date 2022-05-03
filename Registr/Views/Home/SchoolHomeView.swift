@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TeacherHomeView: View {
+struct SchoolHomeView: View {
     
     @StateObject var reportManager = ReportManager()
     @EnvironmentObject var favoriteManager: FavoriteManager
@@ -22,7 +22,9 @@ struct TeacherHomeView: View {
                             .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
                     ) {
                         ForEach(reportManager.reports, id: \.self) { report in
-                            if report.className == favorite {
+                            if DefaultsManager.shared.userRole == .teacher && report.className == favorite && report.registrationType != .legal {
+                                TeacherAbsencesSection(report: report)
+                            } else if DefaultsManager.shared.userRole == .headmaster && report.className == favorite && report.registrationType == .legal {
                                 TeacherAbsencesSection(report: report)
                             }
                         }
@@ -64,6 +66,6 @@ struct TeacherHomeView: View {
 
 struct TeacherHomeView_Previews: PreviewProvider {
     static var previews: some View {
-        TeacherHomeView()
+        SchoolHomeView()
     }
 }

@@ -69,7 +69,7 @@
 		8314F8202809775F00487C5F /* AbsenceRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8314F81F2809775E00487C5F /* AbsenceRegistrationView.swift */; };
 		83201BB92802510800007269 /* UserIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83201BB82802510800007269 /* UserIDView.swift */; };
 		83201BBB2802558900007269 /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83201BBA2802558900007269 /* PasswordView.swift */; };
-		83201BBD28025A2F00007269 /* TeacherHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83201BBC28025A2F00007269 /* TeacherHomeView.swift */; };
+		83201BBD28025A2F00007269 /* SchoolHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83201BBC28025A2F00007269 /* SchoolHomeView.swift */; };
 		833EBDB327FF13BB00CF35DE /* CornerRadius+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833EBDB227FF13BB00CF35DE /* CornerRadius+Extensions.swift */; };
 		8348592427CF8C3D009D8A51 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592327CF8C3D009D8A51 /* TextStyles.swift */; };
 		8348592627CF8C7F009D8A51 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348592527CF8C7F009D8A51 /* Color.swift */; };
@@ -177,7 +177,7 @@
 		8314F81F2809775E00487C5F /* AbsenceRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbsenceRegistrationView.swift; sourceTree = "<group>"; };
 		83201BB82802510800007269 /* UserIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIDView.swift; sourceTree = "<group>"; };
 		83201BBA2802558900007269 /* PasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
-		83201BBC28025A2F00007269 /* TeacherHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHomeView.swift; sourceTree = "<group>"; };
+		83201BBC28025A2F00007269 /* SchoolHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolHomeView.swift; sourceTree = "<group>"; };
 		833EBDB227FF13BB00CF35DE /* CornerRadius+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CornerRadius+Extensions.swift"; sourceTree = "<group>"; };
 		8348592327CF8C3D009D8A51 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
 		8348592527CF8C7F009D8A51 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -480,9 +480,9 @@
 			isa = PBXGroup;
 			children = (
 				83717376281D579000A73B7F /* Sections */,
-				83201BBC28025A2F00007269 /* TeacherHomeView.swift */,
-				8314F81B28072CA800487C5F /* StudentReportView.swift */,
+				83201BBC28025A2F00007269 /* SchoolHomeView.swift */,
 				83547AFB280D51980082D641 /* ParentHomeView.swift */,
+				8314F81B28072CA800487C5F /* StudentReportView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -696,7 +696,7 @@
 				6AC078E727CF8D0B0048F0B1 /* AuthenticationManager.swift in Sources */,
 				830FD5CA27F5D2D800F87E0D /* TextBindingManager.swift in Sources */,
 				830FD5C427F5943200F87E0D /* ParentAbsenceRegistrationView.swift in Sources */,
-				83201BBD28025A2F00007269 /* TeacherHomeView.swift in Sources */,
+				83201BBD28025A2F00007269 /* SchoolHomeView.swift in Sources */,
 				83717373281D570500A73B7F /* TeacherAbsencesSection.swift in Sources */,
 				83717375281D578B00A73B7F /* StudentAbsenceInformationSection.swift in Sources */,
 				83201BB92802510800007269 /* UserIDView.swift in Sources */,

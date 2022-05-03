@@ -34,6 +34,7 @@ struct ReportListView: View {
                                     .padding(.bottom, 20)
                             }
                         }
+                        .listRowSeparator(.hidden)
                     }
                 }
             }

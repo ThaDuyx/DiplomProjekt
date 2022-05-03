@@ -54,19 +54,17 @@ final class DefaultsManager {
         }
     }
     
-//    var userRole: Role {
-//        get {
-//            // Force unwrapping these because if we don't have a role it means the user haven't logged in.
-//            let roleRawValue = defaults.string(forKey: Key.userRole.rawValue)
-//            let role = Role(rawValue: roleRawValue!)!
-//            
-//            return role
-//        }
-//        set {
-//            defaults.set(newValue.rawValue, forKey: Key.userRole.rawValue)
-//            defaults.synchronize()
-//        }
-//    }
+    var userRole: Role {
+        get {
+            // Force unwrapping these because if we don't have a role it means the user haven't logged in.
+            let roleRawValue = defaults.string(forKey: Key.userRole.rawValue)
+            let role = Role(rawValue: roleRawValue!)!
+            
+            return role
+        }
+        set {
+            defaults.set(newValue.rawValue, forKey: Key.userRole.rawValue)
+            defaults.synchronize()
+        }
+    }
 }
-
-

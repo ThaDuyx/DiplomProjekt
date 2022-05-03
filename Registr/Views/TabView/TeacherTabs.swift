@@ -12,7 +12,7 @@ struct TeacherTabs: View {
     @StateObject var favoriteManager = FavoriteManager()
     
     var body: some View {
-        TeacherHomeView()
+        SchoolHomeView()
             .tabItem {
                 Image(systemName: "house")
                 Text("Indberettelser")

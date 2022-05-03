@@ -21,12 +21,7 @@ struct TabViews: View {
                 ParentTabs()
                 
             case .headmaster:
-                // TODO: Make headmaster view
-                ParentHomeView()
-                    .tabItem {
-                        Image(systemName: "house")
-                        Text("Start")
-                    }
+                HeadmasterTabs()
                 
             case .none:
                 ErrorView(error: "alert_default_description".localize)

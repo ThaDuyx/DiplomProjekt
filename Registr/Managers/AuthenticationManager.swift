@@ -16,10 +16,13 @@ enum signInType {
 
 class AuthenticationManager {
     
+    // Singleton instance
     static let shared = AuthenticationManager()
     
+    // Firebase reference
     let db = Firestore.firestore()
     
+    // Selector for which login button was pressed on.
     var loginSelection: signInType?
     
     func signIn(email: String, password: String, completion: @escaping (Bool) -> ())
@@ -33,60 +36,29 @@ class AuthenticationManager {
                 
             } else {
                 if let id = authResult?.user.uid {
+                    // Choosing either the parent or employee path
+                    let docRef = self.loginSelection == .parent ? self.db.collection("fb_parent_path".localize).document(id) : self.db.collection("fb_employee_path".localize).document(id)
                     
                     // Retrieve data from Firestore parent collection
-                    switch self.loginSelection {
-                    case .parent:
-                        let docRef = self.db.collection("fb_parent_path".localize).document(id)
-                        docRef.getDocument { (document, error) in
-                            if let document = document, document.exists {
-                                
-                                do {
-                                    let user = try document.data(as: UserProfile.self)
-                                    UserManager.shared.user = user
-                                    DefaultsManager.shared.currentProfileID = id
-//                                    if let role = user?.role {
-//                                        DefaultsManager.shared.userRole = role
-//                                    }
-                                    completion(true)
-                                } catch {
-                                    print("Error decoding user: \(error)")
-                                    completion(false)
+                    docRef.getDocument { (document, error) in
+                        if let document = document, document.exists {
+                            do {
+                                let user = try document.data(as: UserProfile.self)
+                                UserManager.shared.user = user
+                                DefaultsManager.shared.currentProfileID = id
+                                if let role = user?.role {
+                                    DefaultsManager.shared.userRole = role
                                 }
-                                
-                            } else {
-                                print("Document does not exist")
+                                completion(true)
+                            } catch {
+                                print("Error decoding user: \(error)")
                                 completion(false)
                             }
+                            
+                        } else {
+                            print("Document does not exist")
+                            completion(false)
                         }
-                        
-                    case .school:
-                        let docRef = self.db.collection("fb_employee_path".localize).document(id)
-                        docRef.getDocument { (document, error) in
-                            if let document = document, document.exists {
-                                do {
-                                    let user = try document.data(as: UserProfile.self)
-                                    UserManager.shared.user = user
-                                    
-                                    DefaultsManager.shared.currentProfileID = id
-//                                    if let role = user?.role {
-//                                        DefaultsManager.shared.userRole = role
-//                                    }
-                                    completion(true)
-                                } catch {
-                                    print("Error decoding user: \(error)")
-                                    completion(false)
-                                }
-                                
-                            } else {
-                                print("Document does not exist")
-                                completion(false)
-                            }
-                        }
-                        
-                    case .none:
-                        print("Something went wrong")
-                        completion(false)
                     }
                 }
             }

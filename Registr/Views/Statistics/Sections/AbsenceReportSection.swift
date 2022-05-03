@@ -18,7 +18,7 @@ struct AbsenceReportSection: View {
     
     var body: some View {
         HStack {
-            Text(stringSeparator(reason: absence.reason).uppercased())
+            Text(stringSeparator(reason: absence.reason.rawValue).uppercased())
                 .smallBodyTextStyle(color: .white, font: .poppinsBold)
                 .frame(width: 36, height: 36)
                 .background(Color.frolyRed)
@@ -38,7 +38,7 @@ struct AbsenceReportSection: View {
             VStack {
                 Text("Årsag")
                     .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
-                Text(absence.reason)
+                Text(absence.reason.rawValue)
                     .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
             }
             

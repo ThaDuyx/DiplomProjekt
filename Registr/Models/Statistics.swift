@@ -24,3 +24,11 @@ struct Statistics: Codable {
     var thu: Int
     var fri: Int
 }
+
+enum WeekDays: String, CaseIterable {
+    case mon = "Man"
+    case tue = "Tir"
+    case wed = "Ons"
+    case thu = "Tor"
+    case fri = "Fre"
+}

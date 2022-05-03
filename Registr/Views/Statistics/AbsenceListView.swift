@@ -36,7 +36,7 @@ struct AbsenceListView: View {
                             }
                     }
                 }
-                .listRowSeparatorTint(Color.fiftyfifty)
+                .listRowSeparator(.hidden)
             }
         }
         .navigationTitle(studentName)

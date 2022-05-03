@@ -14,7 +14,7 @@ struct StudentReportView: View {
     @EnvironmentObject var reportManager: ReportManager
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @State private var selectedAbsence = "Syg"
+    @State private var selectedAbsence: RegistrationType = .illness
     private var absence = ["Syg", "Ulovligt", "For sent"]
     
     let report: Report
@@ -25,36 +25,38 @@ struct StudentReportView: View {
     
     var body: some View {
         VStack {
-            StudentAbsenceInformationSection(name: report.studentName, reason: report.reason, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue )
+            StudentAbsenceInformationSection(name: report.studentName + " - " + report.className, reason: report.reason.rawValue, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue )
             
             Spacer()
-            
-            VStack(spacing: 10) {
-                Section(
-                    header: HStack {
-                        Image(systemName: "person.crop.circle.badge.questionmark")
-                            .foregroundColor(.fiftyfifty)
-                        
-                        Text("Vælg fravær - \(selectedAbsence)")
-                            .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
-                    }
-                        .frame(width: 320, alignment: .leading)
-                ) {
-                    VStack {
-                        Picker("Vælg fravær", selection: $selectedAbsence) {
-                            ForEach(absence, id: \.self) {
-                                Text($0)
-                            }
+           
+            if DefaultsManager.shared.userRole == .teacher {
+                VStack(spacing: 10) {
+                    Section(
+                        header: HStack {
+                            Image(systemName: "person.crop.circle.badge.questionmark")
+                                .foregroundColor(.fiftyfifty)
+                            
+                            Text("Vælg fravær - \(selectedAbsence.rawValue)")
+                                .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                         }
-                        .pickerStyle(.wheel)
+                            .frame(width: 320, alignment: .leading)
+                    ) {
+                        VStack {
+                            Picker("Vælg fravær", selection: $selectedAbsence) {
+                                ForEach(absence, id: \.self) {
+                                    Text($0)
+                                }
+                            }
+                            .pickerStyle(.wheel)
+                        }
+                        .listRowBackground(Color.clear)
+                        .frame(width: 320, height: 100)
+                        .clipped()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.frolyRed, lineWidth: 1)
+                        )
                     }
-                    .listRowBackground(Color.clear)
-                    .frame(width: 320, height: 100)
-                    .clipped()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color.frolyRed, lineWidth: 1)
-                    )
                 }
             }
             
@@ -75,7 +77,11 @@ struct StudentReportView: View {
                 Spacer()
                 
                 Button("Registrer") {
-                    reportManager.validateReport(selectedReport: report, validationReason: selectedAbsence, teacherValidation: .accepted) { result in
+                    reportManager.validateReport(
+                        selectedReport: report,
+                        validationReason: DefaultsManager.shared.userRole == .headmaster ? .legal : selectedAbsence,
+                        teacherValidation: .accepted
+                    ) { result in
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
@@ -96,6 +102,6 @@ struct StudentReportView: View {
 
 struct StudentReportView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentReportView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: .pending, isDoubleRegistrationActivated: false))
+        StudentReportView(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: .illness, registrationType: .notRegistered, validated: false, teacherValidation: .pending, isDoubleRegistrationActivated: false))
     }
 }

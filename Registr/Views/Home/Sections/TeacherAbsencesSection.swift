@@ -14,7 +14,7 @@ struct TeacherAbsencesSection: View {
         HStack {
             HStack(spacing: 20) {
                 Button { } label: {
-                    Text(stringSeparator(reason: report.reason).uppercased())
+                    Text(stringSeparator(reason: report.reason.rawValue).uppercased())
                         .frame(width: 35, height: 35)
                         .foregroundColor(Color.white)
                         .background(Color.frolyRed)
@@ -50,6 +50,6 @@ struct TeacherAbsencesSection: View {
 
 struct TeacherAbsencesSection_Previews: PreviewProvider {
     static var previews: some View {
-        TeacherAbsencesSection(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: .pending, isDoubleRegistrationActivated: false))
+        TeacherAbsencesSection(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: .illness, registrationType: .notRegistered, validated: false, teacherValidation: .pending, isDoubleRegistrationActivated: false))
     }
 }

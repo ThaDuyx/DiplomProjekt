@@ -10,13 +10,15 @@ import SwiftUI
 
 struct HeadmasterTabs: View {
     @StateObject var registrationManager = RegistrationManager()
+    @StateObject var favoriteManager = FavoriteManager()
     
     var body: some View {
-        TeacherHomeView()
+        SchoolHomeView()
             .tabItem {
                 Image(systemName: "house")
                 Text("Indberettelser")
             }
+            .environmentObject(favoriteManager)
         
         ClassListView()
             .tabItem {
@@ -24,6 +26,7 @@ struct HeadmasterTabs: View {
                 Text("Statistik")
             }
             .environmentObject(registrationManager)
+            .environmentObject(favoriteManager)
     }
 }
 
