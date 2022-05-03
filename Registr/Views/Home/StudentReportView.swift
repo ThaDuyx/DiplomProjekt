@@ -11,6 +11,7 @@ import SwiftUIKit
 struct StudentReportView: View {
     
     @StateObject private var context = FullScreenCoverContext()
+    @StateObject var errorHandling = ErrorHandling()
     @EnvironmentObject var reportManager: ReportManager
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -93,6 +94,11 @@ struct StudentReportView: View {
             Spacer()
         }
         .fullScreenCover(context)
+        .fullScreenCover(item: $errorHandling.appError, content: { appError in
+            ErrorView(title: appError.title, error: appError.description) {
+                reportManager.attachReportListeners()
+            }
+        })
         .navigationTitle("Indberettelse af elev")
         .navigationBarTitleDisplayMode(.inline)
     }

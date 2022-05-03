@@ -40,7 +40,7 @@ class ReportManager: ObservableObject {
     /**
      Attaches a snapshotlistener for all reports from the user selected favorites
      */
-    private func attachReportListeners() {
+    func attachReportListeners() {
         for favorite in DefaultsManager.shared.favorites {
             let listener = db
                 .collection("fb_schools_path".localize)
@@ -50,10 +50,10 @@ class ReportManager: ObservableObject {
                 .collection("fb_report_path".localize)
                 .addSnapshotListener { querySnapshot, err in
                     if let err = err {
-                        print("Error in subscribing to snapshotListener: \(err)")
+                        ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .reportMangerInitError)
                     } else {
                         guard let snapshot = querySnapshot else {
-                            print("Error fetching snapshots: \(err!)")
+                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err!.localizedDescription, type: .reportMangerInitError)
                             return
                         }
                         
@@ -67,7 +67,7 @@ class ReportManager: ObservableObject {
                                     }
                                 }
                                 catch {
-                                    print(error)
+                                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportMangerInitError)
                                 }
                             }
                             
@@ -81,7 +81,7 @@ class ReportManager: ObservableObject {
                                     }
                                 }
                                 catch {
-                                    print(error)
+                                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportMangerInitError)
                                 }
                             }
                             
@@ -95,7 +95,7 @@ class ReportManager: ObservableObject {
                                     }
                                 }
                                 catch {
-                                    print(error)
+                                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportMangerInitError)
                                 }
                             }
                         }
@@ -122,10 +122,10 @@ class ReportManager: ObservableObject {
             .collection("fb_report_path".localize)
             .addSnapshotListener { querySnapshot, err in
                 if let err = err {
-                    print("Error in subscribing to snapshotListener: \(err)")
+                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .reportManagerError)
                 } else {
                     guard let snapshot = querySnapshot else {
-                        print("Error fetching snapshots: \(err!)")
+                        ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err!.localizedDescription, type: .reportManagerError)
                         return
                     }
                     
@@ -138,7 +138,7 @@ class ReportManager: ObservableObject {
                                 }
                             }
                             catch {
-                                print(error)
+                                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportManagerError)
                             }
                         }
                         
@@ -152,7 +152,7 @@ class ReportManager: ObservableObject {
                                 }
                             }
                             catch {
-                                print(error)
+                                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportManagerError)
                             }
                         }
                         
@@ -166,7 +166,7 @@ class ReportManager: ObservableObject {
                                 }
                             }
                             catch {
-                                print(error)
+                                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportManagerError)
                             }
                         }
                     }
@@ -232,8 +232,8 @@ class ReportManager: ObservableObject {
                 
                 absenceStudentRef
                     .getDocuments { querySnapshot, err in
-                    if let err = err {
-                        print("Error getting documents: \(err)")
+                        if err != nil {
+                        completion(false)
                     } else {
                         if let querySnapshot = querySnapshot {
                             // If the query snapshot is empty we will create the absence
@@ -246,7 +246,7 @@ class ReportManager: ObservableObject {
                                             document.reference.updateData(["reason" : validationReason])
                                         }
                                     } catch {
-                                        print("Error decoding registration: \(error)")
+                                        completion(false)
                                     }
                                 }
                             } else {
@@ -269,7 +269,7 @@ class ReportManager: ObservableObject {
                                     
                                     self.updateStudentAndClassStats(className: newAbsence.className, studentID: newAbsence.studentID, oldReason: newAbsence.reason, newReason: validationReason, time: .morning, isNewAbsence: true)
                                 } catch {
-                                    print(error)
+                                    completion(false)
                                 }
                             }
                         }
@@ -300,8 +300,8 @@ class ReportManager: ObservableObject {
                 
                 absenceStudentRef
                     .getDocuments { querySnapshot, err in
-                    if let err = err {
-                        print("Error getting documents: \(err)")
+                        if err != nil {
+                        completion(false)
                     } else {
                         if let querySnapshot = querySnapshot {
                             // If the query snapshot is empty we will create the absence
@@ -314,7 +314,7 @@ class ReportManager: ObservableObject {
                                             document.reference.updateData(["reason" : validationReason])
                                         }
                                     } catch {
-                                        print("Error decoding registration: \(error)")
+                                        completion(false)
                                     }
                                 }
                             } else {
@@ -337,7 +337,7 @@ class ReportManager: ObservableObject {
                                     
                                     self.updateStudentAndClassStats(className: newAbsence.className, studentID: newAbsence.studentID, oldReason: newAbsence.reason, newReason: validationReason, time: .afternoon, isNewAbsence: true)
                                 } catch {
-                                    print(error)
+                                    completion(false)
                                 }
                             }
                         }
@@ -378,8 +378,8 @@ class ReportManager: ObservableObject {
                 
                 absenceStudentRef
                     .getDocuments { querySnapshot, err in
-                    if let err = err {
-                        print("Error getting documents: \(err)")
+                        if err != nil {
+                        completion(false)
                     } else {
                         if let querySnapshot = querySnapshot {
                             // If the query snapshot is empty we will create the absence
@@ -396,7 +396,7 @@ class ReportManager: ObservableObject {
                                             document.reference.updateData(["reason" : validationReason])
                                         }
                                     } catch {
-                                        print("Error decoding registration: \(error)")
+                                        completion(false)
                                     }
                                 }
                             } else {
@@ -437,7 +437,7 @@ class ReportManager: ObservableObject {
                                     self.updateStudentAndClassStats(className: newAfternoonAbsence.className, studentID: newAfternoonAbsence.studentID, oldReason: newAfternoonAbsence.reason, newReason: validationReason, time: .afternoon, isNewAbsence: true)
                                     
                                 } catch {
-                                    print(error)
+                                    completion(false)
                                 }
                             }
                         }
@@ -463,8 +463,7 @@ class ReportManager: ObservableObject {
             batch.deleteDocument(classReportRef)
 
             batch.commit() { err in
-                if let err = err {
-                    print("Error writing batch \(err)")
+                if err != nil {
                     completion(false)
                 } else {
                     print("Batch write succeeded.")

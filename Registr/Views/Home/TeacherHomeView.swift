@@ -10,6 +10,7 @@ import SwiftUI
 struct TeacherHomeView: View {
     
     @StateObject var reportManager = ReportManager()
+    @StateObject var errorHandling = ErrorHandling()
     @EnvironmentObject var favoriteManager: FavoriteManager
     @EnvironmentObject var notificationVM: NotificationViewModel
     
@@ -27,7 +28,9 @@ struct TeacherHomeView: View {
                             }
                         }
                         .onAppear() {
-                            notificationVM.teacherSubscribeToNotification = true
+                            if !notificationVM.teacherSubscribeToNotification {
+                                notificationVM.teacherSubscribeToNotification = true
+                            }
                         }
                         .listRowBackground(Color.frolyRed)
                         .listRowSeparatorTint(Color.white)
@@ -55,6 +58,15 @@ struct TeacherHomeView: View {
             .onAppear() {
                 notificationVM.getNotificationSettings()
             }
+            .fullScreenCover(item: $errorHandling.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    if appError.type == .reportMangerInitError {
+                        reportManager.attachReportListeners()
+                    } else {
+                        reportManager.addFavorite(newFavorite: favoriteManager.newFavorite)
+                    }
+                }
+            })
             .navigationTitle("Indberettelser")
             .navigationBarTitleDisplayMode(.inline)
             .navigationAppearance(backgroundColor: .white)

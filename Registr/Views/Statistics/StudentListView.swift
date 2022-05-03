@@ -10,6 +10,7 @@ import SwiftUIKit
 
 struct StudentListView: View {
     @EnvironmentObject var registrationManager: RegistrationManager
+    @StateObject var errorHandling = ErrorHandling()
     @StateObject private var context = FullScreenCoverContext()
 
     var selectedClass: String
@@ -33,9 +34,13 @@ struct StudentListView: View {
         .onAppear(){
             registrationManager.fetchStudents(className: selectedClass)
         }
-        .fullScreenCover(item: $registrationManager.appError) { appError in
+        .fullScreenCover(item: $errorHandling.appError) { appError in
             ErrorView(title: appError.title, error: appError.description) {
-                registrationManager.fetchStudents(className: selectedClass)
+                if appError.type == .registrationManagerInitError {
+                    registrationManager.fetchClasses()
+                } else {
+                    registrationManager.fetchStudents(className: selectedClass)
+                }
             }
         }
     }

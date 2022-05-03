@@ -17,9 +17,6 @@ class RegistrationManager: ObservableObject {
     @Published var classes = [ClassInfo]()
     @Published var studentRegistrationList = [Registration]()
     
-    // Object for the ErrorType, used to present an error view.
-    @Published var appError: ErrorType? = nil
-    
     // Firestore db reference
     private let db = Firestore.firestore()
     
@@ -71,7 +68,7 @@ class RegistrationManager: ObservableObject {
                 .document(date)
                 .getDocument { documentSnapshot, err in
                     if let err = err {
-                        self.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerError)
+                        ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerError)
                     } else {
                         do {
                             if let registrationInfoDocument = documentSnapshot{
@@ -80,7 +77,7 @@ class RegistrationManager: ObservableObject {
                                 }
                             }
                         } catch {
-                            self.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerError)
+                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerError)
                         }
                     }
                 }
@@ -95,7 +92,7 @@ class RegistrationManager: ObservableObject {
                 .collection(selectedIsMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
                 .getDocuments() {  (querySnapshot, err) in
                     if let err = err {
-                        self.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerError)
+                        ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerError)
                     } else {
                         for document in querySnapshot!.documents {
                             do {
@@ -105,7 +102,7 @@ class RegistrationManager: ObservableObject {
                                 }
                             }
                             catch {
-                                self.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerError)
+                                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerError)
                             }
                         }
                     }
@@ -151,7 +148,7 @@ class RegistrationManager: ObservableObject {
                             .whereField("isMorning", isEqualTo: isMorning)
                         
                         absenceStudentRef.getDocuments { querySnapshot, err in
-                            if let err = err {
+                            if err != nil {
                                 completion(false)
                             } else {
                                 for document in querySnapshot!.documents {
@@ -197,7 +194,7 @@ class RegistrationManager: ObservableObject {
                         .whereField("isMorning", isEqualTo: isMorning)
                     
                     absenceStudentRef.getDocuments { querySnapshot, err in
-                        if let err = err {
+                        if err != nil {
                             completion(false)
                         } else {
                             for document in querySnapshot!.documents {
@@ -236,7 +233,7 @@ class RegistrationManager: ObservableObject {
             
             // Writing our big batch of data to firebase
             batch.commit() { err in
-                if let err = err {
+                if err != nil {
                     completion(false)
                 } else {
                     completion(true)
@@ -253,7 +250,7 @@ class RegistrationManager: ObservableObject {
             .collection("fb_classes_path".localize)
             .getDocuments { querySnapshot, err in
                 if let err = err {
-                    print("Error getting documents: \(err)")
+                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerError)
                 } else {
                     for document in querySnapshot!.documents {
                         do {
@@ -262,7 +259,7 @@ class RegistrationManager: ObservableObject {
                             }
                         }
                         catch {
-                            print(error)
+                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerError)
                         }
                     }
                 }
@@ -286,8 +283,7 @@ class RegistrationManager: ObservableObject {
                 .collection("fb_students_path".localize)
                 .getDocuments { querySnapshot, err in
                     if let err = err {
-                        print("Error getting documents: \(err)")
-                        self.appError = ErrorType(title: "test1", description: "test2", type: .registrationManagerError)
+                        ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerInitError)
                     } else {
                         for document in querySnapshot!.documents {
                             let studentID = document.documentID
@@ -302,8 +298,7 @@ class RegistrationManager: ObservableObject {
                                             }
                                         }
                                         catch {
-                                            print(error)
-                                            self.appError = ErrorType(title: "test1", description: "test3", type: .registrationManagerError)
+                                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerInitError)
                                         }
                                     }
                                 }

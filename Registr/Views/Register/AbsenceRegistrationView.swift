@@ -20,6 +20,7 @@ struct AbsenceRegistrationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var registrationManager: RegistrationManager
     @StateObject var statisticsManager = StatisticsManager()
+    @StateObject var errorHandling = ErrorHandling()
     @StateObject private var context = FullScreenCoverContext()
     
     // State variables
@@ -194,15 +195,16 @@ struct AbsenceRegistrationView: View {
                 }
             }
             .fullScreenCover(context)
-            .fullScreenCover(item: $statisticsManager.appError, content: { appError in
+            .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
-                    statisticsManager.commitBatch()
-                }
-            })
-            .fullScreenCover(item: $registrationManager.appError, content: { appError in
-                ErrorView(title: appError.title, error: appError.description) {
-                    registrationManager.fetchClasses()
-                    registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
+                    if appError.type == .registrationManagerError {
+                        registrationManager.fetchClasses()
+                        registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
+                    } else if appError.type == .statisticsManagerError {
+                        statisticsManager.commitBatch()
+                    } else if appError.type == .registrationManagerInitError {
+                        registrationManager.fetchClasses()
+                    }
                 }
             })
             .navigationTitle("Registrer")

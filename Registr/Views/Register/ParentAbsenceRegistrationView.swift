@@ -18,6 +18,7 @@ enum AbsenceType: String, CaseIterable {
 struct ParentAbsenceRegistrationView: View {
     // Manager objects
     @StateObject private var context = FullScreenCoverContext()
+    @StateObject var errorHandling = ErrorHandling()
     @EnvironmentObject var childrenManager: ChildrenManager
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     @Environment(\.dismiss) var dismiss
@@ -345,6 +346,16 @@ struct ParentAbsenceRegistrationView: View {
                 }
             }
             .fullScreenCover(context)
+            .fullScreenCover(item: $errorHandling.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                        if result {
+                            childrenManager.attachAbsenceListeners()
+                        }
+                    }
+                    childrenManager.attachReportListeners()
+                }
+            })
             .navigationTitle("parent_absence_registration_nav_title".localize)
             .navigationBarTitleDisplayMode(.inline)
         }

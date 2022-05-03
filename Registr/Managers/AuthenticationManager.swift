@@ -29,7 +29,7 @@ class AuthenticationManager {
     {
         // TODO: --- Add View change ---
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
+            if error != nil {
                 completion(false)
                 return
                 

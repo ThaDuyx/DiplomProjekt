@@ -10,6 +10,7 @@ import SwiftUI
 struct RegistrationStudentSection: View {
     @EnvironmentObject var registrationManager: RegistrationManager
     @EnvironmentObject var statisticsManager: StatisticsManager
+    @StateObject var errorHandling = ErrorHandling()
     
     let index: Int
     let studentName: String
@@ -60,6 +61,11 @@ struct RegistrationStudentSection: View {
             )
             .padding(.trailing, 20)
         }
+        .fullScreenCover(item: $errorHandling.appError, content: { appError in
+            ErrorView(title: appError.title, error: appError.description) {
+                registrationManager.fetchClasses()
+            }
+        })
         .frame(maxWidth: .infinity, minHeight: 80)
     }
 }
