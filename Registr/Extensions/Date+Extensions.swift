@@ -9,14 +9,22 @@ import Foundation
 
 extension Date {
     
-    /// Returns todays date in the format "dd-MM-yyyy"
-    var currentDateFormatted: String {
-        let currentDate = Date()
+    var selectedDateFormatted: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
-        let currentDateFormatted = dateFormatter.string(from: currentDate)
+        let currentDateFormatted = dateFormatter.string(from: self)
         
         return currentDateFormatted
+    }
+    
+    var dayOfDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "da_DK")
+        dateFormatter.dateFormat = "E"
+        
+        let dayOfDate = dateFormatter.string(from: self).dropLast()
+        
+        return String(dayOfDate).capitalized
     }
     
     func formatSpecificDate(date: Date) -> String {

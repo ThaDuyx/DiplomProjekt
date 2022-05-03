@@ -100,6 +100,7 @@ class RegistrationManager: ObservableObject {
                                 if let registration = try document.data(as: Registration.self) {
                                     self.registrations.append(registration)
                                     self.registrations.sort { $0.studentName < $1.studentName }
+                                    print(registration)
                                 }
                             }
                             catch {
@@ -216,14 +217,14 @@ class RegistrationManager: ObservableObject {
                 .collection("fb_date_path".localize)
                 .document(date)
             
-            if isMorning && !registrationInfo.hasMorningBeenRegistrered {
+            if isMorning && !registrationInfo.hasMorningBeenRegistrered && date == Date().selectedDateFormatted {
                 do {
                     registrationInfo.hasMorningBeenRegistrered = true
                     try batch.setData(from: registrationInfo, forDocument: registrationInfoRef)
                 } catch {
                     print("Error encoding document \(error)")
                 }
-            } else if !isMorning && !registrationInfo.hasAfternoonBeenRegistrered {
+            } else if !isMorning && !registrationInfo.hasAfternoonBeenRegistrered && date == Date().selectedDateFormatted {
                 do {
                     registrationInfo.hasAfternoonBeenRegistrered = true
                     try batch.setData(from: registrationInfo, forDocument: registrationInfoRef)

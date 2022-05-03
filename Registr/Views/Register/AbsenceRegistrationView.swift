@@ -16,27 +16,32 @@ enum AbsenceReasons: String, CaseIterable {
 }
 
 struct AbsenceRegistrationView: View {
+    // Managers
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var registrationManager: RegistrationManager
     @StateObject var statisticsManager = StatisticsManager()
     @StateObject private var context = FullScreenCoverContext()
     
-    
-    let currentDate = Date.now
-    let comingDays = Date().comingDays(days: 7)
-    let previousDays = Date().previousDays(days: 7)
-    
+    // State variables
     @State private var selectedItem: Int? = nil
     @State private var isMorning: Bool = true
     @State private var showSheet: Bool = false
     @State private var studentAbsenceState: String = ""
     @State private var studentIndex: Int = 0
     @State private var studentName: String = ""
-    @State var elementDate = Date()
-    @State var selectedDate = Date()
-    var isFromHistory: Bool
+    @State private var elementDate = Date()
+    @State private var selectedDate = Date()
     
-    var selectedClass: ClassInfo
+    // Date selectors
+    private let currentDate = Date.now
+    private let comingDays = Date().comingDays(days: 7)
+    private let previousDays = Date().previousDays(days: 7)
+    
+    // Operator
+    private var isFromHistory: Bool
+    
+    // Selector
+    private var selectedClass: ClassInfo
     
     init(selectedClass: ClassInfo, selectedDate: Date, isFromHistory: Bool) {
         self.selectedClass = selectedClass
@@ -113,6 +118,7 @@ struct AbsenceRegistrationView: View {
                     Text("Den valgte dato er en weekend")
                         .headerTextStyle(color: .frolyRed, font: .poppinsSemiBold)
                         .frame(alignment: .center)
+                    
                     Spacer()
                 } else {
                     if isMorning && registrationManager.registrationInfo.hasMorningBeenRegistrered  || !isMorning && registrationManager.registrationInfo.hasAfternoonBeenRegistrered {
@@ -133,7 +139,8 @@ struct AbsenceRegistrationView: View {
                                 studentName: registrationManager.registrations[index].studentName,
                                 absenceReason: registrationManager.registrations[index].reason,
                                 studentID: registrationManager.registrations[index].studentID,
-                                isMorning: isMorning
+                                isMorning: isMorning,
+                                selectedDate: selectedDate
                             )
                                 .environmentObject(statisticsManager)
                                 .onTapGesture {
@@ -173,7 +180,7 @@ struct AbsenceRegistrationView: View {
                         registrationManager.saveRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning) { result in
                             if result {
                                 statisticsManager.commitBatch()
-                                statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning)
+                                statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning, date: selectedDate)
                                 presentationMode.wrappedValue.dismiss()
                             } else {
                                 context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))

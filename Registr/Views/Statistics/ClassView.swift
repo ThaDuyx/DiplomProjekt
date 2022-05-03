@@ -29,7 +29,7 @@ struct ClassView: View {
     }
     
     var body: some View {
-        ZStack {
+        ScrollView(showsIndicators: false) { 
             VStack(spacing: 20) {
                 Spacer()
                 Button {
@@ -60,35 +60,12 @@ struct ClassView: View {
                 }
                 .frame(width: 150, height: 150)
                 
-                VStack(alignment: .leading, spacing: -10) {
-                    HStack {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
-                            .foregroundColor(Color.fiftyfifty)
-                        Text("Statistik")
-                            .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
-                            .padding(.leading, 20)
+                VStack(spacing: 20) {
+                    AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, statArray: statisticMorning())
+                    if classInfo.isDoubleRegistrationActivated {
+                        AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_afternoon".localize, statArray: statisticAfternoon())
                     }
-                    VStack(alignment: .center, spacing: 15) {
-                        
-                        Text("Lovligt: Morgen - \(statisticsManager.statistic.legalMorning) & Eftermiddag - \(statisticsManager.statistic.legalAfternoon)")
-                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
-                            .padding(.top, 10)
-                        
-                        Text("Sygedage: Morgen - \(statisticsManager.statistic.illnessMorning) & Eftermiddag - \(statisticsManager.statistic.illnessAfternoon)")
-                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
-
-                        Text("Ulovligt: Morgen - \(statisticsManager.statistic.illegalMorning) & Eftermiddag - \(statisticsManager.statistic.illegalAfternoon)")
-                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
-
-                        Text("For sent: Morgen - \(statisticsManager.statistic.lateMorning) & Eftermiddag - \(statisticsManager.statistic.lateAfternoon)")
-                            .bodyTextStyle(color: Color.white, font: .poppinsRegular)
-                            .padding(.bottom, 10)
-                        
-                    }
-                    .frame(width: 290)
-                    .background(Color.frolyRed)
-                    .cornerRadius(20)
-                    .padding()
+                    AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, statArray: statisticsWeekDay())
                 }
                 .onAppear() {
                     statisticsManager.fetchClassStats(className: classInfo.name)
@@ -117,6 +94,36 @@ struct ClassView: View {
         } else {
             notificationVM.subscribeToNotification = false
         }
+    }
+}
+
+extension ClassView {
+    private func statisticMorning() -> [Int] {
+        var morningArray: [Int] = []
+        morningArray.append(statisticsManager.statistic.lateMorning)
+        morningArray.append(statisticsManager.statistic.illnessMorning)
+        morningArray.append(statisticsManager.statistic.legalMorning)
+        morningArray.append(statisticsManager.statistic.illegalMorning)
+        return morningArray
+    }
+    
+    private func statisticAfternoon() -> [Int] {
+        var afternoonArray: [Int] = []
+        afternoonArray.append(statisticsManager.statistic.lateAfternoon)
+        afternoonArray.append(statisticsManager.statistic.illnessAfternoon)
+        afternoonArray.append(statisticsManager.statistic.legalAfternoon)
+        afternoonArray.append(statisticsManager.statistic.illegalAfternoon)
+        return afternoonArray
+    }
+    
+    private func statisticsWeekDay() -> [Int] {
+        var weekdayArray: [Int] = []
+        weekdayArray.append(statisticsManager.statistic.mon)
+        weekdayArray.append(statisticsManager.statistic.tue)
+        weekdayArray.append(statisticsManager.statistic.wed)
+        weekdayArray.append(statisticsManager.statistic.thu)
+        weekdayArray.append(statisticsManager.statistic.fri)
+        return weekdayArray
     }
 }
 
