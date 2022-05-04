@@ -51,7 +51,7 @@ extension ProfileView {
                     .first { $0.isKeyWindow }
                 window?.rootViewController = UIHostingController(rootView: LoginOptions().environmentObject(notificationVM))
             } else {
-                context.present(ErrorView(error: "alert_default_description".localize))
+                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
             }
         }
     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReportListView: View {
     @EnvironmentObject var childrenManager: ChildrenManager
+    @StateObject var errorHandling = ErrorHandling()
     
     private var selectedStudent: String
     private var studentName: String
@@ -39,6 +40,16 @@ struct ReportListView: View {
                 }
             }
         }
+        .fullScreenCover(item: $errorHandling.appError, content: { appError in
+            ErrorView(title: appError.title, error: appError.description) {
+                childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                    if result {
+                        childrenManager.attachAbsenceListeners()
+                    }
+                }
+                childrenManager.attachReportListeners()
+            }
+        })
         .navigationTitle(studentName)
         .navigationBarTitleDisplayMode(.inline)
     }

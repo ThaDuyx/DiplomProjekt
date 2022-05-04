@@ -33,7 +33,7 @@ class SchoolManager: ObservableObject {
             .collection("fb_schools_path".localize)
             .getDocuments { querySnapshot, err in
                 if let err = err {
-                    print("Error getting documents: \(err)")
+                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .schoolManagerError)
                 } else {
                     for document in querySnapshot!.documents {
                         do {
@@ -42,7 +42,7 @@ class SchoolManager: ObservableObject {
                             }
                         }
                         catch {
-                            print(error)
+                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .schoolManagerError)
                         }
                     }
                 }

@@ -25,13 +25,11 @@ class AuthenticationManager {
     // Selector for which login button was pressed on.
     var loginSelection: signInType?
     
-    func signIn(email: String, password: String, completion: @escaping (Bool) -> ())
-    {
+    func signIn(email: String, password: String, completion: @escaping (Bool) -> ()) {
         // TODO: --- Add View change ---
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                //TODO: --- Insert error view ---
-                print("general_error" + error.localizedDescription)
+            if error != nil {
+                completion(false)
                 return
                 
             } else {
@@ -51,12 +49,10 @@ class AuthenticationManager {
                                 }
                                 completion(true)
                             } catch {
-                                print("Error decoding user: \(error)")
                                 completion(false)
                             }
                             
                         } else {
-                            print("Document does not exist")
                             completion(false)
                         }
                     }
@@ -70,8 +66,7 @@ class AuthenticationManager {
         do {
             try firebaseAuth.signOut()
             completion(true)
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
+        } catch _ as NSError {
             completion(false)
         }
     }

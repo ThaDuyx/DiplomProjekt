@@ -12,6 +12,7 @@ struct ClassView: View {
     @EnvironmentObject var favoriteManager: FavoriteManager
     @EnvironmentObject var notificationVM: NotificationViewModel
     @ObservedObject var statisticsManager = StatisticsManager()
+    @StateObject var errorHandling = ErrorHandling()
     
     @State private var followAction: Bool = false
     
@@ -68,7 +69,13 @@ struct ClassView: View {
                 .onAppear() {
                     statisticsManager.fetchClassStats(className: classInfo.name)
                 }
+                
                 Spacer()
+            }
+        }
+        .fullScreenCover(item: $errorHandling.appError) { appError in
+            ErrorView(title: appError.title,error: appError.description) {
+                statisticsManager.fetchClassStats(className: classInfo.name)
             }
         }
         .onAppear() {

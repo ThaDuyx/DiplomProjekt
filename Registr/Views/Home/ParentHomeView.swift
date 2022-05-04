@@ -10,6 +10,7 @@ import SwiftUI
 struct ParentHomeView: View {
     @EnvironmentObject var childrenManager: ChildrenManager
     @EnvironmentObject var notificationVM: NotificationViewModel
+    @StateObject var errorHandling = ErrorHandling()
 
     var body: some View {
         NavigationView {
@@ -56,13 +57,25 @@ struct ParentHomeView: View {
                     .listRowBackground(Color.frolyRed)
                     .listRowSeparatorTint(Color.white)
                     .onAppear() {
-                        notificationVM.parentSubscribeToNotification = true
+                        if !notificationVM.parentSubscribeToNotification {
+                            notificationVM.parentSubscribeToNotification = true
+                        }
                     }
                 }
             }
             .onAppear() {
                 notificationVM.getNotificationSettings()
             }
+            .fullScreenCover(item: $errorHandling.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                        if result {
+                            childrenManager.attachAbsenceListeners()
+                        }
+                    }
+                    childrenManager.attachReportListeners()
+                }
+            })
             .navigationTitle("Børn")
             .navigationBarTitleDisplayMode(.inline)
             .navigationAppearance(backgroundColor: .white)

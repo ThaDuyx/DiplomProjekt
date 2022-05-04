@@ -10,6 +10,7 @@ import SwiftUI
 struct AbsenceClassListView: View {
     @EnvironmentObject var registrationManager: RegistrationManager
     @EnvironmentObject var favoriteManager: FavoriteManager
+    @StateObject var errorHandling = ErrorHandling()
     
     var body: some View {
         NavigationView {
@@ -56,6 +57,11 @@ struct AbsenceClassListView: View {
                 }
                 .listStyle(.insetGrouped)
             }
+            .fullScreenCover(item: $errorHandling.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    registrationManager.fetchClasses()
+                }
+            })
             .navigationTitle("Fravær")
             .navigationBarTitleDisplayMode(.inline)
         }

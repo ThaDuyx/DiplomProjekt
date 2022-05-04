@@ -30,15 +30,14 @@ class ChildrenManager: ObservableObject {
         attachReportListeners()
     }
     
-    private func fetchChildren(parentID: String, completion: @escaping (Bool) -> ()) {
+    func fetchChildren(parentID: String, completion: @escaping (Bool) -> ()) {
         
         db
             .collection("fb_parent_path".localize)
             .document(parentID)
             .collection("fb_children_path".localize)
             .getDocuments() {  (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
+                if err != nil {
                     completion(false)
                 } else {
                     for document in querySnapshot!.documents {
@@ -54,7 +53,7 @@ class ChildrenManager: ObservableObject {
                                     }
                                 }
                                 catch {
-                                    print(error)
+                                    completion(false)
                                 }
                             }
                         }
@@ -64,17 +63,17 @@ class ChildrenManager: ObservableObject {
             }
     }
     
-    private func attachReportListeners() {
+    func attachReportListeners() {
         db
             .collection("fb_parent_path".localize)
             .document(DefaultsManager.shared.currentProfileID)
             .collection("fb_report_path".localize)
             .addSnapshotListener { querySnapshot, err in
                 if let err = err {
-                    print("Error in subscribing to snapshotListener: \(err)")
+                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .childrenManagerError)
                 } else {
                     guard let snapshot = querySnapshot else {
-                        print("Error fetching snapshots: \(err!)")
+                        ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err!.localizedDescription, type: .childrenManagerError)
                         return
                     }
                     
@@ -88,8 +87,7 @@ class ChildrenManager: ObservableObject {
                                 }
                             }
                             catch {
-                                print(error)
-                            }
+                                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .childrenManagerError)                            }
                         }
                         
                         // When a document has been modified we will fetch the repective report and update its content
@@ -103,8 +101,7 @@ class ChildrenManager: ObservableObject {
                                 }
                             }
                             catch {
-                                print(error)
-                            }
+                                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .childrenManagerError)                            }
                         }
                         
                         // When a document has been removed we will fetch the repective report and removed its content from our list
@@ -118,15 +115,14 @@ class ChildrenManager: ObservableObject {
                                 }
                             }
                             catch {
-                                print(error)
-                            }
+                                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .childrenManagerError)                            }
                         }
                     }
                 }
             }
     }
     
-    private func attachAbsenceListeners() {
+    func attachAbsenceListeners() {
         for childrenId in childrenIds {
             db
                 .collection("fb_students_path".localize)
@@ -134,10 +130,10 @@ class ChildrenManager: ObservableObject {
                 .collection("fb_absense_path".localize)
                 .addSnapshotListener { querySnapshot, err in
                     if let err = err {
-                        print("Error in subscribing to snapshotListener: \(err)")
+                        ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .childrenManagerError)
                     } else {
                         guard let snapshot = querySnapshot else {
-                            print("Error fetching snapshots: \(err!)")
+                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err!.localizedDescription, type: .childrenManagerError)
                             return
                         }
                         
@@ -151,7 +147,7 @@ class ChildrenManager: ObservableObject {
                                     }
                                 }
                                 catch {
-                                    print(error)
+                                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .childrenManagerError)
                                 }
                             }
                             
@@ -166,7 +162,7 @@ class ChildrenManager: ObservableObject {
                                     }
                                 }
                                 catch {
-                                    print(error)
+                                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .childrenManagerError)
                                 }
                             }
                             
@@ -181,7 +177,7 @@ class ChildrenManager: ObservableObject {
                                     }
                                 }
                                 catch {
-                                    print(error)
+                                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .childrenManagerError)
                                 }
                             }
                         }
@@ -214,6 +210,7 @@ class ChildrenManager: ObservableObject {
             try batch.setData(from: report, forDocument: newParentReport)
         }
         catch {
+            completion(false)
             print(error)
         }
         
@@ -252,6 +249,7 @@ class ChildrenManager: ObservableObject {
                 try batch.setData(from: report, forDocument: newParentReport)
             }
             catch {
+                completion(false)
                 print(error)
             }
             
@@ -292,7 +290,7 @@ class ChildrenManager: ObservableObject {
             
             batch.commit() { err in
                 if let err = err {
-                    print("Error writing batch \(err)")
+                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .childrenManagerDeleteError)
                 } else {
                     print("Batch write succeeded.")
                 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AbsenceReportSection: View {
     @EnvironmentObject var childrenManager: ChildrenManager
+    @StateObject var errorHandling = ErrorHandling()
     
     let absence: Registration
     
@@ -48,6 +49,16 @@ struct AbsenceReportSection: View {
                 .foregroundColor(Color.fiftyfifty)
                 .padding(.trailing, 10)
         }
+        .fullScreenCover(item: $errorHandling.appError, content: { appError in
+            ErrorView(title: appError.title, error: appError.description) {
+                childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                    if result {
+                        childrenManager.attachAbsenceListeners()
+                    }
+                }
+                childrenManager.attachReportListeners()
+            }
+        })
         .listRowBackground(Color.clear)
     }
 }

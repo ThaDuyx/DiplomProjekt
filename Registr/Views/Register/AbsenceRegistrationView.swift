@@ -13,6 +13,7 @@ struct AbsenceRegistrationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var registrationManager: RegistrationManager
     @StateObject var statisticsManager = StatisticsManager()
+    @StateObject var errorHandling = ErrorHandling()
     @StateObject private var context = FullScreenCoverContext()
     
     // State variables
@@ -176,7 +177,7 @@ struct AbsenceRegistrationView: View {
                                 statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning, date: selectedDate)
                                 presentationMode.wrappedValue.dismiss()
                             } else {
-                                context.present(ErrorView(error: "alert_default_description".localize))
+                                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
                             }
                         }
                     } label: {
@@ -187,6 +188,18 @@ struct AbsenceRegistrationView: View {
                 }
             }
             .fullScreenCover(context)
+            .fullScreenCover(item: $errorHandling.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    if appError.type == .registrationManagerError {
+                        registrationManager.fetchClasses()
+                        registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
+                    } else if appError.type == .statisticsManagerError {
+                        statisticsManager.commitBatch()
+                    } else if appError.type == .registrationManagerInitError {
+                        registrationManager.fetchClasses()
+                    }
+                }
+            })
             .navigationTitle("Registrer")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear() {

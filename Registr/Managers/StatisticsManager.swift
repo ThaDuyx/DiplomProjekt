@@ -43,7 +43,7 @@ class StatisticsManager: ObservableObject {
     func commitBatch() {
         batch.commit() { err in
             if let err = err {
-                print("Error writing batch \(err)")
+                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .statisticsManagerError)
             } else {
                 print("Batch write succeeded.")
             }
@@ -142,7 +142,7 @@ class StatisticsManager: ObservableObject {
             .document("fb_statistics_doc".localize)
             .getDocument { document, err in
                 if let err = err {
-                    print("Error getting documents: \(err)")
+                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .statisticsManagerError)
                 } else {
                     if let document = document {
                         do {
@@ -151,7 +151,7 @@ class StatisticsManager: ObservableObject {
                             }
                         }
                         catch {
-                            print(error)
+                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .statisticsManagerError)
                         }
                     }
                 }
@@ -170,7 +170,7 @@ class StatisticsManager: ObservableObject {
             .document("fb_statistics_doc".localize)
             .getDocument { document, err in
                 if let err = err {
-                    print("Error getting documents: \(err)")
+                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .statisticsManagerError)
                 } else {
                     if let document = document {
                         do {
@@ -179,7 +179,7 @@ class StatisticsManager: ObservableObject {
                             }
                         }
                         catch {
-                            print(error)
+                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .statisticsManagerError)
                         }
                     }
                 }

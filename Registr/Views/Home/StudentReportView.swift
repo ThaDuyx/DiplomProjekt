@@ -11,6 +11,7 @@ import SwiftUIKit
 struct StudentReportView: View {
     
     @StateObject private var context = FullScreenCoverContext()
+    @StateObject var errorHandling = ErrorHandling()
     @EnvironmentObject var reportManager: ReportManager
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -68,7 +69,9 @@ struct StudentReportView: View {
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
-                            context.present(ErrorView(error: "alert_default_description".localize))
+                            context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
+                                presentationMode.wrappedValue.dismiss()
+                            })
                         }
                     }
                 }
@@ -85,7 +88,9 @@ struct StudentReportView: View {
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
-                            context.present(ErrorView(error: "alert_default_description".localize))
+                            context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
+                                presentationMode.wrappedValue.dismiss()
+                            })
                         }
                     }
                 }
@@ -95,6 +100,11 @@ struct StudentReportView: View {
             Spacer()
         }
         .fullScreenCover(context)
+        .fullScreenCover(item: $errorHandling.appError, content: { appError in
+            ErrorView(title: appError.title, error: appError.description) {
+                reportManager.attachReportListeners()
+            }
+        })
         .navigationTitle("Indberettelse af elev")
         .navigationBarTitleDisplayMode(.inline)
     }

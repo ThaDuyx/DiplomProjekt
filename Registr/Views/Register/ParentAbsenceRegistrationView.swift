@@ -11,6 +11,7 @@ import SwiftUIKit
 struct ParentAbsenceRegistrationView: View {
     // Manager objects
     @StateObject private var context = FullScreenCoverContext()
+    @StateObject var errorHandling = ErrorHandling()
     @EnvironmentObject var childrenManager: ChildrenManager
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     @Environment(\.dismiss) var dismiss
@@ -314,7 +315,7 @@ struct ParentAbsenceRegistrationView: View {
                                                     self.endDate = Date()
                                                     dismiss()
                                                 } else {
-                                                    context.present(ErrorView(error: "alert_default_description".localize))
+                                                    context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
                                                 }
                                             }
                                         } else {
@@ -328,7 +329,7 @@ struct ParentAbsenceRegistrationView: View {
                                                     self.startDate = Date()
                                                     self.endDate = Date()
                                                 } else {
-                                                    context.present(ErrorView(error: "alert_default_description".localize))
+                                                    context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
                                                 }
                                                 if isAbsenceChange {
                                                     dismiss()
@@ -351,6 +352,16 @@ struct ParentAbsenceRegistrationView: View {
                 }
             }
             .fullScreenCover(context)
+            .fullScreenCover(item: $errorHandling.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                        if result {
+                            childrenManager.attachAbsenceListeners()
+                        }
+                    }
+                    childrenManager.attachReportListeners()
+                }
+            })
             .navigationTitle("parent_absence_registration_nav_title".localize)
             .navigationBarTitleDisplayMode(.inline)
         }
