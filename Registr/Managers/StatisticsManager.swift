@@ -221,8 +221,8 @@ class StatisticsManager: ObservableObject {
             calculateDayOfAbsenceInClass(docRef: statisticsClassRef, counter: lateCounter, date: date)
         }
         
-        if lateCounter != 0 {
-            statisticsClassRef.updateData([isMorning ? "legalMorning" : "legalAfternoon" : FieldValue.increment(lateCounter)])
+        if legalCounter != 0 {
+            statisticsClassRef.updateData([isMorning ? "legalMorning" : "legalAfternoon" : FieldValue.increment(legalCounter)])
             calculateDayOfAbsenceInClass(docRef: statisticsClassRef, counter: legalCounter, date: date)
         }
     }
