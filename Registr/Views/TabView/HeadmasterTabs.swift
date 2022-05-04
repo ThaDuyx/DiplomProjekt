@@ -1,13 +1,14 @@
 //
-//  TeacherTabs.swift
+//  HeadmasterTabs.swift
 //  Registr
 //
-//  Created by Simon Andersen on 15/04/2022.
+//  Created by Simon Andersen on 03/05/2022.
 //
 
+import Foundation
 import SwiftUI
 
-struct TeacherTabs: View {
+struct HeadmasterTabs: View {
     @StateObject var registrationManager = RegistrationManager()
     @StateObject var favoriteManager = FavoriteManager()
     
@@ -17,14 +18,6 @@ struct TeacherTabs: View {
                 Image(systemName: "house")
                 Text("Indberettelser")
             }
-            .environmentObject(favoriteManager)
-        
-        AbsenceClassListView()
-            .tabItem {
-                Image(systemName: "plus.circle")
-                Text("Fravær")
-            }
-            .environmentObject(registrationManager)
             .environmentObject(favoriteManager)
         
         ClassListView()
@@ -37,8 +30,8 @@ struct TeacherTabs: View {
     }
 }
 
-struct TeacherTabs_Previews: PreviewProvider {
+struct HeadmasterTabs_Previews: PreviewProvider {
     static var previews: some View {
-        TeacherTabs()
+        HeadmasterTabs()
     }
 }

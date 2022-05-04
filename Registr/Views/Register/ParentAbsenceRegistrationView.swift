@@ -8,13 +8,6 @@
 import SwiftUI
 import SwiftUIKit
 
-enum AbsenceType: String, CaseIterable {    
-    case sickness = "Sygdom"
-    case late = "For Sent"
-    case vacation = "Ferie"
-    case prolongedIllness = "Forlænget sygdom"
-}
-
 struct ParentAbsenceRegistrationView: View {
     // Manager objects
     @StateObject private var context = FullScreenCoverContext()
@@ -24,9 +17,11 @@ struct ParentAbsenceRegistrationView: View {
     @Environment(\.dismiss) var dismiss
     
     // States variables
-    @State private var selectedAbsence = ""
-    @State private var selectedTime = ""
-    @State private var selectedTimeOfDay: TimeOfDay = .morning
+    @State private var selectedAbsenceString = ""
+    @State private var selectedAbsenceType: AbsenceType = .late
+    @State private var selectedTimeOfDayString = ""
+    @State private var selectedTimeOfDayType: TimeOfDay = .morning
+    @State private var selectedRegistrationType: RegistrationType = .notRegistered
     @State private var selectedName = ""
     @State private var selectedChild: Student?
     @State private var startDate: Date = Date()
@@ -61,10 +56,11 @@ struct ParentAbsenceRegistrationView: View {
         self.isAbsenceChange = isAbsenceChange
         
         if let availableReport = report {
-            _selectedAbsence = State(initialValue: availableReport.reason)
+            _selectedAbsenceString = State(initialValue: availableReport.reason.rawValue)
+            _selectedAbsenceType = State(initialValue: availableReport.reason)
             _isDoubleRegistrationActivated = State(initialValue: availableReport.isDoubleRegistrationActivated)
-            _selectedTimeOfDay = State(initialValue: availableReport.timeOfDay)
-            _selectedTime = State(initialValue: availableReport.timeOfDay.rawValue)
+            _selectedTimeOfDayType = State(initialValue: availableReport.timeOfDay)
+            _selectedTimeOfDayString = State(initialValue: availableReport.timeOfDay.rawValue)
             _startDate = State(initialValue: availableReport.date)
             
             if let availableEndDate = availableReport.endDate {
@@ -79,10 +75,10 @@ struct ParentAbsenceRegistrationView: View {
         }
         
         if let availableAbsence = absence {
-            _selectedAbsence = State(initialValue: availableAbsence.reason)
+            _selectedAbsenceString = State(initialValue: availableAbsence.reason.rawValue)
             _isDoubleRegistrationActivated = State(initialValue: false)
-            _selectedTimeOfDay = State(initialValue: availableAbsence.isMorning ? .morning : .afternoon)
-            _selectedTime = State(initialValue: availableAbsence.isMorning ? TimeOfDay.morning.rawValue : TimeOfDay.afternoon.rawValue)
+            _selectedTimeOfDayType = State(initialValue: availableAbsence.isMorning ? .morning : .afternoon)
+            _selectedTimeOfDayString = State(initialValue: availableAbsence.isMorning ? TimeOfDay.morning.rawValue : TimeOfDay.afternoon.rawValue)
             _startDate = State(initialValue: availableAbsence.date.dateFromString)
         }
         
@@ -107,7 +103,7 @@ struct ParentAbsenceRegistrationView: View {
                                     selectedName = child.name
                                     selectedChild = child
                                     isDoubleRegistrationActivated = child.classInfo.isDoubleRegistrationActivated
-                                    selectedTimeOfDay = .morning
+                                    selectedTimeOfDayType = .morning
                                 }
                                 .disabled(shouldUpdate || isAbsenceChange)
                             }
@@ -134,14 +130,23 @@ struct ParentAbsenceRegistrationView: View {
                             Menu {
                                 ForEach(AbsenceType.allCases, id: \.self) { absenceType in
                                     Button(absenceType.rawValue) {
-                                        selectedAbsence = absenceType.rawValue
+                                        selectedAbsenceString = absenceType.rawValue
+                                        selectedAbsenceType = absenceType
+                                        switch absenceType {
+                                        case .illness:
+                                            selectedRegistrationType = .illness
+                                        case .late:
+                                            selectedRegistrationType = .late
+                                        case .prolongedIllness, .vacation:
+                                            selectedRegistrationType = .legal
+                                        }
                                     }
                                 }
                             } label: {
                                 HStack {
                                     Image(systemName: "questionmark")
                                         .foregroundColor(.white)
-                                    Text(selectedAbsence.isEmpty ? "parent_absence_registration_pick_reason".localize : selectedAbsence)
+                                    Text(selectedAbsenceString.isEmpty ? "parent_absence_registration_pick_reason".localize : selectedAbsenceString)
                                         .bodyTextStyle(color: .white, font: .poppinsRegular)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Image(systemName: "chevron.down")
@@ -160,15 +165,15 @@ struct ParentAbsenceRegistrationView: View {
                                 Menu {
                                     ForEach(TimeOfDay.allCases, id: \.self) { timeType in
                                         Button(timeType.rawValue) {
-                                            selectedTime = timeType.rawValue
-                                            selectedTimeOfDay = timeType
+                                            selectedTimeOfDayString = timeType.rawValue
+                                            selectedTimeOfDayType = timeType
                                         }
                                     }
                                 } label: {
                                     HStack {
                                         Image(systemName: "clock")
                                             .foregroundColor(.white)
-                                        Text(selectedTime.isEmpty ? "parent_absence_registration_pick_time".localize : selectedTime)
+                                        Text(selectedTimeOfDayString.isEmpty ? "parent_absence_registration_pick_time".localize : selectedTimeOfDayString)
                                             .bodyTextStyle(color: .white, font: .poppinsRegular)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Image(systemName: "chevron.down")
@@ -278,10 +283,10 @@ struct ParentAbsenceRegistrationView: View {
                         
                         VStack(alignment: .center) {
                             Button(shouldUpdate ? "Opdater" : "parent_absence_registration_report".localize) {
-                                if selectedName.isEmpty || selectedAbsence.isEmpty || isDoubleRegistrationActivated && selectedTime.isEmpty {
+                                if selectedName.isEmpty || selectedAbsenceString.isEmpty || isDoubleRegistrationActivated && selectedTimeOfDayString.isEmpty {
                                     showingAlert = true
                                 } else {
-                                    if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsence.isEmpty {
+                                    if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsenceString.isEmpty, selectedRegistrationType != .notRegistered {
                                         let report = Report(id: shouldUpdate ? report?.id : nil,
                                                             parentName: name,
                                                             parentID: DefaultsManager.shared.currentProfileID,
@@ -290,9 +295,10 @@ struct ParentAbsenceRegistrationView: View {
                                                             className: selectedChild.className,
                                                             date: startDate,
                                                             endDate: isInterval ? endDate : nil,
-                                                            timeOfDay: isDoubleRegistrationActivated ? selectedTimeOfDay : .morning,
+                                                            timeOfDay: isDoubleRegistrationActivated ? selectedTimeOfDayType : .morning,
                                                             description: textBindingManager.value,
-                                                            reason: selectedAbsence,
+                                                            reason: selectedAbsenceType,
+                                                            registrationType: selectedRegistrationType,
                                                             validated: false,
                                                             teacherValidation: .pending,
                                                             isDoubleRegistrationActivated: isDoubleRegistrationActivated)
@@ -303,7 +309,7 @@ struct ParentAbsenceRegistrationView: View {
                                                     self.selectedChild = nil
                                                     self.selectedName = ""
                                                     self.textBindingManager.value = ""
-                                                    self.selectedAbsence = ""
+                                                    self.selectedAbsenceString = ""
                                                     self.isInterval = false
                                                     self.startDate = Date()
                                                     self.endDate = Date()
@@ -318,7 +324,7 @@ struct ParentAbsenceRegistrationView: View {
                                                     self.selectedChild = nil
                                                     self.selectedName = ""
                                                     self.textBindingManager.value = ""
-                                                    self.selectedAbsence = ""
+                                                    self.selectedAbsenceString = ""
                                                     self.isInterval = false
                                                     self.startDate = Date()
                                                     self.endDate = Date()

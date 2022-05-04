@@ -8,13 +8,21 @@
 import Foundation
 import FirebaseFirestoreSwift
 
+enum RegistrationType: String, CaseIterable, Codable {
+    case late = "For sent"
+    case illness = "Sygdom"
+    case legal = "Lovligt"
+    case illegal = "Ulovligt"
+    case notRegistered = ""
+}
+
 struct Registration: Codable, Hashable {
     @DocumentID var id: String?
     let studentID: String
     let studentName: String
     let className: String
     let date: String
-    var reason: String = ""
+    var reason: RegistrationType = .notRegistered
     var validated: Bool = false
     var isAbsenceRegistered: Bool = false
     var isMorning: Bool

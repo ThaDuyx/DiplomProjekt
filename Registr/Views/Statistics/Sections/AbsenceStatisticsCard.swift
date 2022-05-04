@@ -11,8 +11,8 @@ struct AbsenceStatisticsCard: View {
     var isWeekDayUsed: Bool
     var title: String
     var statArray: [Int]
-    private let weekArray: [String] = StatisticsManager.WeekDays.allCases.map { $0.rawValue }
-    private let absencesReasonsArray: [String] = StatisticsManager.AbsencesReasons.allCases.map { $0.rawValue }
+    private let weekArray: [String] = WeekDays.allCases.map { $0.rawValue }
+    private let absencesReasonsArray: [String] = RegistrationType.allCases.map { $0.rawValue }
     
     var body: some View {
         ZStack {
@@ -29,11 +29,12 @@ struct AbsenceStatisticsCard: View {
                     VStack() {
                         HStack {
                             ForEach(isWeekDayUsed ? weekArray : absencesReasonsArray, id: \.self) { value in
-                                Text(value)
-                                    .bodyTextStyle(color: .white, font: .poppinsRegular)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .padding(.top, 10)
-                                
+                                if !value.isEmpty {
+                                    Text(value)
+                                        .bodyTextStyle(color: .white, font: .poppinsRegular)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .padding(.top, 10)
+                                }
                             }
                         }
                         

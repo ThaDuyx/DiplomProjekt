@@ -37,7 +37,7 @@ struct AbsenceListView: View {
                             }
                     }
                 }
-                .listRowSeparatorTint(Color.fiftyfifty)
+                .listRowSeparator(.hidden)
             }
         }
         .fullScreenCover(item: $errorHandling.appError, content: { appError in

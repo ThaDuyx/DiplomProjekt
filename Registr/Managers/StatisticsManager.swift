@@ -10,22 +10,6 @@ import FirebaseFirestore
 
 class StatisticsManager: ObservableObject {
     
-    // Enums for Weekdays and absences reasons
-    enum WeekDays: String, CaseIterable {
-        case mon = "Man"
-        case tue = "Tir"
-        case wed = "Ons"
-        case thu = "Tor"
-        case fri = "Fre"
-    }
-    
-    enum AbsencesReasons: String, CaseIterable {
-        case late = "For sent"
-        case sick = "Syg"
-        case legal = "Lovligt"
-        case illegal = "Ulovligt"
-    }
-    
     // Firestore db reference
     private let db = Firestore.firestore()
     
@@ -52,6 +36,7 @@ class StatisticsManager: ObservableObject {
     private var illegalCounter: Int64 = 0
     private var illnessCounter: Int64 = 0
     private var lateCounter: Int64 = 0
+    private var legalCounter: Int64 = 0
     
     // MARK: - Student Statistics
     /// Comitting the global batch of writes and will clean every write in the object.
@@ -110,12 +95,14 @@ class StatisticsManager: ObservableObject {
      */
     private func determineAbsence(docRef: DocumentReference, value: String, inOrDecrement: Int64, isMorning: Bool) {
         switch value {
-        case AbsenceReasons.illegal.rawValue:
+        case RegistrationType.illegal.rawValue:
             batch.updateData([isMorning ? "illegalMorning" : "illegalAfternoon" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
-        case AbsenceReasons.illness.rawValue:
+        case RegistrationType.illness.rawValue:
             batch.updateData([isMorning ? "illnessMorning" : "illnessAfternoon" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
-        case AbsenceReasons.late.rawValue:
+        case RegistrationType.late.rawValue:
             batch.updateData([isMorning ? "lateMorning" : "lateAfternoon" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
+        case RegistrationType.legal.rawValue:
+            batch.updateData([isMorning ? "legalMorning" : "legalAfternoon" : FieldValue.increment(inOrDecrement)], forDocument: docRef)
         default:
             break
         }
@@ -200,7 +187,7 @@ class StatisticsManager: ObservableObject {
     }
     
     func resetStatCounters() {
-        illnessCounter = 0; illegalCounter = 0; lateCounter = 0
+        illnessCounter = 0; illegalCounter = 0; lateCounter = 0; legalCounter = 0
     }
     
     /**
@@ -233,6 +220,11 @@ class StatisticsManager: ObservableObject {
             statisticsClassRef.updateData([isMorning ? "lateMorning" : "lateAfternoon" : FieldValue.increment(lateCounter)])
             calculateDayOfAbsenceInClass(docRef: statisticsClassRef, counter: lateCounter, date: date)
         }
+        
+        if legalCounter != 0 {
+            statisticsClassRef.updateData([isMorning ? "legalMorning" : "legalAfternoon" : FieldValue.increment(legalCounter)])
+            calculateDayOfAbsenceInClass(docRef: statisticsClassRef, counter: legalCounter, date: date)
+        }
     }
     
     /**
@@ -253,12 +245,14 @@ class StatisticsManager: ObservableObject {
     
     private func incrementCounters(value: String) {
         switch value {
-        case AbsenceReasons.illegal.rawValue:
+        case RegistrationType.illegal.rawValue:
             illegalCounter += increment
-        case AbsenceReasons.illness.rawValue:
+        case RegistrationType.illness.rawValue:
             illnessCounter += increment
-        case AbsenceReasons.late.rawValue:
+        case RegistrationType.late.rawValue:
             lateCounter += increment
+        case RegistrationType.legal.rawValue:
+            legalCounter += increment
         default:
             break
         }
@@ -266,12 +260,14 @@ class StatisticsManager: ObservableObject {
     
     private func decrementCounters(value: String) {
         switch value {
-        case AbsenceReasons.illegal.rawValue:
+        case RegistrationType.illegal.rawValue:
             illegalCounter += decrement
-        case AbsenceReasons.illness.rawValue:
+        case RegistrationType.illness.rawValue:
             illnessCounter += decrement
-        case AbsenceReasons.late.rawValue:
+        case RegistrationType.late.rawValue:
             lateCounter += decrement
+        case RegistrationType.legal.rawValue:
+            legalCounter += decrement
         default:
             break
         }

@@ -8,13 +8,6 @@
 import SwiftUI
 import SwiftUIKit
 
-enum AbsenceReasons: String, CaseIterable {
-    case illegal = "Ulovligt"
-    case illness = "Syg"
-    case late = "For sent"
-    case clear = ""
-}
-
 struct AbsenceRegistrationView: View {
     // Managers
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -138,7 +131,7 @@ struct AbsenceRegistrationView: View {
                             RegistrationStudentSection(
                                 index: index+1,
                                 studentName: registrationManager.registrations[index].studentName,
-                                absenceReason: registrationManager.registrations[index].reason,
+                                absenceReason: registrationManager.registrations[index].reason.rawValue,
                                 studentID: registrationManager.registrations[index].studentID,
                                 isMorning: isMorning,
                                 selectedDate: selectedDate
@@ -164,10 +157,10 @@ struct AbsenceRegistrationView: View {
                             Text("student_list_absence_description \(studentName)")
                                 .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             
-                            ForEach(AbsenceReasons.allCases, id: \.self) { absenceReasons in
+                            ForEach(RegistrationType.allCases, id: \.self) { absenceReasons in
                                 Button(absenceReasons.rawValue.isEmpty ? "Ryd felt" : absenceReasons.rawValue) {
                                     studentAbsenceState = absenceReasons.rawValue
-                                    registrationManager.setAbsenceReason(absenceReason: studentAbsenceState, index: studentIndex)
+                                    registrationManager.setAbsenceReason(absenceReason: absenceReasons, index: studentIndex)
                                     showSheet.toggle()
                                 }
                                 .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))

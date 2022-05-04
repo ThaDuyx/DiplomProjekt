@@ -52,7 +52,7 @@ struct ReportSection: View {
                     Text("Årsag")
                         .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                     
-                    Text(report.reason)
+                    Text(report.reason.rawValue)
                         .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
                 }
                 
@@ -96,6 +96,6 @@ struct ReportSection: View {
 
 struct ReportSection_Previews: PreviewProvider {
     static var previews: some View {
-        ReportSection(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: "", validated: false, teacherValidation: .pending, isDoubleRegistrationActivated: false), student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""))
+        ReportSection(report: Report(id: "", parentName: "", parentID: "", studentName: "", studentID: "", className: "", date: Date(), endDate: Date(), timeOfDay: .morning, description: "", reason: .late, registrationType: .notRegistered, validated: false, teacherValidation: .pending, isDoubleRegistrationActivated: false), student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""))
     }
 }

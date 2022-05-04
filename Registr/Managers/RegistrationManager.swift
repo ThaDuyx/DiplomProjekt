@@ -37,7 +37,7 @@ class RegistrationManager: ObservableObject {
         fetchClasses()
     }
     
-    func setAbsenceReason(absenceReason: String, index: Int) {
+    func setAbsenceReason(absenceReason: RegistrationType, index: Int) {
         registrations[index].reason = absenceReason
     }
     
@@ -124,7 +124,7 @@ class RegistrationManager: ObservableObject {
             let batch = db.batch()
             
             for (var registration) in registrations {
-                if !registration.reason.isEmpty {
+                if registration.reason != .notRegistered {
                     // Absence registration for the class collection
                     let registrationRef = db
                         .collection("fb_schools_path".localize)
@@ -136,7 +136,7 @@ class RegistrationManager: ObservableObject {
                         .collection(isMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
                         .document(registration.studentID)
                     
-                    batch.updateData(["reason" : registration.reason, "isAbsenceRegistered": true], forDocument: registrationRef)
+                    batch.updateData(["reason" : registration.reason.rawValue, "isAbsenceRegistered": true], forDocument: registrationRef)
                     
                     // Absence for the student collection
                     if registration.isAbsenceRegistered {
@@ -152,7 +152,7 @@ class RegistrationManager: ObservableObject {
                                 completion(false)
                             } else {
                                 for document in querySnapshot!.documents {
-                                    document.reference.updateData(["reason" : registration.reason])
+                                    document.reference.updateData(["reason" : registration.reason.rawValue])
                                 }
                             }
                         }
@@ -175,7 +175,7 @@ class RegistrationManager: ObservableObject {
                         }
                     }
                     
-                } else if registration.reason.isEmpty && registration.isAbsenceRegistered {
+                } else if registration.reason == .notRegistered && registration.isAbsenceRegistered {
                     let registrationRef = db
                         .collection("fb_schools_path".localize)
                         .document(selectedSchool)
@@ -203,7 +203,7 @@ class RegistrationManager: ObservableObject {
                         }
                     }
                     
-                    batch.updateData(["reason" : registration.reason, "isAbsenceRegistered" : false], forDocument: registrationRef)
+                    batch.updateData(["reason" : registration.reason.rawValue, "isAbsenceRegistered" : false], forDocument: registrationRef)
                 }
             }
             

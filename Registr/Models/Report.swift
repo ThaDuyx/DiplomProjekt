@@ -7,6 +7,13 @@
 
 import Foundation
 import FirebaseFirestoreSwift
+enum AbsenceType: String, CaseIterable, Codable {
+    case illness = "Sygdom"
+    case late = "For sent"
+    case vacation = "Ferie"
+    case prolongedIllness = "Forlænget sygdom"
+}
+
 enum TimeOfDay: String, CaseIterable, Codable {
     case morning = "Morgen"
     case afternoon = "Eftermiddag"
@@ -30,7 +37,8 @@ struct Report: Codable, Hashable {
     let endDate: Date?
     let timeOfDay: TimeOfDay
     let description: String?
-    let reason: String
+    let reason: AbsenceType
+    let registrationType: RegistrationType
     let validated: Bool
     let teacherValidation: TeacherValidation
     let isDoubleRegistrationActivated: Bool
