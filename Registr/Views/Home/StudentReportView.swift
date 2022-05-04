@@ -10,14 +10,14 @@ import SwiftUIKit
 
 struct StudentReportView: View {
     
+    // State variables
     @StateObject private var context = FullScreenCoverContext()
     @StateObject var errorHandling = ErrorHandling()
     @EnvironmentObject var reportManager: ReportManager
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
     @State private var selectedAbsence: RegistrationType = .illness
-    private var absence = ["Syg", "Ulovligt", "For sent"]
     
+    // Selector
     let report: Report
     
     init(report: Report) {
@@ -44,8 +44,10 @@ struct StudentReportView: View {
                     ) {
                         VStack {
                             Picker("Vælg fravær", selection: $selectedAbsence) {
-                                ForEach(absence, id: \.self) {
-                                    Text($0)
+                                ForEach(RegistrationType.allCases, id: \.self) {
+                                    if !$0.rawValue.isEmpty{
+                                        Text($0.rawValue)
+                                    }
                                 }
                             }
                             .pickerStyle(.wheel)
