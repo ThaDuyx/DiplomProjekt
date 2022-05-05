@@ -12,6 +12,7 @@ struct AbsenceRegistrationView: View {
     // Managers
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var registrationManager: RegistrationManager
+    @EnvironmentObject var classManager: ClassManager
     @StateObject var statisticsManager = StatisticsManager()
     @StateObject var errorHandling = ErrorHandling()
     @StateObject private var context = FullScreenCoverContext()
@@ -171,10 +172,10 @@ struct AbsenceRegistrationView: View {
                     }
                     
                     Button {
-                        registrationManager.saveRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning) { result in
+                        registrationManager.saveRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning) { result in
                             if result {
                                 statisticsManager.commitBatch()
-                                statisticsManager.writeClassStats(className: selectedClass.name, isMorning: isMorning, date: selectedDate)
+                                statisticsManager.writeClassStats(classID: selectedClass.classID, isMorning: isMorning, date: selectedDate)
                                 presentationMode.wrappedValue.dismiss()
                             } else {
                                 context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
@@ -191,29 +192,29 @@ struct AbsenceRegistrationView: View {
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
                     if appError.type == .registrationManagerError {
-                        registrationManager.fetchClasses()
-                        registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
+                        classManager.fetchClasses()
+                        registrationManager.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
                     } else if appError.type == .statisticsManagerError {
                         statisticsManager.commitBatch()
                     } else if appError.type == .registrationManagerInitError {
-                        registrationManager.fetchClasses()
+                        classManager.fetchClasses()
                     }
                 }
             })
             .navigationTitle("Registrer")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear() {
-                registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
+                registrationManager.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
             }
             .onChange(of: selectedDate.formatSpecificDate(date: selectedDate)) { newDate in
-                registrationManager.fetchRegistrations(className: selectedClass.name, date: newDate, isMorning: isMorning)
+                registrationManager.fetchRegistrations(classID: selectedClass.classID, date: newDate, isMorning: isMorning)
                 
                 // Resetting on change of date
                 statisticsManager.resetStatCounters()
                 statisticsManager.resetBatch()
             }
             .onChange(of: isMorning) { _ in
-                registrationManager.fetchRegistrations(className: selectedClass.name, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
+                registrationManager.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
                 statisticsManager.resetStatCounters()
                 statisticsManager.resetBatch()
             }
@@ -240,6 +241,6 @@ private func convertedArray(currentDay: Date, previousDays: [Date], comingDays: 
 
 struct AbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceRegistrationView(selectedClass: ClassInfo(isDoubleRegistrationActivated: false, name: ""), selectedDate: .now, isFromHistory: false)
+        AbsenceRegistrationView(selectedClass: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), selectedDate: .now, isFromHistory: false)
     }
 }

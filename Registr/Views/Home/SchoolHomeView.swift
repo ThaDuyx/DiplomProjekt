@@ -13,29 +13,37 @@ struct SchoolHomeView: View {
     @StateObject var errorHandling = ErrorHandling()
     @EnvironmentObject var favoriteManager: FavoriteManager
     @EnvironmentObject var notificationVM: NotificationViewModel
+    @EnvironmentObject var classManager: ClassManager
+    
+    /// - Will be removed later in our process. This is uncommented because it's easier to access the feeder this way.
+    //@StateObject var feeder = FeedDatabaseManager()
+    /// -----------------------------------
     
     var body: some View {
         NavigationView {
             ZStack {
                 List(favoriteManager.favorites, id: \.self) { favorite in
-                    Section(
-                        header: Text(favorite)
-                            .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
-                    ) {
-                        ForEach(reportManager.reports, id: \.self) { report in
-                            if DefaultsManager.shared.userRole == .teacher && report.className == favorite && report.registrationType != .legal {
-                                TeacherAbsencesSection(report: report)
-                            } else if DefaultsManager.shared.userRole == .headmaster && report.className == favorite && report.registrationType == .legal {
-                                TeacherAbsencesSection(report: report)
+                    if let favoriteIndex = classManager.classes.firstIndex(where: { $0.classID == favorite }) {
+                        Section(
+                            header: Text(classManager.classes[favoriteIndex].name)
+                                .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
+                        ) {
+                            ForEach(reportManager.reports, id: \.self) { report in
+                                if DefaultsManager.shared.userRole == .teacher && report.classID == favorite && report.registrationType != .legal {
+                                    TeacherAbsencesSection(report: report)
+                                } else if DefaultsManager.shared.userRole == .headmaster && report.classID == favorite && report.registrationType == .legal {
+                                    TeacherAbsencesSection(report: report)
+                                }
                             }
-                        }
-                        .onAppear() {
-                            if !notificationVM.teacherSubscribeToNotification {
-                                notificationVM.teacherSubscribeToNotification = true
+                            .onAppear() {
+                                if !notificationVM.teacherSubscribeToNotification {
+                                    notificationVM.teacherSubscribeToNotification = true
+                                }
                             }
+                            .listRowBackground(Color.frolyRed)
+                            .listRowSeparatorTint(Color.white)
                         }
-                        .listRowBackground(Color.frolyRed)
-                        .listRowSeparatorTint(Color.white)
+                        
                     }
                 }
                 .accentColor(Color.fiftyfifty)
@@ -45,6 +53,12 @@ struct SchoolHomeView: View {
                 .onChange(of: favoriteManager.deselectedFavorite) { deselectedValue in
                     reportManager.removeFavorite(favorite: deselectedValue)
                 }
+                
+                /// - Will be removed later in our process. This is uncommented because it's easier to access the feeder this way.
+//                Button("Feed") {
+//                    feeder.createRegistrationDates()
+//                }
+                /// -----------------------------------
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

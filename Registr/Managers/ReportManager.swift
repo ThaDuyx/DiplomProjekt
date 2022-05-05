@@ -214,7 +214,7 @@ class ReportManager: ObservableObject {
                     .collection("fb_schools_path".localize)
                     .document(selectedSchool)
                     .collection("fb_classes_path".localize)
-                    .document(selectedReport.className)
+                    .document(selectedReport.classID)
                     .collection("fb_date_path".localize)
                     .document(date)
                     .collection("fb_morningRegistration_path".localize)
@@ -241,7 +241,7 @@ class ReportManager: ObservableObject {
                                     for document in querySnapshot.documents {
                                         do {
                                             if let registration = try document.data(as: Registration.self) {
-                                                self.updateStudentAndClassStats(className: registration.className, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: false, date: registration.date.dateFromString)
+                                                self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: false, date: registration.date.dateFromString)
                                                 
                                                 document.reference.updateData(["reason" : validationReason])
                                             }
@@ -267,7 +267,7 @@ class ReportManager: ObservableObject {
                                             .addDocument(from: newAbsence)
                                         print("A new absence were created: \(newAbsenceRef)")
                                         
-                                        self.updateStudentAndClassStats(className: newAbsence.className, studentID: newAbsence.studentID, oldReason: newAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: true, date: date.dateFromString)
+                                        self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: newAbsence.studentID, oldReason: newAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: true, date: date.dateFromString)
                                     } catch {
                                         completion(false)
                                     }
@@ -309,7 +309,7 @@ class ReportManager: ObservableObject {
                                     for document in querySnapshot.documents {
                                         do {
                                             if let registration = try document.data(as: Registration.self) {
-                                                self.updateStudentAndClassStats(className: registration.className, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: false, date: registration.date.dateFromString)
+                                                self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: false, date: registration.date.dateFromString)
                                                 
                                                 document.reference.updateData(["reason" : validationReason])
                                             }
@@ -334,7 +334,7 @@ class ReportManager: ObservableObject {
                                             .addDocument(from: newAbsence)
                                         print("A new absence were created: \(newAbsenceRef)")
                                         
-                                        self.updateStudentAndClassStats(className: newAbsence.className, studentID: newAbsence.studentID, oldReason: newAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: true, date: date.dateFromString)
+                                        self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: newAbsence.studentID, oldReason: newAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: true, date: date.dateFromString)
                                     } catch {
                                         completion(false)
                                     }
@@ -387,9 +387,9 @@ class ReportManager: ObservableObject {
                                         do {
                                             if let registration = try document.data(as: Registration.self) {
                                                 if registration.isMorning {
-                                                    self.updateStudentAndClassStats(className: registration.className, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: false, date: registration.date.dateFromString)
+                                                    self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: false, date: registration.date.dateFromString)
                                                 } else {
-                                                    self.updateStudentAndClassStats(className: registration.className, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: false, date: registration.date.dateFromString)
+                                                    self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: false, date: registration.date.dateFromString)
                                                 }
                                             }
                                         } catch {
@@ -430,8 +430,8 @@ class ReportManager: ObservableObject {
                                         print("A new absence were created: \(newMorningAbsenceRef)")
                                         print("A new absence were created: \(newAfternoonAbsenceRef)")
                                         
-                                        self.updateStudentAndClassStats(className: newMorningAbsence.className, studentID: newMorningAbsence.studentID, oldReason: newMorningAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: true, date: date.dateFromString)
-                                        self.updateStudentAndClassStats(className: newAfternoonAbsence.className, studentID: newAfternoonAbsence.studentID, oldReason: newAfternoonAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: true, date: date.dateFromString)
+                                        self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: newMorningAbsence.studentID, oldReason: newMorningAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: true, date: date.dateFromString)
+                                        self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: newAfternoonAbsence.studentID, oldReason: newAfternoonAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: true, date: date.dateFromString)
                                     } catch {
                                         completion(false)
                                     }
@@ -450,7 +450,7 @@ class ReportManager: ObservableObject {
                     .collection("fb_schools_path".localize)
                     .document(selectedSchool)
                     .collection("fb_classes_path".localize)
-                    .document(selectedReport.className)
+                    .document(selectedReport.classID)
                     .collection("fb_report_path".localize)
                     .document(id)
                 
@@ -487,7 +487,7 @@ class ReportManager: ObservableObject {
                 .collection("fb_schools_path".localize)
                 .document(selectedSchool)
                 .collection("fb_classes_path".localize)
-                .document(selectedReport.className)
+                .document(selectedReport.classID)
                 .collection("fb_report_path".localize)
                 .document(id)
             
@@ -526,12 +526,12 @@ class ReportManager: ObservableObject {
      - parameter isNewAbsence:    Boolean determining wether there already exists an absence in the database.
      - parameter date:            Date used to fetch the day of the registration that has to be updated in the statistcs.
      */
-    private func updateStudentAndClassStats(className: String, studentID: String, oldReason: String, newReason: String, time: StatisticTime, isNewAbsence: Bool, date: Date) {
+    private func updateStudentAndClassStats(classID: String, studentID: String, oldReason: String, newReason: String, time: StatisticTime, isNewAbsence: Bool, date: Date) {
         let statisticsClassRef = db
             .collection("fb_schools_path".localize)
             .document(selectedSchool)
             .collection("fb_classes_path".localize)
-            .document(className)
+            .document(classID)
             .collection("fb_statistics_path".localize)
             .document("fb_statistics_doc".localize)
         

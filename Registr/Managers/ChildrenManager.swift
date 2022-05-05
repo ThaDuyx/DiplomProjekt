@@ -193,7 +193,7 @@ class ChildrenManager: ObservableObject {
             .collection("fb_schools_path".localize)
             .document(child.associatedSchool)
             .collection("fb_classes_path".localize)
-            .document(child.className)
+            .document(child.classInfo.classID)
             .collection("fb_report_path".localize)
             .document()
         
@@ -234,7 +234,7 @@ class ChildrenManager: ObservableObject {
                 .collection("fb_schools_path".localize)
                 .document(child.associatedSchool)
                 .collection("fb_classes_path".localize)
-                .document(child.className)
+                .document(child.classInfo.classID)
                 .collection("fb_report_path".localize)
                 .document(reportID)
             
@@ -274,7 +274,7 @@ class ChildrenManager: ObservableObject {
                 .collection("fb_schools_path".localize)
                 .document(child.associatedSchool)
                 .collection("fb_classes_path".localize)
-                .document(child.className)
+                .document(child.classInfo.classID)
                 .collection("fb_report_path".localize)
                 .document(reportID)
             

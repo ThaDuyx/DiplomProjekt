@@ -9,13 +9,14 @@ import SwiftUI
 
 struct ClassListView: View {
     @EnvironmentObject var registrationManager: RegistrationManager
+    @EnvironmentObject var classManager: ClassManager
     @StateObject var errorHandling = ErrorHandling()
     
     var body: some View {
         NavigationView {
             ZStack {
                 List {
-                    ForEach(registrationManager.classes, id: \.self) { classInfo in
+                    ForEach(classManager.classes, id: \.self) { classInfo in
                         ClassSection(classInfo: classInfo)
                     }
                     .listRowBackground(Color.frolyRed)
@@ -24,7 +25,7 @@ struct ClassListView: View {
             }
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
-                    registrationManager.fetchClasses()
+                    classManager.fetchClasses()
                 }
             })
             .navigationTitle("Statistik")
