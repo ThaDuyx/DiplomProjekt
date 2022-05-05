@@ -18,7 +18,7 @@ class FeedDatabaseManager: ObservableObject {
     
     // School & Class selectors, change these variable to choose the specific school or class.
     let selectedSchool = "EXvXPS4HuVnxu7LhZRPt"
-    let selectedClass = "0.x"
+    let selectedClass = "ZjHicqkeR0aERu6ZY87v"
     
     init() {
         fetchStudents(className: selectedClass)

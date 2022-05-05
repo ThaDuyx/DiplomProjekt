@@ -14,7 +14,6 @@ class RegistrationManager: ObservableObject {
     @Published var registrationInfo = RegistrationInfo()
     @Published var registrations = [Registration]()
     @Published var students = [Student]()
-    @Published var classes = [ClassInfo]()
     @Published var studentRegistrationList = [Registration]()
     
     // Firestore db reference
@@ -31,10 +30,6 @@ class RegistrationManager: ObservableObject {
         } else {
             return ""
         }
-    }
-    
-    init() {
-        fetchClasses()
     }
     
     func setAbsenceReason(absenceReason: RegistrationType, index: Int) {
@@ -240,30 +235,6 @@ class RegistrationManager: ObservableObject {
                 }
             }
         }
-    }
-    
-    // Retrieves every class name
-    func fetchClasses() {
-        db
-            .collection("fb_schools_path".localize)
-            .document(selectedSchool)
-            .collection("fb_classes_path".localize)
-            .getDocuments { querySnapshot, err in
-                if let err = err {
-                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerError)
-                } else {
-                    for document in querySnapshot!.documents {
-                        do {
-                            if let classSnapshot = try document.data(as: ClassInfo.self) {
-                                self.classes.append(classSnapshot)
-                            }
-                        }
-                        catch {
-                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerError)
-                        }
-                    }
-                }
-            }
     }
     
     /**

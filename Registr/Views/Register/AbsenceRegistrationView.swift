@@ -12,6 +12,7 @@ struct AbsenceRegistrationView: View {
     // Managers
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var registrationManager: RegistrationManager
+    @EnvironmentObject var classManager: ClassManager
     @StateObject var statisticsManager = StatisticsManager()
     @StateObject var errorHandling = ErrorHandling()
     @StateObject private var context = FullScreenCoverContext()
@@ -191,12 +192,12 @@ struct AbsenceRegistrationView: View {
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
                     if appError.type == .registrationManagerError {
-                        registrationManager.fetchClasses()
+                        classManager.fetchClasses()
                         registrationManager.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
                     } else if appError.type == .statisticsManagerError {
                         statisticsManager.commitBatch()
                     } else if appError.type == .registrationManagerInitError {
-                        registrationManager.fetchClasses()
+                        classManager.fetchClasses()
                     }
                 }
             })
