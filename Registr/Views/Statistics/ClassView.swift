@@ -19,9 +19,6 @@ struct ClassView: View {
     let classInfo: ClassInfo
     var studentID: String? = nil
     
-    // This is for testing the chart
-    var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
-    
     init(classInfo: ClassInfo, studentID: String? = nil) {
         self.classInfo = classInfo
         self.studentID = studentID
@@ -51,13 +48,18 @@ struct ClassView: View {
                 
                 Spacer()
                 
-                VStack {
-                    PieChart()
-                        .data(demoData)
-                        .chartStyle(ChartStyle(backgroundColor: .white,
-                                               foregroundColor: ColorGradient(Color.fiftyfifty, Color.fiftyfifty)))
+                if statisticsWeekDay().isEmpty || statisticsWeekDay().allSatisfy { $0 == 0 } {
+                    Text("Der kan ikke blive vist nogen graf på fraværet for hver dag i ugen, da der intet er.")
+                        .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+                        .multilineTextAlignment(.leading)
+                        .frame(width: 320)
+                } else {
+                    VStack {
+                        PieChartView(data: statisticsWeekDay().map { Double($0) }, title: "Fraværs værdi", legend: "Fravær fra ugen", style: ChartStyle(backgroundColor: .white, accentColor: Color.fiftyfifty, gradientColor: GradientColor(start: Color.fiftyfifty, end: Color.fiftyfifty), textColor: Color.fiftyfifty, legendTextColor: .fiftyfifty, dropShadowColor: .clear))
+                    }
                 }
-                .frame(width: 150, height: 150)
+                
+                Spacer()
                 
                 VStack(spacing: 20) {
                     AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, statArray: statisticMorning())
