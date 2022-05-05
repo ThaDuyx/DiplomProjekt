@@ -33,6 +33,7 @@ struct Report: Codable, Hashable {
     let studentName: String
     let studentID: String
     let className: String
+    let classID: String
     let date: Date
     let endDate: Date?
     let timeOfDay: TimeOfDay

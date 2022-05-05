@@ -12,4 +12,5 @@ struct ClassInfo: Codable, Hashable {
     @DocumentID var id: String?
     let isDoubleRegistrationActivated: Bool
     let name: String
+    let classID: String
 }

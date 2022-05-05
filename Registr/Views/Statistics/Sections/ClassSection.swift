@@ -30,6 +30,6 @@ struct ClassSection: View {
 }
 struct ClassSection_Previews: PreviewProvider {
     static var previews: some View {
-        ClassSection(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""))
+        ClassSection(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""))
     }
 }

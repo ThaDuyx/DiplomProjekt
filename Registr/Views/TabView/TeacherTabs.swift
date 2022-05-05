@@ -10,6 +10,7 @@ import SwiftUI
 struct TeacherTabs: View {
     @StateObject var registrationManager = RegistrationManager()
     @StateObject var favoriteManager = FavoriteManager()
+    @StateObject var classesManager = ClassManager()
     
     var body: some View {
         SchoolHomeView()
@@ -18,6 +19,7 @@ struct TeacherTabs: View {
                 Text("Indberettelser")
             }
             .environmentObject(favoriteManager)
+            .environmentObject(classesManager)
         
         AbsenceClassListView()
             .tabItem {
@@ -26,6 +28,7 @@ struct TeacherTabs: View {
             }
             .environmentObject(registrationManager)
             .environmentObject(favoriteManager)
+            .environmentObject(classesManager)
         
         ClassListView()
             .tabItem {
@@ -34,6 +37,7 @@ struct TeacherTabs: View {
             }
             .environmentObject(registrationManager)
             .environmentObject(favoriteManager)
+            .environmentObject(classesManager)
     }
 }
 
