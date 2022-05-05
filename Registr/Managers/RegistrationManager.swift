@@ -49,13 +49,13 @@ class RegistrationManager: ObservableObject {
      - parameter date:           A date string in the format: dd-MM-yyyy
      - parameter isMorning:      A boolean value that determines to fetch the the morning or afternoon table.
      */
-    func fetchRegistrations(className: String, date: String, isMorning: Bool) {
+    func fetchRegistrations(classID: String, date: String, isMorning: Bool) {
         // If 'selectedClass' is the same as the className input we have already fetched the registration.
         // In this case will not have to fetch it again.
-        if selectedClass != className || selectedDate != date || selectedIsMorning != isMorning {
+        if selectedClass != classID || selectedDate != date || selectedIsMorning != isMorning {
             registrations.removeAll()
             registrationInfo = RegistrationInfo()
-            selectedClass = className
+            selectedClass = classID
             selectedDate = date
             selectedIsMorning = isMorning
             
@@ -63,7 +63,7 @@ class RegistrationManager: ObservableObject {
                 .collection("fb_schools_path".localize)
                 .document(selectedSchool)
                 .collection("fb_classes_path".localize)
-                .document(className)
+                .document(classID)
                 .collection("fb_date_path".localize)
                 .document(date)
                 .getDocument { documentSnapshot, err in
@@ -86,7 +86,7 @@ class RegistrationManager: ObservableObject {
                 .collection("fb_schools_path".localize)
                 .document(selectedSchool)
                 .collection("fb_classes_path".localize)
-                .document(className)
+                .document(classID)
                 .collection("fb_date_path".localize)
                 .document(date)
                 .collection(selectedIsMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
@@ -118,7 +118,7 @@ class RegistrationManager: ObservableObject {
      - parameter isMorning:      A boolean value that determines if the registration should be put in the morning or afternoon table.
      - parameter completion:     A Callback that returns if the write to the database went through.
      */
-    func saveRegistrations(className: String, date: String, isMorning: Bool, completion: @escaping (Bool) -> ()) {
+    func saveRegistrations(classID: String, date: String, isMorning: Bool, completion: @escaping (Bool) -> ()) {
         if !registrations.isEmpty {
             // Create new write batch that will pushed at the same time.
             let batch = db.batch()
@@ -130,7 +130,7 @@ class RegistrationManager: ObservableObject {
                         .collection("fb_schools_path".localize)
                         .document(selectedSchool)
                         .collection("fb_classes_path".localize)
-                        .document(className)
+                        .document(classID)
                         .collection("fb_date_path".localize)
                         .document(date)
                         .collection(isMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
@@ -180,7 +180,7 @@ class RegistrationManager: ObservableObject {
                         .collection("fb_schools_path".localize)
                         .document(selectedSchool)
                         .collection("fb_classes_path".localize)
-                        .document(className)
+                        .document(classID)
                         .collection("fb_date_path".localize)
                         .document(date)
                         .collection(isMorning ? "fb_morningRegistration_path".localize : "fb_afternoonRegistration_path".localize)
@@ -211,7 +211,7 @@ class RegistrationManager: ObservableObject {
                 .collection("fb_schools_path".localize)
                 .document(selectedSchool)
                 .collection("fb_classes_path".localize)
-                .document(className)
+                .document(classID)
                 .collection("fb_date_path".localize)
                 .document(date)
             

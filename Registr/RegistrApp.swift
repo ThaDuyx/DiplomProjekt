@@ -18,7 +18,7 @@ struct RegistrApp: App {
     init() {        
         // Hardcoded for test
         if DefaultsManager.shared.favorites.isEmpty {
-            let favoriteArray = ["0.x", "1.x"]
+            let favoriteArray = ["KkT176TAZiImYfurOJuk", "YmORb5urte0Lw3H10lmB", "Gf88KZ9GHf38Tr1XNLxk"]
             DefaultsManager.shared.favorites = favoriteArray
         }
     }

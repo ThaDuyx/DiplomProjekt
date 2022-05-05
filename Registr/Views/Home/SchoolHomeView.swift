@@ -23,9 +23,9 @@ struct SchoolHomeView: View {
                             .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
                     ) {
                         ForEach(reportManager.reports, id: \.self) { report in
-                            if DefaultsManager.shared.userRole == .teacher && report.className == favorite && report.registrationType != .legal {
+                            if DefaultsManager.shared.userRole == .teacher && report.classID == favorite && report.registrationType != .legal {
                                 TeacherAbsencesSection(report: report)
-                            } else if DefaultsManager.shared.userRole == .headmaster && report.className == favorite && report.registrationType == .legal {
+                            } else if DefaultsManager.shared.userRole == .headmaster && report.classID == favorite && report.registrationType == .legal {
                                 TeacherAbsencesSection(report: report)
                             }
                         }

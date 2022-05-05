@@ -27,10 +27,9 @@ struct AbsenceClassListView: View {
                             }
                     ) {
                         ForEach(registrationManager.classes, id: \.self, content: { classInfo in
-                            if favoriteManager.favorites.contains(classInfo.name) {
+                            if favoriteManager.favorites.contains(classInfo.classID) {
                                 RegistrationClassSection(classInfo: classInfo, isFavorite: true)
                             }
-                            
                         })
                     }
                     .listRowBackground(Color.frolyRed)
@@ -47,7 +46,7 @@ struct AbsenceClassListView: View {
                             }
                     ) {
                         ForEach(registrationManager.classes, id: \.self, content: { classInfo in
-                            if !favoriteManager.favorites.contains(classInfo.name) {
+                            if !favoriteManager.favorites.contains(classInfo.classID) {
                                 RegistrationClassSection(classInfo: classInfo, isFavorite: false)
                             }
                         })

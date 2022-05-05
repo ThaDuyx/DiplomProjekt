@@ -196,12 +196,12 @@ class StatisticsManager: ObservableObject {
      - parameter className:      Name of the selected class.
      - parameter isMorning:      A boolean value that determines wether to update the morning or afternoon statistics.
      */
-    func writeClassStats(className: String, isMorning: Bool, date: Date) {
+    func writeClassStats(classID: String, isMorning: Bool, date: Date) {
         let statisticsClassRef = db
             .collection("fb_schools_path".localize)
             .document(selectedSchool)
             .collection("fb_classes_path".localize)
-            .document(className)
+            .document(classID)
             .collection("fb_statistics_path".localize)
             .document("fb_statistics_doc".localize)
         
