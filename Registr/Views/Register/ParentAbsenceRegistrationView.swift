@@ -293,6 +293,7 @@ struct ParentAbsenceRegistrationView: View {
                                                             studentName: selectedChild.name,
                                                             studentID: id,
                                                             className: selectedChild.className,
+                                                            classID: selectedChild.classInfo.classID,
                                                             date: startDate,
                                                             endDate: isInterval ? endDate : nil,
                                                             timeOfDay: isDoubleRegistrationActivated ? selectedTimeOfDayType : .morning,
@@ -371,6 +372,6 @@ struct ParentAbsenceRegistrationView: View {
 
 struct ParentAbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        ParentAbsenceRegistrationView(report: nil, absence: nil, child: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), associatedSchool: ""), shouldUpdate: false, isAbsenceChange: false)
+        ParentAbsenceRegistrationView(report: nil, absence: nil, child: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: ""), shouldUpdate: false, isAbsenceChange: false)
     }
 }

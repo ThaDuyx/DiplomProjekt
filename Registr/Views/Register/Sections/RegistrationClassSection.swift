@@ -37,6 +37,6 @@ struct RegistrationClassSection: View {
 }
 struct RegistrationClassSection_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrationClassSection(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""), isFavorite: false)
+        RegistrationClassSection(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), isFavorite: false)
     }
 }

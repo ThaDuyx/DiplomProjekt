@@ -33,17 +33,17 @@ struct ClassView: View {
                 Spacer()
                 Button {
                     followAction.toggle()
-                    favoriteManager.favoriteAction(favorite: classInfo.name)
+                    favoriteManager.favoriteAction(favorite: classInfo.classID)
                     addNotification()
                 } label: {
                     
                     HStack {
                         Image(systemName: "checkmark.diamond")
                         
-                        Text(favoriteManager.favorites.contains(classInfo.name) ? "Følger" : "Følger ikke")
+                        Text(favoriteManager.favorites.contains(classInfo.classID) ? "Følger" : "Følger ikke")
                     }
                 }
-                .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(isFollowed: favoriteManager.favorites.contains(classInfo.name)))
+                .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(isFollowed: favoriteManager.favorites.contains(classInfo.classID)))
                 
                 StatisticsButtonSection(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo))
                 
@@ -86,9 +86,9 @@ struct ClassView: View {
     }
     
     private func addNotification() {
-        notificationVM.nameOfSubscriptions = classInfo.name
+        notificationVM.nameOfSubscriptions = classInfo.classID
         
-        if favoriteManager.favorites.contains(classInfo.name) {
+        if favoriteManager.favorites.contains(classInfo.classID) {
             notificationVM.subscribeToNotification = true
         } else {
             notificationVM.subscribeToNotification = false
@@ -128,6 +128,6 @@ extension ClassView {
 
 struct ClassView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassView(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: ""))
+        ClassView(classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""))
     }
 }
