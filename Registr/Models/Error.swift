@@ -16,6 +16,7 @@ enum RegistrError: Error, LocalizedError {
     case childrenManagerError
     case childrenManagerDeleteError
     case schoolManagerError
+    case classManagerError
 }
 
 struct ErrorType: Identifiable {

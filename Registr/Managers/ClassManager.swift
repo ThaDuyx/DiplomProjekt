@@ -34,7 +34,7 @@ class ClassManager: ObservableObject {
             .collection("fb_classes_path".localize)
             .getDocuments { querySnapshot, err in
                 if let err = err {
-                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerError)
+                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .classManagerError)
                 } else {
                     for document in querySnapshot!.documents {
                         do {
@@ -44,7 +44,7 @@ class ClassManager: ObservableObject {
                             }
                         }
                         catch {
-                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerError)
+                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .classManagerError)
                         }
                     }
                 }
