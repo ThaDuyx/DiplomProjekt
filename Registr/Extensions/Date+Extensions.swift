@@ -76,4 +76,20 @@ extension Date {
         }
         return daysArray
     }
+    
+    /// Taken from: https://stackoverflow.com/a/45716411
+    static func dates(from fromDate: Date, to toDate: Date) -> [Date] {
+        var dates: [Date] = []
+        var date = fromDate
+        
+        while date <= toDate {
+            if !Calendar.current.isDateInWeekend(date) {
+                dates.append(date)
+            }
+            guard let newDate = Calendar.current.date(byAdding: .day, value: 1, to: date) else { break }
+            date = newDate
+        }
+        return dates
+    }
+    /// ---------------------------------------------------
 }

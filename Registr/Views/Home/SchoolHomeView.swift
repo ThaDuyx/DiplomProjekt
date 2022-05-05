@@ -15,8 +15,8 @@ struct SchoolHomeView: View {
     @EnvironmentObject var notificationVM: NotificationViewModel
     @EnvironmentObject var classManager: ClassManager
     
-    /// - Will be removed later in our process. This is uncommented because it's easier to access the feeder this way.
-    //@StateObject var feeder = FeedDatabaseManager()
+    /// - Will be removed later in our process. This is commented because it's easier to access the feeder this way.
+//    @StateObject var feeder = FeedDatabaseManager()
     /// -----------------------------------
     
     var body: some View {
@@ -54,7 +54,7 @@ struct SchoolHomeView: View {
                     reportManager.removeFavorite(favorite: deselectedValue)
                 }
                 
-                /// - Will be removed later in our process. This is uncommented because it's easier to access the feeder this way.
+                /// - Will be removed later in our process. This is commented because it's easier to access the feeder this way.
 //                Button("Feed") {
 //                    feeder.createRegistrationDates()
 //                }
