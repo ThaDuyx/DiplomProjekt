@@ -472,6 +472,19 @@ class ReportManager: ObservableObject {
         }
     }
     
+//    func validateInterval(selectedReport: Report, teacherValidation: TeacherValidation, completion: @escaping (Bool) -> ()) {
+//        let batch = self.db.batch()
+//
+//        if let endDate = selectedReport.endDate {
+//            let dateInterval = DateInterval(start: selectedReport.date, end: endDate)
+//            dateInterval
+//        }
+//
+//        if let id = selectedReport.id {
+//
+//        }
+//    }
+    
     /**
      Denies the currently selected report and adds the teacher validation to the parents report.
      

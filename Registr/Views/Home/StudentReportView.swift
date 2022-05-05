@@ -26,7 +26,7 @@ struct StudentReportView: View {
     
     var body: some View {
         VStack {
-            StudentAbsenceInformationSection(name: report.studentName + " - " + report.className, reason: report.reason.rawValue, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue )
+            StudentAbsenceInformationSection(name: report.studentName + " - " + report.className, reason: report.reason.rawValue, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue, endDate: report.endDate )
             
             Spacer()
            
