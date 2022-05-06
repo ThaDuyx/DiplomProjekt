@@ -11,7 +11,7 @@ import FirebaseFirestore
  This class is used to feed the database
  */
 class FeedDatabaseManager: ObservableObject {
-    @Published var dateArray: [String] = ["12-05-2022", "13-05-2022"]
+    @Published var dateArray: [String] = []
     @Published var students = [Student]()
     var classes = [ClassInfo]()
     let db = Firestore.firestore()
