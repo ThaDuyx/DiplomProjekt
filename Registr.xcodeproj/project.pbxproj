@@ -82,6 +82,7 @@
 		83547AFA280C532F0082D641 /* StudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AF9280C532F0082D641 /* StudentView.swift */; };
 		83547AFC280D51980082D641 /* ParentHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AFB280D51980082D641 /* ParentHomeView.swift */; };
 		836F149F27E35FF200FEFCB3 /* HalfSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F149E27E35FF200FEFCB3 /* HalfSheet.swift */; };
+		83711D312823EF5D00CE8AE0 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 83711D302823EF5D00CE8AE0 /* SwiftUICharts */; };
 		8371736F281D2B8B00A73B7F /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371736E281D2B8B00A73B7F /* School.swift */; };
 		83717371281D2F2200A73B7F /* SchoolManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83717370281D2F2200A73B7F /* SchoolManager.swift */; };
 		83717373281D570500A73B7F /* TeacherAbsencesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83717372281D570500A73B7F /* TeacherAbsencesSection.swift */; };
@@ -103,7 +104,6 @@
 		8391A8F327DA2DC400B5C698 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F227DA2DC400B5C698 /* ProfileView.swift */; };
 		8391A8F927DA2DFD00B5C698 /* TabViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8391A8F827DA2DFD00B5C698 /* TabViews.swift */; };
 		83BB1B4927EC647E002FF81E /* ClassListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B4827EC647E002FF81E /* ClassListView.swift */; };
-		83BB1B5127ECA827002FF81E /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 83BB1B5027ECA827002FF81E /* SwiftUICharts */; };
 		83BB1B5327EDB925002FF81E /* StudentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B5227EDB925002FF81E /* StudentListView.swift */; };
 		83BB1B5B27EDFBF3002FF81E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83BB1B5A27EDFBF3002FF81E /* LaunchScreen.storyboard */; };
 		83BB1B6127EE0D03002FF81E /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BB1B6027EE0D03002FF81E /* CalendarView.swift */; };
@@ -239,7 +239,7 @@
 				6AC078DF27CF73EB0048F0B1 /* FirebaseCrashlytics in Frameworks */,
 				6AC078E127CF73EB0048F0B1 /* FirebaseFirestore in Frameworks */,
 				6A0F350627D8E717001E60D9 /* FirebaseFirestoreSwift-Beta in Frameworks */,
-				83BB1B5127ECA827002FF81E /* SwiftUICharts in Frameworks */,
+				83711D312823EF5D00CE8AE0 /* SwiftUICharts in Frameworks */,
 				6AC078DB27CF73EB0048F0B1 /* FirebaseAnalytics in Frameworks */,
 				6AC078DD27CF73EB0048F0B1 /* FirebaseAuth in Frameworks */,
 			);
@@ -567,9 +567,9 @@
 				6AC078DE27CF73EB0048F0B1 /* FirebaseCrashlytics */,
 				6AC078E027CF73EB0048F0B1 /* FirebaseFirestore */,
 				6A0F350527D8E717001E60D9 /* FirebaseFirestoreSwift-Beta */,
-				83BB1B5027ECA827002FF81E /* SwiftUICharts */,
 				83D6298228115504005EA006 /* SwiftUIKit */,
 				83D6298828117430005EA006 /* FirebaseMessaging */,
+				83711D302823EF5D00CE8AE0 /* SwiftUICharts */,
 			);
 			productName = Registr;
 			productReference = 6A31FD4527CF61B700EFECDD /* Registr.app */;
@@ -602,8 +602,8 @@
 			mainGroup = 6A31FD3C27CF61B700EFECDD;
 			packageReferences = (
 				6AC078D927CF73EB0048F0B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				83BB1B4F27ECA827002FF81E /* XCRemoteSwiftPackageReference "ChartView" */,
 				83D6298128115504005EA006 /* XCRemoteSwiftPackageReference "SwiftUIKit" */,
+				83711D2F2823EF5D00CE8AE0 /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 6A31FD4627CF61B700EFECDD /* Products */;
 			projectDirPath = "";
@@ -974,12 +974,12 @@
 				minimumVersion = 8.0.0;
 			};
 		};
-		83BB1B4F27ECA827002FF81E /* XCRemoteSwiftPackageReference "ChartView" */ = {
+		83711D2F2823EF5D00CE8AE0 /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
 			requirement = {
 				kind = exactVersion;
-				version = "2.0.0-beta.2";
+				version = 1.5.5;
 			};
 		};
 		83D6298128115504005EA006 /* XCRemoteSwiftPackageReference "SwiftUIKit" */ = {
@@ -1018,9 +1018,9 @@
 			package = 6AC078D927CF73EB0048F0B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-		83BB1B5027ECA827002FF81E /* SwiftUICharts */ = {
+		83711D302823EF5D00CE8AE0 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 83BB1B4F27ECA827002FF81E /* XCRemoteSwiftPackageReference "ChartView" */;
+			package = 83711D2F2823EF5D00CE8AE0 /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
 		};
 		83D6298228115504005EA006 /* SwiftUIKit */ = {
