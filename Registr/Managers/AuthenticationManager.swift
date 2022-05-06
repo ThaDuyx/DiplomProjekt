@@ -25,11 +25,11 @@ class AuthenticationManager {
     // Selector for which login button was pressed on.
     var loginSelection: signInType?
     
-    func signIn(email: String, password: String, completion: @escaping (Bool) -> ()) {
+    func signIn(email: String, password: String, completion: @escaping (Bool, Error?) -> ()) {
         // TODO: --- Add View change ---
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if error != nil {
-                completion(false)
+                completion(false, error)
                 return
                 
             } else {
@@ -47,13 +47,13 @@ class AuthenticationManager {
                                 if let role = user?.role {
                                     DefaultsManager.shared.userRole = role
                                 }
-                                completion(true)
+                                completion(true, nil)
                             } catch {
-                                completion(false)
+                                completion(false, nil)
                             }
                             
                         } else {
-                            completion(false)
+                            completion(false, nil)
                         }
                     }
                 }
