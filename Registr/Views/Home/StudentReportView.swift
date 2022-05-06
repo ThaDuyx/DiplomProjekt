@@ -22,6 +22,7 @@ struct StudentReportView: View {
     
     init(report: Report) {
         self.report = report
+        _selectedAbsence = State(initialValue: report.registrationType)
     }
     
     var body: some View {

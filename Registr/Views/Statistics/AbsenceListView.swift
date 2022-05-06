@@ -25,38 +25,56 @@ struct AbsenceListView: View {
     var body: some View {
         ZStack {
             List() {
-                ForEach(childrenManager.absences, id: \.self) { absence in
-                    if absence.studentID == selectedStudent {
-                        AbsenceReportSection(absence: absence)
-                            .padding(.bottom, 20)
-                            .sheet(isPresented: $showModal) {
-                                ParentAbsenceRegistrationView(report: nil, absence: absence, child: student, shouldUpdate: false, isAbsenceChange: true)
-                            }
-                            .onTapGesture {
-                                showModal = true
-                            }
+                Section(
+                    header: Text("Intervaller")
+                        .bigBodyTextStyle(color: .fiftyfifty, font: .poppinsMedium)
+                ) {
+                    ForEach(childrenManager.absences, id: \.self) { absence in
+                        if absence.studentID == selectedStudent && absence.endDate != nil {
+                            AbsenceReportSection(absence: absence)
+                                .padding(.bottom, 20)
+                        }
                     }
+                    .listRowSeparator(.hidden)
                 }
-                .listRowSeparator(.hidden)
+                Section(
+                    header: Text("Fraværsdage")
+                        .bigBodyTextStyle(color: .fiftyfifty, font: .poppinsMedium)
+                ) {
+                    ForEach(childrenManager.absences, id: \.self) { absence in
+                        if absence.studentID == selectedStudent && absence.endDate == nil {
+                            AbsenceReportSection(absence: absence)
+                                .padding(.bottom, 20)
+                                .sheet(isPresented: $showModal) {
+                                    ParentAbsenceRegistrationView(report: nil, absence: absence, child: student, shouldUpdate: false, isAbsenceChange: true)
+                                }
+                                .onTapGesture {
+                                    showModal = true
+                                }
+                        }
+                    }
+                    .listRowSeparator(.hidden)
+                }
+                
             }
+            .fullScreenCover(item: $errorHandling.appError, content: { appError in
+                ErrorView(title: appError.title, error: appError.description) {
+                    childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                        if result {
+                            childrenManager.attachAbsenceListeners()
+                        }
+                    }
+                    childrenManager.attachReportListeners()
+                }
+            })
+            .navigationTitle(studentName)
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .fullScreenCover(item: $errorHandling.appError, content: { appError in
-            ErrorView(title: appError.title, error: appError.description) {
-                childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
-                    if result {
-                        childrenManager.attachAbsenceListeners()
-                    }
-                }
-                childrenManager.attachReportListeners()
-            }
-        })
-        .navigationTitle(studentName)
-        .navigationBarTitleDisplayMode(.inline)
     }
-}
-
-struct AbsenceListView_Previews: PreviewProvider {
-    static var previews: some View {
-        AbsenceListView(selectedStudent: "", studentName: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: ""))
+    
+    struct AbsenceListView_Previews: PreviewProvider {
+        static var previews: some View {
+            AbsenceListView(selectedStudent: "", studentName: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: ""))
+        }
     }
 }

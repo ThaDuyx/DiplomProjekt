@@ -255,6 +255,7 @@ class ReportManager: ObservableObject {
                                                                   className: selectedReport.className,
                                                                   date: date,
                                                                   reason: validationReason,
+                                                                  endDate: nil,
                                                                   validated: true,
                                                                   isAbsenceRegistered: true,
                                                                   isMorning: true)
@@ -323,6 +324,7 @@ class ReportManager: ObservableObject {
                                                                   className: selectedReport.className,
                                                                   date: date,
                                                                   reason: validationReason,
+                                                                  endDate: nil,
                                                                   validated: true,
                                                                   isAbsenceRegistered: true,
                                                                   isMorning: false)
@@ -402,6 +404,7 @@ class ReportManager: ObservableObject {
                                                                          className: selectedReport.className,
                                                                          date: date,
                                                                          reason: validationReason,
+                                                                         endDate: nil,
                                                                          validated: true,
                                                                          isAbsenceRegistered: true,
                                                                          isMorning: true)
@@ -411,6 +414,7 @@ class ReportManager: ObservableObject {
                                                                            className: selectedReport.className,
                                                                            date: date,
                                                                            reason: validationReason,
+                                                                           endDate: nil,
                                                                            validated: true,
                                                                            isAbsenceRegistered: true,
                                                                            isMorning: false)
@@ -482,7 +486,6 @@ class ReportManager: ObservableObject {
      */
     func validateInterval(selectedReport: Report, validationReason: RegistrationType, teacherValidation: TeacherValidation, completion: @escaping (Bool) -> ()) {
         let batch = self.db.batch()
-        
         // We will only call this method if the selected report has a endDate.
         if let endDate = selectedReport.endDate {
             let dateInterval = Date.dates(from: selectedReport.date, to: endDate)
@@ -523,34 +526,14 @@ class ReportManager: ObservableObject {
                                                     if let registration = try document.data(as: Registration.self) {
                                                         self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: false, date: registration.date.dateFromString)
                                                         
-                                                        document.reference.updateData(["reason" : validationReason.rawValue])
+                                                        document.reference.delete()
                                                     }
                                                 } catch {
                                                     completion(false)
                                                 }
                                             }
                                         } else {
-                                            let newAbsence = Registration(studentID: selectedReport.studentID,
-                                                                          studentName: selectedReport.studentName,
-                                                                          className: selectedReport.className,
-                                                                          date: date.selectedDateFormatted,
-                                                                          reason: validationReason,
-                                                                          validated: true,
-                                                                          isAbsenceRegistered: true,
-                                                                          isMorning: true)
-                                            
-                                            do {
-                                                let newAbsenceRef = try self.db
-                                                    .collection("fb_students_path".localize)
-                                                    .document(selectedReport.studentID)
-                                                    .collection("fb_absense_path".localize)
-                                                    .addDocument(from: newAbsence)
-                                                print("A new absence were created: \(newAbsenceRef)")
-                                                
-                                                self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: newAbsence.studentID, oldReason: newAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: true, date: date)
-                                            } catch {
-                                                completion(false)
-                                            }
+                                            self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: selectedReport.studentID, oldReason: validationReason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: true, date: date)
                                         }
                                     }
                                 }
@@ -589,33 +572,14 @@ class ReportManager: ObservableObject {
                                                     if let registration = try document.data(as: Registration.self) {
                                                         self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: false, date: registration.date.dateFromString)
                                                         
-                                                        document.reference.updateData(["reason" : validationReason.rawValue])
+                                                        document.reference.delete()
                                                     }
                                                 } catch {
                                                     completion(false)
                                                 }
                                             }
                                         } else {
-                                            let newAbsence = Registration(studentID: selectedReport.studentID,
-                                                                          studentName: selectedReport.studentName,
-                                                                          className: selectedReport.className,
-                                                                          date: date.selectedDateFormatted,
-                                                                          reason: validationReason,
-                                                                          validated: true,
-                                                                          isAbsenceRegistered: true,
-                                                                          isMorning: false)
-                                            do {
-                                                let newAbsenceRef = try self.db
-                                                    .collection("fb_students_path".localize)
-                                                    .document(selectedReport.studentID)
-                                                    .collection("fb_absense_path".localize)
-                                                    .addDocument(from: newAbsence)
-                                                print("A new absence were created: \(newAbsenceRef)")
-                                                
-                                                self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: newAbsence.studentID, oldReason: newAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: true, date: date)
-                                            } catch {
-                                                completion(false)
-                                            }
+                                            self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: selectedReport.studentID, oldReason: validationReason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: true, date: date)
                                         }
                                     }
                                 }
@@ -667,50 +631,15 @@ class ReportManager: ObservableObject {
                                                         } else {
                                                             self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: false, date: registration.date.dateFromString)
                                                         }
+                                                        document.reference.delete()
                                                     }
                                                 } catch {
                                                     completion(false)
                                                 }
                                             }
                                         } else {
-                                            let newMorningAbsence = Registration(studentID: selectedReport.studentID,
-                                                                                 studentName: selectedReport.studentName,
-                                                                                 className: selectedReport.className,
-                                                                                 date: date.selectedDateFormatted,
-                                                                                 reason: validationReason,
-                                                                                 validated: true,
-                                                                                 isAbsenceRegistered: true,
-                                                                                 isMorning: true)
-                                            
-                                            let newAfternoonAbsence = Registration(studentID: selectedReport.studentID,
-                                                                                   studentName: selectedReport.studentName,
-                                                                                   className: selectedReport.className,
-                                                                                   date: date.selectedDateFormatted,
-                                                                                   reason: validationReason,
-                                                                                   validated: true,
-                                                                                   isAbsenceRegistered: true,
-                                                                                   isMorning: false)
-                                            
-                                            do {
-                                                let newMorningAbsenceRef = try self.db
-                                                    .collection("fb_students_path".localize)
-                                                    .document(selectedReport.studentID)
-                                                    .collection("fb_absense_path".localize)
-                                                    .addDocument(from: newMorningAbsence)
-                                                
-                                                let newAfternoonAbsenceRef = try self.db
-                                                    .collection("fb_students_path".localize)
-                                                    .document(selectedReport.studentID)
-                                                    .collection("fb_absense_path".localize)
-                                                    .addDocument(from: newAfternoonAbsence)
-                                                print("A new absence were created: \(newMorningAbsenceRef)")
-                                                print("A new absence were created: \(newAfternoonAbsenceRef)")
-                                                
-                                                self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: newMorningAbsence.studentID, oldReason: newMorningAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: true, date: date)
-                                                self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: newAfternoonAbsence.studentID, oldReason: newAfternoonAbsence.reason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: true, date: date)
-                                            } catch {
-                                                completion(false)
-                                            }
+                                            self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: selectedReport.studentID, oldReason: validationReason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: true, date: date)
+                                            self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: selectedReport.studentID, oldReason: validationReason.rawValue, newReason: validationReason.rawValue, time: .afternoon, isNewAbsence: true, date: date)
                                         }
                                     }
                                 }
@@ -731,6 +660,28 @@ class ReportManager: ObservableObject {
                     .document(selectedReport.classID)
                     .collection("fb_report_path".localize)
                     .document(id)
+                
+                let newIntervalRegistration = Registration(studentID: selectedReport.studentID,
+                                                           studentName: selectedReport.studentName,
+                                                           className: selectedReport.className,
+                                                           date: selectedReport.date.selectedDateFormatted,
+                                                           reason: validationReason,
+                                                           endDate: endDate.selectedDateFormatted,
+                                                           validated: true,
+                                                           isAbsenceRegistered: true,
+                                                           isMorning: true)
+                
+                do {
+                    let newAbsenceRef = db
+                        .collection("fb_students_path".localize)
+                        .document(selectedReport.studentID)
+                        .collection("fb_absense_path".localize)
+                        .document()
+                    
+                    try batch.setData(from: newIntervalRegistration, forDocument: newAbsenceRef)
+                } catch {
+                    completion(false)
+                }
                 
                 batch.updateData(["teacherValidation" : teacherValidation.rawValue], forDocument: parentReportRef)
                 batch.deleteDocument(classReportRef)
