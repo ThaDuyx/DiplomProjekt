@@ -22,14 +22,15 @@ struct StudentReportView: View {
     
     init(report: Report) {
         self.report = report
+        _selectedAbsence = State(initialValue: report.registrationType)
     }
     
     var body: some View {
         VStack {
-            StudentAbsenceInformationSection(name: report.studentName + " - " + report.className, reason: report.reason.rawValue, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue )
+            StudentAbsenceInformationSection(name: report.studentName + " - " + report.className, reason: report.reason.rawValue, date: report.date, description: report.description ?? "", timeOfDay: report.timeOfDay.rawValue, endDate: report.endDate )
             
             Spacer()
-           
+            
             if DefaultsManager.shared.userRole == .teacher {
                 VStack(spacing: 10) {
                     Section(
@@ -82,17 +83,33 @@ struct StudentReportView: View {
                 Spacer()
                 
                 Button("Registrer") {
-                    reportManager.validateReport(
-                        selectedReport: report,
-                        validationReason: DefaultsManager.shared.userRole == .headmaster ? .legal : selectedAbsence,
-                        teacherValidation: .accepted
-                    ) { result in
-                        if result {
-                            presentationMode.wrappedValue.dismiss()
-                        } else {
-                            context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
+                    if report.endDate != nil {
+                        reportManager.validateInterval(
+                            selectedReport: report,
+                            validationReason: DefaultsManager.shared.userRole == .headmaster ? .legal : selectedAbsence,
+                            teacherValidation: .accepted
+                        ) { result in
+                            if result {
                                 presentationMode.wrappedValue.dismiss()
-                            })
+                            } else {
+                                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
+                                    presentationMode.wrappedValue.dismiss()
+                                })
+                            }
+                        }
+                    } else {
+                        reportManager.validateReport(
+                            selectedReport: report,
+                            validationReason: DefaultsManager.shared.userRole == .headmaster ? .legal : selectedAbsence,
+                            teacherValidation: .accepted
+                        ) { result in
+                            if result {
+                                presentationMode.wrappedValue.dismiss()
+                            } else {
+                                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
+                                    presentationMode.wrappedValue.dismiss()
+                                })
+                            }
                         }
                     }
                 }

@@ -13,6 +13,7 @@ struct StudentAbsenceInformationSection: View {
     let date: Date
     let description: String
     let timeOfDay: String
+    let endDate: Date?
     
     var body: some View {
         VStack {
@@ -24,7 +25,14 @@ struct StudentAbsenceInformationSection: View {
             StudentAbsencesSection(title: "Elev", icon: "person", description: name)
             StudentAbsencesSection(title: "Årsag", icon: "questionmark.circle", description: reason)
             StudentAbsencesSection(title: "Tidspunkt", icon: "clock", description: timeOfDay)
-            StudentAbsencesSection(title: "Dato", icon: "calendar", description: DateFormatter.abbreviationDayMonthYearFormatter.string(from: date))
+            if let endDate = endDate {
+                let firstDate = DateFormatter.abbreviationDayMonthYearFormatter.string(from: date)
+                let lastDate = DateFormatter.abbreviationDayMonthYearFormatter.string(from: endDate)
+                let dateCombined = firstDate + "\n" + lastDate
+                StudentAbsencesSection(title: "Dato", icon: "calendar", description: dateCombined)
+            } else {
+                StudentAbsencesSection(title: "Dato", icon: "calendar", description: DateFormatter.abbreviationDayMonthYearFormatter.string(from: date))
+            }
             StudentAbsencesSection(title: "Beskrivelse", icon: "note.text", description: description)
         }
         .frame(width: 320)
@@ -36,6 +44,6 @@ struct StudentAbsenceInformationSection: View {
 
 struct StudentAbsenceInformationSection_Previews: PreviewProvider {
     static var previews: some View {
-        StudentAbsenceInformationSection(name: "", reason: "", date: .now, description: "", timeOfDay: "")
+        StudentAbsenceInformationSection(name: "", reason: "", date: .now, description: "", timeOfDay: "", endDate: nil)
     }
 }

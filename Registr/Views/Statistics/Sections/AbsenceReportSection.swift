@@ -30,8 +30,14 @@ struct AbsenceReportSection: View {
             VStack {
                 Text("Dato")
                     .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
-                Text(absence.date)
-                    .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+                if let endDate = absence.endDate {
+                    let dateCombined = absence.date + "\n" + endDate
+                    Text(dateCombined)
+                        .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+                } else {
+                    Text(absence.date)
+                        .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+                }
             }
             
             Spacer()
@@ -45,9 +51,11 @@ struct AbsenceReportSection: View {
             
             Spacer()
 
-            Image(systemName: "ellipsis")
-                .foregroundColor(Color.fiftyfifty)
-                .padding(.trailing, 10)
+            if absence.endDate == nil {
+                Image(systemName: "ellipsis")
+                    .foregroundColor(Color.fiftyfifty)
+                    .padding(.trailing, 10)
+            }
         }
         .fullScreenCover(item: $errorHandling.appError, content: { appError in
             ErrorView(title: appError.title, error: appError.description) {
@@ -65,6 +73,6 @@ struct AbsenceReportSection: View {
 
 struct AbsenceReportSection_Previews: PreviewProvider {
     static var previews: some View {
-        AbsenceReportSection(absence: Registration(studentID: "", studentName: "", className: "", date: "", isMorning: false))
+        AbsenceReportSection(absence: Registration(studentID: "", studentName: "", className: "", date: "", endDate: nil, isMorning: false))
     }
 }
