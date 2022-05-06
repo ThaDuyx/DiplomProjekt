@@ -77,7 +77,7 @@ extension Date {
         return daysArray
     }
     
-    /// Taken from: https://stackoverflow.com/a/45716411
+    /// Taken from: https://stackoverflow.com/a/45716411, but modified
     static func dates(from fromDate: Date, to toDate: Date) -> [Date] {
         var dates: [Date] = []
         var date = fromDate
