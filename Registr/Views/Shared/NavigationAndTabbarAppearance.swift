@@ -10,10 +10,15 @@ import UIKit
 import SwiftUI
 
 struct NavigationAndTabbarAppearance {
-    static func configureAppearance() {
+    static func configureAppearance(clear: Bool) {
         let navigationAppearance = UINavigationBarAppearance(barAppearance: UIBarAppearance())
-        navigationAppearance.configureWithOpaqueBackground()
-        navigationAppearance.backgroundColor = UIColor.clear
+        if clear {
+            navigationAppearance.configureWithTransparentBackground()
+            navigationAppearance.backgroundColor = UIColor.clear
+        } else {
+            navigationAppearance.configureWithDefaultBackground()
+            navigationAppearance.backgroundColor = UIColor.white
+        }
         navigationAppearance.shadowColor = UIColor.clear
 
         navigationAppearance.titleTextAttributes = [
@@ -25,7 +30,7 @@ struct NavigationAndTabbarAppearance {
         UINavigationBar.appearance().tintColor = UIColor(.frolyRed)
         UINavigationBar.appearance().standardAppearance = navigationAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navigationAppearance
-        UINavigationBar.appearance().isOpaque = true
+        UINavigationBar.appearance().isOpaque = false
         
         let tabBarAppearance = UITabBarAppearance(barAppearance: UIBarAppearance())
         tabBarAppearance.configureWithOpaqueBackground()

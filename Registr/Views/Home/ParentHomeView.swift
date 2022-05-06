@@ -85,7 +85,6 @@ struct ParentHomeView: View {
             })
             .navigationTitle("Børn")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationAppearance(backgroundColor: .white)
         }
     }
 }
