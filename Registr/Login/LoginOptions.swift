@@ -7,28 +7,15 @@
 import SwiftUI
 
 struct LoginOptions: View {
-    init() {
-        NavigationAndTabbarAppearance.configureAppearance()
-    }
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
-                    ZStack(alignment: .top) {
-                        Rectangle()
-                            .fill(Color.moonMist.opacity(0.7))
-                            .frame(height: 170)
-                            .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
-                        Spacer()
-                        VStack {
-                            Image("AppLogo")
-                            Text("application_name")
-                                .titleTextStyle(color: .frolyRed, font: .poppinsSemiBold)
-                        }
-                        .offset(y: 80)
-                    }
-                    .ignoresSafeArea()
+                    
+                    LogoSection()
+                    
                     Spacer()
+                    
                     VStack(spacing: 40) {
                         NavigationLink(destination: UserIDView(username: "test@test.com")) {
                             Text("parent_login")
@@ -49,6 +36,9 @@ struct LoginOptions: View {
             }
             .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .onAppear() {
+            NavigationAndTabbarAppearance.configureAppearance(clear: true)
         }
     }
 }

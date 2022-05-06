@@ -11,7 +11,7 @@ struct TeacherTabs: View {
     @StateObject var registrationManager = RegistrationManager()
     @StateObject var favoriteManager = FavoriteManager()
     @StateObject var classesManager = ClassManager()
-    
+
     var body: some View {
         SchoolHomeView()
             .tabItem {

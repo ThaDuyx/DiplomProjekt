@@ -98,7 +98,6 @@ struct SchoolHomeView: View {
             })
             .navigationTitle("Indberettelser")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationAppearance(backgroundColor: .white)
         }.environmentObject(reportManager)
     }
 }
