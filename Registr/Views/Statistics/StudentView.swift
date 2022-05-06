@@ -42,25 +42,16 @@ struct StudentView: View {
                 
                 Spacer()
                 
-                if statisticsWeekDay().isEmpty || statisticsWeekDay().allSatisfy { $0 == 0 } {
-                    Text("Der kan ikke blive vist nogen graf på fraværet for hver dag i ugen, da der intet er.")
-                        .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
-                        .multilineTextAlignment(.leading)
-                        .frame(width: 320)
-                } else {
-                    VStack {
-                        PieChartView(data: statisticsWeekDay().map { Double($0) }, title: "Fraværs værdi", legend: "Fravær fra ugen", style: ChartStyle(backgroundColor: .white, accentColor: Color.fiftyfifty, gradientColor: GradientColor(start: Color.fiftyfifty, end: Color.fiftyfifty), textColor: Color.fiftyfifty, legendTextColor: .fiftyfifty, dropShadowColor: .clear))
-                    }
-                }
+                GraphSection(statisticsManager: statisticsManager)
                 
                 Spacer()
                 
                 VStack(spacing: 20) {
-                    AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, statArray: statisticMorning())
+                    AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, statArray: statisticMorning(statistics: statisticsManager))
                     if student.classInfo.isDoubleRegistrationActivated {
-                        AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_afternoon".localize, statArray: statisticAfternoon())
+                        AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_afternoon".localize, statArray: statisticAfternoon(statistics: statisticsManager))
                     }
-                    AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, statArray: statisticsWeekDay())
+                    AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, statArray: statisticsWeekDay(statistics: statisticsManager))
                 }
                 .onAppear() {
                     statisticsManager.fetchStudentStats(studentID: studentID)
@@ -74,36 +65,6 @@ struct StudentView: View {
             .navigationTitle(studentName)
             .navigationBarTitleDisplayMode(.inline)
         }
-    }
-}
-
-extension StudentView {
-    private func statisticMorning() -> [Int] {
-        var morningArray: [Int] = []
-        morningArray.append(statisticsManager.statistic.lateMorning)
-        morningArray.append(statisticsManager.statistic.illnessMorning)
-        morningArray.append(statisticsManager.statistic.legalMorning)
-        morningArray.append(statisticsManager.statistic.illegalMorning)
-        return morningArray
-    }
-    
-    private func statisticAfternoon() -> [Int] {
-        var afternoonArray: [Int] = []
-        afternoonArray.append(statisticsManager.statistic.lateAfternoon)
-        afternoonArray.append(statisticsManager.statistic.illnessAfternoon)
-        afternoonArray.append(statisticsManager.statistic.legalAfternoon)
-        afternoonArray.append(statisticsManager.statistic.illegalAfternoon)
-        return afternoonArray
-    }
-    
-    private func statisticsWeekDay() -> [Int] {
-        var weekdayArray: [Int] = []
-        weekdayArray.append(statisticsManager.statistic.mon)
-        weekdayArray.append(statisticsManager.statistic.tue)
-        weekdayArray.append(statisticsManager.statistic.wed)
-        weekdayArray.append(statisticsManager.statistic.thu)
-        weekdayArray.append(statisticsManager.statistic.fri)
-        return weekdayArray
     }
 }
 

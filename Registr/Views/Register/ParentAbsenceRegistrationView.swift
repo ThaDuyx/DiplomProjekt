@@ -31,6 +31,7 @@ struct ParentAbsenceRegistrationView: View {
     @State private var showsStartDatePicker = false
     @State private var showsEndDatePicker = false
     @State private var showingAlert = false
+    @State private var isReportAlert = false
     @State private var shouldDismiss = false
     @FocusState private var focusedField: Field?
     
@@ -283,10 +284,13 @@ struct ParentAbsenceRegistrationView: View {
                         .listRowBackground(Color.frolyRed)
                         
                         VStack(alignment: .center) {
-                            Button(shouldUpdate ? "Opdater" : "parent_absence_registration_report".localize) {
-                                
+                            Button(shouldUpdate ? "par_update".localize : "par_report".localize) {
                                 if selectedName.isEmpty || selectedAbsenceString.isEmpty || isDoubleRegistrationActivated && selectedTimeOfDayString.isEmpty {
                                     showingAlert = true
+                                    isReportAlert = false
+                                }else if checkReport(), !shouldUpdate {
+                                    showingAlert = true
+                                    isReportAlert = true
                                 } else {
                                     if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsenceString.isEmpty, selectedRegistrationType != .notRegistered {
                                         let report = Report(id: shouldUpdate ? report?.id : nil,
@@ -344,10 +348,10 @@ struct ParentAbsenceRegistrationView: View {
                             }
                             .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsBold, fontSize: Resources.FontSize.body))
                             .listRowBackground(Color.clear)
-                            .alert("parent_absence_registration_alert_title".localize, isPresented: $showingAlert, actions: {
+                            .alert(isReportAlert ? "par_report_alert_title".localize : "parent_absence_registration_alert_title".localize, isPresented: $showingAlert, actions: {
                                 Button("ok".localize, role: .cancel) { }
                             }, message: {
-                                Text("parent_absence_registration_alert_description".localize)
+                                Text(isReportAlert ? "par_report_alert_text".localize : "parent_absence_registration_alert_description".localize)
                             })
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -368,6 +372,21 @@ struct ParentAbsenceRegistrationView: View {
             .navigationTitle("parent_absence_registration_nav_title".localize)
             .navigationBarTitleDisplayMode(.inline)
         }
+    }
+}
+
+extension ParentAbsenceRegistrationView {
+    
+    // This function is checking if there already exist a report for the given date.
+    private func checkReport() -> Bool {
+        var alreadyExistReport: Bool = false
+        
+        childrenManager.reports.forEach { report in
+            if report.studentID == selectedChild?.id && report.date.selectedDateFormatted == startDate.selectedDateFormatted {
+                alreadyExistReport = true
+            }
+        }
+        return alreadyExistReport
     }
 }
 

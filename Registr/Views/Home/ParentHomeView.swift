@@ -15,50 +15,57 @@ struct ParentHomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                List {
-                    ForEach(childrenManager.children, id: \.self) { child in
-                        HStack {
-                            Image(systemName: "person.crop.circle.fill")
-                                .resizable()
-                                .frame(width: 65, height: 65)
-                                .foregroundColor(.white)
-                                .padding()
-                            
-                            Divider()
-                                .frame(width: 2)
-                                .background(.white)
-                            
-                            VStack(spacing: 13) {
-                                Text("Navn: \(child.name)")
-                                    .smallBodyTextStyle(color: .white, font: .poppinsBold)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                if childrenManager.children.isEmpty {
+                    Text("Du har ikke registeret nogle børn. Hvis dette er en fejl, så søg kontakt hos skolen.")
+                        .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+                        .multilineTextAlignment(.leading)
+                        .frame(width: 320)
+                } else {
+                    List {
+                        ForEach(childrenManager.children, id: \.self) { child in
+                            HStack {
+                                Image(systemName: "person.crop.circle.fill")
+                                    .resizable()
+                                    .frame(width: 65, height: 65)
+                                    .foregroundColor(.white)
+                                    .padding()
                                 
-                                Text("Klasse: \(child.className)")
-                                    .smallBodyTextStyle(color: .white, font: .poppinsBold)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Divider()
+                                    .frame(width: 2)
+                                    .background(.white)
                                 
-                                Text("Email: \(child.email)")
-                                    .smallBodyTextStyle(color: .white, font: .poppinsBold)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                            if let id = child.id {
-                                NavigationLink(destination: StudentView(studentName: child.name, isParent: true, studentID: id, student: child)) {
-                                    EmptyView()
+                                VStack(spacing: 13) {
+                                    Text("Navn: \(child.name)")
+                                        .smallBodyTextStyle(color: .white, font: .poppinsBold)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    Text("Klasse: \(child.className)")
+                                        .smallBodyTextStyle(color: .white, font: .poppinsBold)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    Text("Email: \(child.email)")
+                                        .smallBodyTextStyle(color: .white, font: .poppinsBold)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                 }
-                                .frame(width: 0, height: 0)
-                                .environmentObject(childrenManager)
+                                if let id = child.id {
+                                    NavigationLink(destination: StudentView(studentName: child.name, isParent: true, studentID: id, student: child)) {
+                                        EmptyView()
+                                    }
+                                    .frame(width: 0, height: 0)
+                                    .environmentObject(childrenManager)
+                                }
+                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(Color.white)
+                                    .padding(.trailing, 10)
                             }
-                            
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(Color.white)
-                                .padding(.trailing, 10)
                         }
-                    }
-                    .listRowBackground(Color.frolyRed)
-                    .listRowSeparatorTint(Color.white)
-                    .onAppear() {
-                        if !notificationVM.parentSubscribeToNotification {
-                            notificationVM.parentSubscribeToNotification = true
+                        .listRowBackground(Color.frolyRed)
+                        .listRowSeparatorTint(Color.white)
+                        .onAppear() {
+                            if !notificationVM.parentSubscribeToNotification {
+                                notificationVM.parentSubscribeToNotification = true
+                            }
                         }
                     }
                 }
