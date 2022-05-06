@@ -22,43 +22,56 @@ struct SchoolHomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                List(favoriteManager.favorites, id: \.self) { favorite in
-                    if let favoriteIndex = classManager.classes.firstIndex(where: { $0.classID == favorite }) {
-                        Section(
-                            header: Text(classManager.classes[favoriteIndex].name)
-                                .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
-                        ) {
-                            ForEach(reportManager.reports, id: \.self) { report in
-                                if DefaultsManager.shared.userRole == .teacher && report.classID == favorite && report.registrationType != .legal {
-                                    TeacherAbsencesSection(report: report)
-                                } else if DefaultsManager.shared.userRole == .headmaster && report.classID == favorite && report.registrationType == .legal {
-                                    TeacherAbsencesSection(report: report)
-                                }
-                            }
-                            .onAppear() {
-                                if !notificationVM.teacherSubscribeToNotification {
-                                    notificationVM.teacherSubscribeToNotification = true
-                                }
-                            }
-                            .listRowBackground(Color.frolyRed)
-                            .listRowSeparatorTint(Color.white)
-                        }
-                        
+                if favoriteManager.favorites.isEmpty {
+                    VStack(spacing: 50) {
+                        Text("Du har ikke valgt at følge nogle klasser. For at få vist beskder når en forældre fra en bestemt klasse, har oprettet fravær fra sit barn, så skal du følge denne klasse.")
+                            .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+                            .multilineTextAlignment(.leading)
+                            .frame(width: 320)
+                        Text("For at følge en klasse, så gå ind på Statistik -> vælg en klasse -> Tryk på Følger ikke. Du vil nu følge denne klasse.")
+                            .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
+                            .multilineTextAlignment(.leading)
+                            .frame(width: 320)
                     }
+                } else {
+                    List(favoriteManager.favorites, id: \.self) { favorite in
+                        if let favoriteIndex = classManager.classes.firstIndex(where: { $0.classID == favorite }) {
+                            Section(
+                                header: Text(classManager.classes[favoriteIndex].name)
+                                    .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
+                            ) {
+                                ForEach(reportManager.reports, id: \.self) { report in
+                                    if DefaultsManager.shared.userRole == .teacher && report.classID == favorite && report.registrationType != .legal {
+                                        TeacherAbsencesSection(report: report)
+                                    } else if DefaultsManager.shared.userRole == .headmaster && report.classID == favorite && report.registrationType == .legal {
+                                        TeacherAbsencesSection(report: report)
+                                    }
+                                }
+                                .onAppear() {
+                                    if !notificationVM.teacherSubscribeToNotification {
+                                        notificationVM.teacherSubscribeToNotification = true
+                                    }
+                                }
+                                .listRowBackground(Color.frolyRed)
+                                .listRowSeparatorTint(Color.white)
+                            }
+                            
+                        }
+                    }
+                    .accentColor(Color.fiftyfifty)
+                    .onChange(of: favoriteManager.newFavorite) { newValue in
+                        reportManager.addFavorite(newFavorite: newValue)
+                    }
+                    .onChange(of: favoriteManager.deselectedFavorite) { deselectedValue in
+                        reportManager.removeFavorite(favorite: deselectedValue)
+                    }
+                    
+                    /// - Will be removed later in our process. This is uncommented because it's easier to access the feeder this way.
+                    //                Button("Feed") {
+                    //                    feeder.createRegistrationDates()
+                    //                }
+                    /// -----------------------------------
                 }
-                .accentColor(Color.fiftyfifty)
-                .onChange(of: favoriteManager.newFavorite) { newValue in
-                    reportManager.addFavorite(newFavorite: newValue)
-                }
-                .onChange(of: favoriteManager.deselectedFavorite) { deselectedValue in
-                    reportManager.removeFavorite(favorite: deselectedValue)
-                }
-                
-                /// - Will be removed later in our process. This is uncommented because it's easier to access the feeder this way.
-//                Button("Feed") {
-//                    feeder.createRegistrationDates()
-//                }
-                /// -----------------------------------
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

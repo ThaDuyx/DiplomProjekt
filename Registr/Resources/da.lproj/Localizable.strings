@@ -74,9 +74,12 @@
 "parent_absence_registration_start_date" = "Startdato";
 "parent_absence_registration_end_date" = "Slutdato";
 "parent_absence_registration_description" = "Skriv beskrivelse";
-"parent_absence_registration_report" = "Indberet";
+"par_report" = "Indberet";
+"par_update" = "Opdater";
 "parent_absence_registration_alert_title" = "Hov! Du mangler og udfylde noget!";
-"parent_absence_registration_alert_description" = "Du mangler at vælge enten barn eller fraværs årsag. Udfyld disse for at forsætte.";
+"parent_absence_registration_alert_description" = "Du mangler at vælge fraværsårsag. Udfyld dette felt for at kunne lave en indberretelse.";
+"par_report_alert_text" = "Der er allerede oprettede en indberretelse for denne dato.";
+"par_report_alert_title" = "Hov, dette er ikke muligt!";
 "parent_absence_registration_nav_title" = "Indberettelse af barn";
 
 // Mark: - Student class list
@@ -109,4 +112,6 @@
 "statistics_offenses" = "Forseelser";
 "statistics_absence" = "Fravær";
 "statistics_reports" = "Indberettelser";
+"stat_no_graph" = "Der kan ikke blive vist nogen graf, da der ikke er registeret noget fra til forseelser.";
+"stat_graph_value" = "Fraværs værdi";
 

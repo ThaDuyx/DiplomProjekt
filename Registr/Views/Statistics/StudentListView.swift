@@ -14,9 +14,9 @@ struct StudentListView: View {
     @StateObject var errorHandling = ErrorHandling()
     @StateObject private var context = FullScreenCoverContext()
 
-    var selectedClass: String
+    var selectedClass: ClassInfo
     
-    init(selectedClass: String) {
+    init(selectedClass: ClassInfo) {
         self.selectedClass = selectedClass
     }
     
@@ -30,17 +30,17 @@ struct StudentListView: View {
                 .listRowSeparatorTint(Color.white)
             }
         }
-        .navigationTitle("Elever i \(selectedClass)")
+        .navigationTitle("Elever i \(selectedClass.name)")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(){
-            registrationManager.fetchStudents(className: selectedClass)
+            registrationManager.fetchStudents(className: selectedClass.classID)
         }
         .fullScreenCover(item: $errorHandling.appError) { appError in
             ErrorView(title: appError.title, error: appError.description) {
                 if appError.type == .registrationManagerInitError {
                     classManager.fetchClasses()
                 } else {
-                    registrationManager.fetchStudents(className: selectedClass)
+                    registrationManager.fetchStudents(className: selectedClass.classID)
                 }
             }
         }
@@ -49,6 +49,6 @@ struct StudentListView: View {
 
 struct StudentListView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentListView(selectedClass: "0.x")
+        StudentListView(selectedClass: ClassInfo(isDoubleRegistrationActivated: false, name: "0.x", classID: "qq11ww22ee33"))
     }
 }
