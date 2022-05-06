@@ -20,22 +20,8 @@ struct UserIDView: View {
     var body: some View {
         ZStack {
             VStack {
-                ZStack(alignment: .top) {
-                    Rectangle()
-                        .fill(Color.moonMist.opacity(0.7))
-                        .frame(height: 170)
-                        .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
-                    
-                    Spacer()
-                    
-                    VStack(spacing: 0) {
-                        Image("AppLogo")
-                        Text("application_name")
-                            .titleTextStyle(color: .frolyRed, font: .poppinsSemiBold)
-                    }
-                    .offset(y: 80)
-                }
-                .ignoresSafeArea()
+                
+                LogoSection()
                 
                 Spacer()
                 
