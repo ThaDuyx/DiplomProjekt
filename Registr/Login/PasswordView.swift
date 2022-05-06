@@ -52,7 +52,7 @@ struct PasswordView: View {
                     
                     Button("login") {
                         showActivity = true
-                        AuthenticationManager.shared.signIn(email: userName, password: password, completion: { success in
+                        AuthenticationManager.shared.signIn(email: userName, password: password, completion: { success, error  in
                             if success {
                                 showActivity = false
                                 let window = UIApplication
@@ -63,8 +63,13 @@ struct PasswordView: View {
                                 window?.rootViewController = UIHostingController(rootView: OnboardingControllerFlow().environmentObject(notificationVM))
                                 
                             } else {
-                                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
-                                showActivity = false
+                                if error != nil {
+                                    context.present(ErrorView(title: "alert_title_login".localize, error: error!.localizedDescription))
+                                    showActivity = false
+                                } else {
+                                    context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
+                                    showActivity = false
+                                }
                             }
                         })
                     }
