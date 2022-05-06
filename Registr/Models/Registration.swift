@@ -23,6 +23,7 @@ struct Registration: Codable, Hashable {
     let className: String
     let date: String
     var reason: RegistrationType = .notRegistered
+    let endDate: String?
     var validated: Bool = false
     var isAbsenceRegistered: Bool = false
     var isMorning: Bool

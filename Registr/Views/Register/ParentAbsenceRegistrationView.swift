@@ -59,6 +59,7 @@ struct ParentAbsenceRegistrationView: View {
         if let availableReport = report {
             _selectedAbsenceString = State(initialValue: availableReport.reason.rawValue)
             _selectedAbsenceType = State(initialValue: availableReport.reason)
+            _selectedRegistrationType = State(initialValue: availableReport.registrationType)
             _isDoubleRegistrationActivated = State(initialValue: availableReport.isDoubleRegistrationActivated)
             _selectedTimeOfDayType = State(initialValue: availableReport.timeOfDay)
             _selectedTimeOfDayString = State(initialValue: availableReport.timeOfDay.rawValue)
@@ -66,7 +67,6 @@ struct ParentAbsenceRegistrationView: View {
             
             if let availableEndDate = availableReport.endDate {
                 _isInterval = State(initialValue: true)
-                _showsEndDatePicker = State(initialValue: true)
                 _endDate = State(initialValue: availableEndDate)
             }
             
@@ -81,6 +81,7 @@ struct ParentAbsenceRegistrationView: View {
             _selectedTimeOfDayType = State(initialValue: availableAbsence.isMorning ? .morning : .afternoon)
             _selectedTimeOfDayString = State(initialValue: availableAbsence.isMorning ? TimeOfDay.morning.rawValue : TimeOfDay.afternoon.rawValue)
             _startDate = State(initialValue: availableAbsence.date.dateFromString)
+            _selectedRegistrationType = State(initialValue: availableAbsence.reason)
         }
         
         if let availableChild = child {

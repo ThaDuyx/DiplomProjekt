@@ -44,8 +44,16 @@ struct ReportSection: View {
                     Text("Dato")
                         .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                     
-                    Text(report.date.formatSpecificDate(date: report.date))
-                        .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+                    if let endDate = report.endDate {
+                        let lastDate = endDate.selectedDateFormatted
+                        let firstDate = report.date.selectedDateFormatted
+                        let dateCombined = firstDate + "\n" + lastDate
+                        Text(dateCombined)
+                            .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+                    } else {
+                        Text(report.date.formatSpecificDate(date: report.date))
+                            .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)
+                    }
                 }
                 
                 VStack {
