@@ -34,6 +34,6 @@ struct StudentSection: View {
 
 struct StudentSection_Previews: PreviewProvider {
     static var previews: some View {
-        StudentSection(studentName: "", studentID: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: ""))
+        StudentSection(studentName: "", studentID: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: "", cpr: ""))
     }
 }
