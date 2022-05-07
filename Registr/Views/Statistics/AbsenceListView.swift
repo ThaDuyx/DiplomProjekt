@@ -74,7 +74,7 @@ struct AbsenceListView: View {
     
     struct AbsenceListView_Previews: PreviewProvider {
         static var previews: some View {
-            AbsenceListView(selectedStudent: "", studentName: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: ""))
+            AbsenceListView(selectedStudent: "", studentName: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: "", cpr: ""))
         }
     }
 }
