@@ -17,11 +17,7 @@ class SchoolManager: ObservableObject {
     
     // Selectors
     private var selectedSchool: String {
-        if let schoolID = UserManager.shared.user?.associatedSchool {
-            return schoolID
-        } else {
-            return ""
-        }
+        return DefaultsManager.shared.associatedSchool
     }
     
     init() {
