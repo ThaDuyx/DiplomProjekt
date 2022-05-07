@@ -6,30 +6,105 @@
 //
 
 import XCTest
+import FirebaseFirestore
+@testable import Registr
 
 class RegistrUnitTests: XCTestCase {
+    private let statisticsManager = StatisticsManager()
+    private let db = Firestore.firestore()
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testIncrementAndDecrementMethod() throws {
+        let statManager = StatisticsManager()
+        statManager.updateClassStatistics(oldValue: "For sent", newValue: "Ulovligt")
+        XCTAssert(statManager.illegalCounter == Int64(1) &&
+                  statManager.illnessCounter == Int64(0) &&
+                  statManager.legalCounter == Int64(0) &&
+                  statManager.lateCounter == Int64(-1))
+    }
+    
+    func testOnlyDecrement() throws {
+        let statManager = StatisticsManager()
+        statManager.updateClassStatistics(oldValue: "For sent", newValue: "")
+        XCTAssert(statManager.illegalCounter == Int64(0) &&
+                  statManager.illnessCounter == Int64(0) &&
+                  statManager.legalCounter == Int64(0) &&
+                  statManager.lateCounter == Int64(-1))
+    }
+    
+    func testOnlyIncrement() throws {
+        let statManager = StatisticsManager()
+        statManager.updateClassStatistics(oldValue: "", newValue: "For sent")
+        XCTAssert(statManager.illegalCounter == Int64(0) &&
+                  statManager.illnessCounter == Int64(0) &&
+                  statManager.legalCounter == Int64(0) &&
+                  statManager.lateCounter == Int64(1))
+    }
+    
+    func testResetCounters() throws {
+        let statManager = StatisticsManager()
+        statManager.updateClassStatistics(oldValue: "", newValue: "For sent")
+        statManager.updateClassStatistics(oldValue: "Ulovligt", newValue: "Sygdom")
+        statManager.updateClassStatistics(oldValue: "", newValue: "Sygdom")
+        statManager.updateClassStatistics(oldValue: "", newValue: "For sent")
+        statManager.updateClassStatistics(oldValue: "", newValue: "For sent")
+        statManager.updateClassStatistics(oldValue: "", newValue: "Sygdom")
+        statManager.updateClassStatistics(oldValue: "For sent", newValue: "Ulovligt")
+        statManager.updateClassStatistics(oldValue: "Ulovligt", newValue: "Ulovligt")
+        statManager.resetStatCounters()
+        
+        XCTAssert(statManager.illegalCounter == Int64(0) &&
+                  statManager.illnessCounter == Int64(0) &&
+                  statManager.legalCounter == Int64(0) &&
+                  statManager.lateCounter == Int64(0))
+    }
+    
+    func testDecrementer() throws {
+        let statManager = StatisticsManager()
+        statManager.decrementCounters(value: "Sygdom")
+        
+        XCTAssert(statManager.illnessCounter == Int64(-1))
+    }
+    
+    func testIncrementer() throws {
+        let statManager = StatisticsManager()
+        statManager.incrementCounters(value: "Sygdom")
+        
+        XCTAssert(statManager.illnessCounter == Int64(1))
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
+    func testFetchStudentsPerformance() throws {
         // This is an example of a performance test case.
         self.measure {
-            // Put the code you want to measure the time of here.
+            db
+                .collection("fb_schools_path".localize)
+                .document("EXvXPS4HuVnxu7LhZRPt")
+                .collection("fb_classes_path".localize)
+                .document("ZjHicqkeR0aERu6ZY87v")
+                .collection("fb_students_path".localize)
+                .getDocuments { querySnapshot, err in
+                    if let err = err {
+                        ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .registrationManagerInitError)
+                    } else {
+                        for document in querySnapshot!.documents {
+                            let studentID = document.documentID
+                            self.db.collection("fb_students_path".localize)
+                                .document(studentID)
+                                .getDocument { studentDoc, error in
+                                    if let data = studentDoc {
+                                        do {
+                                            if let student = try data.data(as: Student.self) {
+                                                print(student)
+                                                
+                                            }
+                                        }
+                                        catch {
+                                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .registrationManagerInitError)
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                }
         }
     }
-
 }

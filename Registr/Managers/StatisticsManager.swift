@@ -29,10 +29,10 @@ class StatisticsManager: ObservableObject {
     private let decrement: Int64 = -1
     
     // Counters
-    private var illegalCounter: Int64 = 0
-    private var illnessCounter: Int64 = 0
-    private var lateCounter: Int64 = 0
-    private var legalCounter: Int64 = 0
+    internal var illegalCounter: Int64 = 0
+    internal var illnessCounter: Int64 = 0
+    internal var lateCounter: Int64 = 0
+    internal var legalCounter: Int64 = 0
     
     // MARK: - Student Statistics
     /// Comitting the global batch of writes and will clean every write in the object.
@@ -239,7 +239,7 @@ class StatisticsManager: ObservableObject {
         }
     }
     
-    private func incrementCounters(value: String) {
+    internal func incrementCounters(value: String) {
         switch value {
         case RegistrationType.illegal.rawValue:
             illegalCounter += increment
@@ -254,7 +254,7 @@ class StatisticsManager: ObservableObject {
         }
     }
     
-    private func decrementCounters(value: String) {
+    internal func decrementCounters(value: String) {
         switch value {
         case RegistrationType.illegal.rawValue:
             illegalCounter += decrement
