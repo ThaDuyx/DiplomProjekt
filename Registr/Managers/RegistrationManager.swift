@@ -25,11 +25,7 @@ class RegistrationManager: ObservableObject {
     private var selectedStudent = String()
     private var selectedIsMorning: Bool = true
     private var selectedSchool: String {
-        if let schoolID = UserManager.shared.user?.associatedSchool {
-            return schoolID
-        } else {
-            return ""
-        }
+        return DefaultsManager.shared.associatedSchool
     }
     
     func setAbsenceReason(absenceReason: RegistrationType, index: Int) {

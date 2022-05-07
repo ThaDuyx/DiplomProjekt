@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TabViews: View {
-    @State private var userRole = UserManager.shared.user?.role
+    @State private var userRole = DefaultsManager.shared.userRole
     
     init() {
         NavigationAndTabbarAppearance.configureAppearance(clear: false)
@@ -16,7 +16,6 @@ struct TabViews: View {
     
     var body: some View {
         TabView {
-            
             switch userRole {
             case .teacher:
                 TeacherTabs()
@@ -27,8 +26,10 @@ struct TabViews: View {
             case .headmaster:
                 HeadmasterTabs()
                 
+                // This case will only be called if there is an active auth token and there has been an update or reinstallation of the app.
+                // Could also be a memory issue. Regardless of the error we would just like the user to login again.
             case .none:
-                ErrorView(title: "alert_title".localize, error: "alert_default_description".localize)
+                LoginOptions()
             }
         }
         .accentColor(.frolyRed)

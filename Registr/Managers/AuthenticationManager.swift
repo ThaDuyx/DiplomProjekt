@@ -44,8 +44,11 @@ class AuthenticationManager {
                                 let user = try document.data(as: UserProfile.self)
                                 UserManager.shared.user = user
                                 DefaultsManager.shared.currentProfileID = id
-                                if let role = user?.role {
+                                DefaultsManager.shared.isAuthenticated = true
+                                if let role = user?.role, let associatedSchool = user?.associatedSchool, let name = user?.name {
                                     DefaultsManager.shared.userRole = role
+                                    DefaultsManager.shared.associatedSchool = associatedSchool
+                                    DefaultsManager.shared.userName = name
                                 }
                                 completion(true, nil)
                             } catch {
@@ -67,6 +70,14 @@ class AuthenticationManager {
             try firebaseAuth.signOut()
             completion(true)
         } catch _ as NSError {
+            completion(false)
+        }
+    }
+    
+    func checkAuthenticationStatus(completion: @escaping (Bool) -> ()) {
+        if Auth.auth().currentUser != nil {
+            completion(true)
+        } else {
             completion(false)
         }
     }
