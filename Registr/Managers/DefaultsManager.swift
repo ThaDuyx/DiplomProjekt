@@ -18,6 +18,9 @@ final class DefaultsManager {
         case favorites = "DefaultsManager_favorites"
         case userRole = "DefaultsManager_userRole"
         case childrenID = "DefaultsManager_childrenID"
+        case isAuthenticated = "DefaultsManager_isAuthenticated"
+        case associatedSchool = "DefaultsManager_associatedSchool"
+        case userName = "DefaultsManager_userName"
     }
     
     // MARK: - Properties
@@ -57,8 +60,8 @@ final class DefaultsManager {
     var userRole: Role {
         get {
             // Force unwrapping these because if we don't have a role it means the user haven't logged in.
-            let roleRawValue = defaults.string(forKey: Key.userRole.rawValue)
-            let role = Role(rawValue: roleRawValue!)!
+            let roleRawValue = defaults.string(forKey: Key.userRole.rawValue) ?? "none"
+            let role = Role(rawValue: roleRawValue)!
             
             return role
         }
@@ -66,5 +69,40 @@ final class DefaultsManager {
             defaults.set(newValue.rawValue, forKey: Key.userRole.rawValue)
             defaults.synchronize()
         }
+    }
+    
+    var associatedSchool: String {
+        get {
+            return defaults.string(forKey: Key.associatedSchool.rawValue) ?? "" 
+        }
+        set {
+            defaults.set(newValue, forKey: Key.associatedSchool.rawValue)
+            defaults.synchronize()
+        }
+    }
+    
+    var userName: String {
+        get {
+            return defaults.string(forKey: Key.associatedSchool.rawValue) ?? ""
+        } set {
+            defaults.set(newValue, forKey: Key.userName.rawValue)
+            defaults.synchronize()
+        }
+    }
+    
+    var isAuthenticated: Bool {
+        get {
+            return defaults.bool(forKey: Key.isAuthenticated.rawValue)
+        }
+        set {
+            defaults.set(newValue, forKey: Key.isAuthenticated.rawValue)
+        }
+    }
+    
+    func flushDefaults() {
+        let domain = Bundle.main.bundleIdentifier!
+        defaults.removePersistentDomain(forName: domain)
+        defaults.synchronize()
+        print(Array(defaults.dictionaryRepresentation().keys).count)
     }
 }
