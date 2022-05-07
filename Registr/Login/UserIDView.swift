@@ -9,14 +9,14 @@ import SwiftUI
 
 struct UserIDView: View {
     
-    @State private var userName: String
-    var username: String
-    
-    init(username: String) {
-        self.username = username
-        userName = username
-    }
-    
+    @State private var userName: String = ""
+//    var username: String
+//
+//    init() {
+//        self.username = username
+//        userName = username
+//    }
+//
     var body: some View {
         ZStack {
             VStack {
@@ -38,12 +38,14 @@ struct UserIDView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.frolyRed, lineWidth: 2))
+                        .accessibilityIdentifier("userIDTextField")
                     
                     NavigationLink(destination: PasswordView(userName: userName)) {
                         Text("next_view")
                     }
                     .frame(alignment: .center)
                     .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
+                    .accessibilityIdentifier("userIDNextView")
                     
                     Spacer()
                 }
@@ -55,6 +57,7 @@ struct UserIDView: View {
 
 struct UserIDView_Previews: PreviewProvider {
     static var previews: some View {
-        UserIDView(username: "")
+//        UserIDView(username: "")
+        UserIDView()
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftUIKit
 
 struct PasswordView: View {
-    @State private var password: String = "test1234"
+    @State private var password: String = ""
     @State private var showActivity = false
     @StateObject private var context = FullScreenCoverContext()
     @EnvironmentObject var notificationVM: NotificationViewModel
@@ -37,6 +37,7 @@ struct PasswordView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.frolyRed, lineWidth: 2))
+                        .accessibilityIdentifier("passwordTextField")
                     
                     Button("login") {
                         showActivity = true
@@ -63,6 +64,7 @@ struct PasswordView: View {
                     }
                     .frame(alignment: .center)
                     .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
+                    .accessibilityIdentifier("passwordLogin")
                     
                     if showActivity {
                         ProgressView()

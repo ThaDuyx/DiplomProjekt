@@ -122,6 +122,7 @@ struct ParentAbsenceRegistrationView: View {
                         }
                     }
                     .listRowBackground(Color.frolyRed)
+                    .accessibilityIdentifier("selectChildForRegistration")
                     
                     if selectedChild != nil {
                         Section(
@@ -157,7 +158,8 @@ struct ParentAbsenceRegistrationView: View {
                             }
                         }
                         .listRowBackground(Color.frolyRed)
-                        
+                        .accessibilityIdentifier("absenceReasonMenu")
+
                         if isDoubleRegistrationActivated {
                             Section(
                                 header:
@@ -278,6 +280,7 @@ struct ParentAbsenceRegistrationView: View {
                                                 focusedField = nil
                                             }
                                         }
+                                        .accessibilityIdentifier("writeDescriptionForAbsence")
                                 }
                             }
                         }
@@ -348,6 +351,7 @@ struct ParentAbsenceRegistrationView: View {
                             }
                             .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsBold, fontSize: Resources.FontSize.body))
                             .listRowBackground(Color.clear)
+                            .accessibilityIdentifier("createRegistration")
                             .alert(isReportAlert ? "par_report_alert_title".localize : "parent_absence_registration_alert_title".localize, isPresented: $showingAlert, actions: {
                                 Button("ok".localize, role: .cancel) { }
                             }, message: {
