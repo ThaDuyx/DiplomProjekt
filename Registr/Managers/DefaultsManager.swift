@@ -98,11 +98,4 @@ final class DefaultsManager {
             defaults.set(newValue, forKey: Key.isAuthenticated.rawValue)
         }
     }
-    
-    func flushDefaults() {
-        let domain = Bundle.main.bundleIdentifier!
-        defaults.removePersistentDomain(forName: domain)
-        defaults.synchronize()
-        print(Array(defaults.dictionaryRepresentation().keys).count)
-    }
 }
