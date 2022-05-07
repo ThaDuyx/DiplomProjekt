@@ -10,6 +10,10 @@ import SwiftUI
 struct TabViews: View {
     @State private var userRole = DefaultsManager.shared.userRole
     
+    init() {
+        NavigationAndTabbarAppearance.configureAppearance(clear: false)
+    }
+    
     var body: some View {
         TabView {
             switch userRole {

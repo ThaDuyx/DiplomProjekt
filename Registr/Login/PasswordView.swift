@@ -19,20 +19,8 @@ struct PasswordView: View {
     var body: some View {
         ZStack {
             VStack {
-                ZStack(alignment: .top) {
-                    Rectangle()
-                        .fill(Color.moonMist.opacity(0.7))
-                        .frame(height: 170)
-                        .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
-                    Spacer()
-                    VStack(spacing: 0) {
-                        Image("AppLogo")
-                        Text("application_name")
-                            .titleTextStyle(color: .frolyRed, font: .poppinsSemiBold)
-                    }
-                    .offset(y: 80)
-                }
-                .ignoresSafeArea()
+                
+                LogoSection()
                 
                 Spacer()
                 
@@ -52,7 +40,7 @@ struct PasswordView: View {
                     
                     Button("login") {
                         showActivity = true
-                        AuthenticationManager.shared.signIn(email: userName, password: password, completion: { success in
+                        AuthenticationManager.shared.signIn(email: userName, password: password, completion: { success, error  in
                             if success {
                                 showActivity = false
                                 let window = UIApplication
@@ -63,8 +51,13 @@ struct PasswordView: View {
                                 window?.rootViewController = UIHostingController(rootView: OnboardingControllerFlow().environmentObject(notificationVM))
                                 
                             } else {
-                                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
-                                showActivity = false
+                                if error != nil {
+                                    context.present(ErrorView(title: "alert_title_login".localize, error: error!.localizedDescription))
+                                    showActivity = false
+                                } else {
+                                    context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
+                                    showActivity = false
+                                }
                             }
                         })
                     }

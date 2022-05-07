@@ -16,22 +16,8 @@ struct OnboardSection: View {
     var body: some View {
         ZStack {
             VStack {
-                ZStack(alignment: .top) {
-                    Rectangle()
-                        .fill(Color.moonMist.opacity(0.7))
-                        .frame(height: 170)
-                        .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
-                    
-                    Spacer()
-                    
-                    Image(systemName: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundStyle(.white, Color.frolyRed)
-                        .frame(height: 160)
-                        .offset(y: 80)
-                }
-                .ignoresSafeArea()
+                
+                LogoSection()
                 
                 Spacer()
                 

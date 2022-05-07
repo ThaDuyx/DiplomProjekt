@@ -98,6 +98,7 @@
 
 // MARK: - Alert View
 "alert_title" = "Ups! Noget gik galt!";
+"alert_title_login" = "Noget gik galt med at logge ind!";
 "alert_button_title" = "Luk";
 "alert_default_description" = "Der skete en fejl. Luk beskeden og prøv igen.";
 
