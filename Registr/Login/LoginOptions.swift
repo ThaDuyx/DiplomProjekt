@@ -23,12 +23,14 @@ struct LoginOptions: View {
                             AuthenticationManager.shared.loginSelection = .parent
                         })
                             .buttonStyle(Resources.CustomButtonStyle.LoginOptionsButtonStyle())
+                            .accessibilityIdentifier("parentNavigationLink")
                         NavigationLink(destination: UserIDView(username: "teacher@test.com")) {
                             Text("school_login")
                         }.simultaneousGesture(TapGesture().onEnded{
                             AuthenticationManager.shared.loginSelection = .school
                         })
                             .buttonStyle(Resources.CustomButtonStyle.LoginOptionsButtonStyle())
+                            .accessibilityIdentifier("teacherNavigationLink")
                         Spacer()
                     }
                     .offset(y: 80)

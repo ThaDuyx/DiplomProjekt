@@ -151,7 +151,7 @@ struct AbsenceRegistrationView: View {
                                 .background(Color.fiftyfifty)
                         }
                     }
-                    .listStyle(.plain)
+                    .accessibilityIdentifier("studentScrollView")
                     .halfSheet(showSheet: $showSheet) {
                         
                         VStack {

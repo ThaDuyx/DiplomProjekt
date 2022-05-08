@@ -38,12 +38,14 @@ struct UserIDView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.frolyRed, lineWidth: 2))
+                        .accessibilityIdentifier("userIDTextField")
                     
                     NavigationLink(destination: PasswordView(userName: userName)) {
                         Text("next_view")
                     }
                     .frame(alignment: .center)
                     .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
+                    .accessibilityIdentifier("userIDNextView")
                     
                     Spacer()
                 }
