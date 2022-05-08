@@ -74,6 +74,9 @@ struct AbsenceRegistrationView: View {
                                         self.selectedItem = number
                                         selectedDate = element
                                         elementDate = element
+                                        withAnimation(.spring()) {
+                                            proxy.scrollTo(selectedItem, anchor: .center)
+                                        }
                                     }
                                 }.onAppear {
                                     withAnimation(.spring()) {
