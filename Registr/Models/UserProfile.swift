@@ -12,6 +12,7 @@ enum Role: String, Codable {
     case teacher = "teacher"
     case parent = "parent"
     case headmaster = "headmaster"
+    case none = "none"
 }
 
 class UserProfile: Codable {

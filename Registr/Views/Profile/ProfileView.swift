@@ -39,11 +39,12 @@ extension ProfileView {
     private func logOut() {
         AuthenticationManager.shared.signOut { status in
             if status {
-                if UserManager.shared.user?.role == .parent {
+                if DefaultsManager.shared.userRole == .parent {
                     notificationVM.parentSubscribeToNotification = false
                 } else {
                     notificationVM.teacherSubscribeToNotification = false
                 }
+                
                 let window = UIApplication
                     .shared
                     .connectedScenes

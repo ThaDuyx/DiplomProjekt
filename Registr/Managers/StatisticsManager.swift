@@ -18,11 +18,7 @@ class StatisticsManager: ObservableObject {
     
     // The school that the user is accociated with
     private var selectedSchool: String {
-        if let schoolID = UserManager.shared.user?.associatedSchool {
-            return schoolID
-        } else {
-            return ""
-        }
+        DefaultsManager.shared.associatedSchool
     }
     
     // Object that contains statistic data and overrides every time it is written to.

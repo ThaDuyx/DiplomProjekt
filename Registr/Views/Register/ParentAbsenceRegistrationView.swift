@@ -396,6 +396,6 @@ extension ParentAbsenceRegistrationView {
 
 struct ParentAbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        ParentAbsenceRegistrationView(report: nil, absence: nil, child: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: ""), shouldUpdate: false, isAbsenceChange: false)
+        ParentAbsenceRegistrationView(report: nil, absence: nil, child: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: "", cpr: ""), shouldUpdate: false, isAbsenceChange: false)
     }
 }

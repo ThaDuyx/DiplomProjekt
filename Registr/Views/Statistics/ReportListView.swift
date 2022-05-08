@@ -57,6 +57,6 @@ struct ReportListView: View {
 
 struct ReportList_Previews: PreviewProvider {
     static var previews: some View {
-        ReportListView(selectedStudent: "", studentName: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: ""))
+        ReportListView(selectedStudent: "", studentName: "", student: Student(name: "", className: "", email: "", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: ""), associatedSchool: "", cpr: ""))
     }
 }
