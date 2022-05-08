@@ -122,7 +122,6 @@ struct ParentAbsenceRegistrationView: View {
                         }
                     }
                     .listRowBackground(Color.frolyRed)
-                    .accessibilityIdentifier("selectChildForRegistration")
                     
                     if selectedChild != nil {
                         Section(

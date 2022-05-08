@@ -54,7 +54,6 @@ struct AbsenceListView: View {
                         }
                     }
                     .listRowSeparator(.hidden)
-                    .accessibilityIdentifier("absenceCount")
                 }
                 
             }

@@ -22,64 +22,40 @@ class RegistrUITests: XCTestCase {
     // MARK: - Test for login
     func test_parent_login() {
         // LoginOptions
-        let parentLoginButton = self.app.buttons["parentNavigationLink"]
-        parentLoginButton.tap()
+        self.app.buttons["parentNavigationLink"].tap()
         
         // UserIDView
         let userIDTextField = self.app.textFields["userIDTextField"]
         userIDTextField.tap()
         userIDTextField.typeText("test1@test.com")
         
-        let userIDNextView = self.app.buttons["userIDNextView"]
-        userIDNextView.tap()
+        self.app.buttons["userIDNextView"].tap()
         
         // PasswordView
         let passwordTextField = self.app.secureTextFields["passwordTextField"]
         passwordTextField.tap()
         passwordTextField.typeText("test1234")
         
-        let passwordLogin = self.app.buttons["passwordLogin"]
-        passwordLogin.tap()
+        self.app.buttons["passwordLogin"].tap()
     }
     
     func test_teacher_login() {
         // LoginOptions
-        let parentLoginButton = self.app.buttons["teacherNavigationLink"]
-        parentLoginButton.tap()
+        self.app.buttons["teacherNavigationLink"].tap()
         
         // UserIDView
         let userIDTextField = self.app.textFields["userIDTextField"]
         userIDTextField.tap()
         userIDTextField.typeText("teacher@test.com")
         
-        let userIDNextView = self.app.buttons["userIDNextView"]
-        userIDNextView.tap()
+        self.app.buttons["userIDNextView"].tap()
         
         // PasswordView
         let passwordTextField = self.app.secureTextFields["passwordTextField"]
         passwordTextField.tap()
         passwordTextField.typeText("test1234")
         
-        let passwordLogin = self.app.buttons["passwordLogin"]
-        passwordLogin.tap()
-    }
-    
-    // MARK: - Access the report view
-    func test_access_report_view() -> XCUIElementQuery {
-        // Login flow for teacher
-        test_teacher_login()
-        
-        // Select report in tabbar
-        let tabbar = self.app.tabBars["Fanelinje"]
-        let tabBarItemRegistration = tabbar.buttons["Fravær"]
-        tabBarItemRegistration.tap()
-        
-        // Select a class to make the report.
-        let selectClass = self.app.cells["Favorit, 0.x, Frem"]
-        selectClass.tap()
-        
-        let elementsQuery = self.app/*@START_MENU_TOKEN@*/.scrollViews/*[[".otherElements[\"tabbar\"].scrollViews",".scrollViews"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.otherElements
-        return elementsQuery
+        self.app.buttons["passwordLogin"].tap()
     }
     
     // MARK: - Test for creating a report as a teacher
@@ -105,7 +81,13 @@ class RegistrUITests: XCTestCase {
         scrollViewDate.tap()
         
         // Select a child to give an absence
-        elementsQuery.staticTexts["Alexander Larsen"].tap()
+        let studentScrollView = self.app.scrollViews["studentScrollView"].otherElements
+        // Delaying 1 second to make sure that the students have been fetched.
+        studentScrollView.element.waitForExistence(timeout: 1)
+        let selectStudent = studentScrollView.firstMatch
+        selectStudent.tap()
+        
+        // Select the absence for the child
         self.app.buttons["For sent"].tap()
         
         // Save the report
@@ -122,9 +104,7 @@ class RegistrUITests: XCTestCase {
         for i in 0..<element.staticTexts.count {
             elementLabels.append (element.staticTexts.element(boundBy: i).label)
         }
-        
-        print(elementLabels.count)
-        
+                
         // Using minus 1 here, since it also takes the text "I dag" into account, since it also is part of the scrollview
         let elementsCount = elementLabels.count-1
         
@@ -145,63 +125,51 @@ class RegistrUITests: XCTestCase {
         
         
         // Select pick child in registration
-        let selectChildForRegistration = self.app.buttons["selectChildForRegistration"]
-        selectChildForRegistration.tap()
+        let selectClass = self.app.tables.children(matching: .cell).otherElements
+        let accessClass = selectClass.firstMatch
+        accessClass.tap()
         
-        // Select Simone as the child
-        let childPicked = self.app.buttons["Simone Jylstrup - 4.y"]
-        childPicked.tap()
+        // Getting all the children in the collectionview
+        let collectionViewStudents = self.app.collectionViews.children(matching: .cell)
+        // Using a delay here, to make sure that the childrens get fetched from the server.
+        
+        // Selects the first child in the list.
+        let selectStudent = collectionViewStudents.firstMatch
+        selectStudent.tap()
+
         
         // Select absence reason menu
-        let absenceReasonMenu = self.app.buttons["absenceReasonMenu"]
-        absenceReasonMenu.tap()
+        self.app.buttons["absenceReasonMenu"].tap()
         
         // Select a reason from the absence reason menu
-        let absenceReasonPicked = self.app.buttons["For sent"]
-        absenceReasonPicked.tap()
+        self.app.buttons["For sent"].tap()
         
         // Write on the description for absence
         let writeDescriptionForAbsence = self.app.textViews["writeDescriptionForAbsence"]
         writeDescriptionForAbsence.tap()
         writeDescriptionForAbsence.typeText("Simone kommer for sent i dag, da vi var til bryllup i går.")
-        
+        // Need a second tap, to remove the focus from the TextEditor
+        writeDescriptionForAbsence.tap()
+
         // Create the registration
-        let createRegistration = self.app.buttons["createRegistration"]
-        createRegistration.tap()
+        self.app.buttons["createRegistration"].tap()
         
-        // Checking if the registration have been made (only works truly works on a child that have had no previous registration added)
-        child_absence_registration_count(isAfterRegistration: true)
+        // If there already have been made a registration that day, there will appear an alert.
+        // This will handle that, where it will tap on the OK button and then continue with showing that there is more than one registration.
+        if app.alerts["Hov, dette er ikke muligt!"].exists {
+            let okButton = app.alerts.buttons["OK"]
+              if okButton.exists {
+                okButton.tap()
+              }
+            self.child_absence_registration_count(isAfterRegistration: true)
+        } else {
+            self.child_absence_registration_count(isAfterRegistration: true)
+        }
     }
     
+    // MARK: - Gets the absence count, without needing to create one first.
     func test_child_absence_registration_count() {
         child_absence_registration_count(isAfterRegistration: false)
-    }
-    
-    func child_absence_registration_count(isAfterRegistration: Bool) {
-        
-        if isAfterRegistration {
-            // Select home in tabbar
-            let tabbar = self.app.tabBars["Fanelinje"]
-            let tabBarItemRegistration = tabbar.buttons["Børn"]
-            tabBarItemRegistration.tap()
-        } else {
-            test_parent_login()
-        }
-        
-        let childCount = self.app.tables.children(matching: .cell).count
-        print("the child count is: \(childCount)")
-
-        let accesChildStatistics = self.app.cells["Konto, Navn: Simone Jylstrup, Klasse: 4.y, Frem, Email: jglen8@mail.com"]
-        accesChildStatistics.tap()
-        
-        let absenceRegistration = self.app.buttons["Indberettelser"]
-        absenceRegistration.tap()
-        
-        let cellCount = self.app.tables.children(matching: .cell).count
-        
-        print("The total count of cells are: \(cellCount)")
-        
-        XCTAssertGreaterThan(cellCount, 0)
     }
 }
 
@@ -212,5 +180,58 @@ extension RegistrUITests {
         dateFormatter.dateFormat = "dd.MMM"
         
         return dateFormatter.string(from: date)
+    }
+    
+    
+    // MARK: - Access the report view
+    func test_access_report_view() -> XCUIElementQuery {
+        // Login flow for teacher
+        test_teacher_login()
+        
+        // Select report in tabbar
+        let tabbar = self.app.tabBars["Fanelinje"]
+        let tabBarItemRegistration = tabbar.buttons["Fravær"]
+        tabBarItemRegistration.tap()
+        
+        // Select a class to make the report.
+        let selectClass = self.app.tables.children(matching: .cell)
+        let accessClass = selectClass.firstMatch
+        accessClass.tap()
+        
+        let elementsQuery = self.app/*@START_MENU_TOKEN@*/.scrollViews/*[[".otherElements[\"tabbar\"].scrollViews",".scrollViews"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.otherElements
+        return elementsQuery
+    }
+    
+    func child_absence_registration_count(isAfterRegistration: Bool) {
+        
+        if isAfterRegistration {
+            // Select home in tabbar
+            let tabbar = self.app.tabBars["Fanelinje"]
+            let tabBarItemRegistration = tabbar.buttons["Børn"]
+            tabBarItemRegistration.tap()
+        } else {
+            // Uses the parent login flow
+            test_parent_login()
+        }
+        // Getting the list of children
+        let childCount = self.app.tables.children(matching: .cell)
+        
+        // Using a delay here, to make sure that the childrens get fetched from the server.
+        childCount.element.waitForExistence(timeout: 1)
+        
+        // Selects the first child in the list.
+        childCount.firstMatch.tap()
+        
+        // Selects the button for the absence registration.
+        self.app.buttons["Indberettelser"].tap()
+        
+        // Gets the count for all the absences
+        let cellCount = self.app.tables.children(matching: .cell).count
+                
+        if isAfterRegistration {
+            XCTAssertGreaterThan(cellCount, 0)
+        } else {
+            XCTAssertGreaterThanOrEqual(cellCount, 0)
+        }
     }
 }

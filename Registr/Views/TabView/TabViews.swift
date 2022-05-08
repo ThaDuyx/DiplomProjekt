@@ -31,7 +31,6 @@ struct TabViews: View {
                 ErrorView(title: "alert_title".localize, error: "alert_default_description".localize)
             }
         }
-        .accessibilityIdentifier("tabbar")
         .accentColor(.frolyRed)
     }
 }

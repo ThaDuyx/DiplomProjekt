@@ -18,7 +18,6 @@ struct ParentTabs: View {
             }.environmentObject(childrenManager)
         
         ParentAbsenceRegistrationView(report: nil, absence: nil, child: nil, shouldUpdate: false, isAbsenceChange: false)
-            .accessibilityIdentifier("tabBarItemRegistration")
             .tabItem {
                 Image(systemName: "square.and.pencil")
                 Text("Indberet")
