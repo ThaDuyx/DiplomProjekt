@@ -21,7 +21,8 @@ struct ParentTabs: View {
             .tabItem {
                 Image(systemName: "square.and.pencil")
                 Text("Indberet")
-            }.environmentObject(childrenManager)
+            }
+            .environmentObject(childrenManager)
         
         ProfileView(isTeacher: false)
             .tabItem {
