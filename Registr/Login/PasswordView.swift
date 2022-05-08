@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftUIKit
 
 struct PasswordView: View {
-    @State private var password: String = ""
+    @State private var password: String = "test1234"
     @State private var showActivity = false
     @StateObject private var context = FullScreenCoverContext()
     @EnvironmentObject var notificationVM: NotificationViewModel

@@ -152,7 +152,6 @@ struct AbsenceRegistrationView: View {
                         }
                     }
                     .accessibilityIdentifier("studentScrollView")
-                    .listStyle(.plain)
                     .halfSheet(showSheet: $showSheet) {
                         
                         VStack {

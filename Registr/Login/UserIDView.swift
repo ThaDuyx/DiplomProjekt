@@ -9,14 +9,14 @@ import SwiftUI
 
 struct UserIDView: View {
     
-    @State private var userName: String = ""
-//    var username: String
-//
-//    init() {
-//        self.username = username
-//        userName = username
-//    }
-//
+    @State private var userName: String
+    var username: String
+    
+    init(username: String) {
+        self.username = username
+        userName = username
+    }
+    
     var body: some View {
         ZStack {
             VStack {
@@ -57,7 +57,6 @@ struct UserIDView: View {
 
 struct UserIDView_Previews: PreviewProvider {
     static var previews: some View {
-//        UserIDView(username: "")
-        UserIDView()
+        UserIDView(username: "")
     }
 }
