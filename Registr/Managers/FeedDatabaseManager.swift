@@ -13,16 +13,17 @@ import FirebaseFirestore
 class FeedDatabaseManager: ObservableObject {
     @Published var dateArray: [String] = []
     @Published var students = [Student]()
-    var classes = [ClassInfo]()
-    let db = Firestore.firestore()
+    
+    private var testStudent: Student = Student(id: "1234", name: "Alice Testable", className: "1.a", email: "student@school.com", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "1.a", classID: "abcdefg1234"), associatedSchool: "abcdefg1234", cpr: "123456-7890")
+    private var classes = [ClassInfo]()
+    private let db = Firestore.firestore()
     
     // School & Class selectors, change these variable to choose the specific school or class.
     let selectedSchool = "EXvXPS4HuVnxu7LhZRPt"
     let selectedClass = "ZjHicqkeR0aERu6ZY87v"
     
     init() {
-        fetchStudents(className: selectedClass)
-        fetchClasses()
+        fetchTestStudents()
     }
     
     /// This method fills our date array with date strings in the format 'dd-MM-yyyy'.
@@ -126,7 +127,7 @@ class FeedDatabaseManager: ObservableObject {
             } catch {
                 print("Error in encoding data \(error)")
             }
-
+            
             for student in students {
                 if let id = student.id {
                     newRegistration
@@ -155,5 +156,30 @@ class FeedDatabaseManager: ObservableObject {
                 }
             }
         }
+    }
+    
+    func fetchTestStudents() {
+        db
+            .collection("test")
+            .document("testableData")
+            .collection("students")
+            .getDocuments { querySnapshot, err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        do {
+                            if let student = try document.data(as: Student.self) {
+                                self.students.append(student)
+                                self.students.sort { $0.name < $1.name }
+                                print(student)
+                            }
+                        }
+                        catch {
+                            print(error)
+                        }
+                    }
+                }
+            }
     }
 }
