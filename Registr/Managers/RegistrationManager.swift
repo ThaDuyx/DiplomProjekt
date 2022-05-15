@@ -14,7 +14,6 @@ class RegistrationManager: ObservableObject {
     @Published var registrationInfo = RegistrationInfo()
     @Published var registrations = [Registration]()
     @Published var students = [Student]()
-    @Published var studentRegistrationList = [Registration]()
     
     // Firestore db reference
     private let db = Firestore.firestore()
