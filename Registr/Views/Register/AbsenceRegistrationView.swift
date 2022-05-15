@@ -233,13 +233,13 @@ struct AbsenceRegistrationView: View {
 private func convertedArray(currentDay: Date, previousDays: [Date], comingDays: [Date]) -> [Date]{
     let reversedPreviousDays = previousDays.reversed()
     
-    var array: [Date] = []
+    var dateArray: [Date] = []
     
-    array.append(contentsOf: reversedPreviousDays)
-    array.insert(currentDay, at: 7)
-    array.append(contentsOf: comingDays)
+    dateArray.append(contentsOf: reversedPreviousDays)
+    dateArray.insert(currentDay, at: 7)
+    dateArray.append(contentsOf: comingDays)
     
-    return array
+    return dateArray
 }
 
 struct AbsenceRegistrationView_Previews: PreviewProvider {

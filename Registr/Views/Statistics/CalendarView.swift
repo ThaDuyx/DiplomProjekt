@@ -27,9 +27,14 @@ struct CalendarView: View {
                         .padding(.horizontal)
                 }
                 if let school = schoolManager.school {
-                    DatePicker("", selection: $selectedDate, in: dateRanges(amountOfDaysSinceStart: dateClosedRange(date: school.startDate), amountOfDayssinceStop: dateClosedRange(date: school.endDate)), displayedComponents: .date)
-                        .datePickerStyle(.graphical)
-                        .padding()
+                    DatePicker(
+                        "",
+                        selection: $selectedDate,
+                        in: dateRanges(amountOfDaysSinceStart: dateClosedRange(date: school.startDate), amountOfDayssinceStop: dateClosedRange(date: school.endDate)),
+                        displayedComponents: .date
+                    )
+                    .datePickerStyle(.graphical)
+                    .padding()
                 }
                 NavigationLink(destination: AbsenceRegistrationView(selectedClass: classInfo, selectedDate: selectedDate, isFromHistory: true)) {
                     Text("next_view")

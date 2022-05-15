@@ -12,6 +12,7 @@ struct ParentAbsenceRegistrationView: View {
     // Manager objects
     @StateObject private var context = FullScreenCoverContext()
     @StateObject var errorHandling = ErrorHandling()
+    @StateObject private var schoolManager = SchoolManager()
     @EnvironmentObject var childrenManager: ChildrenManager
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     @Environment(\.dismiss) var dismiss
@@ -221,13 +222,15 @@ struct ParentAbsenceRegistrationView: View {
                                     }
                             }
                             if showsStartDatePicker {
-                                DatePicker(
-                                    "",
-                                    selection: $startDate,
-                                    in: dateRange,
-                                    displayedComponents: .date)
-                                .datePickerStyle(.graphical)
-                                .applyTextColor(Color.white)
+                                if let school = schoolManager.school {
+                                    DatePicker(
+                                        "",
+                                        selection: $startDate,
+                                        in: dateRanges(amountOfDaysSinceStart: dateClosedRange(date: school.startDate), amountOfDayssinceStop: dateClosedRange(date: school.endDate)),
+                                        displayedComponents: .date)
+                                    .datePickerStyle(.graphical)
+                                    .applyTextColor(Color.white)
+                                }
                             }
                         }
                         .listRowBackground(Color.frolyRed)
@@ -249,13 +252,15 @@ struct ParentAbsenceRegistrationView: View {
                                         }
                                 }
                                 if showsEndDatePicker {
-                                    DatePicker(
-                                        "",
-                                        selection: $endDate,
-                                        in: dateRange,
-                                        displayedComponents: .date)
-                                    .datePickerStyle(.graphical)
-                                    .applyTextColor(.white)
+                                    if let school = schoolManager.school {
+                                        DatePicker(
+                                            "",
+                                            selection: $endDate,
+                                            in: dateRanges(amountOfDaysSinceStart: dateClosedRange(date: school.startDate), amountOfDayssinceStop: dateClosedRange(date: school.endDate)),
+                                            displayedComponents: .date)
+                                        .datePickerStyle(.graphical)
+                                        .applyTextColor(.white)
+                                    }
                                 }
                             }
                             .listRowBackground(Color.frolyRed)
@@ -361,6 +366,7 @@ struct ParentAbsenceRegistrationView: View {
                     }
                 }
             }
+            .environmentObject(schoolManager)
             .fullScreenCover(context)
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
