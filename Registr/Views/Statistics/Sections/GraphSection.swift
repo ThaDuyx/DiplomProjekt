@@ -19,7 +19,15 @@ struct GraphSection: View {
                 .multilineTextAlignment(.leading)
                 .frame(width: 320)
         } else {
-            BarChartView(data: ChartData(values: chartData(stringArray: WeekDays.allCases.map { $0.rawValue }, doubleArray: statisticsWeekDay(statistics: statisticsManager).map { Double($0) })), title: "stat_graph_value".localize, legend: "statistics_offenses".localize, style: ChartsStyle.style)
-
-        }    }
+            BarChartView(
+                data: ChartData(
+                    values: chartData(
+                        stringArray: WeekDays.allCases.map { $0.rawValue }, 
+                        doubleArray: statisticsWeekDay(statistics: statisticsManager).map { Double($0) })), 
+                title: "stat_graph_value".localize, 
+                legend: "statistics_offenses".localize, 
+                style: ChartsStyle.style
+            )
+        }    
+    }
 }
