@@ -6,11 +6,9 @@
 //
 
 import SwiftUI
-import SwiftUIKit
 
 struct ParentAbsenceRegistrationView: View {
     // Manager objects
-    @StateObject private var context = FullScreenCoverContext()
     @StateObject var errorHandling = ErrorHandling()
     @StateObject private var schoolManager = SchoolManager()
     @EnvironmentObject var childrenManager: ChildrenManager
@@ -18,6 +16,7 @@ struct ParentAbsenceRegistrationView: View {
     @Environment(\.dismiss) var dismiss
     
     // States variables
+    @State private var isPresented = false
     @State private var selectedAbsenceString = ""
     @State private var selectedAbsenceType: AbsenceType = .late
     @State private var selectedTimeOfDayString = ""
@@ -329,7 +328,7 @@ struct ParentAbsenceRegistrationView: View {
                                                     self.endDate = Date()
                                                     dismiss()
                                                 } else {
-                                                    context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
+                                                    isPresented.toggle()
                                                 }
                                             }
                                         } else {
@@ -343,7 +342,7 @@ struct ParentAbsenceRegistrationView: View {
                                                     self.startDate = Date()
                                                     self.endDate = Date()
                                                 } else {
-                                                    context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
+                                                    isPresented.toggle()
                                                 }
                                                 if isAbsenceChange {
                                                     dismiss()
@@ -367,7 +366,9 @@ struct ParentAbsenceRegistrationView: View {
                 }
             }
             .environmentObject(schoolManager)
-            .fullScreenCover(context)
+            .fullScreenCover(isPresented: $isPresented, content: {
+                ErrorView(title: "alert_title".localize, error: "alert_default_description".localize)
+            })
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
                     childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in

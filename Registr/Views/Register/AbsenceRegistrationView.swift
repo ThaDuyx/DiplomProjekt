@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIKit
 
 struct AbsenceRegistrationView: View {
     // Managers
@@ -15,7 +14,6 @@ struct AbsenceRegistrationView: View {
     @EnvironmentObject var classManager: ClassManager
     @StateObject var statisticsManager = StatisticsManager()
     @StateObject var errorHandling = ErrorHandling()
-    @StateObject private var context = FullScreenCoverContext()
     
     // State variables
     @State private var selectedItem: Int? = nil
@@ -26,6 +24,7 @@ struct AbsenceRegistrationView: View {
     @State private var studentName: String = ""
     @State private var elementDate = Date()
     @State private var selectedDate = Date()
+    @State private var isPresented = false
     
     // Date selectors
     private let currentDate = Date.now
@@ -181,7 +180,7 @@ struct AbsenceRegistrationView: View {
                                 statisticsManager.writeClassStats(classID: selectedClass.classID, isMorning: isMorning, date: selectedDate)
                                 presentationMode.wrappedValue.dismiss()
                             } else {
-                                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
+                                isPresented.toggle()
                             }
                         }
                     } label: {
@@ -191,7 +190,9 @@ struct AbsenceRegistrationView: View {
                     .padding(.bottom, 20)
                 }
             }
-            .fullScreenCover(context)
+            .fullScreenCover(isPresented: $isPresented, content: {
+                ErrorView(title: "alert_title".localize, error: "alert_default_description".localize)
+            })
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
                     if appError.type == .registrationManagerError {

@@ -117,7 +117,6 @@
 		83D6297A280D97F6005EA006 /* ReportListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D62979280D97F6005EA006 /* ReportListView.swift */; };
 		83D6297C28101085005EA006 /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6297B28101085005EA006 /* DateRange.swift */; };
 		83D6298028113AAC005EA006 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6297F28113AAC005EA006 /* ErrorView.swift */; };
-		83D6298328115504005EA006 /* SwiftUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 83D6298228115504005EA006 /* SwiftUIKit */; };
 		83D6298928117430005EA006 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 83D6298828117430005EA006 /* FirebaseMessaging */; };
 		83D6298B281176E5005EA006 /* RegistrAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6298A281176E5005EA006 /* RegistrAppDelegate.swift */; };
 		83D629902812D371005EA006 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6298F2812D371005EA006 /* NotificationViewModel.swift */; };
@@ -134,9 +133,6 @@
 			remoteGlobalIDString = 6A31FD4427CF61B700EFECDD;
 			remoteInfo = Registr;
 		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXContainerItemProxy section */
 		83711D562825695600CE8AE0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6A31FD3D27CF61B700EFECDD /* Project object */;
@@ -269,7 +265,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				83D6298928117430005EA006 /* FirebaseMessaging in Frameworks */,
-				83D6298328115504005EA006 /* SwiftUIKit in Frameworks */,
 				6AC078DF27CF73EB0048F0B1 /* FirebaseCrashlytics in Frameworks */,
 				6AC078E127CF73EB0048F0B1 /* FirebaseFirestore in Frameworks */,
 				6A0F350627D8E717001E60D9 /* FirebaseFirestoreSwift-Beta in Frameworks */,
@@ -655,7 +650,6 @@
 				6AC078DE27CF73EB0048F0B1 /* FirebaseCrashlytics */,
 				6AC078E027CF73EB0048F0B1 /* FirebaseFirestore */,
 				6A0F350527D8E717001E60D9 /* FirebaseFirestoreSwift-Beta */,
-				83D6298228115504005EA006 /* SwiftUIKit */,
 				83D6298828117430005EA006 /* FirebaseMessaging */,
 				83711D302823EF5D00CE8AE0 /* SwiftUICharts */,
 			);
@@ -734,7 +728,6 @@
 			mainGroup = 6A31FD3C27CF61B700EFECDD;
 			packageReferences = (
 				6AC078D927CF73EB0048F0B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				83D6298128115504005EA006 /* XCRemoteSwiftPackageReference "SwiftUIKit" */,
 				83711D2F2823EF5D00CE8AE0 /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 6A31FD4627CF61B700EFECDD /* Products */;
@@ -911,9 +904,6 @@
 			target = 6A31FD4427CF61B700EFECDD /* Registr */;
 			targetProxy = 6A89A7382826AB1200CA76C8 /* PBXContainerItemProxy */;
 		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXTargetDependency section */
 		83711D572825695600CE8AE0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6A31FD4427CF61B700EFECDD /* Registr */;
@@ -1265,14 +1255,6 @@
 				version = 1.5.5;
 			};
 		};
-		83D6298128115504005EA006 /* XCRemoteSwiftPackageReference "SwiftUIKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielsaidi/SwiftUIKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1305,11 +1287,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 83711D2F2823EF5D00CE8AE0 /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
-		};
-		83D6298228115504005EA006 /* SwiftUIKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 83D6298128115504005EA006 /* XCRemoteSwiftPackageReference "SwiftUIKit" */;
-			productName = SwiftUIKit;
 		};
 		83D6298828117430005EA006 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;

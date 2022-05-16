@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-import SwiftUIKit
 
 struct StudentReportView: View {
     
     // State variables
-    @StateObject private var context = FullScreenCoverContext()
+    @State private var isPresented = false
     @StateObject var errorHandling = ErrorHandling()
     @EnvironmentObject var reportManager: ReportManager
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -72,9 +71,7 @@ struct StudentReportView: View {
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
-                            context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
-                                presentationMode.wrappedValue.dismiss()
-                            })
+                            isPresented.toggle()
                         }
                     }
                 }
@@ -92,9 +89,7 @@ struct StudentReportView: View {
                             if result {
                                 presentationMode.wrappedValue.dismiss()
                             } else {
-                                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
-                                    presentationMode.wrappedValue.dismiss()
-                                })
+                                isPresented.toggle()
                             }
                         }
                     } else {
@@ -106,9 +101,7 @@ struct StudentReportView: View {
                             if result {
                                 presentationMode.wrappedValue.dismiss()
                             } else {
-                                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
-                                    presentationMode.wrappedValue.dismiss()
-                                })
+                                isPresented.toggle()
                             }
                         }
                     }
@@ -118,7 +111,11 @@ struct StudentReportView: View {
             .frame(width: 320)
             Spacer()
         }
-        .fullScreenCover(context)
+        .fullScreenCover(isPresented: $isPresented, content: {
+            ErrorView(title: "alert_title".localize, error: "alert_default_description".localize) {
+                presentationMode.wrappedValue.dismiss()
+            }
+        })
         .fullScreenCover(item: $errorHandling.appError, content: { appError in
             ErrorView(title: appError.title, error: appError.description) {
                 reportManager.attachReportListeners()
