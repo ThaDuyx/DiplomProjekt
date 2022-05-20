@@ -5,28 +5,30 @@
 //  Created by Christoffer Detlef on 06/05/2022.
 //
 
-//import XCTest
+import XCTest
 
-//class RegistrUITestsLaunchTests: XCTestCase {
-//
-//    override class var runsForEachTargetApplicationUIConfiguration: Bool {
-//        true
-//    }
-//
-//    override func setUpWithError() throws {
-//        continueAfterFailure = false
-//    }
-//
-//    func testLaunch() throws {
-//        let app = XCUIApplication()
-//        app.launch()
-//
-//        // Insert steps here to perform after app launch but before taking a screenshot,
-//        // such as logging into a test account or navigating somewhere in the app
-//
-//        let attachment = XCTAttachment(screenshot: app.screenshot())
-//        attachment.name = "Launch Screen"
-//        attachment.lifetime = .keepAlways
-//        add(attachment)
-//    }
-//}
+class UILaunchTests: XCTestCase {
+  func testLaunchPerformance() {
+    if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
+      measure(metrics: [XCTApplicationLaunchMetric()]) {
+          let app = XCUIApplication()
+          app.launch()
+      }
+    }
+  }
+    
+    func testLaunchLoggedInPerformance() {
+      if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
+        measure(metrics: [XCTApplicationLaunchMetric()]) {
+            let app = XCUIApplication()
+            app.launch()
+            
+            let childName = expectation(description: "Delay for 5 sec")
+            if app.staticTexts["Emma Hansen"].exists {
+                childName.fulfill()
+            }
+            _ = XCTWaiter.wait(for: [childName], timeout: 5)
+        }
+      }
+    }
+}
