@@ -10,7 +10,7 @@ import SwiftUICharts
 
 struct StudentView: View {
     
-    @StateObject var statisticsManager = StatisticsManager()
+    @StateObject var statisticsViewModel = StatisticsViewModel()
     @StateObject var errorHandling = ErrorHandling()
     
     let studentName: String
@@ -42,23 +42,23 @@ struct StudentView: View {
                 
                 Spacer()
                 
-                GraphSection(statisticsManager: statisticsManager)
+                GraphSection(statisticsViewModel: statisticsViewModel)
                 
                 Spacer()
                 
                 VStack(spacing: 20) {
-                    AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, statArray: statisticMorning(statistics: statisticsManager))
+                    AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, statArray: statisticMorning(statistics: statisticsViewModel))
                     if student.classInfo.isDoubleRegistrationActivated {
-                        AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_afternoon".localize, statArray: statisticAfternoon(statistics: statisticsManager))
+                        AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_afternoon".localize, statArray: statisticAfternoon(statistics: statisticsViewModel))
                     }
-                    AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, statArray: statisticsWeekDay(statistics: statisticsManager))
+                    AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, statArray: statisticsWeekDay(statistics: statisticsViewModel))
                 }
                 .onAppear() {
-                    statisticsManager.fetchStudentStats(studentID: studentID)
+                    statisticsViewModel.fetchStudentStats(studentID: studentID)
                 }
                 .fullScreenCover(item: $errorHandling.appError) { appError in
                     ErrorView(title: appError.title, error: appError.description) {
-                        statisticsManager.fetchStudentStats(studentID: studentID)
+                        statisticsViewModel.fetchStudentStats(studentID: studentID)
                     }
                 }
             }

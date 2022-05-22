@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AbsenceReportSection: View {
-    @EnvironmentObject var childrenManager: ChildrenManager
+    @EnvironmentObject var childrenViewModel: ChildrenViewModel
     @StateObject var errorHandling = ErrorHandling()
     
     let absence: Registration
@@ -59,12 +59,12 @@ struct AbsenceReportSection: View {
         }
         .fullScreenCover(item: $errorHandling.appError, content: { appError in
             ErrorView(title: appError.title, error: appError.description) {
-                childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                childrenViewModel.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
                     if result {
-                        childrenManager.attachAbsenceListeners()
+                        childrenViewModel.attachAbsenceListeners()
                     }
                 }
-                childrenManager.attachReportListeners()
+                childrenViewModel.attachReportListeners()
             }
         })
         .listRowBackground(Color.clear)

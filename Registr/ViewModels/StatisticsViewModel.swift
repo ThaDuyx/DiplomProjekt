@@ -1,5 +1,5 @@
 //
-//  StatisticsManager.swift
+//  StatisticsViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 18/04/2022.
@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class StatisticsManager: ObservableObject {
+class StatisticsViewModel: ObservableObject {
     
     // Firestore db reference
     private let db = Firestore.firestore()

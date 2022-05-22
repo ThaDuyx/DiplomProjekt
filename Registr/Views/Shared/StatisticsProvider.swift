@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
     
-    func statisticMorning(statistics: StatisticsManager) -> [Int] {
+    func statisticMorning(statistics: StatisticsViewModel) -> [Int] {
         var morningArray: [Int] = []
         morningArray.append(statistics.statistic.lateMorning)
         morningArray.append(statistics.statistic.illnessMorning)
@@ -18,7 +18,7 @@ extension View {
         return morningArray
     }
     
-    func statisticAfternoon(statistics: StatisticsManager) -> [Int] {
+    func statisticAfternoon(statistics: StatisticsViewModel) -> [Int] {
         var afternoonArray: [Int] = []
         afternoonArray.append(statistics.statistic.lateAfternoon)
         afternoonArray.append(statistics.statistic.illnessAfternoon)
@@ -27,7 +27,7 @@ extension View {
         return afternoonArray
     }
     
-    func statisticsWeekDay(statistics: StatisticsManager) -> [Int] {
+    func statisticsWeekDay(statistics: StatisticsViewModel) -> [Int] {
         var weekdayArray: [Int] = []
         weekdayArray.append(statistics.statistic.mon)
         weekdayArray.append(statistics.statistic.tue)
