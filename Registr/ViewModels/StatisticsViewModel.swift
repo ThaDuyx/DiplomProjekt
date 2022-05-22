@@ -156,12 +156,12 @@ class StatisticsViewModel: ObservableObject {
     
     // MARK: - Class Statistics
     /// Fetches the statistic variables for a specific class
-    func fetchClassStats(className: String) {
+    func fetchClassStats(classID: String) {
         db
             .collection("fb_schools_path".localize)
             .document(selectedSchool)
             .collection("fb_classes_path".localize)
-            .document(className)
+            .document(classID)
             .collection("fb_statistics_path".localize)
             .document("fb_statistics_doc".localize)
             .getDocument { document, err in
