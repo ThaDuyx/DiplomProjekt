@@ -33,11 +33,16 @@
 
 // MARK: - Onboarding flow page 2
 "onboard_flow_page_two_title" = "Data.";
-"onboard_flow_page_two_description" = "Applikationen benytter personlige oplysninger omkring. Denne data er beskyttet bag GDPR reglementet. ";
+"onboard_flow_page_two_description" = "Applikationen anvender personlige oplysninger til at hente data. Din data er beskyttet bag GDPR reglementet.";
 
 // MARK: - Onboarding flow page 3
-"onboard_flow_page_three_title" = "Færdig.";
-"onboard_flow_page_three_description" = "Appen er nu klar til brug.";
+"onboard_flow_page_three_title" = "Funktionlitet i Appen";
+"onboard_flow_page_three_description_school" = "Med Registr kan du give elever fravær. Du kan også se statistik over fraværet for en hel klasse, eller for en bestemt elev.";
+"onboard_flow_page_three_description_parent" = "Registr giver dig mulighed for at give indberettelse til skolen, at dit barn er fraværende fra skole. Det er også muligt at se statistik for fraværet for barnet.";
+
+// MARK: - Onboarding flow page 4
+"onboard_flow_page_four_title" = "Færdig.";
+"onboard_flow_page_four_description" = "Appen er nu klar til brug.";
 
 // MARK: - Errors
 "general_error" = "Something went wrong. Error description: ";
