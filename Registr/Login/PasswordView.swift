@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
-import SwiftUIKit
 
 struct PasswordView: View {
     @State private var password: String = "test1234"
     @State private var showActivity = false
-    @StateObject private var context = FullScreenCoverContext()
+    @State private var isPresented = false
+    @State private var presentedDescription = ""
     @EnvironmentObject var notificationVM: NotificationViewModel
 
     var userName: String
@@ -53,10 +53,12 @@ struct PasswordView: View {
                                 
                             } else {
                                 if error != nil {
-                                    context.present(ErrorView(title: "alert_title_login".localize, error: error!.localizedDescription))
+                                    presentedDescription = error!.localizedDescription
+                                    isPresented.toggle()
                                     showActivity = false
                                 } else {
-                                    context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
+                                    presentedDescription = "alert_default_description".localize
+                                    isPresented.toggle()
                                     showActivity = false
                                 }
                             }
@@ -76,7 +78,9 @@ struct PasswordView: View {
             }
             .ignoresSafeArea(.keyboard)
         }
-        .fullScreenCover(context)
+        .fullScreenCover(isPresented: $isPresented) {
+           ErrorView.init(title: "alert_title_login".localize, error: presentedDescription)
+        }
     }
 }
 

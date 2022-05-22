@@ -6,11 +6,10 @@
 //
 
 import SwiftUI
-import SwiftUIKit
 
 struct ProfileView: View {
     @EnvironmentObject var notificationVM: NotificationViewModel
-    @StateObject private var context = FullScreenCoverContext()
+    @State private var isPresented = false
     let isTeacher: Bool
     var body: some View {
         VStack {
@@ -29,7 +28,9 @@ struct ProfileView: View {
                 .lineLimit(2)
                 .padding()
         }
-        .fullScreenCover(context)
+        .fullScreenCover(isPresented: $isPresented, content: {
+            ErrorView(title: "alert_title".localize, error: "alert_default_description".localize)
+        })
         .navigationTitle("Profil")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -52,7 +53,7 @@ extension ProfileView {
                     .first { $0.isKeyWindow }
                 window?.rootViewController = UIHostingController(rootView: LoginOptions().environmentObject(notificationVM))
             } else {
-                context.present(ErrorView(title: "alert_title".localize, error: "alert_default_description".localize))
+                isPresented.toggle()
             }
         }
     }

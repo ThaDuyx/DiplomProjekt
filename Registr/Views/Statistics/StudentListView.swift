@@ -6,13 +6,11 @@
 //
 
 import SwiftUI
-import SwiftUIKit
 
 struct StudentListView: View {
     @EnvironmentObject var registrationManager: RegistrationManager
     @EnvironmentObject var classManager: ClassManager
     @StateObject var errorHandling = ErrorHandling()
-    @StateObject private var context = FullScreenCoverContext()
 
     var selectedClass: ClassInfo
     
