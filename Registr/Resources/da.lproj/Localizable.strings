@@ -101,7 +101,7 @@
 // MARK: - Report Section
 "rs_validation" = "Validering";
 "rs_edit" = "Rediger";
-"rs_delete" = "Slet"
+"rs_delete" = "Slet";
 
 // MARK: - Absence List View
 "al_intervals" = "Intervaller";
@@ -178,3 +178,4 @@
 // MARK: - Profile view
 "profile_log_out" = "Log ud";
 "profile_toggle" = "Tilladelse til at modtage notifikationer, når der sker noget vigtigt.";
+
