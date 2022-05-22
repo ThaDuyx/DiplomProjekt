@@ -1,5 +1,5 @@
 //
-//  ChildrenManager.swift
+//  ChildrenViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 30/03/2022.
@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class ChildrenManager: ObservableObject {
+class ChildrenViewModel: ObservableObject {
     
     // Published collection of our data
     @Published var children = [Student]()

@@ -1,5 +1,5 @@
 //
-//  ReportManager.swift
+//  ReportViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 10/03/2022.
@@ -13,7 +13,7 @@ enum StatisticTime: String {
     case afternoon = "Afternoon"
 }
 
-class ReportManager: ObservableObject {
+class ReportViewModel: ObservableObject {
     
     // Container for our reports
     @Published var reports = [Report]()

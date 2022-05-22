@@ -1,5 +1,5 @@
 //
-//  ClassManager.swift
+//  ClassViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 05/05/2022.
@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class ClassManager: ObservableObject {
+class ClassViewModel: ObservableObject {
     
     @Published var classes = [ClassInfo]()
     

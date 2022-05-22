@@ -1,5 +1,5 @@
 //
-//  FavoriteManager.swift
+//  FavoriteViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 09/04/2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FavoriteManager: ObservableObject {
+class FavoriteViewModel: ObservableObject {
     @Published var favorites: [String] = []
     @Published var newFavorite = String()
     @Published var deselectedFavorite = String()

@@ -9,9 +9,9 @@ import SwiftUI
 import SwiftUICharts
 
 struct ClassView: View {
-    @EnvironmentObject var favoriteManager: FavoriteManager
+    @EnvironmentObject var favoriteViewModel: FavoriteViewModel
     @EnvironmentObject var notificationVM: NotificationViewModel
-    @ObservedObject var statisticsManager = StatisticsManager()
+    @ObservedObject var statisticsViewModel = StatisticsViewModel()
     @StateObject var errorHandling = ErrorHandling()
     
     @State private var followAction: Bool = false
@@ -30,17 +30,17 @@ struct ClassView: View {
                 Spacer()
                 Button {
                     followAction.toggle()
-                    favoriteManager.favoriteAction(favorite: classInfo.classID)
+                    favoriteViewModel.favoriteAction(favorite: classInfo.classID)
                     addNotification()
                 } label: {
                     
                     HStack {
                         Image(systemName: "checkmark.diamond")
                         
-                        Text(favoriteManager.favorites.contains(classInfo.classID) ? "Følger" : "Følger ikke")
+                        Text(favoriteViewModel.favorites.contains(classInfo.classID) ? "Følger" : "Følger ikke")
                     }
                 }
-                .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(isFollowed: favoriteManager.favorites.contains(classInfo.classID)))
+                .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(isFollowed: favoriteViewModel.favorites.contains(classInfo.classID)))
                 
                 StatisticsButtonSection(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo))
                 
@@ -48,19 +48,19 @@ struct ClassView: View {
                 
                 Spacer()
                 
-                GraphSection(statisticsManager: statisticsManager)
+                GraphSection(statisticsViewModel: statisticsViewModel)
                 
                 Spacer()
                 
                 VStack(spacing: 20) {
-                    AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, statArray: statisticMorning(statistics: statisticsManager))
+                    AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_morning".localize, statArray: statisticMorning(statistics: statisticsViewModel))
                     if classInfo.isDoubleRegistrationActivated {
-                        AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_afternoon".localize, statArray: statisticAfternoon(statistics: statisticsManager))
+                        AbsenceStatisticsCard(isWeekDayUsed: false, title: "statistics_afternoon".localize, statArray: statisticAfternoon(statistics: statisticsViewModel))
                     }
-                    AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, statArray: statisticsWeekDay(statistics: statisticsManager))
+                    AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, statArray: statisticsWeekDay(statistics: statisticsViewModel))
                 }
                 .onAppear() {
-                    statisticsManager.fetchClassStats(className: classInfo.name)
+                    statisticsViewModel.fetchClassStats(className: classInfo.name)
                 }
                 
                 Spacer()
@@ -68,7 +68,7 @@ struct ClassView: View {
         }
         .fullScreenCover(item: $errorHandling.appError) { appError in
             ErrorView(title: appError.title,error: appError.description) {
-                statisticsManager.fetchClassStats(className: classInfo.name)
+                statisticsViewModel.fetchClassStats(className: classInfo.name)
             }
         }
         .onAppear() {
@@ -81,7 +81,7 @@ struct ClassView: View {
     private func addNotification() {
         notificationVM.nameOfSubscriptions = classInfo.classID
         
-        if favoriteManager.favorites.contains(classInfo.classID) {
+        if favoriteViewModel.favorites.contains(classInfo.classID) {
             notificationVM.subscribeToNotification = true
         } else {
             notificationVM.subscribeToNotification = false

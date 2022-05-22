@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct ParentHomeView: View {
-    @EnvironmentObject var childrenManager: ChildrenManager
+    @EnvironmentObject var childrenViewModel: ChildrenViewModel
     @EnvironmentObject var notificationVM: NotificationViewModel
     @StateObject var errorHandling = ErrorHandling()
 
     var body: some View {
         NavigationView {
             ZStack {
-                if childrenManager.children.isEmpty {
+                if childrenViewModel.children.isEmpty {
                     Text("Du har ikke registeret nogle børn. Hvis dette er en fejl, så søg kontakt hos skolen.")
                         .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                         .multilineTextAlignment(.leading)
                         .frame(width: 320)
                 } else {
                     List {
-                        ForEach(childrenManager.children, id: \.self) { child in
+                        ForEach(childrenViewModel.children, id: \.self) { child in
                             HStack {
                                 Image(systemName: "person.crop.circle.fill")
                                     .resizable()
@@ -52,7 +52,7 @@ struct ParentHomeView: View {
                                         EmptyView()
                                     }
                                     .frame(width: 0, height: 0)
-                                    .environmentObject(childrenManager)
+                                    .environmentObject(childrenViewModel)
                                 }
                                 
                                 Image(systemName: "chevron.right")
@@ -75,12 +75,12 @@ struct ParentHomeView: View {
             }
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
-                    childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                    childrenViewModel.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
                         if result {
-                            childrenManager.attachAbsenceListeners()
+                            childrenViewModel.attachAbsenceListeners()
                         }
                     }
-                    childrenManager.attachReportListeners()
+                    childrenViewModel.attachReportListeners()
                 }
             })
             .navigationTitle("Børn")

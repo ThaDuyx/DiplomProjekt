@@ -11,5 +11,6 @@ import FirebaseAuth
 
 class UserManager {
     static let shared = UserManager()
+    
     var user: UserProfile?
 }

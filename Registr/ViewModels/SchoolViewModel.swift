@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class SchoolManager: ObservableObject {
+class SchoolViewModel: ObservableObject {
     
     @Published var school: School?
     

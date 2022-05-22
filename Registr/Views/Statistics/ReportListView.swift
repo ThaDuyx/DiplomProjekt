@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReportListView: View {
-    @EnvironmentObject var childrenManager: ChildrenManager
+    @EnvironmentObject var childrenViewModel: ChildrenViewModel
     @StateObject var errorHandling = ErrorHandling()
     
     private var selectedStudent: String
@@ -29,7 +29,7 @@ struct ReportListView: View {
                         header: Text(validation.rawValue)
                             .bigBodyTextStyle(color: .fiftyfifty, font: .poppinsMedium)
                     ) {
-                        ForEach(childrenManager.reports, id: \.self) { report in
+                        ForEach(childrenViewModel.reports, id: \.self) { report in
                             if report.studentID == selectedStudent && report.teacherValidation == validation {
                                 ReportSection(report: report, student: student)
                                     .padding(.bottom, 20)
@@ -42,12 +42,12 @@ struct ReportListView: View {
         }
         .fullScreenCover(item: $errorHandling.appError, content: { appError in
             ErrorView(title: appError.title, error: appError.description) {
-                childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                childrenViewModel.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
                     if result {
-                        childrenManager.attachAbsenceListeners()
+                        childrenViewModel.attachAbsenceListeners()
                     }
                 }
-                childrenManager.attachReportListeners()
+                childrenViewModel.attachReportListeners()
             }
         })
         .navigationTitle(studentName)
