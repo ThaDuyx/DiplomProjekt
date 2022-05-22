@@ -72,7 +72,7 @@
 "fb_children_path" = "children";
 "fb_students_path" = "students";
 "fb_classes_path" = "classes";
-"fb_absense_path" = "absense";
+"fb_absence_path" = "absence";
 "fb_report_path" = "reports";
 "fb_statistics_path" = "statistics";
 "fb_statistics_doc" = "stats";

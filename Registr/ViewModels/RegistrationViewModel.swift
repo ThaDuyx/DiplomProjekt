@@ -132,7 +132,7 @@ class RegistrationViewModel: ObservableObject {
                         let absenceStudentRef = db
                             .collection("fb_students_path".localize)
                             .document(registration.studentID)
-                            .collection("fb_absense_path".localize)
+                            .collection("fb_absence_path".localize)
                             .whereField("date", isEqualTo: date)
                             .whereField("isMorning", isEqualTo: isMorning)
                         
@@ -149,7 +149,7 @@ class RegistrationViewModel: ObservableObject {
                         let absenceStudentRef = db
                             .collection("fb_students_path".localize)
                             .document(registration.studentID)
-                            .collection("fb_absense_path".localize)
+                            .collection("fb_absence_path".localize)
                             .document()
                         
                         if let index = self.registrations.firstIndex(where: {$0.studentID == registration.studentID}) {
@@ -178,7 +178,7 @@ class RegistrationViewModel: ObservableObject {
                     let absenceStudentRef = db
                         .collection("fb_students_path".localize)
                         .document(registration.studentID)
-                        .collection("fb_absense_path".localize)
+                        .collection("fb_absence_path".localize)
                         .whereField("date", isEqualTo: date)
                         .whereField("isMorning", isEqualTo: isMorning)
                     

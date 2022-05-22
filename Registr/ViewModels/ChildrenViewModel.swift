@@ -127,7 +127,7 @@ class ChildrenViewModel: ObservableObject {
             db
                 .collection("fb_students_path".localize)
                 .document(childrenId)
-                .collection("fb_absense_path".localize)
+                .collection("fb_absence_path".localize)
                 .addSnapshotListener { querySnapshot, err in
                     if let err = err {
                         ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .childrenManagerError)
