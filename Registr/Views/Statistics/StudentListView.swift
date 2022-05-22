@@ -31,14 +31,14 @@ struct StudentListView: View {
         .navigationTitle("sl_navigationtitle".localize + selectedClass.name)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(){
-            registrationViewModel.fetchStudents(className: selectedClass.classID)
+            registrationViewModel.fetchStudents(classID: selectedClass.classID)
         }
         .fullScreenCover(item: $errorHandling.appError) { appError in
             ErrorView(title: appError.title, error: appError.description) {
                 if appError.type == .registrationManagerInitError {
                     classViewModel.fetchClasses()
                 } else {
-                    registrationViewModel.fetchStudents(className: selectedClass.classID)
+                    registrationViewModel.fetchStudents(classID: selectedClass.classID)
                 }
             }
         }
