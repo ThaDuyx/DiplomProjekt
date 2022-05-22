@@ -9,9 +9,10 @@ import SwiftUI
 
 struct OnboardingControllerFlow: View {
     @AppStorage("currentPage") var currentPage = 1
+    @AppStorage("totalPages") var totalPages = 1
 
     var body: some View {
-        if currentPage > 3 {
+        if currentPage > totalPages {
             TabViews()
         } else {
             OnboardingView()
