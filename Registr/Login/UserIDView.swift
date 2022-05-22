@@ -21,7 +21,7 @@ struct UserIDView: View {
         ZStack {
             VStack {
                 
-                LogoSection()
+                LogoSection(isOnboarding: false)
                 
                 Spacer()
                 

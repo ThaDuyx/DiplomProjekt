@@ -12,7 +12,7 @@ struct LoginOptions: View {
             ZStack {
                 VStack {
                     
-                    LogoSection()
+                    LogoSection(isOnboarding: false)
                     
                     Spacer()
                     

@@ -17,7 +17,7 @@ struct OnboardSection: View {
         ZStack {
             VStack {
                 
-                LogoSection()
+                LogoSection(isOnboarding: true, onboardingImage: image)
                 
                 Spacer()
                 
