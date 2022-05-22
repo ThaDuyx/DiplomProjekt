@@ -181,7 +181,6 @@ class ReportViewModel: ObservableObject {
      */
     func removeFavorite(favorite: String) {
         if !DefaultsManager.shared.favorites.contains(favorite) {
-            
             if let index = snapshotListeners.firstIndex(where: { $0.favoriteName == favorite }) {
                 reports.removeAll(where: { $0.classID == favorite })
                 snapshotListeners[index].listenerRegistration.remove()
