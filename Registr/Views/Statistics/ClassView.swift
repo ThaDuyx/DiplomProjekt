@@ -60,7 +60,7 @@ struct ClassView: View {
                     AbsenceStatisticsCard(isWeekDayUsed: true, title: "statistics_offenses".localize, statArray: statisticsWeekDay(statistics: statisticsViewModel))
                 }
                 .onAppear() {
-                    statisticsViewModel.fetchClassStats(className: classInfo.name)
+                    statisticsViewModel.fetchClassStats(classID: classInfo.classID)
                 }
                 
                 Spacer()
@@ -68,7 +68,7 @@ struct ClassView: View {
         }
         .fullScreenCover(item: $errorHandling.appError) { appError in
             ErrorView(title: appError.title,error: appError.description) {
-                statisticsViewModel.fetchClassStats(className: classInfo.name)
+                statisticsViewModel.fetchClassStats(classID: classInfo.classID)
             }
         }
         .onAppear() {

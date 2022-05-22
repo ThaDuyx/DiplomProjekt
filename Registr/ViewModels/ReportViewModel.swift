@@ -158,6 +158,7 @@ class ReportViewModel: ObservableObject {
                                 if let removedReport = try diff.document.data(as: Report.self) {
                                     if let removedId = removedReport.id, let index = self.reports.firstIndex(where: {$0.id == removedId}) {
                                         self.reports.remove(at: index)
+                                        self.reports.sort{ $0.className < $1.className }
                                     }
                                 }
                             }
@@ -180,9 +181,8 @@ class ReportViewModel: ObservableObject {
      */
     func removeFavorite(favorite: String) {
         if !DefaultsManager.shared.favorites.contains(favorite) {
-            reports.removeAll(where: { $0.className == favorite })
-            
             if let index = snapshotListeners.firstIndex(where: { $0.favoriteName == favorite }) {
+                reports.removeAll(where: { $0.classID == favorite })
                 snapshotListeners[index].listenerRegistration.remove()
                 snapshotListeners.remove(at: index)
             }

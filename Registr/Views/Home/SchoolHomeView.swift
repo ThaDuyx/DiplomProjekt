@@ -15,10 +15,6 @@ struct SchoolHomeView: View {
     @EnvironmentObject var notificationVM: NotificationViewModel
     @EnvironmentObject var classViewModel: ClassViewModel
     
-    /// - Will be removed later in our process. This is commented because it's easier to access the feeder this way.
-//    @StateObject var feeder = FeedDatabaseManager()
-    /// -----------------------------------
-    
     var body: some View {
         NavigationView {
             ZStack {
@@ -34,16 +30,16 @@ struct SchoolHomeView: View {
                             .frame(width: 320)
                     }
                 } else {
-                    List(favoriteViewModel.favorites, id: \.self) { favorite in
-                        if let favoriteIndex = classViewModel.classes.firstIndex(where: { $0.classID == favorite }) {
+                    List(classViewModel.classes, id: \.self) { classInfo in
+                        if favoriteViewModel.favorites.contains(classInfo.classID) {
                             Section(
-                                header: Text(classViewModel.classes[favoriteIndex].name)
+                                header: Text(classInfo.name)
                                     .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
                             ) {
                                 ForEach(reportViewModel.reports, id: \.self) { report in
-                                    if DefaultsManager.shared.userRole == .teacher && report.classID == favorite && report.registrationType != .legal {
+                                    if DefaultsManager.shared.userRole == .teacher && report.classID == classInfo.classID && report.registrationType != .legal {
                                         TeacherAbsencesSection(report: report)
-                                    } else if DefaultsManager.shared.userRole == .headmaster && report.classID == favorite && report.registrationType == .legal {
+                                    } else if DefaultsManager.shared.userRole == .headmaster && report.classID == classInfo.classID && report.registrationType == .legal {
                                         TeacherAbsencesSection(report: report)
                                     }
                                 }
@@ -55,7 +51,6 @@ struct SchoolHomeView: View {
                                 .listRowBackground(Color.frolyRed)
                                 .listRowSeparatorTint(Color.white)
                             }
-                            
                         }
                     }
                     .accentColor(Color.fiftyfifty)
@@ -65,12 +60,6 @@ struct SchoolHomeView: View {
                     .onChange(of: favoriteViewModel.deselectedFavorite) { deselectedValue in
                         reportViewModel.removeFavorite(favorite: deselectedValue)
                     }
-                    /// - Will be removed later in our process. This is uncommented because it's easier to access the feeder this way.
-//                                    Button("Feed") {
-//                                        feeder.createRegistrationDates()
-//                                    }
-                    /// -----------------------------------
-                    ///
                 }
             }
             .toolbar {
