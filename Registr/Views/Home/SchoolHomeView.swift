@@ -56,9 +56,6 @@ struct SchoolHomeView: View {
                                 .listRowSeparatorTint(Color.white)
                             }
                         }
-//                        if let favoriteIndex = classViewModel.classes.firstIndex(where: { $0.classID == favorite }) {
-//
-//                        }
                     }
                     .accentColor(Color.fiftyfifty)
                     .onChange(of: favoriteViewModel.newFavorite) { newValue in
