@@ -26,7 +26,7 @@ struct AbsenceListView: View {
         ZStack {
             List() {
                 Section(
-                    header: Text("Intervaller")
+                    header: Text("al_intervals".localize)
                         .bigBodyTextStyle(color: .fiftyfifty, font: .poppinsMedium)
                 ) {
                     ForEach(childrenViewModel.absences, id: \.self) { absence in
@@ -38,7 +38,7 @@ struct AbsenceListView: View {
                     .listRowSeparator(.hidden)
                 }
                 Section(
-                    header: Text("Fraværsdage")
+                    header: Text("al_absences_days".localize)
                         .bigBodyTextStyle(color: .fiftyfifty, font: .poppinsMedium)
                 ) {
                     ForEach(childrenViewModel.absences, id: \.self) { absence in

@@ -27,7 +27,7 @@ struct ClassListView: View {
                     classViewModel.fetchClasses()
                 }
             })
-            .navigationTitle("Statistik")
+            .navigationTitle("cl_navigationtitle".localize)
             .navigationBarTitleDisplayMode(.inline)
         }
     }

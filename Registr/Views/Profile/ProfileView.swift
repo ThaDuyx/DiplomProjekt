@@ -19,7 +19,7 @@ struct ProfileView: View {
             Button {
                 logOut()
             } label: {
-                Text("Log ud")
+                Text("profile_log_out".localize)
             }
             .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
             Text("app_info")
@@ -31,7 +31,7 @@ struct ProfileView: View {
         .fullScreenCover(isPresented: $isPresented, content: {
             ErrorView(title: "alert_title".localize, error: "alert_default_description".localize)
         })
-        .navigationTitle("Profil")
+        .navigationTitle("profile_navigationtitle".localize)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

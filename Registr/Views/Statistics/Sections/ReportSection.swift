@@ -16,11 +16,11 @@ struct ReportSection: View {
     
     var body: some View {
         Menu {
-            Button("Rediger") {
+            Button("rs_edit".localize) {
                 showModal = true
             }
             
-            Button("Slet") {
+            Button("rs_delete".localize) {
                 childrenViewModel.deleteReport(report: report, child: student)
             }
         } label: {
@@ -33,7 +33,7 @@ struct ReportSection: View {
                     .clipShape(Circle())
                 
                 VStack {
-                    Text("Validering")
+                    Text("rs_validation".localize)
                         .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                     
                     Text(report.teacherValidation.rawValue)
@@ -41,7 +41,7 @@ struct ReportSection: View {
                 }
                 
                 VStack {
-                    Text("Dato")
+                    Text("date".localize)
                         .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                     
                     if let endDate = report.endDate {
@@ -57,7 +57,7 @@ struct ReportSection: View {
                 }
                 
                 VStack {
-                    Text("Årsag")
+                    Text("reason".localize)
                         .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                     
                     Text(report.reason.rawValue)

@@ -37,14 +37,14 @@ struct ClassView: View {
                     HStack {
                         Image(systemName: "checkmark.diamond")
                         
-                        Text(favoriteViewModel.favorites.contains(classInfo.classID) ? "Følger" : "Følger ikke")
+                        Text(favoriteViewModel.favorites.contains(classInfo.classID) ? "class_follow".localize : "class_not_following".localize)
                     }
                 }
                 .buttonStyle(Resources.CustomButtonStyle.FollowButtonStyle(isFollowed: favoriteViewModel.favorites.contains(classInfo.classID)))
                 
-                StatisticsButtonSection(systemName: "calendar", titleText: "Historik", destination: CalendarView(classInfo: classInfo))
+                StatisticsButtonSection(systemName: "calendar", titleText: "class_history".localize, destination: CalendarView(classInfo: classInfo))
                 
-                StatisticsButtonSection(systemName: "person.3", titleText: "Elever", destination: StudentListView(selectedClass: classInfo))
+                StatisticsButtonSection(systemName: "person.3", titleText: "class_students".localize, destination: StudentListView(selectedClass: classInfo))
                 
                 Spacer()
                 

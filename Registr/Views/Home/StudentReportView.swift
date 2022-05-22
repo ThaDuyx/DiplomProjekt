@@ -37,13 +37,13 @@ struct StudentReportView: View {
                             Image(systemName: "person.crop.circle.badge.questionmark")
                                 .foregroundColor(.fiftyfifty)
                             
-                            Text("Vælg fravær - \(selectedAbsence.rawValue)")
+                            Text("sr_pick_absences".localize + " - \(selectedAbsence.rawValue)")
                                 .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                         }
                             .frame(width: 320, alignment: .leading)
                     ) {
                         VStack {
-                            Picker("Vælg fravær", selection: $selectedAbsence) {
+                            Picker("sr_pick_absences".localize, selection: $selectedAbsence) {
                                 ForEach(RegistrationType.allCases, id: \.self) {
                                     if !$0.rawValue.isEmpty{
                                         Text($0.rawValue)
@@ -66,7 +66,7 @@ struct StudentReportView: View {
             Spacer()
             
             HStack {
-                Button("Afslå") {
+                Button("sr_denied".localize) {
                     reportViewModel.denyReport(selectedReport: report, teacherValidation: .denied) { result in
                         if result {
                             presentationMode.wrappedValue.dismiss()
@@ -79,7 +79,7 @@ struct StudentReportView: View {
                 
                 Spacer()
                 
-                Button("Registrer") {
+                Button("sr_register".localize) {
                     if report.endDate != nil {
                         reportViewModel.validateInterval(
                             selectedReport: report,
@@ -121,7 +121,7 @@ struct StudentReportView: View {
                 reportViewModel.attachReportListeners()
             }
         })
-        .navigationTitle("Indberettelse af elev")
+        .navigationTitle("sr_navigationtitle".localize)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

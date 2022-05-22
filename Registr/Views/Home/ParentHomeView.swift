@@ -16,7 +16,7 @@ struct ParentHomeView: View {
         NavigationView {
             ZStack {
                 if childrenViewModel.children.isEmpty {
-                    Text("Du har ikke registeret nogle børn. Hvis dette er en fejl, så søg kontakt hos skolen.")
+                    Text("ph_no_children".localize)
                         .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                         .multilineTextAlignment(.leading)
                         .frame(width: 320)
@@ -35,15 +35,15 @@ struct ParentHomeView: View {
                                     .background(.white)
                                 
                                 VStack(spacing: 13) {
-                                    Text("Navn: \(child.name)")
+                                    Text("ph_name".localize + child.name)
                                         .smallBodyTextStyle(color: .white, font: .poppinsBold)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     
-                                    Text("Klasse: \(child.className)")
+                                    Text("ph_class".localize + child.className)
                                         .smallBodyTextStyle(color: .white, font: .poppinsBold)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     
-                                    Text("Email: \(child.email)")
+                                    Text("ph_email".localize + child.email)
                                         .smallBodyTextStyle(color: .white, font: .poppinsBold)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
@@ -83,7 +83,7 @@ struct ParentHomeView: View {
                     childrenViewModel.attachReportListeners()
                 }
             })
-            .navigationTitle("Børn")
+            .navigationTitle("ph_navigationtitle".localize)
             .navigationBarTitleDisplayMode(.inline)
         }
     }

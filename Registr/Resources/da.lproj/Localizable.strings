@@ -12,9 +12,20 @@
 // MARK: - Standard
 "next_view" = "Næste";
 "ok" = "OK";
+"date" = "Dato";
+"reason" = "Årsag";
+
 
 // MARK: - Navigation titles
 "reports_navigationtitle" = "Indberettelser";
+"ph_navigationtitle" = "Børn";
+"sr_navigationtitle" = "Indberettelse af elev";
+"cl_navigationtitle" = "Statistik";
+"sl_navigationtitle" = "Elever i ";
+"acl_navigationtitle" = "Fravær";
+"ar_navigationtitle" = "Registrer";
+"pt_report" = "Indberet";
+"profile_navigationtitle" = "Profil";
 
 // MARK: - Teacher validation
 "tv-pending" = "Afventer";
@@ -73,15 +84,34 @@
 // MARK: - Student Absence Information Section
 "sais_report" = "Indberettelse";
 "sais_student" = "Elev";
-"sais_reason" = "Årsag";
 "sais_time" = "Tidspunkt";
-"sais_date" = "Dato";
 "sais_description" = "Beskrivelse";
 
-// MARK: - Parent Home Screen
-"parent_home_name" = "Navn:";
-"parent_home_class" = "Klasse:";
-"parent_home_email" = "Email:";
+// MARK: - Parent Home Screen View
+"ph_name" = "Navn: ";
+"ph_class" = "Klasse: ";
+"ph_email" = "Email: ";
+"ph_no_children" = "Du har ikke registeret nogle børn. Hvis dette er en fejl, så søg kontakt hos skolen.";
+
+// MARK: - Student Report View
+"sr_pick_absences" = "Vælg fravær";
+"sr_denied" = "Afslå";
+"sr_register" = "Registrer";
+
+// MARK: - Report Section
+"rs_validation" = "Validering";
+"rs_edit" = "Rediger";
+"rs_delete" = "Slet"
+
+// MARK: - Absence List View
+"al_intervals" = "Intervaller";
+"al_absences_days" = "Fraværsdage";
+
+// MARK: - Class View
+"class_follow" = "Følger";
+"class_not_following" = "Følger ikke";
+"class_history" = "Historik";
+"class_students" = "Elever";
 
 // MARK: - Parent Absence Registration
 "parent_absence_registration_kid" = "Barn";
@@ -102,6 +132,14 @@
 "par_report_alert_text" = "Der er allerede oprettede en indberretelse for denne dato.";
 "par_report_alert_title" = "Hov, dette er ikke muligt!";
 "parent_absence_registration_nav_title" = "Indberettelse af barn";
+
+// MARK: - Absence Registration View
+"ar_day_picked" = "Valgte dag";
+"ar_today" = "I dag";
+"ar_day_is_weekend" = "Den valgte dato er en weekend";
+"ar_registration_completed" = "Fraværsregistrering gennemgået";
+"ar_empty_field" = "Ryd felt";
+"ar_save" = "Gem";
 
 // Mark: - Student class list
 "student_list_absence_description %@" = "Vælg årsag for %@ fravær";
@@ -137,3 +175,6 @@
 "stat_no_graph" = "Der kan ikke blive vist nogen graf, da der ikke er registeret noget fra til forseelser.";
 "stat_graph_value" = "Fraværs værdi";
 
+// MARK: - Profile view
+"profile_log_out" = "Log ud";
+"profile_toggle" = "Tilladelse til at modtage notifikationer, når der sker noget vigtigt.";

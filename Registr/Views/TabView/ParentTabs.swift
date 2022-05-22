@@ -14,20 +14,20 @@ struct ParentTabs: View {
         ParentHomeView()
             .tabItem {
                 Image(systemName: "house")
-                Text("Børn")
+                Text("ph_navigationtitle".localize)
             }.environmentObject(childrenViewModel)
         
         ParentAbsenceRegistrationView(report: nil, absence: nil, child: nil, shouldUpdate: false, isAbsenceChange: false)
             .tabItem {
                 Image(systemName: "square.and.pencil")
-                Text("Indberet")
+                Text("pt_report".localize)
             }
             .environmentObject(childrenViewModel)
         
         ProfileView(isTeacher: false)
             .tabItem {
                 Image(systemName: "person")
-                Text("Profil")
+                Text("profile_navigationtitle".localize)
             }
     }
 }
