@@ -13,6 +13,14 @@
 "next_view" = "Næste";
 "ok" = "OK";
 
+// MARK: - Navigation titles
+"reports_navigationtitle" = "Indberettelser";
+
+// MARK: - Teacher validation
+"tv-pending" = "Afventer";
+"tv-denied" = "Afslået";
+"tv-accepted" = "Godkendt";
+
 // MARK: - Login flow
 "parent_login" = "Forældre login";
 "school_login" = "Skole login";
@@ -22,10 +30,6 @@
 "password_field_text" = "Indtast dit kodeord";
 "user_id_field_text" = "Indtast dit BrugerID";
 
-// MARK: - Teacher validation
-"tv-pending" = "Afventer";
-"tv-denied" = "Afslået";
-"tv-accepted" = "Godkendt";
 
 // MARK: - Onboarding flow page 1
 "onboard_flow_page_one_title" = "Notifikationer.";
@@ -61,6 +65,18 @@
 "fb_report_path" = "reports";
 "fb_statistics_path" = "statistics";
 "fb_statistics_doc" = "stats";
+
+// MARK: - School Home Screen
+"shs_no_favorites_1" = "Du har ikke valgt at følge nogle klasser. For at få vist beskder når en forældre fra en bestemt klasse, har oprettet fravær fra sit barn, så skal du følge denne klasse.";
+"shs_no_favorites_2" = "For at følge en klasse, så gå ind på Statistik -> vælg en klasse -> Tryk på Følger ikke. Du vil nu følge denne klasse.";
+
+// MARK: - Student Absence Information Section
+"sais_report" = "Indberettelse";
+"sais_student" = "Elev";
+"sais_reason" = "Årsag";
+"sais_time" = "Tidspunkt";
+"sais_date" = "Dato";
+"sais_description" = "Beskrivelse";
 
 // MARK: - Parent Home Screen
 "parent_home_name" = "Navn:";

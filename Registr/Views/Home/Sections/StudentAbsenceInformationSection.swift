@@ -17,23 +17,23 @@ struct StudentAbsenceInformationSection: View {
     
     var body: some View {
         VStack {
-            Text("Indberettelse")
+            Text("sais_report".localize)
                 .bodyTextStyle(color: Color.white, font: .poppinsBold)
             Divider()
                 .frame(height: 1)
                 .background(.white)
-            StudentAbsencesSection(title: "Elev", icon: "person", description: name)
-            StudentAbsencesSection(title: "Årsag", icon: "questionmark.circle", description: reason)
-            StudentAbsencesSection(title: "Tidspunkt", icon: "clock", description: timeOfDay)
+            StudentAbsencesSection(title: "sais_student".localize, icon: "person", description: name)
+            StudentAbsencesSection(title: "sais_reason".localize, icon: "questionmark.circle", description: reason)
+            StudentAbsencesSection(title: "sais_time".localize, icon: "clock", description: timeOfDay)
             if let endDate = endDate {
                 let firstDate = DateFormatter.abbreviationDayMonthYearFormatter.string(from: date)
                 let lastDate = DateFormatter.abbreviationDayMonthYearFormatter.string(from: endDate)
                 let dateCombined = firstDate + "\n" + lastDate
-                StudentAbsencesSection(title: "Dato", icon: "calendar", description: dateCombined)
+                StudentAbsencesSection(title: "sais_date".localize, icon: "calendar", description: dateCombined)
             } else {
-                StudentAbsencesSection(title: "Dato", icon: "calendar", description: DateFormatter.abbreviationDayMonthYearFormatter.string(from: date))
+                StudentAbsencesSection(title: "sais_date".localize, icon: "calendar", description: DateFormatter.abbreviationDayMonthYearFormatter.string(from: date))
             }
-            StudentAbsencesSection(title: "Beskrivelse", icon: "note.text", description: description)
+            StudentAbsencesSection(title: "sais_description".localize, icon: "note.text", description: description)
         }
         .frame(width: 320)
         .padding(.vertical, 20)
