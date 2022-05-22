@@ -61,7 +61,7 @@ struct AbsenceClassListView: View {
                     classViewModel.fetchClasses()
                 }
             })
-            .navigationTitle("Fravær")
+            .navigationTitle("acl_navigationtitle".localize)
             .navigationBarTitleDisplayMode(.inline)
         }
     }

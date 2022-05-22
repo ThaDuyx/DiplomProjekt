@@ -20,11 +20,11 @@ struct SchoolHomeView: View {
             ZStack {
                 if favoriteViewModel.favorites.isEmpty {
                     VStack(spacing: 50) {
-                        Text("Du har ikke valgt at følge nogle klasser. For at få vist beskder når en forældre fra en bestemt klasse, har oprettet fravær fra sit barn, så skal du følge denne klasse.")
+                        Text("shs_no_favorites_1".localize)
                             .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             .multilineTextAlignment(.leading)
                             .frame(width: 320)
-                        Text("For at følge en klasse, så gå ind på Statistik -> vælg en klasse -> Tryk på Følger ikke. Du vil nu følge denne klasse.")
+                        Text("shs_no_favorites_2".localize)
                             .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             .multilineTextAlignment(.leading)
                             .frame(width: 320)
@@ -85,7 +85,7 @@ struct SchoolHomeView: View {
                     }
                 }
             })
-            .navigationTitle("Indberettelser")
+            .navigationTitle("reports_navigationtitle".localize)
             .navigationBarTitleDisplayMode(.inline)
         }.environmentObject(reportViewModel)
     }

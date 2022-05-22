@@ -16,7 +16,7 @@ struct TeacherTabs: View {
         SchoolHomeView()
             .tabItem {
                 Image(systemName: "house")
-                Text("Indberettelser")
+                Text("reports_navigationtitle".localize)
             }
             .environmentObject(favoriteViewModel)
             .environmentObject(classesViewModel)
@@ -24,7 +24,7 @@ struct TeacherTabs: View {
         AbsenceClassListView()
             .tabItem {
                 Image(systemName: "plus.circle")
-                Text("Fravær")
+                Text("acl_navigationtitle".localize)
             }
             .environmentObject(registrationViewModel)
             .environmentObject(favoriteViewModel)
@@ -33,7 +33,7 @@ struct TeacherTabs: View {
         ClassListView()
             .tabItem {
                 Image(systemName: "chart.pie")
-                Text("Statistik")
+                Text("cl_navigationtitle".localize)
             }
             .environmentObject(registrationViewModel)
             .environmentObject(favoriteViewModel)

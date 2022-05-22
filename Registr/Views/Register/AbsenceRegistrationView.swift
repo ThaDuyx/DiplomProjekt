@@ -48,7 +48,7 @@ struct AbsenceRegistrationView: View {
             VStack {
                 if isFromHistory {
                     VStack {
-                        Text("Valgte dag")
+                        Text("ar_day_picked".localize)
                             .bigBodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                         
                         Text(selectedDate.formatSpecificDate(date: selectedDate))
@@ -61,7 +61,7 @@ struct AbsenceRegistrationView: View {
                                 ForEach(Array(convertedArray(currentDay: currentDate, previousDays: previousDays, comingDays: comingDays).enumerated()), id: \.offset) { number, element in
                                     VStack {
                                         if element == currentDate {
-                                            Text("I dag")
+                                            Text("ar_today".localize)
                                                 .bigBodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                                         }
                                         
@@ -93,7 +93,7 @@ struct AbsenceRegistrationView: View {
                         Button {
                             isMorning = true
                         } label: {
-                            Text("Formiddag")
+                            Text("statistics_morning".localize)
                                 .subTitleTextStyle(color: isMorning ? .frolyRed : .fiftyfifty, font: isMorning ? .poppinsMedium : .poppinsRegular)
                         }
                         .frame(maxWidth: .infinity, minHeight: 35)
@@ -102,7 +102,7 @@ struct AbsenceRegistrationView: View {
                         Button {
                             isMorning = false
                         } label: {
-                            Text("Eftermiddag")
+                            Text("statistics_afternoon".localize)
                                 .subTitleTextStyle(color: !isMorning ? .frolyRed : .fiftyfifty, font: !isMorning ? .poppinsMedium : .poppinsRegular)
                         }
                         .frame(maxWidth: .infinity, minHeight: 35)
@@ -112,7 +112,7 @@ struct AbsenceRegistrationView: View {
                 if Calendar.current.isDateInWeekend(isFromHistory ? selectedDate : elementDate) {
                     Spacer()
                     
-                    Text("Den valgte dato er en weekend")
+                    Text("ar_day_is_weekend".localize)
                         .headerTextStyle(color: .frolyRed, font: .poppinsSemiBold)
                         .frame(alignment: .center)
                     
@@ -120,7 +120,7 @@ struct AbsenceRegistrationView: View {
                 } else {
                     if isMorning && registrationViewModel.registrationInfo.hasMorningBeenRegistrered  || !isMorning && registrationViewModel.registrationInfo.hasAfternoonBeenRegistrered {
                         HStack {
-                            Text("Fraværsregistrering gennemgået")
+                            Text("ar_registration_completed".localize)
                                 .bodyTextStyle(color: .completionGreen, font: .poppinsMedium)
                             
                             Image(systemName: "checkmark.circle.fill")
@@ -161,7 +161,7 @@ struct AbsenceRegistrationView: View {
                                 .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             
                             ForEach(RegistrationType.allCases, id: \.self) { absenceReasons in
-                                Button(absenceReasons.rawValue.isEmpty ? "Ryd felt" : absenceReasons.rawValue) {
+                                Button(absenceReasons.rawValue.isEmpty ? "ar_empty_field".localize : absenceReasons.rawValue) {
                                     studentAbsenceState = absenceReasons.rawValue
                                     registrationViewModel.setAbsenceReason(absenceReason: absenceReasons, index: studentIndex)
                                     showSheet.toggle()
@@ -184,7 +184,7 @@ struct AbsenceRegistrationView: View {
                             }
                         }
                     } label: {
-                        Text("Gem")
+                        Text("ar_save".localize)
                     }
                     .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
                     .padding(.bottom, 20)
@@ -205,7 +205,7 @@ struct AbsenceRegistrationView: View {
                     }
                 }
             })
-            .navigationTitle("Registrer")
+            .navigationTitle("ar_navigationtitle".localize)
             .navigationBarTitleDisplayMode(.inline)
             .onAppear() {
                 registrationViewModel.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)

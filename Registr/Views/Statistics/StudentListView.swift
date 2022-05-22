@@ -28,7 +28,7 @@ struct StudentListView: View {
                 .listRowSeparatorTint(Color.white)
             }
         }
-        .navigationTitle("Elever i \(selectedClass.name)")
+        .navigationTitle("sl_navigationtitle".localize + selectedClass.name)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(){
             registrationViewModel.fetchStudents(className: selectedClass.classID)

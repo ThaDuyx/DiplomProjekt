@@ -16,14 +16,14 @@ struct HeadmasterTabs: View {
         SchoolHomeView()
             .tabItem {
                 Image(systemName: "house")
-                Text("Indberettelser")
+                Text("reports_navigationtitle".localize)
             }
             .environmentObject(favoriteViewModel)
         
         ClassListView()
             .tabItem {
                 Image(systemName: "chart.pie")
-                Text("Statistik")
+                Text("cl_navigationtitle".localize)
             }
             .environmentObject(registrationViewModel)
             .environmentObject(favoriteViewModel)

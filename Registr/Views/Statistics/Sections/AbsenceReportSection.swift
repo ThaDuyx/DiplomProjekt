@@ -28,7 +28,7 @@ struct AbsenceReportSection: View {
             Spacer()
             
             VStack {
-                Text("Dato")
+                Text("date".localize)
                     .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                 if let endDate = absence.endDate {
                     let dateCombined = absence.date + "\n" + endDate
@@ -43,7 +43,7 @@ struct AbsenceReportSection: View {
             Spacer()
             
             VStack {
-                Text("Årsag")
+                Text("reason".localize)
                     .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                 Text(absence.reason.rawValue)
                     .smallBodyTextStyle(color: .fiftyfifty, font: .poppinsRegular)

@@ -54,7 +54,6 @@ struct OnboardingView: View {
                                                 return
                                             }
                                             nextPage()
-                                            print("Succes in APNS registry")
                                         }
                                 } else {
                                     nextPage()
