@@ -78,7 +78,7 @@
 "fb_statistics_doc" = "stats";
 
 // MARK: - School Home Screen
-"shs_no_favorites_1" = "Du har ikke valgt at følge nogle klasser. For at få vist beskder når en forældre fra en bestemt klasse, har oprettet fravær fra sit barn, så skal du følge denne klasse.";
+"shs_no_favorites_1" = "Du har ikke valgt at følge nogle klasser. For at få vist beskeder når en forældre fra en bestemt klasse, har oprettet fravær fra sit barn, så skal du følge denne klasse.";
 "shs_no_favorites_2" = "For at følge en klasse, så gå ind på Statistik -> vælg en klasse -> Tryk på Følger ikke. Du vil nu følge denne klasse.";
 
 // MARK: - Student Absence Information Section
