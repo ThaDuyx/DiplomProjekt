@@ -9,11 +9,11 @@ import SwiftUI
 
 struct SchoolHomeView: View {
     
-    @StateObject var reportManager = ReportManager()
+    @StateObject var reportManager = ReportViewModel()
     @StateObject var errorHandling = ErrorHandling()
-    @EnvironmentObject var favoriteManager: FavoriteManager
+    @EnvironmentObject var favoriteManager: FavoriteViewModel
     @EnvironmentObject var notificationVM: NotificationViewModel
-    @EnvironmentObject var classManager: ClassManager
+    @EnvironmentObject var classManager: ClassViewModel
     
     /// - Will be removed later in our process. This is commented because it's easier to access the feeder this way.
 //    @StateObject var feeder = FeedDatabaseManager()

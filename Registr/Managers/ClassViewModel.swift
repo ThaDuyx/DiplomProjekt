@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class ClassManager: ObservableObject {
+class ClassViewModel: ObservableObject {
     
     @Published var classes = [ClassInfo]()
     

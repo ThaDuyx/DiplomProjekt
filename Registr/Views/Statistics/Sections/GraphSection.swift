@@ -10,7 +10,7 @@ import SwiftUICharts
 
 struct GraphSection: View {
     
-    @StateObject var statisticsManager = StatisticsManager()
+    @StateObject var statisticsManager = StatisticsViewModel()
 
     var body: some View {
         if statisticsWeekDay(statistics: statisticsManager).isEmpty || statisticsWeekDay(statistics: statisticsManager).allSatisfy({ $0 == 0 }) {

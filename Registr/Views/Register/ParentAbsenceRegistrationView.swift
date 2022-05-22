@@ -12,6 +12,7 @@ struct ParentAbsenceRegistrationView: View {
     @StateObject var errorHandling = ErrorHandling()
     @StateObject private var schoolManager = SchoolManager()
     @EnvironmentObject var childrenManager: ChildrenManager
+    @EnvironmentObject var childrenManager: ChildrenViewModel
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     @Environment(\.dismiss) var dismiss
     

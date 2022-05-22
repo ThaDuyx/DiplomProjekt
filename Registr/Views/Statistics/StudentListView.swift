@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct StudentListView: View {
-    @EnvironmentObject var registrationManager: RegistrationManager
-    @EnvironmentObject var classManager: ClassManager
+    @EnvironmentObject var registrationManager: RegistrationViewModel
+    @EnvironmentObject var classManager: ClassViewModel
     @StateObject var errorHandling = ErrorHandling()
 
     var selectedClass: ClassInfo

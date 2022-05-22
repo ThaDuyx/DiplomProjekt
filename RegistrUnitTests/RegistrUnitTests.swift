@@ -10,12 +10,12 @@ import FirebaseFirestore
 @testable import Registr
 
 class RegistrUnitTests: XCTestCase {
-    private let statisticsManager = StatisticsManager()
+    private let statisticsManager = StatisticsViewModel()
     private let db = Firestore.firestore()
     
     //MARK: - Statistic unit tests
     func testIncrementAndDecrementMethod() throws {
-        let statManager = StatisticsManager()
+        let statManager = StatisticsViewModel()
         statManager.updateClassStatistics(oldValue: "For sent", newValue: "Ulovligt")
         XCTAssert(statManager.illegalCounter == Int64(1) &&
                   statManager.illnessCounter == Int64(0) &&
@@ -24,7 +24,7 @@ class RegistrUnitTests: XCTestCase {
     }
     
     func testOnlyDecrement() throws {
-        let statManager = StatisticsManager()
+        let statManager = StatisticsViewModel()
         statManager.updateClassStatistics(oldValue: "For sent", newValue: "")
         XCTAssert(statManager.illegalCounter == Int64(0) &&
                   statManager.illnessCounter == Int64(0) &&
@@ -33,7 +33,7 @@ class RegistrUnitTests: XCTestCase {
     }
     
     func testOnlyIncrement() throws {
-        let statManager = StatisticsManager()
+        let statManager = StatisticsViewModel()
         statManager.updateClassStatistics(oldValue: "", newValue: "For sent")
         XCTAssert(statManager.illegalCounter == Int64(0) &&
                   statManager.illnessCounter == Int64(0) &&
@@ -42,7 +42,7 @@ class RegistrUnitTests: XCTestCase {
     }
     
     func testResetCounters() throws {
-        let statManager = StatisticsManager()
+        let statManager = StatisticsViewModel()
         statManager.updateClassStatistics(oldValue: "", newValue: "For sent")
         statManager.updateClassStatistics(oldValue: "Ulovligt", newValue: "Sygdom")
         statManager.updateClassStatistics(oldValue: "", newValue: "Sygdom")
@@ -60,14 +60,14 @@ class RegistrUnitTests: XCTestCase {
     }
     
     func testDecrementer() throws {
-        let statManager = StatisticsManager()
+        let statManager = StatisticsViewModel()
         statManager.decrementCounters(value: "Sygdom")
         
         XCTAssert(statManager.illnessCounter == Int64(-1))
     }
     
     func testIncrementer() throws {
-        let statManager = StatisticsManager()
+        let statManager = StatisticsViewModel()
         statManager.incrementCounters(value: "Sygdom")
         
         XCTAssert(statManager.illnessCounter == Int64(1))

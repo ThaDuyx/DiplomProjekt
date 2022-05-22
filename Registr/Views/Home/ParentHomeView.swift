@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ParentHomeView: View {
-    @EnvironmentObject var childrenManager: ChildrenManager
+    @EnvironmentObject var childrenManager: ChildrenViewModel
     @EnvironmentObject var notificationVM: NotificationViewModel
     @StateObject var errorHandling = ErrorHandling()
 

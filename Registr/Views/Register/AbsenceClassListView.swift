@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct AbsenceClassListView: View {
-    @EnvironmentObject var registrationManager: RegistrationManager
-    @EnvironmentObject var classManager: ClassManager
-    @EnvironmentObject var favoriteManager: FavoriteManager
+    @EnvironmentObject var registrationManager: RegistrationViewModel
+    @EnvironmentObject var classManager: ClassViewModel
+    @EnvironmentObject var favoriteManager: FavoriteViewModel
     @StateObject var errorHandling = ErrorHandling()
     
     var body: some View {

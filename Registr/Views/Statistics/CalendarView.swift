@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @StateObject private var schoolManager = SchoolManager()
+    @StateObject private var schoolManager = SchoolViewModel()
     @StateObject var errorHandling = ErrorHandling()
     @State private var selectedDate: Date = Date()
     let classInfo: ClassInfo

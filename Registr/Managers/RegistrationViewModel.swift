@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class RegistrationManager: ObservableObject {
+class RegistrationViewModel: ObservableObject {
     
     // Collections
     @Published var registrationInfo = RegistrationInfo()
@@ -21,7 +21,6 @@ class RegistrationManager: ObservableObject {
     // Selectors
     private var selectedClass = String()
     private var selectedDate = String()
-    private var selectedStudent = String()
     private var selectedIsMorning: Bool = true
     private var selectedSchool: String {
         return DefaultsManager.shared.associatedSchool

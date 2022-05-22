@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct HeadmasterTabs: View {
-    @StateObject var registrationManager = RegistrationManager()
-    @StateObject var favoriteManager = FavoriteManager()
+    @StateObject var registrationManager = RegistrationViewModel()
+    @StateObject var favoriteManager = FavoriteViewModel()
     
     var body: some View {
         SchoolHomeView()

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FavoriteManager: ObservableObject {
+class FavoriteViewModel: ObservableObject {
     @Published var favorites: [String] = []
     @Published var newFavorite = String()
     @Published var deselectedFavorite = String()

@@ -10,9 +10,9 @@ import SwiftUI
 struct AbsenceRegistrationView: View {
     // Managers
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var registrationManager: RegistrationManager
-    @EnvironmentObject var classManager: ClassManager
-    @StateObject var statisticsManager = StatisticsManager()
+    @EnvironmentObject var registrationManager: RegistrationViewModel
+    @EnvironmentObject var classManager: ClassViewModel
+    @StateObject var statisticsManager = StatisticsViewModel()
     @StateObject var errorHandling = ErrorHandling()
     
     // State variables

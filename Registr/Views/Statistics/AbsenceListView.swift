@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AbsenceListView: View {
-    @EnvironmentObject var childrenManager: ChildrenManager
+    @EnvironmentObject var childrenManager: ChildrenViewModel
     @StateObject var errorHandling = ErrorHandling()
     @State var showModal = false
     

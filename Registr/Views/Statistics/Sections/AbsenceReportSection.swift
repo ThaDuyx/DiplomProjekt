@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AbsenceReportSection: View {
-    @EnvironmentObject var childrenManager: ChildrenManager
+    @EnvironmentObject var childrenManager: ChildrenViewModel
     @StateObject var errorHandling = ErrorHandling()
     
     let absence: Registration

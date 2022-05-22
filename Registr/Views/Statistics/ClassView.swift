@@ -9,9 +9,9 @@ import SwiftUI
 import SwiftUICharts
 
 struct ClassView: View {
-    @EnvironmentObject var favoriteManager: FavoriteManager
+    @EnvironmentObject var favoriteManager: FavoriteViewModel
     @EnvironmentObject var notificationVM: NotificationViewModel
-    @ObservedObject var statisticsManager = StatisticsManager()
+    @ObservedObject var statisticsManager = StatisticsViewModel()
     @StateObject var errorHandling = ErrorHandling()
     
     @State private var followAction: Bool = false

@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class ChildrenManager: ObservableObject {
+class ChildrenViewModel: ObservableObject {
     
     // Published collection of our data
     @Published var children = [Student]()

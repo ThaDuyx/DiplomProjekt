@@ -10,7 +10,7 @@ import SwiftUICharts
 
 struct StudentView: View {
     
-    @StateObject var statisticsManager = StatisticsManager()
+    @StateObject var statisticsManager = StatisticsViewModel()
     @StateObject var errorHandling = ErrorHandling()
     
     let studentName: String

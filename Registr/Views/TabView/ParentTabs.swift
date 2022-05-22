@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ParentTabs: View {
-    @StateObject var childrenManager = ChildrenManager()
+    @StateObject var childrenManager = ChildrenViewModel()
     
     var body: some View {
         ParentHomeView()

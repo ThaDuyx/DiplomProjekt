@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct RegistrationStudentSection: View {
-    @EnvironmentObject var registrationManager: RegistrationManager
-    @EnvironmentObject var statisticsManager: StatisticsManager
-    @EnvironmentObject var classManager: ClassManager
+    @EnvironmentObject var registrationManager: RegistrationViewModel
+    @EnvironmentObject var statisticsManager: StatisticsViewModel
+    @EnvironmentObject var classManager: ClassViewModel
     @StateObject var errorHandling = ErrorHandling()
     
     let index: Int

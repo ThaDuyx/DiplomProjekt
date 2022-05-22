@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReportListView: View {
-    @EnvironmentObject var childrenManager: ChildrenManager
+    @EnvironmentObject var childrenManager: ChildrenViewModel
     @StateObject var errorHandling = ErrorHandling()
     
     private var selectedStudent: String

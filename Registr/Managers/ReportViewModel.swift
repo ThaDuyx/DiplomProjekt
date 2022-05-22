@@ -13,7 +13,7 @@ enum StatisticTime: String {
     case afternoon = "Afternoon"
 }
 
-class ReportManager: ObservableObject {
+class ReportViewModel: ObservableObject {
     
     // Container for our reports
     @Published var reports = [Report]()

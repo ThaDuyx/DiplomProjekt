@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct TeacherTabs: View {
-    @StateObject var registrationManager = RegistrationManager()
-    @StateObject var favoriteManager = FavoriteManager()
-    @StateObject var classesManager = ClassManager()
+    @StateObject var registrationManager = RegistrationViewModel()
+    @StateObject var favoriteManager = FavoriteViewModel()
+    @StateObject var classesManager = ClassViewModel()
 
     var body: some View {
         SchoolHomeView()

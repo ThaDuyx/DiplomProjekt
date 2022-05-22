@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class StatisticsManager: ObservableObject {
+class StatisticsViewModel: ObservableObject {
     
     // Firestore db reference
     private let db = Firestore.firestore()

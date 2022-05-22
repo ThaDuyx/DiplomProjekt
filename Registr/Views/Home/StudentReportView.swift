@@ -12,7 +12,7 @@ struct StudentReportView: View {
     // State variables
     @State private var isPresented = false
     @StateObject var errorHandling = ErrorHandling()
-    @EnvironmentObject var reportManager: ReportManager
+    @EnvironmentObject var reportManager: ReportViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var selectedAbsence: RegistrationType = .illness
     
