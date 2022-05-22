@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct LogoSection: View {
+    let isOnboarding: Bool
+    let onboardingImage: String?
+    
+    init(isOnboarding: Bool, onboardingImage: String? = nil) {
+        self.onboardingImage = onboardingImage
+        self.isOnboarding = isOnboarding
+    }
     var body: some View {
         ZStack(alignment: .top) {
             Rectangle()
@@ -16,13 +23,22 @@ struct LogoSection: View {
                 .cornerRadius(50, corners: [.bottomLeft, .bottomRight])
             
             Spacer()
-            
-            VStack(spacing: 0) {
-                Image("AppLogo")
-                Text("application_name".localize)
-                    .titleTextStyle(color: .frolyRed, font: .poppinsSemiBold)
+            if isOnboarding {
+                Image(systemName: onboardingImage ?? "person")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundStyle(.white, Color.frolyRed)
+                    .frame(height: 160)
+                    .offset(y: 80)
+            } else {
+                VStack(spacing: 0) {
+                    Image("AppLogo")
+                    Text("application_name".localize)
+                        .titleTextStyle(color: .frolyRed, font: .poppinsSemiBold)
+                }
+                .offset(y: 80)
             }
-            .offset(y: 80)
+            
         }
         .ignoresSafeArea()
     }
@@ -30,6 +46,6 @@ struct LogoSection: View {
 
 struct LogoSection_Previews: PreviewProvider {
     static var previews: some View {
-        LogoSection()
+        LogoSection(isOnboarding: false, onboardingImage: "")
     }
 }
