@@ -10,10 +10,10 @@ import SwiftUICharts
 
 struct GraphSection: View {
     
-    @StateObject var statisticsManager = StatisticsViewModel()
+    @StateObject var statisticsViewModel = StatisticsViewModel()
 
     var body: some View {
-        if statisticsWeekDay(statistics: statisticsManager).isEmpty || statisticsWeekDay(statistics: statisticsManager).allSatisfy({ $0 == 0 }) {
+        if statisticsWeekDay(statistics: statisticsViewModel).isEmpty || statisticsWeekDay(statistics: statisticsViewModel).allSatisfy({ $0 == 0 }) {
             Text("stat_no_graph".localize)
                 .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                 .multilineTextAlignment(.leading)
@@ -23,7 +23,7 @@ struct GraphSection: View {
                 data: ChartData(
                     values: chartData(
                         stringArray: WeekDays.allCases.map { $0.rawValue }, 
-                        doubleArray: statisticsWeekDay(statistics: statisticsManager).map { Double($0) })), 
+                        doubleArray: statisticsWeekDay(statistics: statisticsViewModel).map { Double($0) })), 
                 title: "stat_graph_value".localize, 
                 legend: "statistics_offenses".localize, 
                 style: ChartsStyle.style

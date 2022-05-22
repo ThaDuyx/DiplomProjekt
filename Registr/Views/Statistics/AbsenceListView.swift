@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AbsenceListView: View {
-    @EnvironmentObject var childrenManager: ChildrenViewModel
+    @EnvironmentObject var childrenViewModel: ChildrenViewModel
     @StateObject var errorHandling = ErrorHandling()
     @State var showModal = false
     
@@ -29,7 +29,7 @@ struct AbsenceListView: View {
                     header: Text("Intervaller")
                         .bigBodyTextStyle(color: .fiftyfifty, font: .poppinsMedium)
                 ) {
-                    ForEach(childrenManager.absences, id: \.self) { absence in
+                    ForEach(childrenViewModel.absences, id: \.self) { absence in
                         if absence.studentID == selectedStudent && absence.endDate != nil {
                             AbsenceReportSection(absence: absence)
                                 .padding(.bottom, 20)
@@ -41,7 +41,7 @@ struct AbsenceListView: View {
                     header: Text("Fraværsdage")
                         .bigBodyTextStyle(color: .fiftyfifty, font: .poppinsMedium)
                 ) {
-                    ForEach(childrenManager.absences, id: \.self) { absence in
+                    ForEach(childrenViewModel.absences, id: \.self) { absence in
                         if absence.studentID == selectedStudent && absence.endDate == nil {
                             AbsenceReportSection(absence: absence)
                                 .padding(.bottom, 20)
@@ -59,12 +59,12 @@ struct AbsenceListView: View {
             }
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
-                    childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                    childrenViewModel.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
                         if result {
-                            childrenManager.attachAbsenceListeners()
+                            childrenViewModel.attachAbsenceListeners()
                         }
                     }
-                    childrenManager.attachReportListeners()
+                    childrenViewModel.attachReportListeners()
                 }
             })
             .navigationTitle(studentName)

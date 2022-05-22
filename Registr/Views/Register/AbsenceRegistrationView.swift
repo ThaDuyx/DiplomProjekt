@@ -10,9 +10,9 @@ import SwiftUI
 struct AbsenceRegistrationView: View {
     // Managers
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var registrationManager: RegistrationViewModel
-    @EnvironmentObject var classManager: ClassViewModel
-    @StateObject var statisticsManager = StatisticsViewModel()
+    @EnvironmentObject var registrationViewModel: RegistrationViewModel
+    @EnvironmentObject var classViewModel: ClassViewModel
+    @StateObject var statisticsViewModel = StatisticsViewModel()
     @StateObject var errorHandling = ErrorHandling()
     
     // State variables
@@ -118,7 +118,7 @@ struct AbsenceRegistrationView: View {
                     
                     Spacer()
                 } else {
-                    if isMorning && registrationManager.registrationInfo.hasMorningBeenRegistrered  || !isMorning && registrationManager.registrationInfo.hasAfternoonBeenRegistrered {
+                    if isMorning && registrationViewModel.registrationInfo.hasMorningBeenRegistrered  || !isMorning && registrationViewModel.registrationInfo.hasAfternoonBeenRegistrered {
                         HStack {
                             Text("Fraværsregistrering gennemgået")
                                 .bodyTextStyle(color: .completionGreen, font: .poppinsMedium)
@@ -130,22 +130,22 @@ struct AbsenceRegistrationView: View {
                     }
                     
                     ScrollView {
-                        ForEach(0..<registrationManager.registrations.count, id: \.self) { index in
+                        ForEach(0..<registrationViewModel.registrations.count, id: \.self) { index in
                             RegistrationStudentSection(
                                 index: index+1,
-                                studentName: registrationManager.registrations[index].studentName,
-                                absenceReason: registrationManager.registrations[index].reason.rawValue,
-                                studentID: registrationManager.registrations[index].studentID,
+                                studentName: registrationViewModel.registrations[index].studentName,
+                                absenceReason: registrationViewModel.registrations[index].reason.rawValue,
+                                studentID: registrationViewModel.registrations[index].studentID,
                                 isMorning: isMorning,
                                 selectedDate: selectedDate
                             )
-                                .environmentObject(statisticsManager)
+                                .environmentObject(statisticsViewModel)
                                 .onTapGesture {
                                     if !studentAbsenceState.isEmpty {
                                         studentAbsenceState = ""
                                     }
                                     studentIndex = index
-                                    studentName = registrationManager.registrations[index].studentName
+                                    studentName = registrationViewModel.registrations[index].studentName
                                     showSheet.toggle()
                                 }
                             
@@ -163,7 +163,7 @@ struct AbsenceRegistrationView: View {
                             ForEach(RegistrationType.allCases, id: \.self) { absenceReasons in
                                 Button(absenceReasons.rawValue.isEmpty ? "Ryd felt" : absenceReasons.rawValue) {
                                     studentAbsenceState = absenceReasons.rawValue
-                                    registrationManager.setAbsenceReason(absenceReason: absenceReasons, index: studentIndex)
+                                    registrationViewModel.setAbsenceReason(absenceReason: absenceReasons, index: studentIndex)
                                     showSheet.toggle()
                                 }
                                 .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsSemiBold, fontSize: Resources.FontSize.primaryHeader))
@@ -174,10 +174,10 @@ struct AbsenceRegistrationView: View {
                     }
                     
                     Button {
-                        registrationManager.saveRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning) { result in
+                        registrationViewModel.saveRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning) { result in
                             if result {
-                                statisticsManager.commitBatch()
-                                statisticsManager.writeClassStats(classID: selectedClass.classID, isMorning: isMorning, date: selectedDate)
+                                statisticsViewModel.commitBatch()
+                                statisticsViewModel.writeClassStats(classID: selectedClass.classID, isMorning: isMorning, date: selectedDate)
                                 presentationMode.wrappedValue.dismiss()
                             } else {
                                 isPresented.toggle()
@@ -196,36 +196,36 @@ struct AbsenceRegistrationView: View {
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
                     if appError.type == .registrationManagerError {
-                        classManager.fetchClasses()
-                        registrationManager.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
+                        classViewModel.fetchClasses()
+                        registrationViewModel.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
                     } else if appError.type == .statisticsManagerError {
-                        statisticsManager.commitBatch()
+                        statisticsViewModel.commitBatch()
                     } else if appError.type == .registrationManagerInitError {
-                        classManager.fetchClasses()
+                        classViewModel.fetchClasses()
                     }
                 }
             })
             .navigationTitle("Registrer")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear() {
-                registrationManager.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
+                registrationViewModel.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
             }
             .onChange(of: selectedDate.formatSpecificDate(date: selectedDate)) { newDate in
-                registrationManager.fetchRegistrations(classID: selectedClass.classID, date: newDate, isMorning: isMorning)
+                registrationViewModel.fetchRegistrations(classID: selectedClass.classID, date: newDate, isMorning: isMorning)
                 
                 // Resetting on change of date
-                statisticsManager.resetStatCounters()
-                statisticsManager.resetBatch()
+                statisticsViewModel.resetStatCounters()
+                statisticsViewModel.resetBatch()
             }
             .onChange(of: isMorning) { _ in
-                registrationManager.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
-                statisticsManager.resetStatCounters()
-                statisticsManager.resetBatch()
+                registrationViewModel.fetchRegistrations(classID: selectedClass.classID, date: selectedDate.formatSpecificDate(date: selectedDate), isMorning: isMorning)
+                statisticsViewModel.resetStatCounters()
+                statisticsViewModel.resetBatch()
             }
             .onChange(of: selectedClass) { _ in
                 // Resetting on change of class
-                statisticsManager.resetStatCounters()
-                statisticsManager.resetBatch()
+                statisticsViewModel.resetStatCounters()
+                statisticsViewModel.resetBatch()
             }
         }
     }

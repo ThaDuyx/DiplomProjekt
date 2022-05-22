@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct AbsenceClassListView: View {
-    @EnvironmentObject var registrationManager: RegistrationViewModel
-    @EnvironmentObject var classManager: ClassViewModel
-    @EnvironmentObject var favoriteManager: FavoriteViewModel
+    @EnvironmentObject var classViewModel: ClassViewModel
+    @EnvironmentObject var favoriteViewModel: FavoriteViewModel
     @StateObject var errorHandling = ErrorHandling()
     
     var body: some View {
@@ -27,8 +26,8 @@ struct AbsenceClassListView: View {
                                     .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             }
                     ) {
-                        ForEach(classManager.classes, id: \.self, content: { classInfo in
-                            if favoriteManager.favorites.contains(classInfo.classID) {
+                        ForEach(classViewModel.classes, id: \.self, content: { classInfo in
+                            if favoriteViewModel.favorites.contains(classInfo.classID) {
                                 RegistrationClassSection(classInfo: classInfo, isFavorite: true)
                             }
                         })
@@ -46,8 +45,8 @@ struct AbsenceClassListView: View {
                                     .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
                             }
                     ) {
-                        ForEach(classManager.classes, id: \.self, content: { classInfo in
-                            if !favoriteManager.favorites.contains(classInfo.classID) {
+                        ForEach(classViewModel.classes, id: \.self, content: { classInfo in
+                            if !favoriteViewModel.favorites.contains(classInfo.classID) {
                                 RegistrationClassSection(classInfo: classInfo, isFavorite: false)
                             }
                         })
@@ -59,7 +58,7 @@ struct AbsenceClassListView: View {
             }
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
-                    classManager.fetchClasses()
+                    classViewModel.fetchClasses()
                 }
             })
             .navigationTitle("Fravær")

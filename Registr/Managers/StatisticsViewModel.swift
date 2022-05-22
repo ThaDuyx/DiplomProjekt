@@ -1,5 +1,5 @@
 //
-//  StatisticsManager.swift
+//  StatisticsViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 18/04/2022.

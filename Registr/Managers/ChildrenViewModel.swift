@@ -1,5 +1,5 @@
 //
-//  ChildrenManager.swift
+//  ChildrenViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 30/03/2022.

@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct ParentTabs: View {
-    @StateObject var childrenManager = ChildrenViewModel()
+    @StateObject var childrenViewModel = ChildrenViewModel()
     
     var body: some View {
         ParentHomeView()
             .tabItem {
                 Image(systemName: "house")
                 Text("Børn")
-            }.environmentObject(childrenManager)
+            }.environmentObject(childrenViewModel)
         
         ParentAbsenceRegistrationView(report: nil, absence: nil, child: nil, shouldUpdate: false, isAbsenceChange: false)
             .tabItem {
                 Image(systemName: "square.and.pencil")
                 Text("Indberet")
             }
-            .environmentObject(childrenManager)
+            .environmentObject(childrenViewModel)
         
         ProfileView(isTeacher: false)
             .tabItem {

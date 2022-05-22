@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct RegistrationStudentSection: View {
-    @EnvironmentObject var registrationManager: RegistrationViewModel
-    @EnvironmentObject var statisticsManager: StatisticsViewModel
-    @EnvironmentObject var classManager: ClassViewModel
+    @EnvironmentObject var statisticsViewModel: StatisticsViewModel
+    @EnvironmentObject var classViewModel: ClassViewModel
     @StateObject var errorHandling = ErrorHandling()
     
     let index: Int
@@ -52,8 +51,8 @@ struct RegistrationStudentSection: View {
                 // Note: absenceReason in the following code is the old state value.
                     .onChange(of: absenceReason) { [absenceReason] newValue in
                         // Force un-wrapping because we know we have the values and would like to receive an empty String
-                        statisticsManager.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
-                        statisticsManager.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID, isMorning: isMorning, date: selectedDate)
+                        statisticsViewModel.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
+                        statisticsViewModel.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID, isMorning: isMorning, date: selectedDate)
                     }
             }
             .overlay(
@@ -64,7 +63,7 @@ struct RegistrationStudentSection: View {
         }
         .fullScreenCover(item: $errorHandling.appError, content: { appError in
             ErrorView(title: appError.title, error: appError.description) {
-                classManager.fetchClasses()
+                classViewModel.fetchClasses()
             }
         })
         .frame(maxWidth: .infinity, minHeight: 80)

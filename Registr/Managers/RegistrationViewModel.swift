@@ -1,5 +1,5 @@
 //
-//  RegistrationManager.swift
+//  RegistrationViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 10/03/2022.

@@ -12,7 +12,7 @@ struct StudentReportView: View {
     // State variables
     @State private var isPresented = false
     @StateObject var errorHandling = ErrorHandling()
-    @EnvironmentObject var reportManager: ReportViewModel
+    @EnvironmentObject var reportViewModel: ReportViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var selectedAbsence: RegistrationType = .illness
     
@@ -67,7 +67,7 @@ struct StudentReportView: View {
             
             HStack {
                 Button("Afslå") {
-                    reportManager.denyReport(selectedReport: report, teacherValidation: .denied) { result in
+                    reportViewModel.denyReport(selectedReport: report, teacherValidation: .denied) { result in
                         if result {
                             presentationMode.wrappedValue.dismiss()
                         } else {
@@ -81,7 +81,7 @@ struct StudentReportView: View {
                 
                 Button("Registrer") {
                     if report.endDate != nil {
-                        reportManager.validateInterval(
+                        reportViewModel.validateInterval(
                             selectedReport: report,
                             validationReason: DefaultsManager.shared.userRole == .headmaster ? .legal : selectedAbsence,
                             teacherValidation: .accepted
@@ -93,7 +93,7 @@ struct StudentReportView: View {
                             }
                         }
                     } else {
-                        reportManager.validateReport(
+                        reportViewModel.validateReport(
                             selectedReport: report,
                             validationReason: DefaultsManager.shared.userRole == .headmaster ? .legal : selectedAbsence,
                             teacherValidation: .accepted
@@ -118,7 +118,7 @@ struct StudentReportView: View {
         })
         .fullScreenCover(item: $errorHandling.appError, content: { appError in
             ErrorView(title: appError.title, error: appError.description) {
-                reportManager.attachReportListeners()
+                reportViewModel.attachReportListeners()
             }
         })
         .navigationTitle("Indberettelse af elev")

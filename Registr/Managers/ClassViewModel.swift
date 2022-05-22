@@ -1,5 +1,5 @@
 //
-//  ClassManager.swift
+//  ClassViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 05/05/2022.

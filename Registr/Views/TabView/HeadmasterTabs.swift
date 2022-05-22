@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct HeadmasterTabs: View {
-    @StateObject var registrationManager = RegistrationViewModel()
-    @StateObject var favoriteManager = FavoriteViewModel()
+    @StateObject var registrationViewModel = RegistrationViewModel()
+    @StateObject var favoriteViewModel = FavoriteViewModel()
     
     var body: some View {
         SchoolHomeView()
@@ -18,15 +18,15 @@ struct HeadmasterTabs: View {
                 Image(systemName: "house")
                 Text("Indberettelser")
             }
-            .environmentObject(favoriteManager)
+            .environmentObject(favoriteViewModel)
         
         ClassListView()
             .tabItem {
                 Image(systemName: "chart.pie")
                 Text("Statistik")
             }
-            .environmentObject(registrationManager)
-            .environmentObject(favoriteManager)
+            .environmentObject(registrationViewModel)
+            .environmentObject(favoriteViewModel)
     }
 }
 

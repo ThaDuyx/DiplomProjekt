@@ -1,5 +1,5 @@
 //
-//  ReportManager.swift
+//  ReportViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 10/03/2022.

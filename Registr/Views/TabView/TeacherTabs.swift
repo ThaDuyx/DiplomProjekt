@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct TeacherTabs: View {
-    @StateObject var registrationManager = RegistrationViewModel()
-    @StateObject var favoriteManager = FavoriteViewModel()
-    @StateObject var classesManager = ClassViewModel()
+    @StateObject var registrationViewModel = RegistrationViewModel()
+    @StateObject var favoriteViewModel = FavoriteViewModel()
+    @StateObject var classesViewModel = ClassViewModel()
 
     var body: some View {
         SchoolHomeView()
@@ -18,26 +18,26 @@ struct TeacherTabs: View {
                 Image(systemName: "house")
                 Text("Indberettelser")
             }
-            .environmentObject(favoriteManager)
-            .environmentObject(classesManager)
+            .environmentObject(favoriteViewModel)
+            .environmentObject(classesViewModel)
         
         AbsenceClassListView()
             .tabItem {
                 Image(systemName: "plus.circle")
                 Text("Fravær")
             }
-            .environmentObject(registrationManager)
-            .environmentObject(favoriteManager)
-            .environmentObject(classesManager)
+            .environmentObject(registrationViewModel)
+            .environmentObject(favoriteViewModel)
+            .environmentObject(classesViewModel)
         
         ClassListView()
             .tabItem {
                 Image(systemName: "chart.pie")
                 Text("Statistik")
             }
-            .environmentObject(registrationManager)
-            .environmentObject(favoriteManager)
-            .environmentObject(classesManager)
+            .environmentObject(registrationViewModel)
+            .environmentObject(favoriteViewModel)
+            .environmentObject(classesViewModel)
     }
 }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @StateObject private var schoolManager = SchoolViewModel()
+    @StateObject private var schoolViewModel = SchoolViewModel()
     @StateObject var errorHandling = ErrorHandling()
     @State private var selectedDate: Date = Date()
     let classInfo: ClassInfo
@@ -26,7 +26,7 @@ struct CalendarView: View {
                         .subTitleTextStyle(color: Color.fiftyfifty, font: .poppinsBold)
                         .padding(.horizontal)
                 }
-                if let school = schoolManager.school {
+                if let school = schoolViewModel.school {
                     DatePicker(
                         "",
                         selection: $selectedDate,
@@ -44,10 +44,10 @@ struct CalendarView: View {
             }
             .fullScreenCover(item: $errorHandling.appError) { appError in
                 ErrorView(title: appError.title, error: appError.description) {
-                    schoolManager.fetchSchool()
+                    schoolViewModel.fetchSchool()
                 }
             }
-        }.environmentObject(schoolManager)
+        }.environmentObject(schoolViewModel)
     }
 }
 

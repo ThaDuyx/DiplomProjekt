@@ -10,9 +10,8 @@ import SwiftUI
 struct ParentAbsenceRegistrationView: View {
     // Manager objects
     @StateObject var errorHandling = ErrorHandling()
-    @StateObject private var schoolManager = SchoolManager()
-    @EnvironmentObject var childrenManager: ChildrenManager
-    @EnvironmentObject var childrenManager: ChildrenViewModel
+    @StateObject private var schoolViewModel = SchoolViewModel()
+    @EnvironmentObject var childrenViewModel: ChildrenViewModel
     @ObservedObject var textBindingManager = TextBindingManager(limit: 150)
     @Environment(\.dismiss) var dismiss
     
@@ -101,7 +100,7 @@ struct ParentAbsenceRegistrationView: View {
                             .bodyTextStyle(color: Color.fiftyfifty, font: .poppinsRegular)
                     ) {
                         Menu {
-                            ForEach(childrenManager.children, id: \.self) { child in
+                            ForEach(childrenViewModel.children, id: \.self) { child in
                                 Button(child.name + " - " + child.className) {
                                     selectedName = child.name
                                     selectedChild = child
@@ -222,7 +221,7 @@ struct ParentAbsenceRegistrationView: View {
                                     }
                             }
                             if showsStartDatePicker {
-                                if let school = schoolManager.school {
+                                if let school = schoolViewModel.school {
                                     DatePicker(
                                         "",
                                         selection: $startDate,
@@ -252,7 +251,7 @@ struct ParentAbsenceRegistrationView: View {
                                         }
                                 }
                                 if showsEndDatePicker {
-                                    if let school = schoolManager.school {
+                                    if let school = schoolViewModel.school {
                                         DatePicker(
                                             "",
                                             selection: $endDate,
@@ -318,7 +317,7 @@ struct ParentAbsenceRegistrationView: View {
                                                             isDoubleRegistrationActivated: isDoubleRegistrationActivated)
                                         
                                         if shouldUpdate {
-                                            childrenManager.updateAbsenceReport(child: selectedChild, report: report) { result in
+                                            childrenViewModel.updateAbsenceReport(child: selectedChild, report: report) { result in
                                                 if result {
                                                     self.selectedChild = nil
                                                     self.selectedName = ""
@@ -333,7 +332,7 @@ struct ParentAbsenceRegistrationView: View {
                                                 }
                                             }
                                         } else {
-                                            childrenManager.createAbsenceReport(child: selectedChild, report: report) { result in
+                                            childrenViewModel.createAbsenceReport(child: selectedChild, report: report) { result in
                                                 if result {
                                                     self.selectedChild = nil
                                                     self.selectedName = ""
@@ -366,18 +365,18 @@ struct ParentAbsenceRegistrationView: View {
                     }
                 }
             }
-            .environmentObject(schoolManager)
+            .environmentObject(schoolViewModel)
             .fullScreenCover(isPresented: $isPresented, content: {
                 ErrorView(title: "alert_title".localize, error: "alert_default_description".localize)
             })
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
-                    childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                    childrenViewModel.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
                         if result {
-                            childrenManager.attachAbsenceListeners()
+                            childrenViewModel.attachAbsenceListeners()
                         }
                     }
-                    childrenManager.attachReportListeners()
+                    childrenViewModel.attachReportListeners()
                 }
             })
             .navigationTitle("parent_absence_registration_nav_title".localize)
@@ -392,7 +391,7 @@ extension ParentAbsenceRegistrationView {
     private func checkReport() -> Bool {
         var alreadyExistReport: Bool = false
         
-        childrenManager.reports.forEach { report in
+        childrenViewModel.reports.forEach { report in
             if report.studentID == selectedChild?.id && report.date.selectedDateFormatted == startDate.selectedDateFormatted {
                 alreadyExistReport = true
             }

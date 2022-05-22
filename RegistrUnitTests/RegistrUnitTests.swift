@@ -10,67 +10,67 @@ import FirebaseFirestore
 @testable import Registr
 
 class RegistrUnitTests: XCTestCase {
-    private let statisticsManager = StatisticsViewModel()
+    private let statisticsViewModel = StatisticsViewModel()
     private let db = Firestore.firestore()
     
     //MARK: - Statistic unit tests
     func testIncrementAndDecrementMethod() throws {
-        let statManager = StatisticsViewModel()
-        statManager.updateClassStatistics(oldValue: "For sent", newValue: "Ulovligt")
-        XCTAssert(statManager.illegalCounter == Int64(1) &&
-                  statManager.illnessCounter == Int64(0) &&
-                  statManager.legalCounter == Int64(0) &&
-                  statManager.lateCounter == Int64(-1))
+        let statViewModel = StatisticsViewModel()
+        statViewModel.updateClassStatistics(oldValue: "For sent", newValue: "Ulovligt")
+        XCTAssert(statViewModel.illegalCounter == Int64(1) &&
+                  statViewModel.illnessCounter == Int64(0) &&
+                  statViewModel.legalCounter == Int64(0) &&
+                  statViewModel.lateCounter == Int64(-1))
     }
     
     func testOnlyDecrement() throws {
-        let statManager = StatisticsViewModel()
-        statManager.updateClassStatistics(oldValue: "For sent", newValue: "")
-        XCTAssert(statManager.illegalCounter == Int64(0) &&
-                  statManager.illnessCounter == Int64(0) &&
-                  statManager.legalCounter == Int64(0) &&
-                  statManager.lateCounter == Int64(-1))
+        let statViewModel = StatisticsViewModel()
+        statViewModel.updateClassStatistics(oldValue: "For sent", newValue: "")
+        XCTAssert(statViewModel.illegalCounter == Int64(0) &&
+                  statViewModel.illnessCounter == Int64(0) &&
+                  statViewModel.legalCounter == Int64(0) &&
+                  statViewModel.lateCounter == Int64(-1))
     }
     
     func testOnlyIncrement() throws {
-        let statManager = StatisticsViewModel()
-        statManager.updateClassStatistics(oldValue: "", newValue: "For sent")
-        XCTAssert(statManager.illegalCounter == Int64(0) &&
-                  statManager.illnessCounter == Int64(0) &&
-                  statManager.legalCounter == Int64(0) &&
-                  statManager.lateCounter == Int64(1))
+        let statViewModel = StatisticsViewModel()
+        statViewModel.updateClassStatistics(oldValue: "", newValue: "For sent")
+        XCTAssert(statViewModel.illegalCounter == Int64(0) &&
+                  statViewModel.illnessCounter == Int64(0) &&
+                  statViewModel.legalCounter == Int64(0) &&
+                  statViewModel.lateCounter == Int64(1))
     }
     
     func testResetCounters() throws {
-        let statManager = StatisticsViewModel()
-        statManager.updateClassStatistics(oldValue: "", newValue: "For sent")
-        statManager.updateClassStatistics(oldValue: "Ulovligt", newValue: "Sygdom")
-        statManager.updateClassStatistics(oldValue: "", newValue: "Sygdom")
-        statManager.updateClassStatistics(oldValue: "", newValue: "For sent")
-        statManager.updateClassStatistics(oldValue: "", newValue: "For sent")
-        statManager.updateClassStatistics(oldValue: "", newValue: "Sygdom")
-        statManager.updateClassStatistics(oldValue: "For sent", newValue: "Ulovligt")
-        statManager.updateClassStatistics(oldValue: "Ulovligt", newValue: "Ulovligt")
-        statManager.resetStatCounters()
+        let statViewModel = StatisticsViewModel()
+        statViewModel.updateClassStatistics(oldValue: "", newValue: "For sent")
+        statViewModel.updateClassStatistics(oldValue: "Ulovligt", newValue: "Sygdom")
+        statViewModel.updateClassStatistics(oldValue: "", newValue: "Sygdom")
+        statViewModel.updateClassStatistics(oldValue: "", newValue: "For sent")
+        statViewModel.updateClassStatistics(oldValue: "", newValue: "For sent")
+        statViewModel.updateClassStatistics(oldValue: "", newValue: "Sygdom")
+        statViewModel.updateClassStatistics(oldValue: "For sent", newValue: "Ulovligt")
+        statViewModel.updateClassStatistics(oldValue: "Ulovligt", newValue: "Ulovligt")
+        statViewModel.resetStatCounters()
         
-        XCTAssert(statManager.illegalCounter == Int64(0) &&
-                  statManager.illnessCounter == Int64(0) &&
-                  statManager.legalCounter == Int64(0) &&
-                  statManager.lateCounter == Int64(0))
+        XCTAssert(statViewModel.illegalCounter == Int64(0) &&
+                  statViewModel.illnessCounter == Int64(0) &&
+                  statViewModel.legalCounter == Int64(0) &&
+                  statViewModel.lateCounter == Int64(0))
     }
     
     func testDecrementer() throws {
-        let statManager = StatisticsViewModel()
-        statManager.decrementCounters(value: "Sygdom")
+        let statViewModel = StatisticsViewModel()
+        statViewModel.decrementCounters(value: "Sygdom")
         
-        XCTAssert(statManager.illnessCounter == Int64(-1))
+        XCTAssert(statViewModel.illnessCounter == Int64(-1))
     }
     
     func testIncrementer() throws {
-        let statManager = StatisticsViewModel()
-        statManager.incrementCounters(value: "Sygdom")
+        let statViewModel = StatisticsViewModel()
+        statViewModel.incrementCounters(value: "Sygdom")
         
-        XCTAssert(statManager.illnessCounter == Int64(1))
+        XCTAssert(statViewModel.illnessCounter == Int64(1))
     }
     
     //MARK: - Date conversions unit tests

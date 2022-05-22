@@ -1,5 +1,5 @@
 //
-//  FavoriteManager.swift
+//  FavoriteViewModel.swift
 //  Registr
 //
 //  Created by Simon Andersen on 09/04/2022.

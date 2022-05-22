@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct StudentListView: View {
-    @EnvironmentObject var registrationManager: RegistrationViewModel
-    @EnvironmentObject var classManager: ClassViewModel
+    @EnvironmentObject var registrationViewModel: RegistrationViewModel
+    @EnvironmentObject var classViewModel: ClassViewModel
     @StateObject var errorHandling = ErrorHandling()
 
     var selectedClass: ClassInfo
@@ -21,7 +21,7 @@ struct StudentListView: View {
     var body: some View {
         ZStack {
             List {
-                ForEach(registrationManager.students, id: \.self) { student in
+                ForEach(registrationViewModel.students, id: \.self) { student in
                     StudentSection(studentName: student.name, studentID: student.id ?? "", student: student)
                 }
                 .listRowBackground(Color.frolyRed)
@@ -31,14 +31,14 @@ struct StudentListView: View {
         .navigationTitle("Elever i \(selectedClass.name)")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(){
-            registrationManager.fetchStudents(className: selectedClass.classID)
+            registrationViewModel.fetchStudents(className: selectedClass.classID)
         }
         .fullScreenCover(item: $errorHandling.appError) { appError in
             ErrorView(title: appError.title, error: appError.description) {
                 if appError.type == .registrationManagerInitError {
-                    classManager.fetchClasses()
+                    classViewModel.fetchClasses()
                 } else {
-                    registrationManager.fetchStudents(className: selectedClass.classID)
+                    registrationViewModel.fetchStudents(className: selectedClass.classID)
                 }
             }
         }

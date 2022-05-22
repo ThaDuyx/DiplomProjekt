@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReportSection: View {
-    @EnvironmentObject var childrenManager: ChildrenViewModel
+    @EnvironmentObject var childrenViewModel: ChildrenViewModel
     @StateObject var errorHandling = ErrorHandling()
     @State var showModal = false
     let report: Report
@@ -21,7 +21,7 @@ struct ReportSection: View {
             }
             
             Button("Slet") {
-                childrenManager.deleteReport(report: report, child: student)
+                childrenViewModel.deleteReport(report: report, child: student)
             }
         } label: {
             HStack(spacing: 20) {
@@ -76,14 +76,14 @@ struct ReportSection: View {
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
                     if appError.type == .childrenManagerDeleteError {
-                        childrenManager.deleteReport(report: report, child: student)
+                        childrenViewModel.deleteReport(report: report, child: student)
                     } else {
-                        childrenManager.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
+                        childrenViewModel.fetchChildren(parentID: DefaultsManager.shared.currentProfileID) { result in
                             if result {
-                                childrenManager.attachAbsenceListeners()
+                                childrenViewModel.attachAbsenceListeners()
                             }
                         }
-                        childrenManager.attachReportListeners()
+                        childrenViewModel.attachReportListeners()
                     }
                 }
             })
