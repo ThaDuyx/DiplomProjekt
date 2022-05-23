@@ -11,19 +11,29 @@ import FirebaseFirestore
  This class is used to feed the database
  */
 class FeedDatabaseManager: ObservableObject {
-    @Published var dateArray: [String] = []
+    @Published var dateArray: [String] = [
+        "24-05-2022",
+        "25-05-2022",
+        "26-05-2022",
+        "27-05-2022"
+    ]
     @Published var students = [Student]()
+    @Published var classInfo = ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: "")
     
     private var testStudent: Student = Student(id: "1234", name: "Alice Testable", className: "1.a", email: "student@school.com", classInfo: ClassInfo(isDoubleRegistrationActivated: false, name: "1.a", classID: "abcdefg1234"), associatedSchool: "abcdefg1234", cpr: "123456-7890")
     private var classes = [ClassInfo]()
     private let db = Firestore.firestore()
     
     // School & Class selectors, change these variable to choose the specific school or class.
+    // Gladsaxe Skole
     let selectedSchool = "EXvXPS4HuVnxu7LhZRPt"
+    // 9.x
     let selectedClass = "ZjHicqkeR0aERu6ZY87v"
     
     init() {
-        fetchTestStudents()
+        // fetchTestStudents()
+        fetchClass(classID: selectedClass)
+        fetchStudents(classID: selectedClass)
     }
     
     /// This method fills our date array with date strings in the format 'dd-MM-yyyy'.
@@ -53,12 +63,12 @@ class FeedDatabaseManager: ObservableObject {
     }
     
     /// This method is used to fill the 'students' array with student that can be used to create new absence registrations.
-    func fetchStudents(className: String) {
+    func fetchStudents(classID: String) {
         db
             .collection("fb_schools_path".localize)
             .document(selectedSchool)
             .collection("fb_classes_path".localize)
-            .document(className)
+            .document(classID)
             .collection("fb_students_path".localize)
             .getDocuments { querySnapshot, err in
                 if let err = err {
@@ -84,6 +94,46 @@ class FeedDatabaseManager: ObservableObject {
                     }
                 }
             }
+    }
+    
+    func fetchClass(classID: String) {
+        db
+            .collection("fb_schools_path".localize)
+            .document(selectedSchool)
+            .collection("fb_classes_path".localize)
+            .document(classID)
+            .getDocument { querySnapshot, err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    do {
+                        if let classSnapshot = try querySnapshot!.data(as: ClassInfo.self) {
+                            self.classInfo = classSnapshot
+                        }
+                    }
+                    catch {
+                        print(error)
+                    }
+                }
+            }
+        
+        
+//            .getDocuments { querySnapshot, err in
+//                if let err = err {
+//                    print("Error getting documents: \(err)")
+//                } else {
+//                    for document in querySnapshot!.documents {
+//                        do {
+//                            if let classSnapshot = try document.data(as: ClassInfo.self) {
+//                                self.classes.append(classSnapshot)
+//                            }
+//                        }
+//                        catch {
+//                            print(error)
+//                        }
+//                    }
+//                }
+//            }
     }
     
     func fetchClasses() {
@@ -137,11 +187,12 @@ class FeedDatabaseManager: ObservableObject {
                                   "date" : date,
                                   "isAbsenceRegistered" : false,
                                   "isMorning" : true,
-                                  "reason" : "", "studentID" : id,
+                                  "reason" : "",
+                                  "studentID" : id,
                                   "studentName" : student.name,
                                   "validated" : false])
                     
-                    if classes.contains(where: { $0.name == student.className && $0.isDoubleRegistrationActivated}) {
+                    if classInfo.isDoubleRegistrationActivated {
                         newRegistration
                             .collection("fb_afternoonRegistration_path".localize)
                             .document(id)
@@ -149,7 +200,8 @@ class FeedDatabaseManager: ObservableObject {
                                       "date" : date,
                                       "isAbsenceRegistered" : false,
                                       "isMorning" : false,
-                                      "reason" : "", "studentID" : id,
+                                      "reason" : "",
+                                      "studentID" : id,
                                       "studentName" : student.name,
                                       "validated" : false])
                     }
@@ -172,7 +224,6 @@ class FeedDatabaseManager: ObservableObject {
                             if let student = try document.data(as: Student.self) {
                                 self.students.append(student)
                                 self.students.sort { $0.name < $1.name }
-                                print(student)
                             }
                         }
                         catch {
