@@ -29,6 +29,16 @@ struct TeacherAbsencesSection: View {
                         .bodyTextStyle(color: Color.white, font: .poppinsBold)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
+                    if let endDate = report.endDate {
+                        Text(report.date.selectedDateFormatted + " - " + endDate.selectedDateFormatted)
+                            .smallBodyTextStyle(color: .white, font: .poppinsRegular)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    } else {
+                        Text(report.date.selectedDateFormatted)
+                            .smallBodyTextStyle(color: .white, font: .poppinsRegular)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    
                     Text(report.description ?? "")
                         .smallBodyTextStyle(color: .white, font: .poppinsRegular)
                         .frame(maxWidth: .infinity, alignment: .leading)
