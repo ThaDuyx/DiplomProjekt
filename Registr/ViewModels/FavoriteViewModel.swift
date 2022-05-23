@@ -25,11 +25,13 @@ class FavoriteViewModel: ObservableObject {
             if let index = favorites.firstIndex(of: favorite) {
                 favorites.remove(at: index)
                 DefaultsManager.shared.favorites = favorites
+                deselectedFavorite = ""
                 deselectedFavorite = favorite
             }
         } else {
             // Updating the published variable to call a redraw of the view
             favorites.append(favorite)
+            newFavorite = ""
             newFavorite = favorite
             
             
