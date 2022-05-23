@@ -222,7 +222,7 @@ class ReportViewModel: ObservableObject {
                 let absenceStudentRef = db
                     .collection("fb_students_path".localize)
                     .document(selectedReport.studentID)
-                    .collection("fb_absense_path".localize)
+                    .collection("fb_absence_path".localize)
                     .whereField("date", isEqualTo: date)
                     .whereField("isMorning", isEqualTo: true)
                 
@@ -260,7 +260,7 @@ class ReportViewModel: ObservableObject {
                                         let newAbsenceRef = try self.db
                                             .collection("fb_students_path".localize)
                                             .document(selectedReport.studentID)
-                                            .collection("fb_absense_path".localize)
+                                            .collection("fb_absence_path".localize)
                                             .addDocument(from: newAbsence)
                                         print("A new absence were created: \(newAbsenceRef)")
                                         
@@ -291,7 +291,7 @@ class ReportViewModel: ObservableObject {
                 let absenceStudentRef = db
                     .collection("fb_students_path".localize)
                     .document(selectedReport.studentID)
-                    .collection("fb_absense_path".localize)
+                    .collection("fb_absence_path".localize)
                     .whereField("date", isEqualTo: date)
                     .whereField("isMorning", isEqualTo: false)
                 
@@ -328,7 +328,7 @@ class ReportViewModel: ObservableObject {
                                         let newAbsenceRef = try self.db
                                             .collection("fb_students_path".localize)
                                             .document(selectedReport.studentID)
-                                            .collection("fb_absense_path".localize)
+                                            .collection("fb_absence_path".localize)
                                             .addDocument(from: newAbsence)
                                         print("A new absence were created: \(newAbsenceRef)")
                                         
@@ -370,7 +370,7 @@ class ReportViewModel: ObservableObject {
                 let absenceStudentRef = db
                     .collection("fb_students_path".localize)
                     .document(selectedReport.studentID)
-                    .collection("fb_absense_path".localize)
+                    .collection("fb_absence_path".localize)
                     .whereField("date", isEqualTo: date)
                 
                 absenceStudentRef
@@ -419,13 +419,13 @@ class ReportViewModel: ObservableObject {
                                         let newMorningAbsenceRef = try self.db
                                             .collection("fb_students_path".localize)
                                             .document(selectedReport.studentID)
-                                            .collection("fb_absense_path".localize)
+                                            .collection("fb_absence_path".localize)
                                             .addDocument(from: newMorningAbsence)
                                         
                                         let newAfternoonAbsenceRef = try self.db
                                             .collection("fb_students_path".localize)
                                             .document(selectedReport.studentID)
-                                            .collection("fb_absense_path".localize)
+                                            .collection("fb_absence_path".localize)
                                             .addDocument(from: newAfternoonAbsence)
                                         print("A new absence were created: \(newMorningAbsenceRef)")
                                         print("A new absence were created: \(newAfternoonAbsenceRef)")
@@ -505,7 +505,7 @@ class ReportViewModel: ObservableObject {
                         let absenceStudentRef = db
                             .collection("fb_students_path".localize)
                             .document(selectedReport.studentID)
-                            .collection("fb_absense_path".localize)
+                            .collection("fb_absence_path".localize)
                             .whereField("date", isEqualTo: date.selectedDateFormatted)
                             .whereField("isMorning", isEqualTo: true)
                         
@@ -551,7 +551,7 @@ class ReportViewModel: ObservableObject {
                         let absenceStudentRef = db
                             .collection("fb_students_path".localize)
                             .document(selectedReport.studentID)
-                            .collection("fb_absense_path".localize)
+                            .collection("fb_absence_path".localize)
                             .whereField("date", isEqualTo: date)
                             .whereField("isMorning", isEqualTo: false)
                         
@@ -608,7 +608,7 @@ class ReportViewModel: ObservableObject {
                         let absenceStudentRef = db
                             .collection("fb_students_path".localize)
                             .document(selectedReport.studentID)
-                            .collection("fb_absense_path".localize)
+                            .collection("fb_absence_path".localize)
                             .whereField("date", isEqualTo: date)
                         
                         absenceStudentRef
@@ -671,7 +671,7 @@ class ReportViewModel: ObservableObject {
                     let newAbsenceRef = db
                         .collection("fb_students_path".localize)
                         .document(selectedReport.studentID)
-                        .collection("fb_absense_path".localize)
+                        .collection("fb_absence_path".localize)
                         .document()
                     
                     try batch.setData(from: newIntervalRegistration, forDocument: newAbsenceRef)
