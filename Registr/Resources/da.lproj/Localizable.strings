@@ -179,3 +179,6 @@
 "profile_log_out" = "Log ud";
 "profile_toggle" = "Tilladelse til at modtage notifikationer, når der sker noget vigtigt.";
 
+// MARK: - Report State Section
+"rss_check_description" = "Indberettelsen er blevet oprettet!";
+"rss_error_description" = "Der er sket en fejl. Prøv igen!";
