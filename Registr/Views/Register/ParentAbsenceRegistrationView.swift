@@ -297,14 +297,13 @@ struct ParentAbsenceRegistrationView: View {
                                 if selectedName.isEmpty || selectedAbsenceString.isEmpty || isDoubleRegistrationActivated && selectedTimeOfDayString.isEmpty {
                                     showingAlert = true
                                     isReportAlert = false
-                                }else if checkReport(), !shouldUpdate {
+                                } else if checkReport(), !shouldUpdate {
                                     showingAlert = true
                                     isReportAlert = true
                                 } else {
-                                    showLoading = true
-                                    if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsenceString.isEmpty, selectedRegistrationType != .notRegistered {
+                                    if let selectedChild = selectedChild, let id = selectedChild.id, !selectedAbsenceString.isEmpty, selectedRegistrationType != .notRegistered {
                                         let report = Report(id: shouldUpdate ? report?.id : nil,
-                                                            parentName: name,
+                                                            parentName: DefaultsManager.shared.userName,
                                                             parentID: DefaultsManager.shared.currentProfileID,
                                                             studentName: selectedChild.name,
                                                             studentID: id,
@@ -432,7 +431,6 @@ extension ParentAbsenceRegistrationView {
         return alreadyExistReport
     }
 }
-
 
 struct ParentAbsenceRegistrationView_Previews: PreviewProvider {
     static var previews: some View {

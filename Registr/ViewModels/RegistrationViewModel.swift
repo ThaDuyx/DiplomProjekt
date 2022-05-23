@@ -132,7 +132,7 @@ class RegistrationViewModel: ObservableObject {
                         let absenceStudentRef = db
                             .collection("fb_students_path".localize)
                             .document(registration.studentID)
-                            .collection("fb_absense_path".localize)
+                            .collection("fb_absence_path".localize)
                             .whereField("date", isEqualTo: date)
                             .whereField("isMorning", isEqualTo: isMorning)
                         
@@ -149,7 +149,7 @@ class RegistrationViewModel: ObservableObject {
                         let absenceStudentRef = db
                             .collection("fb_students_path".localize)
                             .document(registration.studentID)
-                            .collection("fb_absense_path".localize)
+                            .collection("fb_absence_path".localize)
                             .document()
                         
                         if let index = self.registrations.firstIndex(where: {$0.studentID == registration.studentID}) {
@@ -178,7 +178,7 @@ class RegistrationViewModel: ObservableObject {
                     let absenceStudentRef = db
                         .collection("fb_students_path".localize)
                         .document(registration.studentID)
-                        .collection("fb_absense_path".localize)
+                        .collection("fb_absence_path".localize)
                         .whereField("date", isEqualTo: date)
                         .whereField("isMorning", isEqualTo: isMorning)
                     
@@ -236,15 +236,17 @@ class RegistrationViewModel: ObservableObject {
      
      - parameter className:      The unique name specifier of the class
      */
-    func fetchStudents(className: String) {
+    func fetchStudents(classID: String) {
+        
+        if selectedClass != classID || students.isEmpty {
             students.removeAll()
-            selectedClass = className
+            selectedClass = classID
             
             db
                 .collection("fb_schools_path".localize)
                 .document(selectedSchool)
                 .collection("fb_classes_path".localize)
-                .document(className)
+                .document(classID)
                 .collection("fb_students_path".localize)
                 .getDocuments { querySnapshot, err in
                     if let err = err {
@@ -270,5 +272,6 @@ class RegistrationViewModel: ObservableObject {
                         }
                     }
                 }
+        }
     }
 }

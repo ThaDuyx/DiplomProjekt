@@ -17,14 +17,6 @@ struct RegistrApp: App {
     @StateObject var notificationVM = NotificationViewModel()
     @State var authenticationState: Bool = false
     
-    init() {
-        // Hardcoded for test
-        if DefaultsManager.shared.favorites.isEmpty {
-            let favoriteArray = ["KkT176TAZiImYfurOJuk", "YmORb5urte0Lw3H10lmB", "Gf88KZ9GHf38Tr1XNLxk"]
-            DefaultsManager.shared.favorites = favoriteArray
-        }
-    }
-    
     var body: some Scene {
         WindowGroup {
             LoginOptions().environmentObject(notificationVM)
