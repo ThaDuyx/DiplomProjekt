@@ -402,19 +402,6 @@ struct ParentAbsenceRegistrationView: View {
     }
 }
 
-struct TransparentBackground: UIViewRepresentable {
-
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView()
-        DispatchQueue.main.async {
-            view.superview?.superview?.backgroundColor = .clear
-        }
-        return view
-    }
-
-    func updateUIView(_ uiView: UIView, context: Context) {}
-}
-
 extension ParentAbsenceRegistrationView {
     
     // This function is checking if there already exist a report for the given date.
