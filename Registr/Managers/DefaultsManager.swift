@@ -83,7 +83,7 @@ final class DefaultsManager {
     
     var userName: String {
         get {
-            return defaults.string(forKey: Key.associatedSchool.rawValue) ?? ""
+            return defaults.string(forKey: Key.userName.rawValue) ?? ""
         } set {
             defaults.set(newValue, forKey: Key.userName.rawValue)
             defaults.synchronize()

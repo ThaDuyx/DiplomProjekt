@@ -54,13 +54,8 @@ struct SchoolHomeView: View {
                         }
                     }
                     .accentColor(Color.fiftyfifty)
-                    .onChange(of: favoriteViewModel.newFavorite) { newValue in
-                        reportViewModel.addFavorite(newFavorite: newValue)
-                    }
-                    .onChange(of: favoriteViewModel.deselectedFavorite) { deselectedValue in
-                        reportViewModel.removeFavorite(favorite: deselectedValue)
-                    }
                 }
+                
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -72,6 +67,12 @@ struct SchoolHomeView: View {
                         }
                     }
                 }
+            }
+            .onChange(of: favoriteViewModel.newFavorite) { newValue in
+                reportViewModel.addFavorite(newFavorite: newValue)
+            }
+            .onChange(of: favoriteViewModel.deselectedFavorite) { deselectedValue in
+                reportViewModel.removeFavorite(favorite: deselectedValue)
             }
             .onAppear() {
                 notificationVM.getNotificationSettings()
