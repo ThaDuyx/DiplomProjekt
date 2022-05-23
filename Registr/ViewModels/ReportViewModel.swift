@@ -110,68 +110,70 @@ class ReportViewModel: ObservableObject {
      - parameter newFavorite:       A string on the name of the selected favorite class.
      */
     func addFavorite(newFavorite: String) {
-        let listener = db
-            .collection("fb_schools_path".localize)
-            .document(selectedSchool)
-            .collection("fb_classes_path".localize)
-            .document(newFavorite)
-            .collection("fb_report_path".localize)
-            .addSnapshotListener { querySnapshot, err in
-                if let err = err {
-                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .reportManagerError)
-                } else {
-                    guard let snapshot = querySnapshot else {
-                        ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err!.localizedDescription, type: .reportManagerError)
-                        return
-                    }
-                    
-                    snapshot.documentChanges.forEach { diff in
-                        // When a document has been added we will add the new report to our list
-                        if (diff.type == .added) {
-                            do {
-                                if let report = try diff.document.data(as: Report.self) {
-                                    self.reports.append(report)
-                                }
-                            }
-                            catch {
-                                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportManagerError)
-                            }
+        if !newFavorite.isEmpty {
+            let listener = db
+                .collection("fb_schools_path".localize)
+                .document(selectedSchool)
+                .collection("fb_classes_path".localize)
+                .document(newFavorite)
+                .collection("fb_report_path".localize)
+                .addSnapshotListener { querySnapshot, err in
+                    if let err = err {
+                        ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err.localizedDescription, type: .reportManagerError)
+                    } else {
+                        guard let snapshot = querySnapshot else {
+                            ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: err!.localizedDescription, type: .reportManagerError)
+                            return
                         }
                         
-                        // When a document has been modified we will fetch the repective report and update its content
-                        if (diff.type == .modified) {
-                            do {
-                                if let modifiedReport = try diff.document.data(as: Report.self) {
-                                    if let modifiedId = modifiedReport.id, let index = self.reports.firstIndex(where: {$0.id == modifiedId}) {
-                                        self.reports[index] = modifiedReport
+                        snapshot.documentChanges.forEach { diff in
+                            // When a document has been added we will add the new report to our list
+                            if (diff.type == .added) {
+                                do {
+                                    if let report = try diff.document.data(as: Report.self) {
+                                        self.reports.append(report)
                                     }
                                 }
-                            }
-                            catch {
-                                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportManagerError)
-                            }
-                        }
-                        
-                        // When a document has been removed we will fetch the repective report and removed its content from our list
-                        if (diff.type == .removed) {
-                            do {
-                                if let removedReport = try diff.document.data(as: Report.self) {
-                                    if let removedId = removedReport.id, let index = self.reports.firstIndex(where: {$0.id == removedId}) {
-                                        self.reports.remove(at: index)
-                                        self.reports.sort{ $0.className < $1.className }
-                                    }
+                                catch {
+                                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportManagerError)
                                 }
                             }
-                            catch {
-                                ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportManagerError)
+                            
+                            // When a document has been modified we will fetch the repective report and update its content
+                            if (diff.type == .modified) {
+                                do {
+                                    if let modifiedReport = try diff.document.data(as: Report.self) {
+                                        if let modifiedId = modifiedReport.id, let index = self.reports.firstIndex(where: {$0.id == modifiedId}) {
+                                            self.reports[index] = modifiedReport
+                                        }
+                                    }
+                                }
+                                catch {
+                                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportManagerError)
+                                }
+                            }
+                            
+                            // When a document has been removed we will fetch the repective report and removed its content from our list
+                            if (diff.type == .removed) {
+                                do {
+                                    if let removedReport = try diff.document.data(as: Report.self) {
+                                        if let removedId = removedReport.id, let index = self.reports.firstIndex(where: {$0.id == removedId}) {
+                                            self.reports.remove(at: index)
+                                            self.reports.sort{ $0.className < $1.className }
+                                        }
+                                    }
+                                }
+                                catch {
+                                    ErrorHandling.shared.appError = ErrorType(title: "alert_title".localize, description: error.localizedDescription, type: .reportManagerError)
+                                }
                             }
                         }
                     }
                 }
-            }
-        
-        // We add the snapshotlistener to our list of references so we can uniquely identify them.
-        snapshotListeners.append(SnapshotData(favoriteName: newFavorite, listenerRegistration: listener))
+            
+            // We add the snapshotlistener to our list of references so we can uniquely identify them.
+            snapshotListeners.append(SnapshotData(favoriteName: newFavorite, listenerRegistration: listener))
+        }
     }
     
     /**
