@@ -294,6 +294,7 @@ struct ParentAbsenceRegistrationView: View {
                         
                         VStack(alignment: .center) {
                             Button {
+                                showLoading = true
                                 if selectedName.isEmpty || selectedAbsenceString.isEmpty || isDoubleRegistrationActivated && selectedTimeOfDayString.isEmpty {
                                     showingAlert = true
                                     isReportAlert = false
@@ -323,7 +324,6 @@ struct ParentAbsenceRegistrationView: View {
                                             childrenViewModel.updateAbsenceReport(child: selectedChild, report: report) { result in
                                                 showLoading = false
                                                 resultState = result
-                                                showAnimation.toggle()
                                                 if result {
                                                     self.selectedChild = nil
                                                     self.selectedName = ""
@@ -332,7 +332,7 @@ struct ParentAbsenceRegistrationView: View {
                                                     self.isInterval = false
                                                     self.startDate = Date()
                                                     self.endDate = Date()
-                                                    dismiss()
+                                                    showAnimation.toggle()
                                                 } else {
                                                     isPresented.toggle()
                                                 }
@@ -341,7 +341,6 @@ struct ParentAbsenceRegistrationView: View {
                                             childrenViewModel.createAbsenceReport(child: selectedChild, report: report) { result in
                                                 showLoading = false
                                                 resultState = result
-                                                showAnimation.toggle()
                                                 if result {
                                                     self.selectedChild = nil
                                                     self.selectedName = ""
@@ -350,6 +349,7 @@ struct ParentAbsenceRegistrationView: View {
                                                     self.isInterval = false
                                                     self.startDate = Date()
                                                     self.endDate = Date()
+                                                    showAnimation.toggle()
                                                 } else {
                                                     isPresented.toggle()
                                                 }
@@ -377,6 +377,8 @@ struct ParentAbsenceRegistrationView: View {
                             })
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
+                    } else if selectedChild == nil && showAnimation {
+                        ReportStateSection(state: resultState ? AnimationStates.check.rawValue : AnimationStates.error.rawValue)
                     }
                 }
             }
@@ -394,10 +396,6 @@ struct ParentAbsenceRegistrationView: View {
                     childrenViewModel.attachReportListeners()
                 }
             })
-            .fullScreenCover(isPresented: $showAnimation) {
-                ReportStateSection(state: resultState ? AnimationStates.check.rawValue : AnimationStates.error.rawValue)
-                    .background(TransparentBackground())
-            }
             .navigationTitle("parent_absence_registration_nav_title".localize)
             .navigationBarTitleDisplayMode(.inline)
         }
