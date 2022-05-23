@@ -33,6 +33,9 @@ struct ParentAbsenceRegistrationView: View {
     @State private var showingAlert = false
     @State private var isReportAlert = false
     @State private var shouldDismiss = false
+    @State private var showAnimation = false
+    @State private var showLoading = false
+    @State private var resultState = false
     @FocusState private var focusedField: Field?
     
     // Selectors
@@ -290,7 +293,7 @@ struct ParentAbsenceRegistrationView: View {
                         .listRowBackground(Color.frolyRed)
                         
                         VStack(alignment: .center) {
-                            Button(shouldUpdate ? "par_update".localize : "par_report".localize) {
+                            Button {
                                 if selectedName.isEmpty || selectedAbsenceString.isEmpty || isDoubleRegistrationActivated && selectedTimeOfDayString.isEmpty {
                                     showingAlert = true
                                     isReportAlert = false
@@ -298,6 +301,7 @@ struct ParentAbsenceRegistrationView: View {
                                     showingAlert = true
                                     isReportAlert = true
                                 } else {
+                                    showLoading = true
                                     if let selectedChild = selectedChild, let name = UserManager.shared.user?.name, let id = selectedChild.id, !selectedAbsenceString.isEmpty, selectedRegistrationType != .notRegistered {
                                         let report = Report(id: shouldUpdate ? report?.id : nil,
                                                             parentName: name,
@@ -318,6 +322,9 @@ struct ParentAbsenceRegistrationView: View {
                                         
                                         if shouldUpdate {
                                             childrenViewModel.updateAbsenceReport(child: selectedChild, report: report) { result in
+                                                showLoading = false
+                                                resultState = result
+                                                showAnimation.toggle()
                                                 if result {
                                                     self.selectedChild = nil
                                                     self.selectedName = ""
@@ -333,6 +340,9 @@ struct ParentAbsenceRegistrationView: View {
                                             }
                                         } else {
                                             childrenViewModel.createAbsenceReport(child: selectedChild, report: report) { result in
+                                                showLoading = false
+                                                resultState = result
+                                                showAnimation.toggle()
                                                 if result {
                                                     self.selectedChild = nil
                                                     self.selectedName = ""
@@ -350,6 +360,12 @@ struct ParentAbsenceRegistrationView: View {
                                             }
                                         }
                                     }
+                                }
+                            } label: {
+                                if showLoading {
+                                    ProgressView()
+                                } else {
+                                    Text(shouldUpdate ? "par_update".localize : "par_report".localize)
                                 }
                             }
                             .buttonStyle(Resources.CustomButtonStyle.StandardButtonStyle(font: .poppinsBold, fontSize: Resources.FontSize.body))
@@ -379,10 +395,27 @@ struct ParentAbsenceRegistrationView: View {
                     childrenViewModel.attachReportListeners()
                 }
             })
+            .fullScreenCover(isPresented: $showAnimation) {
+                ReportStateSection(state: resultState ? AnimationStates.check.rawValue : AnimationStates.error.rawValue)
+                    .background(TransparentBackground())
+            }
             .navigationTitle("parent_absence_registration_nav_title".localize)
             .navigationBarTitleDisplayMode(.inline)
         }
     }
+}
+
+struct TransparentBackground: UIViewRepresentable {
+
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        DispatchQueue.main.async {
+            view.superview?.superview?.backgroundColor = .clear
+        }
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
 extension ParentAbsenceRegistrationView {
