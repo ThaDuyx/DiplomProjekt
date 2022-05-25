@@ -11,6 +11,7 @@ import SwiftUI
 struct HeadmasterTabs: View {
     @StateObject var registrationViewModel = RegistrationViewModel()
     @StateObject var favoriteViewModel = FavoriteViewModel()
+    @StateObject var classViewModel = ClassViewModel()
     
     var body: some View {
         SchoolHomeView()
@@ -19,6 +20,7 @@ struct HeadmasterTabs: View {
                 Text("Indberettelser")
             }
             .environmentObject(favoriteViewModel)
+            .environmentObject(classViewModel)
         
         ClassListView()
             .tabItem {
@@ -27,6 +29,7 @@ struct HeadmasterTabs: View {
             }
             .environmentObject(registrationViewModel)
             .environmentObject(favoriteViewModel)
+            .environmentObject(classViewModel)
     }
 }
 
