@@ -21,6 +21,7 @@ class RegistrUITests: XCTestCase {
     
     // MARK: - Test for login
     func test_parent_login() {
+        logout()
         // LoginOptions
         self.app.buttons["parentNavigationLink"].tap()
         
@@ -40,6 +41,7 @@ class RegistrUITests: XCTestCase {
     }
     
     func test_teacher_login() {
+        logout()
         // LoginOptions
         self.app.buttons["teacherNavigationLink"].tap()
         
@@ -82,9 +84,7 @@ class RegistrUITests: XCTestCase {
         
         // Select a child to give an absence
         let studentScrollView = self.app.scrollViews["studentScrollView"].otherElements
-        // Delaying 1 second to make sure that the students have been fetched.
-        studentScrollView.element.waitForExistence(timeout: 1)
-        let selectStudent = studentScrollView.firstMatch
+        let selectStudent = studentScrollView.staticTexts["Alexander Larsen"]
         selectStudent.tap()
         
         // Select the absence for the child
@@ -116,10 +116,11 @@ class RegistrUITests: XCTestCase {
     // MARK: - Creat a new absence registration for child.
     func test_make_new_absence_registration() {
         // Login flow for parent
+        let tabbar = self.app.tabBars["Fanelinje"]
+        logout()
         test_parent_login()
         
         // Select registration in tabbar
-        let tabbar = self.app.tabBars["Fanelinje"]
         let tabBarItemRegistration = tabbar.buttons["Indberet"]
         tabBarItemRegistration.tap()
         
@@ -175,6 +176,19 @@ class RegistrUITests: XCTestCase {
 
 
 extension RegistrUITests {
+    func logout() {
+        let tabbar = self.app.tabBars["Fanelinje"]
+        if tabbar.buttons["Børn"].exists {
+            app.tabBars["Fanelinje"].buttons["Profil"].tap()
+            app.buttons["Log ud"].tap()
+        } else if tabbar.buttons["Indberettelser"].exists {
+            app.navigationBars["Indberettelser"].buttons["person"].tap()
+            app.buttons["Log ud"].tap()
+        } else {
+            XCTAssertTrue(true)
+        }
+    }
+    
     func dateFormatter(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MMM"
@@ -186,6 +200,7 @@ extension RegistrUITests {
     // MARK: - Access the report view
     func test_access_report_view() -> XCUIElementQuery {
         // Login flow for teacher
+        logout()
         test_teacher_login()
         
         // Select report in tabbar
@@ -204,13 +219,14 @@ extension RegistrUITests {
     
     func child_absence_registration_count(isAfterRegistration: Bool) {
         
+        let tabbar = self.app.tabBars["Fanelinje"]
         if isAfterRegistration {
             // Select home in tabbar
-            let tabbar = self.app.tabBars["Fanelinje"]
             let tabBarItemRegistration = tabbar.buttons["Børn"]
             tabBarItemRegistration.tap()
         } else {
             // Uses the parent login flow
+            logout()
             test_parent_login()
         }
         // Getting the list of children
