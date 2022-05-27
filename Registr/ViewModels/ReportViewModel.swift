@@ -240,8 +240,7 @@ class ReportViewModel: ObservableObject {
                                         do {
                                             if let registration = try document.data(as: Registration.self) {
                                                 self.updateStudentAndClassStats(classID: selectedReport.classID, studentID: registration.studentID, oldReason: registration.reason.rawValue, newReason: validationReason.rawValue, time: .morning, isNewAbsence: false, date: registration.date.dateFromString)
-                                                
-                                                document.reference.updateData(["reason" : validationReason])
+                                                document.reference.updateData(["reason" : validationReason.rawValue])
                                             }
                                         } catch {
                                             completion(false)
@@ -441,33 +440,33 @@ class ReportViewModel: ObservableObject {
                             }
                         }
                     }
-                
-                let parentReportRef = db
-                    .collection("fb_parent_path".localize)
-                    .document(selectedReport.parentID)
-                    .collection("fb_report_path".localize)
-                    .document(id)
-                
-                let classReportRef = db
-                    .collection("fb_schools_path".localize)
-                    .document(selectedSchool)
-                    .collection("fb_classes_path".localize)
-                    .document(selectedReport.classID)
-                    .collection("fb_report_path".localize)
-                    .document(id)
-                
-                batch.updateData(["teacherValidation" : teacherValidation.rawValue], forDocument: parentReportRef)
-                batch.deleteDocument(classReportRef)
-                
-                batch.commit() { err in
-                    if err != nil {
-                        completion(false)
-                    } else {
-                        print("Batch write succeeded.")
-                        completion(true)
-                        if let index = self.reports.firstIndex(where: {$0.id == id}) {
-                            self.reports.remove(at: index)
-                        }
+            }
+            
+            let parentReportRef = db
+                .collection("fb_parent_path".localize)
+                .document(selectedReport.parentID)
+                .collection("fb_report_path".localize)
+                .document(id)
+            
+            let classReportRef = db
+                .collection("fb_schools_path".localize)
+                .document(selectedSchool)
+                .collection("fb_classes_path".localize)
+                .document(selectedReport.classID)
+                .collection("fb_report_path".localize)
+                .document(id)
+            
+            batch.updateData(["teacherValidation" : teacherValidation.rawValue], forDocument: parentReportRef)
+            batch.deleteDocument(classReportRef)
+            
+            batch.commit() { err in
+                if err != nil {
+                    completion(false)
+                } else {
+                    print("Batch write succeeded.")
+                    completion(true)
+                    if let index = self.reports.firstIndex(where: {$0.id == id}) {
+                        self.reports.remove(at: index)
                     }
                 }
             }
