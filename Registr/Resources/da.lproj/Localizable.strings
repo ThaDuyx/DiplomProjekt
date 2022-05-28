@@ -43,11 +43,11 @@
 
 
 // MARK: - Onboarding flow page 1
-"onboard_flow_page_one_title" = "Notifikationer.";
+"onboard_flow_page_one_title" = "Notifikationer";
 "onboard_flow_page_one_description" = "Tillad notifikationer for at få opdateringer når der sker ændringer i applikationen.";
 
 // MARK: - Onboarding flow page 2
-"onboard_flow_page_two_title" = "Data.";
+"onboard_flow_page_two_title" = "Data";
 "onboard_flow_page_two_description" = "Applikationen anvender personlige oplysninger til at hente data. Din data er beskyttet bag GDPR reglementet.";
 
 // MARK: - Onboarding flow page 3
@@ -56,7 +56,7 @@
 "onboard_flow_page_three_description_parent" = "Registr giver dig mulighed for at indberette, om dit barn er fraværende fra skole. Det er også muligt at se statistik for fraværet for barnet.";
 
 // MARK: - Onboarding flow page 4
-"onboard_flow_page_four_title" = "Færdig.";
+"onboard_flow_page_four_title" = "Færdig";
 "onboard_flow_page_four_description" = "Appen er nu klar til brug.";
 
 // MARK: - Errors
