@@ -13,17 +13,14 @@ struct TeacherAbsencesSection: View {
     var body: some View {
         HStack {
             HStack(spacing: 20) {
-                Button { } label: {
-                    Text(stringSeparator(reason: report.reason.rawValue).uppercased())
-                        .frame(width: 35, height: 35)
-                        .foregroundColor(Color.white)
-                        .background(Color.frolyRed)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.white, lineWidth: 2)
-                        )
-                }
-                
+                Text(stringSeparator(reason: report.reason.rawValue).uppercased())
+                    .frame(width: 35, height: 35)
+                    .foregroundColor(Color.white)
+                    .background(Color.frolyRed)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.white, lineWidth: 2)
+                    )
                 VStack {
                     Text(report.studentName)
                         .bodyTextStyle(color: Color.white, font: .poppinsBold)

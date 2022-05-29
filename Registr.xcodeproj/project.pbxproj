@@ -48,7 +48,6 @@
 		6A89C5EC283A674D0081ADAE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 83093A9628377C9C00FBE775 /* FirebaseFirestore */; };
 		6A89C5ED283A674D0081ADAE /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 83093A9828377CA500FBE775 /* FirebaseFirestoreSwift-Beta */; };
 		6A89C5EE283A674D0081ADAE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 83093A9A28377CAB00FBE775 /* FirebaseMessaging */; };
-		6A89C5EF283A674D0081ADAE /* SwiftUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 83093A9D28377E1100FBE775 /* SwiftUIKit */; };
 		6AA308D9281937D100AE9665 /* SnapshotData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA308D8281937D100AE9665 /* SnapshotData.swift */; };
 		6AA308DB281A86DA00AE9665 /* RegistrationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA308DA281A86DA00AE9665 /* RegistrationInfo.swift */; };
 		6AAC4E53280D546600AB59C2 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAC4E52280D546600AB59C2 /* StatisticsViewModel.swift */; };
@@ -275,7 +274,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				83D6298928117430005EA006 /* FirebaseMessaging in Frameworks */,
-				6A89C5EF283A674D0081ADAE /* SwiftUIKit in Frameworks */,
 				6AC078DF27CF73EB0048F0B1 /* (null) in Frameworks */,
 				6A89C5E9283A674D0081ADAE /* FirebaseAnalytics in Frameworks */,
 				6AC078E127CF73EB0048F0B1 /* (null) in Frameworks */,
@@ -679,7 +677,6 @@
 				83093A9628377C9C00FBE775 /* FirebaseFirestore */,
 				83093A9828377CA500FBE775 /* FirebaseFirestoreSwift-Beta */,
 				83093A9A28377CAB00FBE775 /* FirebaseMessaging */,
-				83093A9D28377E1100FBE775 /* SwiftUIKit */,
 				830F0597283B872200A86B94 /* RiveRuntime */,
 			);
 			productName = Registr;
@@ -758,7 +755,6 @@
 			packageReferences = (
 				83711D2F2823EF5D00CE8AE0 /* XCRemoteSwiftPackageReference "ChartView" */,
 				83093A8F28377C3900FBE775 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				83093A9C28377E1100FBE775 /* XCRemoteSwiftPackageReference "SwiftUIKit" */,
 				830F0596283B872100A86B94 /* XCRemoteSwiftPackageReference "rive-ios" */,
 			);
 			productRefGroup = 6A31FD4627CF61B700EFECDD /* Products */;
@@ -1280,14 +1276,6 @@
 				version = 8.12.1;
 			};
 		};
-		83093A9C28377E1100FBE775 /* XCRemoteSwiftPackageReference "SwiftUIKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielsaidi/SwiftUIKit.git";
-			requirement = {
-				kind = exactVersion;
-				version = 2.5.0;
-			};
-		};
 		830F0596283B872100A86B94 /* XCRemoteSwiftPackageReference "rive-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rive-app/rive-ios";
@@ -1336,11 +1324,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 83093A8F28377C3900FBE775 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
-		};
-		83093A9D28377E1100FBE775 /* SwiftUIKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 83093A9C28377E1100FBE775 /* XCRemoteSwiftPackageReference "SwiftUIKit" */;
-			productName = SwiftUIKit;
 		};
 		830F0597283B872200A86B94 /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -88,7 +88,8 @@ struct SchoolHomeView: View {
             })
             .navigationTitle("reports_navigationtitle".localize)
             .navigationBarTitleDisplayMode(.inline)
-        }.environmentObject(reportViewModel)
+        }
+        .environmentObject(reportViewModel)
     }
 }
 
