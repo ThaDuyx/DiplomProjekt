@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// This solution have been made by following this tutorial: https://www.youtube.com/watch?v=rQKT7tn4uag
+
 extension View {
     func halfSheet<SheetView: View>(showSheet: Binding<Bool>, @ViewBuilder sheetView: @escaping () -> SheetView, onEnd: @escaping () -> () ) -> some View {
         
@@ -58,7 +60,8 @@ struct HalfSheetController<SheetView: View>: UIViewControllerRepresentable {
             self.parent = parent
         }
         
-        func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+            parent.showSheet = false
             parent.onEnd()
         }
     }

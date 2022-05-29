@@ -146,7 +146,7 @@ struct AbsenceRegistrationView: View {
                                     }
                                     studentIndex = index
                                     studentName = registrationViewModel.registrations[index].studentName
-                                    showSheet.toggle()
+                                    showSheet = true
                                 }
                             
                             Divider()
@@ -170,7 +170,7 @@ struct AbsenceRegistrationView: View {
                             }
                         }
                     } onEnd: {
-                        showSheet.toggle()
+                        showSheet = false
                     }
                     
                     Button {

@@ -44,22 +44,20 @@ struct RegistrationStudentSection: View {
             
             Spacer()
             
-            Button { } label: {
-                Text(absenceReason?.isEmpty ?? true ? "" : stringSeparator(reason: absenceReason ?? "").uppercased())
-                    .frame(width: 35, height: 35)
-                    .foregroundColor(.frolyRed)
-                // Note: absenceReason in the following code is the old state value.
-                    .onChange(of: absenceReason) { [absenceReason] newValue in
-                        // Force un-wrapping because we know we have the values and would like to receive an empty String
-                        statisticsViewModel.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
-                        statisticsViewModel.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID, isMorning: isMorning, date: selectedDate)
-                    }
-            }
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(absenceReason?.isEmpty ?? true ? Color.fiftyfifty : .frolyRed, lineWidth: 2)
-            )
-            .padding(.trailing, 20)
+            Text(absenceReason?.isEmpty ?? true ? "" : stringSeparator(reason: absenceReason ?? "").uppercased())
+                .frame(width: 35, height: 35)
+                .foregroundColor(.frolyRed)
+            // Note: absenceReason in the following code is the old state value.
+                .onChange(of: absenceReason) { [absenceReason] newValue in
+                    // Force un-wrapping because we know we have the values and would like to receive an empty String
+                    statisticsViewModel.updateClassStatistics(oldValue: absenceReason!, newValue: newValue!)
+                    statisticsViewModel.updateStudentStatistics(oldValue: absenceReason!, newValue: newValue!, studentID: studentID, isMorning: isMorning, date: selectedDate)
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(absenceReason?.isEmpty ?? true ? Color.fiftyfifty : .frolyRed, lineWidth: 2)
+                )
+                .padding(.trailing, 20)
         }
         .fullScreenCover(item: $errorHandling.appError, content: { appError in
             ErrorView(title: appError.title, error: appError.description) {
@@ -72,6 +70,6 @@ struct RegistrationStudentSection: View {
 
 struct RegistrationStudentSection_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrationStudentSection(index: 0, studentName: "", absenceReason: "", studentID: "", isMorning: false, selectedDate: Date())
+        RegistrationStudentSection(index: 0, studentName: "testName", absenceReason: "FS", studentID: "", isMorning: false, selectedDate: Date())
     }
 }
