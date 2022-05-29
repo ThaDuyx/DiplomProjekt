@@ -18,7 +18,7 @@ struct SchoolHomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                if self.favoriteViewModel.favorites.isEmpty {
+                if favoriteViewModel.favorites.isEmpty {
                     VStack(spacing: 50) {
                         Text("shs_no_favorites_1".localize)
                             .bodyTextStyle(color: .fiftyfifty, font: .poppinsBold)
@@ -30,13 +30,13 @@ struct SchoolHomeView: View {
                             .frame(width: 320)
                     }
                 } else {
-                    List(self.classViewModel.classes, id: \.self) { classInfo in
-                        if self.favoriteViewModel.favorites.contains(classInfo.classID) {
+                    List(classViewModel.classes, id: \.self) { classInfo in
+                        if favoriteViewModel.favorites.contains(classInfo.classID) {
                             Section(
                                 header: Text(classInfo.name)
                                     .headerTextStyle(color: Color.fiftyfifty, font: .poppinsMedium)
                             ) {
-                                ForEach(self.reportViewModel.reports, id: \.self) { report in
+                                ForEach(reportViewModel.reports, id: \.self) { report in
                                     if DefaultsManager.shared.userRole == .teacher && report.classID == classInfo.classID && report.registrationType != .legal {
                                         TeacherAbsencesSection(report: report)
                                     } else if DefaultsManager.shared.userRole == .headmaster && report.classID == classInfo.classID && report.registrationType == .legal {
@@ -68,11 +68,11 @@ struct SchoolHomeView: View {
                     }
                 }
             }
-            .onChange(of: self.favoriteViewModel.newFavorite) { newValue in
-                self.reportViewModel.addFavorite(newFavorite: newValue)
+            .onChange(of: favoriteViewModel.newFavorite) { newValue in
+                reportViewModel.addFavorite(newFavorite: newValue)
             }
-            .onChange(of: self.favoriteViewModel.deselectedFavorite) { deselectedValue in
-                self.reportViewModel.removeFavorite(favorite: deselectedValue)
+            .onChange(of: favoriteViewModel.deselectedFavorite) { deselectedValue in
+                reportViewModel.removeFavorite(favorite: deselectedValue)
             }
             .onAppear() {
                 notificationVM.getNotificationSettings()
@@ -80,9 +80,9 @@ struct SchoolHomeView: View {
             .fullScreenCover(item: $errorHandling.appError, content: { appError in
                 ErrorView(title: appError.title, error: appError.description) {
                     if appError.type == .reportMangerInitError {
-                        self.reportViewModel.attachReportListeners()
+                        reportViewModel.attachReportListeners()
                     } else {
-                        self.reportViewModel.addFavorite(newFavorite: self.favoriteViewModel.newFavorite)
+                        reportViewModel.addFavorite(newFavorite: favoriteViewModel.newFavorite)
                     }
                 }
             })
