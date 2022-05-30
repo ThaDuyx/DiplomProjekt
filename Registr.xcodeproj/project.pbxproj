@@ -88,6 +88,7 @@
 		83547AF6280C15D50082D641 /* ClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AF5280C15D50082D641 /* ClassView.swift */; };
 		83547AFA280C532F0082D641 /* StudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AF9280C532F0082D641 /* StudentView.swift */; };
 		83547AFC280D51980082D641 /* ParentHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83547AFB280D51980082D641 /* ParentHomeView.swift */; };
+		835BA9322843BA7100A325D2 /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835BA9312843BA7100A325D2 /* SFSafariView.swift */; };
 		836F149F27E35FF200FEFCB3 /* HalfSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F149E27E35FF200FEFCB3 /* HalfSheet.swift */; };
 		83711D312823EF5D00CE8AE0 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 83711D302823EF5D00CE8AE0 /* SwiftUICharts */; };
 		83711D352825273300CE8AE0 /* StatisticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83711D342825273300CE8AE0 /* StatisticsProvider.swift */; };
@@ -224,6 +225,7 @@
 		83547AF5280C15D50082D641 /* ClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassView.swift; sourceTree = "<group>"; };
 		83547AF9280C532F0082D641 /* StudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentView.swift; sourceTree = "<group>"; };
 		83547AFB280D51980082D641 /* ParentHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentHomeView.swift; sourceTree = "<group>"; };
+		835BA9312843BA7100A325D2 /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		836F149E27E35FF200FEFCB3 /* HalfSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSheet.swift; sourceTree = "<group>"; };
 		83711D342825273300CE8AE0 /* StatisticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsProvider.swift; sourceTree = "<group>"; };
 		83711D36282529EB00CE8AE0 /* ChartsStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsStyle.swift; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 			isa = PBXGroup;
 			children = (
 				83711D3C2825589D00CE8AE0 /* LogoSection.swift */,
+				835BA9312843BA7100A325D2 /* SFSafariView.swift */,
 			);
 			path = Section;
 			sourceTree = "<group>";
@@ -849,6 +852,7 @@
 				6A0F350327D8C8A9001E60D9 /* Registration.swift in Sources */,
 				83717371281D2F2200A73B7F /* SchoolViewModel.swift in Sources */,
 				8348592827CF8D1C009D8A51 /* Resources.swift in Sources */,
+				835BA9322843BA7100A325D2 /* SFSafariView.swift in Sources */,
 				83717386281D5EB400A73B7F /* RegistrationClassSection.swift in Sources */,
 				6A63250F27EB565D000EF260 /* DefaultsManager.swift in Sources */,
 				6AA308D9281937D100AE9665 /* SnapshotData.swift in Sources */,

@@ -5,8 +5,27 @@
 //
 
 import SwiftUI
+import SafariServices
+
+/// Authorization result
+enum AuthenticationResult
+{
+    /// User cancel flow.
+    case cancel
+
+    /// Login success.
+    case success
+
+    /// Login error.
+    case error( Error )
+}
+
+typealias CompletionHandler = (_ result: AuthenticationResult ) -> Void
+
 
 struct LoginOptions: View {
+    @State private var showSafari = false
+    @State var _completionHandler: CompletionHandler?
     var body: some View {
         NavigationView {
             ZStack {
@@ -31,9 +50,18 @@ struct LoginOptions: View {
                         })
                             .buttonStyle(Resources.CustomButtonStyle.LoginOptionsButtonStyle())
                             .accessibilityIdentifier("teacherNavigationLink")
+                        Button(action: {
+                            showSafari = true
+                        }, label: {
+                            Text("MitID")
+                        })
+                        .buttonStyle(Resources.CustomButtonStyle.LoginOptionsButtonStyle())
                         Spacer()
                     }
                     .offset(y: 80)
+                    .fullScreenCover(isPresented: $showSafari, content: {
+                        SFSafariView(url: URL(string: "https://registr-test.criipto.id/oauth2/authorize?scope=openid&client_id=urn:my:application:identifier:1430&redirect_uri=https://jwt.io/&response_type=id_token&response_mode=fragment&nonce=ecnon-23825ad2-c9e8-441b-8633-fef700dd3e28&login_hint=acr_values:urn:grn:authn:dk:nemid:poces")!)
+                    })
                 }
             }
             .navigationBarHidden(true)
