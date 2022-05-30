@@ -90,7 +90,7 @@
 // MARK: - Parent Home Screen View
 "ph_name" = "Navn: ";
 "ph_class" = "Klasse: ";
-"ph_email" = "Email: ";
+"ph_email" = "E-mail: ";
 "ph_no_children" = "Du har ikke registreret nogle børn. Hvis dette er en fejl, så søg kontakt hos skolen.";
 
 // MARK: - Student Report View
