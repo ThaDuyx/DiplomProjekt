@@ -1,0 +1,185 @@
+/* 
+  Localizable.strings
+  Registr
+
+  Created by Christoffer Detlef on 02/03/2022.
+  
+*/
+// MARK: - App Name
+"application_name" = "Registr";
+"app_info" = "Diplomingeniørprojekt - Udviklet af Simon Andersen & Christoffer Adrian Detlef";
+
+// MARK: - Standard
+"next_view" = "Næste";
+"ok" = "OK";
+"date" = "Dato";
+"reason" = "Årsag";
+
+
+// MARK: - Navigation titles
+"reports_navigationtitle" = "Indberetninger";
+"ph_navigationtitle" = "Børn";
+"sr_navigationtitle" = "Indberetning af elev";
+"cl_navigationtitle" = "Statistik";
+"sl_navigationtitle" = "Elever i ";
+"acl_navigationtitle" = "Fravær";
+"ar_navigationtitle" = "Registrer";
+"pt_report" = "Indberet";
+"profile_navigationtitle" = "Profil";
+
+// MARK: - Teacher validation
+"tv-pending" = "Afventer";
+"tv-denied" = "Afslået";
+"tv-accepted" = "Godkendt";
+
+// MARK: - Login flow
+"parent_login" = "Forældre login";
+"school_login" = "Skole login";
+"user_id" = "BrugerID";
+"password" = "Kodeord";
+"login" = "Log ind";
+"password_field_text" = "Indtast dit kodeord";
+"user_id_field_text" = "Indtast dit BrugerID";
+
+
+// MARK: - Onboarding flow page 1
+"onboard_flow_page_one_title" = "Notifikationer";
+"onboard_flow_page_one_description" = "Tillad notifikationer for at få opdateringer når der sker ændringer i applikationen.";
+
+// MARK: - Onboarding flow page 2
+"onboard_flow_page_two_title" = "Data";
+"onboard_flow_page_two_description" = "Applikationen anvender personlige oplysninger til at hente data. Din data er beskyttet bag GDPR reglementet.";
+
+// MARK: - Onboarding flow page 3
+"onboard_flow_page_three_title" = "Funktionlitet i Appen";
+"onboard_flow_page_three_description_school" = "Registr består af alle aktive indberetninger fra de klasser du følger, mulighed for at registrer fravær for en klasse og statistik for en klasse eller elev.";
+"onboard_flow_page_three_description_parent" = "Registr giver dig et overblik over dine børns fravær, mulighed for at indberette fravær og se dit barns fravær.";
+
+// MARK: - Onboarding flow page 4
+"onboard_flow_page_four_title" = "Færdig";
+"onboard_flow_page_four_description" = "Appen er nu klar til brug.";
+
+// MARK: - Errors
+"general_error" = "Something went wrong. Error description: ";
+
+// MARK: - Firebase paths
+"fb_schools_path" = "schools";
+"fb_parent_path" = "parent";
+"fb_employee_path" = "employees";
+"fb_date_path" = "registrationDates";
+"fb_morningRegistration_path" = "morning";
+"fb_afternoonRegistration_path" = "afternoon";
+"fb_children_path" = "children";
+"fb_students_path" = "students";
+"fb_classes_path" = "classes";
+"fb_absence_path" = "absence";
+"fb_report_path" = "reports";
+"fb_statistics_path" = "statistics";
+"fb_statistics_doc" = "stats";
+
+// MARK: - School Home Screen
+"shs_no_favorites_1" = "Du følger ikke nogen klasse. For at få beskeder om indberetninger for en specifik klasse, så skal du følge denne klasse.";
+"shs_no_favorites_2" = "For at følge en klasse, så skal du gå ind på Statistik -> vælg en klasse -> Tryk på 'Følger ikke'. Du vil nu følge denne klasse.";
+
+// MARK: - Student Absence Information Section
+"sais_report" = "Indberetning";
+"sais_student" = "Elev";
+"sais_time" = "Tidspunkt";
+"sais_description" = "Beskrivelse";
+
+// MARK: - Parent Home Screen View
+"ph_name" = "Navn: ";
+"ph_class" = "Klasse: ";
+"ph_email" = "E-mail: ";
+"ph_no_children" = "Du har ikke registreret nogle børn. Hvis dette er en fejl, så søg kontakt hos skolen.";
+
+// MARK: - Student Report View
+"sr_pick_absences" = "Vælg fravær";
+"sr_denied" = "Afslå";
+"sr_register" = "Registrer";
+
+// MARK: - Report Section
+"rs_validation" = "Validering";
+"rs_edit" = "Rediger";
+"rs_delete" = "Slet";
+
+// MARK: - Absence List View
+"al_intervals" = "Intervaller";
+"al_absences_days" = "Fraværsdage";
+
+// MARK: - Class View
+"class_follow" = "Følger";
+"class_not_following" = "Følger ikke";
+"class_history" = "Historik";
+"class_students" = "Elever";
+
+// MARK: - Parent Absence Registration
+"parent_absence_registration_kid" = "Barn";
+"parent_absence_registration_pick_kid" = "Vælg barn";
+"parent_absence_registration_reason" = "Fraværsårsag";
+"parent_absence_registration_pick_reason" = "Vælg fraværsårsag";
+"parent_absence_registration_time" = "Tidspunkt";
+"parent_absence_registration_pick_time" = "Vælg tidspunkt";
+"parent_absence_registration_interval" = "Interval";
+"parent_absence_registration_enable_end_date" = "Aktivér for slutdato";
+"parent_absence_registration_start_date" = "Startdato";
+"parent_absence_registration_end_date" = "Slutdato";
+"parent_absence_registration_description" = "Skriv beskrivelse - maks. 150 tegn";
+"par_report" = "Indberet";
+"par_update" = "Opdater";
+"parent_absence_registration_alert_title" = "Hov! Du mangler og udfylde noget!";
+"parent_absence_registration_alert_description" = "Du mangler at vælge fraværsårsag. Udfyld dette felt for at kunne lave en indberretelse.";
+"par_report_alert_text" = "Der er allerede oprettede en indberretelse for denne dato.";
+"par_report_alert_title" = "Hov, dette er ikke muligt!";
+"parent_absence_registration_nav_title" = "Indberetning af barn";
+
+// MARK: - Absence Registration View
+"ar_day_picked" = "Valgte dag";
+"ar_today" = "I dag";
+"ar_day_is_weekend" = "Den valgte dato er en weekend";
+"ar_registration_completed" = "Fraværsregistrering gennemgået";
+"ar_empty_field" = "Ryd felt";
+"ar_save" = "Gem";
+
+// Mark: - Student class list
+"student_list_absence_description %@" = "Vælg årsag for %@ fravær";
+"student_list_absence_late" = "For sent - (FS)";
+"student_list_absence_illegal" = "Ulovligt - (U)";
+"student_list_absence_sick" = "Sygdom - (S)";
+"student_list_absence_clear" = "Ryd felt";
+
+//Mark: - Register View
+"register_section_header_favoritter" = "favoritter";
+"register_section_header_classes" = "andre klasser";
+
+// MARK: - Absence History View
+"absence_day_pick" = "Den følgende dato er valgt:";
+
+// MARK: - Alert View
+"alert_title" = "Ups! Noget gik galt!";
+"alert_title_login" = "Noget gik galt med at logge ind!";
+"alert_button_title" = "Luk";
+"alert_default_description" = "Der skete en fejl. Luk beskeden og prøv igen.";
+
+// MARK: - Notification Row
+"notification_title" = "Du har slået notificationer fra.";
+"notification_description" = "For at app'en kan sende dig notifikationer, når der er sket noget vigtigt, så skal du slå notifikationer til i telefonens indstillinger.";
+"notification_button_title" = "Åben indstillinger";
+
+// MARK: - Statistics
+"statistics_morning" = "Formiddag";
+"statistics_afternoon" = "Eftermiddag";
+"statistics_offenses" = "Forseelser";
+"statistics_absence" = "Fravær";
+"statistics_reports" = "Indberetninger";
+"stat_no_graph" = "Der kan ikke blive vist nogen graf, da der ikke er registreret noget fravær i forseelser.";
+"stat_graph_value" = "Fraværs værdi";
+"stat_graph_description" = "Fraværs dage";
+
+// MARK: - Profile view
+"profile_log_out" = "Log ud";
+"profile_toggle" = "Tillad notifikationer, så du altid er holdt opdateret når der sker noget i applikationen.";
+
+// MARK: - Report State Section
+"rss_check_description" = "Indberetningen er blevet oprettet!";
+"rss_error_description" = "Der er sket en fejl. Prøv igen!";
