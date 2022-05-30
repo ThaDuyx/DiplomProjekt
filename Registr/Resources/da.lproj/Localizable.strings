@@ -124,7 +124,7 @@
 "parent_absence_registration_enable_end_date" = "Aktivér for slutdato";
 "parent_absence_registration_start_date" = "Startdato";
 "parent_absence_registration_end_date" = "Slutdato";
-"parent_absence_registration_description" = "Skriv beskrivelse";
+"parent_absence_registration_description" = "Skriv beskrivelse - maks. 150 tegn";
 "par_report" = "Indberet";
 "par_update" = "Opdater";
 "parent_absence_registration_alert_title" = "Hov! Du mangler og udfylde noget!";
