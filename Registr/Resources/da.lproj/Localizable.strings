@@ -17,9 +17,9 @@
 
 
 // MARK: - Navigation titles
-"reports_navigationtitle" = "Indberettelser";
+"reports_navigationtitle" = "Indberetninger";
 "ph_navigationtitle" = "Børn";
-"sr_navigationtitle" = "Indberettelse af elev";
+"sr_navigationtitle" = "Indberetning af elev";
 "cl_navigationtitle" = "Statistik";
 "sl_navigationtitle" = "Elever i ";
 "acl_navigationtitle" = "Fravær";
@@ -52,8 +52,8 @@
 
 // MARK: - Onboarding flow page 3
 "onboard_flow_page_three_title" = "Funktionlitet i Appen";
-"onboard_flow_page_three_description_school" = "Med Registr kan du give elever fravær. Du kan også se statistik over fraværet for en hel klasse, eller for en bestemt elev.";
-"onboard_flow_page_three_description_parent" = "Registr giver dig mulighed for at indberette, om dit barn er fraværende fra skole. Det er også muligt at se statistik for fraværet for barnet.";
+"onboard_flow_page_three_description_school" = "Registr består af alle aktive indberetninger fra de klasser du følger, mulighed for at registrer fravær for en klasse og statistik for en klasse eller elev.";
+"onboard_flow_page_three_description_parent" = "Registr giver dig et overblik over dine børns fravær, mulighed for at indberette fravær og se dit barns fravær.";
 
 // MARK: - Onboarding flow page 4
 "onboard_flow_page_four_title" = "Færdig";
@@ -78,11 +78,11 @@
 "fb_statistics_doc" = "stats";
 
 // MARK: - School Home Screen
-"shs_no_favorites_1" = "Du har ikke valgt at følge nogle klasser. For at få vist beskeder når en forældre fra en bestemt klasse, har oprettet fravær fra sit barn, så skal du følge denne klasse.";
-"shs_no_favorites_2" = "For at følge en klasse, så gå ind på Statistik -> vælg en klasse -> Tryk på Følger ikke. Du vil nu følge denne klasse.";
+"shs_no_favorites_1" = "Du følger ikke nogen klasse. For at få beskeder om indberetninger for en specifik klasse, så skal du følge denne klasse.";
+"shs_no_favorites_2" = "For at følge en klasse, så skal du gå ind på Statistik -> vælg en klasse -> Tryk på 'Følger ikke'. Du vil nu følge denne klasse.";
 
 // MARK: - Student Absence Information Section
-"sais_report" = "Indberettelse";
+"sais_report" = "Indberetning";
 "sais_student" = "Elev";
 "sais_time" = "Tidspunkt";
 "sais_description" = "Beskrivelse";
@@ -91,7 +91,7 @@
 "ph_name" = "Navn: ";
 "ph_class" = "Klasse: ";
 "ph_email" = "Email: ";
-"ph_no_children" = "Du har ikke registeret nogle børn. Hvis dette er en fejl, så søg kontakt hos skolen.";
+"ph_no_children" = "Du har ikke registreret nogle børn. Hvis dette er en fejl, så søg kontakt hos skolen.";
 
 // MARK: - Student Report View
 "sr_pick_absences" = "Vælg fravær";
@@ -131,7 +131,7 @@
 "parent_absence_registration_alert_description" = "Du mangler at vælge fraværsårsag. Udfyld dette felt for at kunne lave en indberretelse.";
 "par_report_alert_text" = "Der er allerede oprettede en indberretelse for denne dato.";
 "par_report_alert_title" = "Hov, dette er ikke muligt!";
-"parent_absence_registration_nav_title" = "Indberettelse af barn";
+"parent_absence_registration_nav_title" = "Indberetning af barn";
 
 // MARK: - Absence Registration View
 "ar_day_picked" = "Valgte dag";
@@ -163,7 +163,7 @@
 
 // MARK: - Notification Row
 "notification_title" = "Du har slået notificationer fra.";
-"notification_description" = "For at app'en kan sende dig notifikationer, når der er sket noget vigtig på det som du følger, så skal du slå notifikationer til i telefonens indstillinger.";
+"notification_description" = "For at app'en kan sende dig notifikationer, når der er sket noget vigtigt, så skal du slå notifikationer til i telefonens indstillinger.";
 "notification_button_title" = "Åben indstillinger";
 
 // MARK: - Statistics
@@ -171,14 +171,15 @@
 "statistics_afternoon" = "Eftermiddag";
 "statistics_offenses" = "Forseelser";
 "statistics_absence" = "Fravær";
-"statistics_reports" = "Indberettelser";
-"stat_no_graph" = "Der kan ikke blive vist nogen graf, da der ikke er registeret noget fra til forseelser.";
+"statistics_reports" = "Indberetninger";
+"stat_no_graph" = "Der kan ikke blive vist nogen graf, da der ikke er registreret noget fravær i forseelser.";
 "stat_graph_value" = "Fraværs værdi";
+"stat_graph_description" = "Fraværs dage";
 
 // MARK: - Profile view
 "profile_log_out" = "Log ud";
-"profile_toggle" = "Tilladelse til at modtage notifikationer, når der sker noget vigtigt.";
+"profile_toggle" = "Tillad notifikationer, så du altid er holdt opdateret når der sker noget i applikationen.";
 
 // MARK: - Report State Section
-"rss_check_description" = "Indberettelsen er blevet oprettet!";
+"rss_check_description" = "Indberetningen er blevet oprettet!";
 "rss_error_description" = "Der er sket en fejl. Prøv igen!";
