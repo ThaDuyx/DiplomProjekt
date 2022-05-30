@@ -181,8 +181,8 @@ extension RegistrUITests {
         if tabbar.buttons["Børn"].exists {
             app.tabBars["Fanelinje"].buttons["Profil"].tap()
             app.buttons["Log ud"].tap()
-        } else if tabbar.buttons["Indberettelser"].exists {
-            app.navigationBars["Indberettelser"].buttons["person"].tap()
+        } else if tabbar.buttons["Indberetninger"].exists {
+            app.navigationBars["Indberetninger"].buttons["person"].tap()
             app.buttons["Log ud"].tap()
         } else {
             XCTAssertTrue(true)
@@ -239,7 +239,7 @@ extension RegistrUITests {
         childCount.firstMatch.tap()
         
         // Selects the button for the absence registration.
-        self.app.buttons["Indberettelser"].tap()
+        self.app.buttons["Indberetninger"].tap()
         
         // Gets the count for all the absences
         let cellCount = self.app.tables.children(matching: .cell).count

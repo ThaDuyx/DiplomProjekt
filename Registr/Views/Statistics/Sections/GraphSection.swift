@@ -25,7 +25,7 @@ struct GraphSection: View {
                         stringArray: WeekDays.allCases.map { $0.rawValue }, 
                         doubleArray: statisticsWeekDay(statistics: statisticsViewModel).map { Double($0) })), 
                 title: "stat_graph_value".localize, 
-                legend: "statistics_offenses".localize, 
+                legend: "stat_graph_description".localize,
                 style: ChartsStyle.style
             )
         }    
