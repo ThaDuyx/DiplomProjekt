@@ -29,7 +29,7 @@ class FeedDatabaseManager: ObservableObject {
     // Gladsaxe Skole
     let selectedSchool = "EXvXPS4HuVnxu7LhZRPt"
     // 9.x
-    let selectedClass = "YmORb5urte0Lw3H10lmB"
+    let selectedClass = "KkT176TAZiImYfurOJuk"
     
     init() {
         // fetchTestStudents()
