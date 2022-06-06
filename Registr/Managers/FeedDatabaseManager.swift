@@ -12,11 +12,11 @@ import FirebaseFirestore
  */
 class FeedDatabaseManager: ObservableObject {
     @Published var dateArray: [String] = [
-        "16-05-2022",
-        "17-05-2022",
-        "18-05-2022",
-        "19-05-2022",
-        "20-05-2022"
+        "06-06-2022",
+        "07-06-2022",
+        "08-06-2022",
+        "09-06-2022",
+        "10-06-2022"
     ]
     @Published var students = [Student]()
     @Published var classInfo = ClassInfo(isDoubleRegistrationActivated: false, name: "", classID: "")
@@ -29,7 +29,7 @@ class FeedDatabaseManager: ObservableObject {
     // Gladsaxe Skole
     let selectedSchool = "EXvXPS4HuVnxu7LhZRPt"
     // 9.x
-    let selectedClass = "KkT176TAZiImYfurOJuk"
+    let selectedClass = "Gf88KZ9GHf38Tr1XNLxk"
     
     init() {
         // fetchTestStudents()
